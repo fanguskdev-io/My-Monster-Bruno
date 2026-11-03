@@ -1,0 +1,1985 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Un juego para Lucía: investigación y propuestas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Andika:wght@400;700&family=Grandstander:wght@500;600;700;800&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --papel:#FFFFFF;
+  --cuadricula:#E5EDF7;
+  --cuadricula-fuerte:#CFDCEC;
+  --margen:#F2A3A3;
+  --tinta:#1D2B53;
+  --tinta-2:#46526F;
+  --tinta-3:#7C87A3;
+  --rojo:#E4483C;
+  --verde:#2E9E5B;
+  --azul:#2C74D8;
+  --amarillo:#F4B623;
+  --bisel:#262B40;
+  --display:"Grandstander","Trebuchet MS",system-ui,sans-serif;
+  --texto:"Literata",Georgia,"Times New Roman",serif;
+  --letra:"Andika","Trebuchet MS",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;color:var(--tinta);
+  font:400 17px/1.62 var(--texto);
+  background-color:var(--papel);
+  background-image:linear-gradient(var(--cuadricula) 1px,transparent 1px),linear-gradient(90deg,var(--cuadricula) 1px,transparent 1px);
+  background-size:26px 26px;
+}
+a{color:var(--azul);text-underline-offset:3px}
+a:focus-visible,input:focus-visible{outline:3px solid var(--azul);outline-offset:3px;border-radius:6px}
+.defs{position:absolute;width:0;height:0;overflow:hidden}
+.pagina{position:relative;max-width:1260px;margin:0 auto;padding:36px 36px 96px 124px}
+.pagina::before{content:"";position:absolute;top:0;bottom:0;left:92px;width:2px;background:var(--margen)}
+
+/* gomets */
+.gomet,.gomet-mini{display:inline-block;border-radius:50%;background:var(--c,var(--tinta-3));color:var(--ct,#fff);
+  box-shadow:inset -3px -4px 0 rgba(0,0,0,.13),inset 3px 3px 0 rgba(255,255,255,.38);text-align:center;font-family:var(--display);font-weight:800}
+.seccion{position:relative;padding:64px 0 4px}
+.seccion>.gomet{position:absolute;left:-63px;top:72px;width:34px;height:34px;line-height:34px;font-size:17px}
+
+h1,h2,h3{font-family:var(--display);color:var(--tinta);margin:0}
+h2{font-weight:800;font-size:clamp(30px,4vw,46px);line-height:1.06;letter-spacing:-.005em;margin-bottom:12px}
+h3{font-weight:700;font-size:21px;line-height:1.2;margin-bottom:8px}
+p{margin:0 0 14px;max-width:70ch}
+.entradilla{font-size:19px;color:var(--tinta-2);max-width:62ch}
+.fuente{font-size:14px;color:var(--tinta-3);margin-top:10px}
+.panel{background:#fff;border-radius:18px;box-shadow:0 0 0 2px var(--cuadricula-fuerte)}
+
+/* portada */
+.portada{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:8px 56px;align-items:start;padding:8px 0 40px}
+.portada-cabeza{grid-column:1/-1;margin-bottom:22px}
+.portada-antes{font:700 clamp(30px,3.6vw,46px)/1 var(--display);margin:0 0 4px}
+.nombre-grande{display:block;width:100%;max-width:1000px;height:auto;overflow:visible}
+#portada-nombre{stroke:var(--tinta);stroke-width:2.6;stroke-linejoin:round;paint-order:stroke}
+#portada-nombre.trazando{stroke-dasharray:1100;stroke-dashoffset:1100;fill-opacity:0;animation:trazar 1.9s cubic-bezier(.45,.05,.3,1) forwards,rellenar .5s 1.5s ease forwards}
+@keyframes trazar{to{stroke-dashoffset:0}}
+@keyframes rellenar{to{fill-opacity:1}}
+.campo-nombre{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:10px}
+.campo-nombre label{font:700 19px var(--display)}
+.campo-nombre input{font:700 22px var(--letra);text-transform:uppercase;letter-spacing:.04em;color:var(--tinta);padding:8px 14px;border:2px solid var(--tinta);border-radius:12px;background:#fff;width:13ch}
+.nota{font-size:14px;color:var(--tinta-2);margin:8px 0 0}
+.portada-texto p{font-size:18px}
+.indice{display:grid;margin-top:8px}
+.indice a{display:grid;grid-template-columns:38px 1fr;gap:12px;align-items:start;padding:12px 0;color:inherit;text-decoration:none;border-top:2px dashed var(--cuadricula-fuerte)}
+.indice a:hover b,.indice a:focus-visible b{text-decoration:underline;text-decoration-color:var(--c);text-decoration-thickness:3px}
+.indice b{font:700 19px/1.2 var(--display);display:block}
+.indice span.desc{font-size:15px;color:var(--tinta-2);line-height:1.45}
+.gomet-mini{width:32px;height:32px;line-height:32px;font-size:15px;flex:none}
+
+/* mercado */
+.ranking{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px 40px;padding:22px 26px}
+.ranking h3{font-size:19px}
+.ranking ol{list-style:none;margin:0;padding:0}
+.ranking li{display:grid;grid-template-columns:42px 1fr;gap:6px;padding:7px 0;border-top:1px solid var(--cuadricula)}
+.ranking .puesto{font:800 19px/1.3 var(--display);color:var(--tinta-3)}
+.ranking .que{display:block;font-size:14px;color:var(--tinta-2);line-height:1.4}
+.familias{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:34px 48px;margin-top:40px}
+.familia ul{list-style:none;margin:0;padding:0}
+.familia li{padding:5px 0;font-size:16px;line-height:1.5}
+.familia li b{font-weight:600}
+.balance{margin-top:8px;font-size:15px;line-height:1.5}
+.balance span{display:block}
+.si-me{color:#1F7A44;font-weight:600}
+.no-me{color:#B7332A;font-weight:600}
+.datos{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:22px 34px;margin-top:40px;padding:24px 28px}
+.dato strong{display:block;font:800 34px/1 var(--display);margin-bottom:6px}
+.dato span{font-size:15px;line-height:1.5;color:var(--tinta-2)}
+
+/* cole y reglas */
+.areas{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:28px 44px;margin-top:22px}
+ul.puntos-lista{list-style:none;margin:0;padding:0}
+ul.puntos-lista li{position:relative;padding:4px 0 4px 22px;font-size:16px;line-height:1.5}
+ul.puntos-lista li::before{content:"";position:absolute;left:0;top:.72em;width:11px;height:11px;border-radius:50%;background:var(--c,var(--tinta-3))}
+.reglas{columns:2 400px;column-gap:56px;margin-top:22px;padding:0;list-style:none}
+.reglas li{break-inside:avoid;margin:0 0 18px;padding-left:22px;position:relative;font-size:16px;line-height:1.5}
+.reglas li::before{content:"";position:absolute;left:0;top:.45em;width:12px;height:12px;border-radius:50%;background:var(--c)}
+.reglas b{display:block;font:700 19px/1.25 var(--display);margin-bottom:2px}
+.comunes{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:26px 34px;margin-top:22px}
+.comun svg{width:96px;height:auto;display:block;margin-bottom:8px}
+.comun p{font-size:16px}
+
+/* propuestas */
+.propuesta h2{text-decoration:underline wavy var(--c);text-decoration-thickness:3px;text-underline-offset:12px;text-decoration-skip-ink:none;margin-bottom:18px}
+.propuesta-frase{font-size:20px;max-width:58ch;margin-bottom:28px}
+.pantallas{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,430px),1fr));gap:34px 34px}
+.pantalla{margin:0}
+.dispositivo{position:relative;background:var(--bisel);border-radius:30px;padding:12px 16px 12px 22px;box-shadow:0 20px 30px -24px rgba(29,43,83,.6)}
+.dispositivo::before{content:"";position:absolute;left:8px;top:50%;width:6px;height:6px;margin-top:-3px;border-radius:50%;background:#454C6B}
+.dispositivo svg{display:block;width:100%;height:auto;border-radius:15px;background:#fff}
+.pantalla figcaption{margin-top:12px;font-size:15px;line-height:1.5}
+.pantalla figcaption b{display:block;font:700 18px/1.25 var(--display);margin-bottom:2px}
+.voz{font-style:italic;color:var(--tinta-2)}
+.prueba{display:inline-flex;align-items:center;gap:6px;margin-top:6px;font:600 14px var(--display);color:var(--tinta);background:#fff;border:2px solid var(--c);border-radius:999px;padding:2px 12px 2px 8px}
+.prueba::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--c)}
+.detalle{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:30px 48px;margin-top:40px}
+.detalle h3{font-size:20px}
+.detalle h3+*{margin-top:0}
+.detalle>div>h3:not(:first-child){margin-top:22px}
+ol.partida{list-style:none;margin:0;padding:0;counter-reset:paso}
+ol.partida li{counter-increment:paso;display:grid;grid-template-columns:30px 1fr;gap:8px;margin-bottom:9px;font-size:16px;line-height:1.5}
+ol.partida li::before{content:counter(paso);width:25px;height:25px;border-radius:50%;background:var(--c);color:var(--ct,#fff);font:800 13px/25px var(--display);text-align:center;margin-top:1px}
+.detalle ul{margin:0;padding:0;list-style:none}
+.detalle ul li{position:relative;padding:3px 0 3px 20px;font-size:16px;line-height:1.5}
+.detalle ul li::before{content:"";position:absolute;left:2px;top:.78em;width:9px;height:9px;border-radius:50%;background:var(--c)}
+.detalle ul.contra li::before{background:transparent;box-shadow:inset 0 0 0 2px var(--c)}
+.temporada{font-size:16px;line-height:1.5;background:#fff;border-radius:14px;padding:12px 16px;box-shadow:0 0 0 2px var(--cuadricula-fuerte);margin-top:12px}
+.esfuerzo{font-size:16px;line-height:1.5}
+
+/* comparativa */
+.tabla-scroll{overflow-x:auto;margin-top:22px;border-radius:18px}
+table.comparativa{width:100%;min-width:760px;border-collapse:separate;border-spacing:0;background:#fff;border-radius:18px;box-shadow:inset 0 0 0 2px var(--cuadricula-fuerte)}
+.comparativa th,.comparativa td{padding:13px 16px;text-align:left;vertical-align:middle;border-bottom:1px solid var(--cuadricula)}
+.comparativa tbody tr:last-child th,.comparativa tbody tr:last-child td{border-bottom:0}
+.comparativa thead th{font:700 17px/1.2 var(--display);vertical-align:bottom}
+.comparativa thead th .gomet-mini{width:26px;height:26px;line-height:26px;font-size:13px;margin-right:8px;vertical-align:-6px}
+.comparativa tbody th{font:600 16px/1.3 var(--texto);width:22%}
+.comparativa td{font-size:15px;line-height:1.45}
+.puntos{display:inline-flex;gap:5px}
+.puntos i{width:15px;height:15px;border-radius:50%;box-shadow:inset 0 0 0 2px var(--c)}
+.puntos i.si{background:var(--c)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.recomendacion{display:grid;grid-template-columns:auto 1fr;gap:6px 22px;margin-top:30px;padding:24px 28px;background:#fff;border-radius:20px;box-shadow:0 0 0 3px var(--azul)}
+.recomendacion .gomet{width:52px;height:52px;line-height:52px;font-size:24px;grid-row:span 2}
+.recomendacion h3{font-size:26px;margin:4px 0 6px}
+.recomendacion p{font-size:17px}
+.siguiente{margin-top:26px;padding:22px 28px}
+.siguiente h3{font-size:22px}
+.fuentes{columns:2 380px;column-gap:48px;font-size:15px;line-height:1.5;padding-left:18px}
+.fuentes li{margin-bottom:6px;break-inside:avoid}
+footer{margin-top:56px;font-size:14px;color:var(--tinta-3)}
+
+/* texto dentro de las pantallas */
+.t-disp{font-family:var(--display);font-weight:800}
+.t-ui{font-family:var(--display);font-weight:600}
+.t-letra{font-family:var(--letra);font-weight:700}
+.t-texto{font-family:var(--texto);font-weight:400}
+
+/* pequeñas demostraciones */
+[data-demo],[data-globo]{cursor:pointer;outline:none}
+[data-demo]:focus-visible,[data-globo]:focus-visible{filter:drop-shadow(0 0 2px #1D2B53) drop-shadow(0 0 2px #1D2B53)}
+.latido{transform-box:fill-box;transform-origin:center;animation:latido 1.7s ease-out infinite}
+@keyframes latido{0%{opacity:.95;transform:scale(.93)}100%{opacity:0;transform:scale(1.2)}}
+.mano,.pista{transition:opacity .2s}
+svg.hecho .mano,svg.hecho .latido,svg.hecho .pista{opacity:0;animation:none}
+.num5{opacity:0;transform:scale(.3);transform-box:fill-box;transform-origin:center;transition:opacity .25s,transform .4s cubic-bezier(.3,1.6,.5,1)}
+svg.hecho .num5{opacity:1;transform:none}
+.celda5{fill:#EEF1F7;transition:fill .3s .15s}
+svg.hecho .celda5{fill:#F4B623}
+.ficha{transform-box:fill-box;transform-origin:center;transition:transform .75s cubic-bezier(.45,.05,.3,1.15)}
+.bote .tapa{transition:transform .3s}
+.bote.elegido .tapa{transform:translateY(-6px)}
+.botella{transform-box:fill-box;transform-origin:center;transition:transform .8s cubic-bezier(.45,.05,.4,1),opacity .2s .72s}
+svg.hecho .botella{transform:translate(256px,-78px) rotate(25deg) scale(.5);opacity:0}
+.brillo{opacity:0;transition:opacity .3s .8s}
+svg.hecho .brillo{opacity:1}
+.galleta-a{transform-box:fill-box;transform-origin:center;transition:transform .7s cubic-bezier(.5,-.3,.6,1),opacity .15s .62s}
+svg.comiendo .galleta-a{transform:translate(-376px,0) scale(.3);opacity:0}
+.boca-feliz{opacity:0;transition:opacity .2s .65s}
+.boca-abierta{transition:opacity .2s .65s}
+svg.comiendo .boca-feliz{opacity:1}
+svg.comiendo .boca-abierta{opacity:0}
+.boca-rara{opacity:0}
+svg.raro .boca-rara{opacity:1}
+svg.raro .boca-abierta{opacity:0;transition:none}
+.nam{opacity:0;transition:opacity .25s .7s}
+svg.comiendo .nam{opacity:1}
+svg.comiendo .mano,svg.comiendo .pista{opacity:0}
+.meneo{transform-box:fill-box;transform-origin:center;animation:meneo .5s ease}
+@keyframes meneo{20%{transform:rotate(-10deg)}40%{transform:rotate(8deg)}60%{transform:rotate(-6deg)}80%{transform:rotate(3deg)}}
+.globo{transform-box:fill-box;transform-origin:50% 100%;transition:transform 3s ease-in-out}
+svg.inflando .globo{transform:scale(1.24);transition:transform 3.5s ease-in-out}
+.aro{stroke-dasharray:227;stroke-dashoffset:227;transition:stroke-dashoffset 3s ease-in-out}
+svg.inflando .aro{stroke-dashoffset:0;transition:stroke-dashoffset 3.5s linear}
+.ojos{transform-box:fill-box;transform-origin:center;animation:parpadeo 5.5s infinite}
+@keyframes parpadeo{0%,93%,100%{transform:scaleY(1)}96%{transform:scaleY(.12)}}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  #portada-nombre.trazando{animation:none;stroke-dashoffset:0;fill-opacity:1}
+  .latido,.ojos,.meneo{animation:none}
+  .ficha,.botella,.galleta-a,.globo,.aro,.num5{transition-duration:.01s}
+}
+@media (max-width:760px){
+  .portada{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+  body{font-size:16px}
+  .pagina{padding:24px 16px 72px 44px}
+  .pagina::before{left:28px}
+  .seccion>.gomet{left:-38px;width:24px;height:24px;line-height:24px;font-size:12px;top:72px}
+  .dispositivo{padding:8px 10px 8px 14px;border-radius:20px}
+  .dispositivo svg{border-radius:10px}
+}
+</style>
+</head>
+<body>
+
+<svg class="defs" aria-hidden="true" focusable="false">
+<defs>
+  <pattern id="babi" width="12" height="12" patternUnits="userSpaceOnUse">
+    <rect width="12" height="12" fill="#FFFFFF"/>
+    <rect width="6" height="12" fill="#86AEEA" opacity=".55"/>
+    <rect width="12" height="6" fill="#86AEEA" opacity=".55"/>
+  </pattern>
+  <filter id="sombra" x="-30%" y="-30%" width="160%" height="170%">
+    <feDropShadow dx="0" dy="4" stdDeviation="0" flood-color="#1D2B53" flood-opacity=".16"/>
+  </filter>
+  <linearGradient id="g-cielo-lila" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7470DE"/><stop offset="1" stop-color="#ABA6F3"/></linearGradient>
+  <linearGradient id="g-mar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5ECDE3"/><stop offset="1" stop-color="#2FA3C6"/></linearGradient>
+  <linearGradient id="g-mar-lila" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7C88EF"/><stop offset="1" stop-color="#5967D8"/></linearGradient>
+  <linearGradient id="g-tarde" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFCF9C"/><stop offset="1" stop-color="#FFEBD4"/></linearGradient>
+  <linearGradient id="g-lluvia" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#AFC9E6"/><stop offset="1" stop-color="#DCE8F3"/></linearGradient>
+  <linearGradient id="g-lomo" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FFF8EC"/><stop offset=".5" stop-color="#D8C9AC"/><stop offset="1" stop-color="#FFF8EC"/></linearGradient>
+
+  <symbol id="ui-casa" viewBox="0 0 56 56">
+    <rect x="2" y="7" width="52" height="47" rx="16" fill="#1D2B53" opacity=".2"/>
+    <rect x="2" y="2" width="52" height="47" rx="16" fill="#FFFFFF"/>
+    <path d="M15 26.5 L28 15 L41 26.5 V37 Q41 39 39 39 H32.5 V30.5 H23.5 V39 H17 Q15 39 15 37 Z" fill="#1D2B53"/>
+  </symbol>
+  <symbol id="ui-voz" viewBox="0 0 56 56">
+    <circle cx="28" cy="31" r="25" fill="#1D2B53" opacity=".2"/>
+    <circle cx="28" cy="26" r="25" fill="#FFFFFF"/>
+    <path d="M13 21.5 H19 L27 14.5 V37.5 L19 30.5 H13 Z" fill="#1D2B53" stroke="#1D2B53" stroke-width="2" stroke-linejoin="round"/>
+    <path d="M32 20 Q36 26 32 32 M37 16 Q44 26 37 36" fill="none" stroke="#1D2B53" stroke-width="3" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="ui-mano" viewBox="0 0 48 60">
+    <path d="M19 33 V9 a5 5 0 0 1 10 0 V27 l1 -1 a4.6 4.6 0 0 1 8 3 l1 -.5 a4.4 4.4 0 0 1 6.6 3.6 V44 a14 14 0 0 1 -14 14 H25 a14 14 0 0 1 -11.5 -6 L5.5 40.5 a4.6 4.6 0 0 1 7 -6 Z" fill="#FFFFFF" stroke="#1D2B53" stroke-width="2.6" stroke-linejoin="round"/>
+  </symbol>
+
+  <symbol id="ninia" viewBox="0 0 120 140">
+    <path d="M22 62 C20 24 100 24 98 62 L100 98 Q60 112 20 98 Z" fill="#5A3825"/>
+    <rect x="52" y="86" width="16" height="18" rx="7" fill="#E9B08A"/>
+    <path d="M18 140 C18 112 36 98 60 98 C84 98 102 112 102 140 Z" fill="var(--ropa, url(#babi))"/>
+    <path d="M45 99 L60 112 L75 99 Q60 95 45 99 Z" fill="#FFFFFF"/>
+    <circle cx="60" cy="62" r="31" fill="#F5C7A1"/>
+    <path d="M28 62 C28 36 46 27 62 28 C80 29 93 40 92 60 C83 51 73 47 64 45 C57 52 44 57 28 62 Z" fill="#5A3825"/>
+    <ellipse cx="49" cy="68" rx="3.6" ry="4.6" fill="#2A2238"/>
+    <ellipse cx="71" cy="68" rx="3.6" ry="4.6" fill="#2A2238"/>
+    <circle cx="50.3" cy="66.4" r="1.3" fill="#FFFFFF"/>
+    <circle cx="72.3" cy="66.4" r="1.3" fill="#FFFFFF"/>
+    <circle cx="41" cy="77" r="5" fill="#FF8FA3" opacity=".45"/>
+    <circle cx="79" cy="77" r="5" fill="#FF8FA3" opacity=".45"/>
+    <path d="M53 79 Q60 85 67 79" fill="none" stroke="#8A3B2E" stroke-width="2.6" stroke-linecap="round"/>
+    <circle cx="86" cy="42" r="6.5" fill="#F4B623"/>
+    <circle cx="84" cy="40" r="2" fill="#FFFFFF" opacity=".7"/>
+  </symbol>
+
+  <symbol id="ninia-entera" viewBox="0 0 120 210">
+    <rect x="45" y="158" width="12" height="40" rx="6" fill="#F5C7A1"/>
+    <rect x="63" y="158" width="12" height="40" rx="6" fill="#F5C7A1"/>
+    <path d="M38 198 H58 a5 5 0 0 1 0 10 H38 a5 5 0 0 1 0 -10 Z" fill="#E4483C"/>
+    <path d="M62 198 H82 a5 5 0 0 1 0 10 H62 a5 5 0 0 1 0 -10 Z" fill="#E4483C"/>
+    <path d="M22 62 C20 24 100 24 98 62 L100 98 Q60 112 20 98 Z" fill="#5A3825"/>
+    <rect x="52" y="86" width="16" height="18" rx="7" fill="#E9B08A"/>
+    <path d="M38 112 Q24 130 26 148" fill="none" stroke="#F5C7A1" stroke-width="10" stroke-linecap="round"/>
+    <path d="M82 112 Q96 130 94 148" fill="none" stroke="#F5C7A1" stroke-width="10" stroke-linecap="round"/>
+    <path d="M30 168 L37 108 Q60 96 83 108 L90 168 Q60 176 30 168 Z" fill="var(--ropa, url(#babi))"/>
+    <path d="M45 101 L60 113 L75 101 Q60 96 45 101 Z" fill="#FFFFFF"/>
+    <circle cx="60" cy="62" r="31" fill="#F5C7A1"/>
+    <path d="M28 62 C28 36 46 27 62 28 C80 29 93 40 92 60 C83 51 73 47 64 45 C57 52 44 57 28 62 Z" fill="#5A3825"/>
+    <ellipse cx="49" cy="68" rx="3.6" ry="4.6" fill="#2A2238"/>
+    <ellipse cx="71" cy="68" rx="3.6" ry="4.6" fill="#2A2238"/>
+    <circle cx="50.3" cy="66.4" r="1.3" fill="#FFFFFF"/>
+    <circle cx="72.3" cy="66.4" r="1.3" fill="#FFFFFF"/>
+    <circle cx="41" cy="77" r="5" fill="#FF8FA3" opacity=".45"/>
+    <circle cx="79" cy="77" r="5" fill="#FF8FA3" opacity=".45"/>
+    <path d="M53 79 Q60 86 67 79" fill="none" stroke="#8A3B2E" stroke-width="2.6" stroke-linecap="round"/>
+    <circle cx="86" cy="42" r="6.5" fill="#F4B623"/>
+  </symbol>
+
+  <symbol id="adulta" viewBox="0 0 120 220">
+    <rect x="44" y="150" width="13" height="58" rx="6" fill="#2F3A63"/>
+    <rect x="63" y="150" width="13" height="58" rx="6" fill="#2F3A63"/>
+    <ellipse cx="49" cy="210" rx="11" ry="5" fill="#1D2B53"/>
+    <ellipse cx="71" cy="210" rx="11" ry="5" fill="#1D2B53"/>
+    <path d="M38 90 Q28 118 32 140" fill="none" stroke="#2E9E5B" stroke-width="12" stroke-linecap="round"/>
+    <circle cx="32" cy="144" r="6.5" fill="#EDBB95"/>
+    <path d="M30 160 L36 84 Q60 72 84 84 L90 160 Q60 168 30 160 Z" fill="#2E9E5B"/>
+    <path d="M82 90 Q100 70 98 46" fill="none" stroke="#2E9E5B" stroke-width="12" stroke-linecap="round"/>
+    <circle cx="98" cy="40" r="7.5" fill="#EDBB95"/>
+    <rect x="53" y="62" width="14" height="16" rx="6" fill="#E3AC86"/>
+    <path d="M44 80 Q60 90 76 80 L74 90 Q60 98 46 90 Z" fill="#F4B623"/>
+    <circle cx="60" cy="18" r="10" fill="#3B2A20"/>
+    <circle cx="60" cy="46" r="22" fill="#EDBB95"/>
+    <path d="M38 46 C38 22 82 22 82 46 C76 36 67 32 60 32 C52 32 44 36 38 46 Z" fill="#3B2A20"/>
+    <ellipse cx="52" cy="48" rx="2.8" ry="3.6" fill="#2A2238"/>
+    <ellipse cx="68" cy="48" rx="2.8" ry="3.6" fill="#2A2238"/>
+    <circle cx="46" cy="56" r="4" fill="#FF8FA3" opacity=".4"/>
+    <circle cx="74" cy="56" r="4" fill="#FF8FA3" opacity=".4"/>
+    <path d="M54 57 Q60 62 66 57" fill="none" stroke="#8A3B2E" stroke-width="2.4" stroke-linecap="round"/>
+  </symbol>
+
+  <symbol id="conejo" viewBox="0 0 80 84">
+    <g transform="rotate(-8 30 30)"><ellipse cx="30" cy="22" rx="8.5" ry="21" fill="#EEF0F7"/><ellipse cx="30" cy="24" rx="4" ry="14" fill="#FFB8C9"/></g>
+    <g transform="rotate(8 50 30)"><ellipse cx="50" cy="22" rx="8.5" ry="21" fill="#EEF0F7"/><ellipse cx="50" cy="24" rx="4" ry="14" fill="#FFB8C9"/></g>
+    <circle cx="40" cy="56" r="25" fill="#EEF0F7"/>
+    <ellipse cx="31" cy="54" rx="3.2" ry="4.2" fill="#2A2238"/><ellipse cx="49" cy="54" rx="3.2" ry="4.2" fill="#2A2238"/>
+    <circle cx="32" cy="52.6" r="1.1" fill="#FFFFFF"/><circle cx="50" cy="52.6" r="1.1" fill="#FFFFFF"/>
+    <ellipse cx="40" cy="62" rx="3.4" ry="2.4" fill="#FF8FA3"/>
+    <path d="M36 66 Q40 69 44 66" fill="none" stroke="#7A5A6A" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="26" cy="63" r="4" fill="#FF8FA3" opacity=".4"/><circle cx="54" cy="63" r="4" fill="#FF8FA3" opacity=".4"/>
+  </symbol>
+  <symbol id="oso" viewBox="0 0 80 84">
+    <circle cx="19" cy="34" r="10" fill="#A86B45"/><circle cx="19" cy="34" r="5.5" fill="#D9A27A"/>
+    <circle cx="61" cy="34" r="10" fill="#A86B45"/><circle cx="61" cy="34" r="5.5" fill="#D9A27A"/>
+    <circle cx="40" cy="53" r="27" fill="#A86B45"/>
+    <ellipse cx="40" cy="63" rx="13" ry="10" fill="#E3BC95"/>
+    <ellipse cx="40" cy="58.5" rx="5.2" ry="3.6" fill="#3A2A24"/>
+    <path d="M36 66 Q40 69.5 44 66" fill="none" stroke="#3A2A24" stroke-width="2" stroke-linecap="round"/>
+    <ellipse cx="30" cy="48" rx="3.2" ry="4.2" fill="#2A2238"/><ellipse cx="50" cy="48" rx="3.2" ry="4.2" fill="#2A2238"/>
+    <circle cx="31" cy="46.6" r="1.1" fill="#FFFFFF"/><circle cx="51" cy="46.6" r="1.1" fill="#FFFFFF"/>
+  </symbol>
+  <symbol id="gata" viewBox="0 0 80 84">
+    <path d="M16 42 L20 14 L38 30 Z" fill="#F2A65A"/><path d="M21 34 L23 20 L31 28 Z" fill="#FFC2C9"/>
+    <path d="M64 42 L60 14 L42 30 Z" fill="#F2A65A"/><path d="M59 34 L57 20 L49 28 Z" fill="#FFC2C9"/>
+    <circle cx="40" cy="53" r="26" fill="#F2A65A"/>
+    <path d="M34 31 Q40 35 46 31 M32 37 Q40 41 48 37" fill="none" stroke="#D9853A" stroke-width="3" stroke-linecap="round"/>
+    <ellipse cx="31" cy="52" rx="3.2" ry="4.2" fill="#2A2238"/><ellipse cx="49" cy="52" rx="3.2" ry="4.2" fill="#2A2238"/>
+    <circle cx="32" cy="50.6" r="1.1" fill="#FFFFFF"/><circle cx="50" cy="50.6" r="1.1" fill="#FFFFFF"/>
+    <path d="M37 59 H43 L40 62 Z" fill="#FF8FA3"/>
+    <path d="M40 62 q-3 4 -6 2 M40 62 q3 4 6 2" fill="none" stroke="#8A4B2E" stroke-width="1.8" stroke-linecap="round"/>
+    <path d="M13 58 H24 M13 64 L24 61 M67 58 H56 M67 64 L56 61" stroke="#8A4B2E" stroke-width="1.4" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="zorro" viewBox="0 0 80 84">
+    <path d="M14 44 L18 10 L38 30 Z" fill="#E9783E"/><path d="M19 34 L21 18 L31 28 Z" fill="#FFF4E6"/>
+    <path d="M66 44 L62 10 L42 30 Z" fill="#E9783E"/><path d="M61 34 L59 18 L49 28 Z" fill="#FFF4E6"/>
+    <circle cx="40" cy="53" r="26" fill="#E9783E"/>
+    <path d="M15 56 Q40 90 65 56 Q54 62 40 62 Q26 62 15 56 Z" fill="#FFF4E6"/>
+    <ellipse cx="31" cy="50" rx="3.2" ry="4.2" fill="#2A2238"/><ellipse cx="49" cy="50" rx="3.2" ry="4.2" fill="#2A2238"/>
+    <circle cx="32" cy="48.6" r="1.1" fill="#FFFFFF"/><circle cx="50" cy="48.6" r="1.1" fill="#FFFFFF"/>
+    <ellipse cx="40" cy="66" rx="4" ry="3" fill="#2A2238"/>
+  </symbol>
+  <symbol id="rana" viewBox="0 0 80 84">
+    <circle cx="24" cy="36" r="12" fill="#7CCB6B"/><circle cx="56" cy="36" r="12" fill="#7CCB6B"/>
+    <ellipse cx="40" cy="56" rx="31" ry="23" fill="#7CCB6B"/>
+    <circle cx="24" cy="35" r="7.5" fill="#FFFFFF"/><circle cx="56" cy="35" r="7.5" fill="#FFFFFF"/>
+    <circle cx="25" cy="36" r="3.8" fill="#2A2238"/><circle cx="57" cy="36" r="3.8" fill="#2A2238"/>
+    <path d="M26 60 Q40 72 54 60" fill="none" stroke="#2E6B3A" stroke-width="2.6" stroke-linecap="round"/>
+    <circle cx="20" cy="62" r="4.5" fill="#FF8FA3" opacity=".45"/><circle cx="60" cy="62" r="4.5" fill="#FF8FA3" opacity=".45"/>
+  </symbol>
+  <symbol id="buho" viewBox="0 0 100 130">
+    <path d="M22 32 L17 8 L38 23 Z" fill="#8C6A5D"/><path d="M78 32 L83 8 L62 23 Z" fill="#8C6A5D"/>
+    <ellipse cx="50" cy="74" rx="38" ry="50" fill="#8C6A5D"/>
+    <ellipse cx="17" cy="82" rx="10" ry="26" fill="#76584D"/><ellipse cx="83" cy="82" rx="10" ry="26" fill="#76584D"/>
+    <ellipse cx="50" cy="90" rx="24" ry="30" fill="#EAD7C3"/>
+    <path d="M38 84 q4 4 8 0 q4 4 8 0 q4 4 8 0 M38 96 q4 4 8 0 q4 4 8 0 q4 4 8 0 M42 108 q4 4 8 0 q4 4 8 0" fill="none" stroke="#C9AE95" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="35" cy="48" r="16" fill="#F4E6D6"/><circle cx="65" cy="48" r="16" fill="#F4E6D6"/>
+    <circle cx="35" cy="48" r="7" fill="#2A2238"/><circle cx="65" cy="48" r="7" fill="#2A2238"/>
+    <circle cx="37.5" cy="45.5" r="2.2" fill="#FFFFFF"/><circle cx="67.5" cy="45.5" r="2.2" fill="#FFFFFF"/>
+    <circle cx="35" cy="48" r="13.5" fill="none" stroke="#1D2B53" stroke-width="3"/><circle cx="65" cy="48" r="13.5" fill="none" stroke="#1D2B53" stroke-width="3"/>
+    <path d="M48.5 47 Q50 45 51.5 47" fill="none" stroke="#1D2B53" stroke-width="3"/>
+    <path d="M45 58 L55 58 L50 67 Z" fill="#F4A23C"/>
+    <ellipse cx="40" cy="124" rx="7" ry="4" fill="#F4A23C"/><ellipse cx="60" cy="124" rx="7" ry="4" fill="#F4A23C"/>
+  </symbol>
+  <symbol id="coco" viewBox="0 0 120 132">
+    <path d="M38 34 Q36 14 46 12 Q50 22 50 32 Z" fill="#FFD36E"/>
+    <path d="M82 34 Q84 14 74 12 Q70 22 70 32 Z" fill="#FFD36E"/>
+    <ellipse cx="16" cy="86" rx="9" ry="14" fill="#3FBF9F" transform="rotate(20 16 86)"/>
+    <ellipse cx="104" cy="86" rx="9" ry="14" fill="#3FBF9F" transform="rotate(-20 104 86)"/>
+    <ellipse cx="60" cy="76" rx="46" ry="50" fill="#4FD1B0"/>
+    <ellipse cx="60" cy="94" rx="27" ry="24" fill="#9BEBD5"/>
+    <ellipse cx="44" cy="124" rx="12" ry="7" fill="#3FBF9F"/><ellipse cx="76" cy="124" rx="12" ry="7" fill="#3FBF9F"/>
+    <circle cx="45" cy="62" r="12" fill="#FFFFFF"/><circle cx="75" cy="62" r="12" fill="#FFFFFF"/>
+    <circle cx="47" cy="64" r="5.5" fill="#2A2238"/><circle cx="77" cy="64" r="5.5" fill="#2A2238"/>
+    <circle cx="49" cy="61.5" r="1.8" fill="#FFFFFF"/><circle cx="79" cy="61.5" r="1.8" fill="#FFFFFF"/>
+    <circle cx="34" cy="80" r="6" fill="#FF7AA8" opacity=".85"/><circle cx="86" cy="80" r="6" fill="#FF7AA8" opacity=".85"/>
+    <path d="M50 80 Q60 90 70 80" fill="none" stroke="#2A2238" stroke-width="3" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="gota" viewBox="-8 -12 16 20">
+    <path d="M0 -11 Q7 -1 6 3 A6 6 0 0 1 -6 3 Q-7 -1 0 -11 Z"/>
+  </symbol>
+  <symbol id="estrella" viewBox="-30 -30 60 60">
+    <path d="M0 -28 L7.05 -9.7 L26.6 -8.7 L11.4 3.7 L16.5 22.7 L0 12 L-16.5 22.7 L-11.4 3.7 L-26.6 -8.7 L-7.05 -9.7 Z"/>
+  </symbol>
+  <symbol id="chispa" viewBox="-10 -10 20 20">
+    <path d="M0 -9 L2.2 -2.2 L9 0 L2.2 2.2 L0 9 L-2.2 2.2 L-9 0 L-2.2 -2.2 Z"/>
+  </symbol>
+</defs>
+</svg>
+
+<div class="pagina">
+
+<header class="portada">
+  <div class="portada-cabeza">
+    <p class="portada-antes">Un juego para</p>
+    <svg class="nombre-grande" viewBox="0 0 1000 262" role="img" aria-labelledby="nombre-portada-t">
+      <title id="nombre-portada-t">Su nombre escrito en mayúsculas sobre la pauta, como en el cole</title>
+      <g stroke-linecap="round">
+        <line class="pauta-arriba" x1="0" y1="52" x2="1000" y2="52" stroke="#9DBBE3" stroke-width="2"/>
+        <line class="pauta-medio" x1="0" y1="131" x2="1000" y2="131" stroke="#F2A3A3" stroke-width="2" stroke-dasharray="10 10"/>
+        <line x1="0" y1="210" x2="1000" y2="210" stroke="#9DBBE3" stroke-width="2.6"/>
+        <line class="pauta-abajo" x1="0" y1="249" x2="1000" y2="249" stroke="#9DBBE3" stroke-width="1.5" opacity=".6"/>
+      </g>
+      <text id="portada-nombre" x="6" y="210" class="t-letra trazando" font-size="230">LUCÍA</text>
+    </svg>
+    <div class="campo-nombre">
+      <label for="nombre">Su nombre</label>
+      <input id="nombre" type="text" maxlength="16" autocomplete="off" spellcheck="false" value="LUCÍA">
+    </div>
+    <p class="nota">LUCÍA es un nombre de ejemplo. Escribe el suyo y aparecerá en las pantallas de las cuatro propuestas.</p>
+  </div>
+  <div class="portada-texto">
+    <p>He mirado qué usan los niños de su edad en España, qué apps premia la crítica, qué se trabaja en el aula de 4 años y qué dice la investigación sobre juegos para esta edad.</p>
+    <p>Con lo mejor de todo eso salen cuatro propuestas, cada una con cuatro pantallas de ejemplo; algunas se pueden tocar. Al final las comparo y te digo cuál haría yo.</p>
+  </div>
+  <div>
+    <nav class="indice" aria-label="Propuestas">
+      <a href="#p1" style="--c:var(--rojo)"><span class="gomet-mini">1</span><span><b>¡Buenos días, cole!</b><span class="desc">Un día de cole en miniatura en el que ella es la encargada.</span></span></a>
+      <a href="#p2" style="--c:var(--verde)"><span class="gomet-mini">2</span><span><b>La isla de <span data-nombre-texto>Lucía</span></b><span class="desc">Un pequeño mundo suyo para explorar sin reglas.</span></span></a>
+      <a href="#p3" style="--c:var(--azul)"><span class="gomet-mini">3</span><span><b>Mi monstruo Coco</b><span class="desc">De un huevo nace un monstruo y ella le enseña letras y números.</span></span></a>
+      <a href="#p4" style="--c:var(--amarillo);--ct:var(--tinta)"><span class="gomet-mini">4</span><span><b>Los cuentos de <span data-nombre-texto>Lucía</span></b><span class="desc">Cuentos donde ella y su familia son los protagonistas.</span></span></a>
+    </nav>
+  </div>
+</header>
+
+<!-- ============ MERCADO ============ -->
+<section class="seccion" id="mercado">
+  <span class="gomet" style="--c:var(--tinta)" aria-hidden="true"></span>
+  <h2>Lo que hay en el mercado</h2>
+  <p class="entradilla">Hay tres grandes estilos: rutas guiadas por un personaje, mundos libres sin reglas y personajes a los que se cuida o se enseña. Las mejores apps combinan dos de ellos.</p>
+
+  <h3 style="margin-top:26px">Lo más usado hoy en España</h3>
+  <div class="ranking panel">
+    <div>
+      <h3>Gratis</h3>
+      <ol>
+        <li><span class="puesto">11</span><span><b>Toca Boca World</b><span class="que">Un mundo libre para inventar historias</span></span></li>
+        <li><span class="puesto">24</span><span><b>Applaydu (Kinder)</b><span class="que">Minijuegos, emociones y hábitos, sin anuncios</span></span></li>
+        <li><span class="puesto">30</span><span><b>Lingokids</b><span class="que">Inglés con canciones y personajes (española)</span></span></li>
+        <li><span class="puesto">53</span><span><b>Juegos infantiles 3-4 años</b><span class="que">Paquete genérico de minijuegos</span></span></li>
+        <li><span class="puesto">77</span><span><b>Bimi Boo</b><span class="que">Paquete genérico de minijuegos</span></span></li>
+      </ol>
+    </div>
+    <div>
+      <h3>De pago</h3>
+      <ol>
+        <li><span class="puesto">6</span><span><b>Teach Your Monster to Read</b><span class="que">Creas un monstruo y le enseñas a leer (9,99 €)</span></span></li>
+        <li><span class="puesto">12</span><span><b>Verduras divertidas</b><span class="que">Juego preescolar con comida</span></span></li>
+        <li><span class="puesto">62</span><span><b>Dr. Panda</b><span class="que">Juego de rol de oficios; ocho apps en la lista</span></span></li>
+        <li><span class="puesto">75</span><span><b>Fox and Sheep</b><span class="que">Juguetes digitales tranquilos; cuatro en la lista</span></span></li>
+        <li><span class="puesto">96</span><span><b>Montessori Numberland</b><span class="que">Números al estilo Montessori</span></span></li>
+      </ol>
+    </div>
+    <div>
+      <h3>Las que más ingresan</h3>
+      <ol>
+        <li><span class="puesto">19</span><span><b>Lingokids</b><span class="que">Suscripción</span></span></li>
+        <li><span class="puesto">24</span><span><b>Toca Boca World</b><span class="que">Compras dentro de la app</span></span></li>
+        <li><span class="puesto">26</span><span><b>Juegos infantiles 3-4 años</b><span class="que">Suscripción</span></span></li>
+        <li><span class="puesto">53</span><span><b>bmath (Innovamat)</b><span class="que">Matemáticas con el método de muchos coles españoles</span></span></li>
+      </ol>
+    </div>
+  </div>
+  <p class="fuente">Puestos en las listas del App Store de España, categoría Educación, el 2 de noviembre de 2026. Solo apps infantiles. Google Play no publica sus listas en abierto.</p>
+
+  <div class="familias">
+    <div class="familia">
+      <h3>Rutas guiadas por un personaje</h3>
+      <ul>
+        <li><b>Khan Academy Kids</b>: gratis y sin anuncios. Un osito guía con la voz y los premios son ropa para los personajes.</li>
+        <li><b>Lingokids</b>: canciones, juegos y vídeos cortos; más de 185 millones de descargas.</li>
+        <li><b>Duolingo ABC</b>: lecciones de pocos minutos en una ruta, solo en inglés.</li>
+        <li><b>Sago Mini School</b>: temas que cambian (bichos, arcoíris, camiones). Mejor app educativa de preescolar en los Kidscreen 2026.</li>
+      </ul>
+      <p class="balance"><span class="si-me">Me quedo con el guía por voz y la ruta que alterna temas.</span><span class="no-me">Evito los menús enormes y las suscripciones.</span></p>
+    </div>
+    <div class="familia">
+      <h3>Juego libre, sin reglas</h3>
+      <ul>
+        <li><b>Toca Boca World</b>: inventar historias en un mundo propio. La app infantil mejor colocada hoy en España.</li>
+        <li><b>Sago Mini World</b>: sin reglas, sin tiempo y sin puntos.</li>
+        <li><b>Pok Pok</b>: calma de verdad, sin texto y con sonidos solo al tocar. Apple Design Award 2021.</li>
+        <li><b>Bluey: Let's Play!</b>: explorar la casa de la serie, casi todo de pago.</li>
+      </ul>
+      <p class="balance"><span class="si-me">Me quedo con la libertad, que no haya fallos y la calma.</span><span class="no-me">Evito que lo educativo quede tan escondido que no se note.</span></p>
+    </div>
+    <div class="familia">
+      <h3>Un personaje al que enseñar</h3>
+      <ul>
+        <li><b>Teach Your Monster to Read</b>: creas tu monstruo y le enseñas a leer en aventuras de 10 minutos.</li>
+        <li><b>Endless Alphabet</b>: letras-monstruo que dicen su sonido y animaciones para reírse. No se puede fallar.</li>
+        <li><b>Talking Tom y Pou</b>: no son educativas, pero enganchan porque se cuida a alguien que repite lo que dices.</li>
+      </ul>
+      <p class="balance"><span class="si-me">Me quedo con que ella es la «profe» y el humor como premio.</span><span class="no-me">Evito los personajes que se ponen tristes si no juegas.</span></p>
+    </div>
+    <div class="familia">
+      <h3>Tutor por voz</h3>
+      <ul>
+        <li><b>Funexpected Math</b>: pistas por voz en vez de soluciones y material para manipular. Kidscreen 2025.</li>
+        <li><b>Buddy.ai</b>: el niño contesta hablando (en inglés); necesita internet.</li>
+        <li><b>Kokoro Kids</b> (española): una ruta que se adapta, también para niños con TDAH y TEA.</li>
+      </ul>
+      <p class="balance"><span class="si-me">Me quedo con la pista amable cuando se equivoca.</span><span class="no-me">Evito depender de internet y de un reconocimiento de voz que falla.</span></p>
+    </div>
+    <div class="familia">
+      <h3>Hechas en España</h3>
+      <ul>
+        <li><b>Smile and Learn</b>: modo calma sin límite de tiempo y pictogramas en los cuentos.</li>
+        <li><b>Leo con Grin</b>: la cartilla de sílabas de toda la vida, jugada. Casi todo es de pago.</li>
+        <li><b>bmath</b>: el método de Innovamat, que usan unos 1.700 coles.</li>
+        <li><b>Cleo y Cuquín</b> y <b>Clan</b>: personajes de la tele y juegos sueltos.</li>
+      </ul>
+      <p class="balance"><span class="si-me">Me quedo con el castellano de aquí y las sílabas como en clase.</span><span class="no-me">Evito los muros de pago a la segunda lección.</span></p>
+    </div>
+    <div class="familia">
+      <h3>Paquetes de minijuegos</h3>
+      <ul>
+        <li><b>El Mundo del Panda Bebé</b> (BabyBus): más de 100 millones de descargas, con cientos de escenas de la vida diaria.</li>
+        <li><b>Bimi Boo, BENIPOL y Bebi</b>: se encuentran fácil buscando «juegos niños 3 años».</li>
+        <li><b>Applaydu</b>: la excepción, sin anuncios ni compras, con zona de emociones e inventor de cuentos.</li>
+      </ul>
+      <p class="balance"><span class="si-me">Me quedo con los temas de la vida diaria (lavarse los dientes, el súper, el autobús).</span><span class="no-me">Evito la sobreestimulación, los anuncios y la calidad irregular.</span></p>
+    </div>
+  </div>
+
+  <div class="datos panel">
+    <div class="dato"><strong>1 de cada 5</strong><span>apps de las que usan los niños de 3 a 5 años no tienen trampas para engancharlos (<a href="https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2793493">Radesky y otros, 2022</a>).</span></div>
+    <div class="dato"><strong>8-12 min</strong><span>dura la atención a los 4 años (<a href="https://plandigitalfamiliar.aeped.es/plandigitalfamiliar.php">Asociación Española de Pediatría</a>). Las partidas tienen que ser así de cortas.</span></div>
+    <div class="dato"><strong>0 pantallas</strong><span>antes de los 6 años, según la AEP. El comité de expertos del Gobierno las admite de forma ocasional y acompañada entre los 3 y los 6.</span></div>
+    <div class="dato"><strong>2 cm</strong><span>como mínimo para un botón que tocan dedos de 4 años (<a href="https://www.nngroup.com/articles/children-ux-physical-development/">Nielsen Norman Group</a>).</span></div>
+  </div>
+</section>
+
+<!-- ============ COLE ============ -->
+<section class="seccion" id="cole">
+  <span class="gomet" style="--c:var(--tinta)" aria-hidden="true"></span>
+  <h2>Lo que trabaja en el cole a los 4 años</h2>
+  <p class="entradilla">Lo organizan las tres áreas del <a href="https://www.boe.es/buscar/doc.php?id=BOE-A-2022-1654">Real Decreto 95/2022</a>. Cada comunidad y cada cole lo concretan a su manera (método ABN, Innovamat, editoriales), pero en el aula de 4 años es habitual esto:</p>
+  <div class="areas">
+    <div style="--c:var(--rojo)">
+      <h3>Comunicación y representación</h3>
+      <ul class="puntos-lista">
+        <li>Su nombre y su primer apellido en mayúsculas.</li>
+        <li>Las vocales y las primeras consonantes: M, P, L, S…</li>
+        <li>Sílabas con palmadas (ma-ri-po-sa: cuatro), rimas y el sonido inicial.</li>
+        <li>Trazos en orden: rectos, diagonales, curvas, bucles y espirales.</li>
+        <li>Cuentos, canciones y un primer contacto con el inglés.</li>
+      </ul>
+    </div>
+    <div style="--c:var(--verde)">
+      <h3>Descubrimiento del entorno</h3>
+      <ul class="puntos-lista">
+        <li>Contar hasta 10 con los dedos y con la recta numérica.</li>
+        <li>El anterior y el siguiente, contar hacia atrás, cantidad y número.</li>
+        <li>Series de tres colores, formas, grande y pequeño.</li>
+        <li>Días de la semana, el tiempo y las estaciones.</li>
+        <li>Animales, plantas y reciclaje.</li>
+      </ul>
+    </div>
+    <div style="--c:var(--azul)">
+      <h3>Crecimiento en armonía</h3>
+      <ul class="puntos-lista">
+        <li>Emociones con colores (como en <i>El monstruo de colores</i>) y el rincón de la calma.</li>
+        <li>La asamblea de cada mañana: lista, calendario, tiempo y encargado del día.</li>
+        <li>Hábitos: lavarse, comer sano, ordenar.</li>
+        <li>Autonomía y jugar con otros.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ REGLAS ============ -->
+<section class="seccion" id="reglas">
+  <span class="gomet" style="--c:var(--tinta)" aria-hidden="true"></span>
+  <h2>Reglas que cumplen las cuatro propuestas</h2>
+  <p class="entradilla">Salen de lo que mejor funciona en el mercado, de lo que molesta a las familias y de la investigación.</p>
+  <ul class="reglas">
+    <li style="--c:var(--rojo)"><b>Sin leer</b>Todo se explica con voz y con un ejemplo animado. El texto es solo para los mayores.</li>
+    <li style="--c:var(--verde)"><b>Para dedos de 4 años</b>Botones de 2 cm o más, solo tocar y arrastrar y zonas de soltar generosas. Nada de doble toque, pellizcos ni prisas.</li>
+    <li style="--c:var(--azul)"><b>Equivocarse no castiga</b>No hay «¡mal!», ni vidas, ni cronómetro: el personaje da una pista y se vuelve a intentar.</li>
+    <li style="--c:var(--amarillo)"><b>Unos 10 minutos y se acaba</b>El juego se despide con un «¡Hasta mañana!». Nada de rachas, cuentas atrás ni «¡no te vayas!».</li>
+    <li style="--c:var(--rojo)"><b>Mejor acompañada</b>Hay momentos pensados para hacer con un adulto y una misión para después, fuera de la pantalla.</li>
+    <li style="--c:var(--verde)"><b>Lo que hace en el cole</b>Mayúsculas, vocales y primeras consonantes, sílabas, números hasta 10 y trazos en orden, en castellano de España.</li>
+    <li style="--c:var(--azul)"><b>Hecho para ella</b>Su nombre, su cara o un avatar parecido, su familia, su mascota y voces grabadas por la familia.</li>
+    <li style="--c:var(--amarillo)"><b>Tranquilo</b>Colores suaves, sonidos solo al tocar algo y animaciones lentas. La música se puede quitar.</li>
+    <li style="--c:var(--rojo)"><b>Premios con sentido</b>Pegatinas y cosas para su personaje que se ganan jugando. Ni compras ni cofres sorpresa.</li>
+    <li style="--c:var(--verde)"><b>Limpio</b>Sin anuncios, sin compras, sin cuentas, sin internet y sin recoger datos. Los ajustes van en una zona de mayores con candado.</li>
+  </ul>
+</section>
+
+<!-- ============ COMUNES ============ -->
+<section class="seccion" id="comunes">
+  <span class="gomet" style="--c:var(--tinta)" aria-hidden="true"></span>
+  <h2>Cuatro piezas que llevan todas</h2>
+  <div class="comunes">
+    <div class="comun">
+      <svg viewBox="0 0 120 96" aria-hidden="true"><circle cx="60" cy="48" r="44" fill="#FDE3E0"/><rect x="48" y="16" width="24" height="40" rx="12" fill="#E4483C"/><path d="M40 44 Q40 66 60 66 Q80 66 80 44 M60 66 V78 M48 78 H72" fill="none" stroke="#1D2B53" stroke-width="4" stroke-linecap="round"/><path d="M26 32 Q20 44 26 56 M94 32 Q100 44 94 56" fill="none" stroke="#E4483C" stroke-width="4" stroke-linecap="round"/></svg>
+      <h3>Voces de la familia</h3>
+      <p>Tú, sus padres o sus abuelos grabáis las felicitaciones, las instrucciones y los cuentos. Oye a su familia, no a un locutor.</p>
+    </div>
+    <div class="comun">
+      <svg viewBox="0 0 120 96" aria-hidden="true"><circle cx="60" cy="48" r="44" fill="#DDF1E3"/><ellipse cx="60" cy="38" rx="20" ry="24" fill="#2E9E5B"/><path d="M55 62 H65 L60 68 Z" fill="#2E9E5B"/><path d="M60 68 q-6 8 0 16" fill="none" stroke="#1D2B53" stroke-width="2.5"/><ellipse cx="53" cy="30" rx="5" ry="8" fill="#FFFFFF" opacity=".4"/><path d="M28 28 q-6 10 0 20 M92 28 q6 10 0 20" fill="none" stroke="#2E9E5B" stroke-width="3" stroke-linecap="round" opacity=".6"/></svg>
+      <h3>Rincón de la calma</h3>
+      <p>Si se frustra o se enfada, respira con un globo: lo infla mientras mantiene el dedo y lo deshincha al soltar. Como el rincón de la calma de su clase.</p>
+    </div>
+    <div class="comun">
+      <svg viewBox="0 0 120 96" aria-hidden="true"><circle cx="60" cy="48" r="44" fill="#FFF1C9"/><path d="M34 52 L58 30 L82 52 V78 H34 Z" fill="#FFFFFF" stroke="#1D2B53" stroke-width="4" stroke-linejoin="round"/><rect x="52" y="58" width="12" height="20" fill="#1D2B53"/><use href="#estrella" x="74" y="8" width="30" height="30" fill="#F4B623"/></svg>
+      <h3>Misión para casa</h3>
+      <p>Cada partida termina con algo para hacer fuera de la pantalla: «busca algo amarillo», «cuenta las cucharas», «enséñale a tu tía la M».</p>
+    </div>
+    <div class="comun">
+      <svg viewBox="0 0 120 96" aria-hidden="true"><circle cx="60" cy="48" r="44" fill="#E1ECFB"/><path d="M47 44 V34 a13 13 0 0 1 26 0 V44" fill="none" stroke="#1D2B53" stroke-width="5"/><rect x="38" y="42" width="44" height="34" rx="8" fill="#2C74D8"/><circle cx="60" cy="56" r="5" fill="#FFFFFF"/><rect x="58" y="58" width="4" height="10" rx="2" fill="#FFFFFF"/></svg>
+      <h3>Zona de mayores</h3>
+      <p>Tras un candado que ella no abre: nombre y foto, grabar voces, la duración de la partida, qué ha practicado y qué toca esta semana.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROPUESTA 1 ============ -->
+<section class="seccion propuesta" id="p1" style="--c:var(--rojo)">
+  <span class="gomet" aria-hidden="true">1</span>
+  <h2>¡Buenos días, cole!</h2>
+  <p class="propuesta-frase">Cada partida es un día de cole en miniatura y ella es la encargada del día: asamblea, rincones, recreo y salida.</p>
+
+  <div class="pantallas">
+    <figure class="pantalla">
+      <div class="dispositivo">
+        <svg viewBox="0 0 800 370" role="img" aria-labelledby="p1s1-t">
+          <title id="p1s1-t">Asamblea: la niña cuenta a los compañeros sentados en la alfombra</title>
+          <rect width="800" height="250" fill="#FFE7CF"/>
+          <rect y="212" width="800" height="38" fill="#F8D3AE"/>
+          <rect y="250" width="800" height="120" fill="#E6B47C"/>
+          <path d="M0 288 H800 M0 330 H800 M120 250 V288 M330 250 V288 M560 250 V288 M240 288 V330 M470 288 V330 M690 288 V330 M80 330 V370 M380 330 V370 M610 330 V370" stroke="#D49B5E" stroke-width="2"/>
+          <g transform="translate(96 28)">
+            <rect width="132" height="118" rx="12" fill="#FFFFFF" filter="url(#sombra)"/>
+            <path d="M0 12 A12 12 0 0 1 12 0 H120 A12 12 0 0 1 132 12 V32 H0 Z" fill="#E4483C"/>
+            <text x="66" y="23" text-anchor="middle" class="t-disp" font-size="16" fill="#FFFFFF">LUNES</text>
+            <text x="66" y="86" text-anchor="middle" class="t-letra" font-size="52" fill="#1D2B53">2</text>
+            <circle cx="21" cy="104" r="8.5" fill="none" stroke="#1D2B53" stroke-width="2"/>
+            <circle cx="21" cy="104" r="5" fill="#E4483C"/><circle cx="36" cy="104" r="5" fill="#F4B623"/><circle cx="51" cy="104" r="5" fill="#2E9E5B"/><circle cx="66" cy="104" r="5" fill="#2C74D8"/><circle cx="81" cy="104" r="5" fill="#9B6BD3"/><circle cx="96" cy="104" r="5" fill="#FF8FB1"/><circle cx="111" cy="104" r="5" fill="#F2A65A"/>
+          </g>
+          <g transform="translate(298 24)">
+            <rect width="196" height="134" rx="10" fill="#FFFFFF" filter="url(#sombra)"/>
+            <rect x="10" y="10" width="176" height="114" rx="6" fill="#A6DCF6"/>
+            <circle cx="142" cy="46" r="19" fill="#FFD54A"/>
+            <g fill="#FFFFFF"><circle cx="70" cy="70" r="15"/><circle cx="90" cy="62" r="19"/><circle cx="111" cy="72" r="13"/><rect x="60" y="70" width="62" height="16" rx="8"/></g>
+            <rect x="96" y="10" width="5" height="114" fill="#FFFFFF"/>
+            <rect x="10" y="64" width="176" height="5" fill="#FFFFFF"/>
+          </g>
+          <g transform="translate(528 22)">
+            <rect width="176" height="152" rx="12" fill="#C98A4B"/>
+            <rect x="8" y="8" width="160" height="136" rx="8" fill="#E4AE73"/>
+            <g transform="translate(20 18) rotate(-4)">
+              <rect width="86" height="104" rx="4" fill="#FFFFFF" filter="url(#sombra)"/>
+              <rect x="7" y="7" width="72" height="70" fill="#CFE9F8"/>
+              <use href="#ninia" x="7" y="9" width="72" height="68"/>
+              <text x="43" y="96" text-anchor="middle" class="t-disp" font-size="15" fill="#1D2B53" data-nombre data-maxw="74">LUCÍA</text>
+            </g>
+            <g transform="translate(134 40)">
+              <path d="M-15 -22 L-5 8 H5 L15 -22 Z" fill="#E4483C"/>
+              <circle cy="22" r="21" fill="#F4B623"/><circle cy="22" r="15" fill="#FFD66B"/>
+              <use href="#estrella" x="-11" y="11" width="22" height="22" fill="#E89B0C"/>
+            </g>
+            <circle cx="62" cy="16" r="5" fill="#2C74D8"/>
+          </g>
+          <ellipse cx="430" cy="314" rx="338" ry="52" fill="#4FA89A"/>
+          <ellipse cx="430" cy="314" rx="306" ry="40" fill="#6CC2B2"/>
+          <use href="#buho" x="22" y="166" width="104" height="135"/>
+          <ellipse cx="210" cy="294" rx="33" ry="28" fill="#E1E4EE"/><use href="#conejo" x="170" y="196" width="80" height="84"/>
+          <ellipse cx="320" cy="294" rx="34" ry="28" fill="#96603D"/><use href="#oso" x="280" y="200" width="80" height="84"/>
+          <ellipse cx="430" cy="294" rx="33" ry="28" fill="#E8994F"/><use href="#gata" x="390" y="200" width="80" height="84"/>
+          <ellipse cx="540" cy="294" rx="33" ry="28" fill="#DD6E36"/><use href="#zorro" x="500" y="200" width="80" height="84"/>
+          <g data-demo="lista" role="button" tabindex="0" aria-label="Tocar la rana para contarla">
+            <circle class="latido" cx="650" cy="258" r="52" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-dasharray="9 9"/>
+            <ellipse cx="650" cy="294" rx="34" ry="28" fill="#6DBE5C"/>
+            <use href="#rana" x="610" y="202" width="80" height="84"/>
+          </g>
+          <g class="t-letra" font-size="19" text-anchor="middle" fill="#FFFFFF">
+            <circle cx="210" cy="188" r="16" fill="#E4483C"/><text x="210" y="195">1</text>
+            <circle cx="320" cy="192" r="16" fill="#2C74D8"/><text x="320" y="199">2</text>
+            <circle cx="430" cy="192" r="16" fill="#2E9E5B"/><text x="430" y="199">3</text>
+            <circle cx="540" cy="192" r="16" fill="#9B6BD3"/><text x="540" y="199">4</text>
+            <g class="num5"><circle cx="650" cy="196" r="16" fill="#F2A65A"/><text x="650" y="203">5</text></g>
+          </g>
+          <use class="mano" href="#ui-mano" x="674" y="270" width="38" height="48"/>
+          <g transform="translate(232 334)">
+            <rect x="-8" y="-5" width="356" height="34" rx="17" fill="#FFFFFF"/>
+            <g fill="#F4B623"><rect x="2" y="0" width="30" height="24" rx="7"/><rect x="36" y="0" width="30" height="24" rx="7"/><rect x="70" y="0" width="30" height="24" rx="7"/><rect x="104" y="0" width="30" height="24" rx="7"/></g>
+            <rect class="celda5" x="138" y="0" width="30" height="24" rx="7"/>
+            <g fill="#EEF1F7"><rect x="172" y="0" width="30" height="24" rx="7"/><rect x="206" y="0" width="30" height="24" rx="7"/><rect x="240" y="0" width="30" height="24" rx="7"/><rect x="274" y="0" width="30" height="24" rx="7"/><rect x="308" y="0" width="30" height="24" rx="7"/></g>
+            <g class="t-letra" font-size="16" text-anchor="middle" fill="#1D2B53"><text x="17" y="18">1</text><text x="51" y="18">2</text><text x="85" y="18">3</text><text x="119" y="18">4</text><text x="153" y="18">5</text><text x="187" y="18">6</text><text x="221" y="18">7</text><text x="255" y="18">8</text><text x="289" y="18">9</text><text x="323" y="18">10</text></g>
+          </g>
+          <use href="#ui-casa" x="14" y="12" width="52" height="52"/>
+          <use href="#ui-voz" x="734" y="12" width="52" height="52"/>
+        </svg>
+      </div>
+      <figcaption><b>Pasar lista</b><span class="voz">Se oye: «¡Buenos días, <span data-nombre-texto>Lucía</span>! ¿Quién ha venido hoy? Tócalos y los contamos». Cada toque enciende un número en la recta, como en el método ABN.</span><br><span class="prueba">Toca la rana</span></figcaption>
+    </figure>
+
+    <figure class="pantalla">
+      <div class="dispositivo">
+        <svg viewBox="0 0 800 370" role="img" aria-labelledby="p1s2-t">
+          <title id="p1s2-t">Emociones: cinco botes de colores y la foto de la niña para elegir cómo se siente</title>
+          <defs><clipPath id="p1-recorte"><circle r="29"/></clipPath></defs>
+          <rect width="800" height="370" fill="#FFE7CF"/>
+          <rect y="304" width="800" height="66" fill="#E6B47C"/>
+          <path d="M0 336 H800 M200 304 V336 M520 304 V336 M90 336 V370 M400 336 V370 M690 336 V370" stroke="#D49B5E" stroke-width="2"/>
+          <rect x="56" y="262" width="688" height="16" rx="5" fill="#C98A4B"/>
+          <rect x="74" y="278" width="12" height="26" fill="#A86E37"/><rect x="714" y="278" width="12" height="26" fill="#A86E37"/>
+          <g transform="translate(140 0)"><g class="bote" data-demo="bote" data-x="-260" data-y="-120" role="button" tabindex="0" aria-label="Bote amarillo, la alegría">
+            <rect x="-48" y="118" width="96" height="144" rx="26" fill="#F4C430" fill-opacity=".25" stroke="#FFFFFF" stroke-width="4"/>
+            <rect class="tapa" x="-40" y="102" width="80" height="20" rx="7" fill="#E0A800"/>
+            <g transform="translate(0 196)">
+              <circle r="31" fill="#F4C430"/>
+              <path d="M-13 -6 q4.5 -7 9 0 M4 -6 q4.5 -7 9 0" fill="none" stroke="#5A3A00" stroke-width="3" stroke-linecap="round"/>
+              <path d="M-12 5 Q0 22 12 5 Z" fill="#5A3A00"/>
+              <circle cx="-21" cy="6" r="4" fill="#FF8FA3" opacity=".6"/><circle cx="21" cy="6" r="4" fill="#FF8FA3" opacity=".6"/>
+            </g>
+            <path d="M-31 140 Q-36 190 -31 238" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" opacity=".75"/>
+          </g></g>
+          <g transform="translate(270 0)"><g class="bote" data-demo="bote" data-x="-130" data-y="-120" role="button" tabindex="0" aria-label="Bote azul, la tristeza">
+            <rect x="-48" y="118" width="96" height="144" rx="26" fill="#4A90D9" fill-opacity=".22" stroke="#FFFFFF" stroke-width="4"/>
+            <rect class="tapa" x="-40" y="102" width="80" height="20" rx="7" fill="#2F6FB5"/>
+            <g transform="translate(0 196)">
+              <circle r="31" fill="#4A90D9"/>
+              <path d="M-16 -12 L-6 -15 M16 -12 L6 -15" stroke="#1B3B66" stroke-width="3" stroke-linecap="round"/>
+              <circle cx="-10" cy="-3" r="3.6" fill="#1B3B66"/><circle cx="10" cy="-3" r="3.6" fill="#1B3B66"/>
+              <path d="M-8 15 Q0 7 8 15" fill="none" stroke="#1B3B66" stroke-width="3" stroke-linecap="round"/>
+              <path d="M-14 4 q-4 6 0 9 q4 -3 0 -9 Z" fill="#CFE6FF"/>
+            </g>
+            <path d="M-31 140 Q-36 190 -31 238" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" opacity=".75"/>
+          </g></g>
+          <g transform="translate(400 0)"><g class="bote" data-demo="bote" data-x="0" data-y="-120" role="button" tabindex="0" aria-label="Bote rojo, el enfado">
+            <rect x="-48" y="118" width="96" height="144" rx="26" fill="#E4483C" fill-opacity=".2" stroke="#FFFFFF" stroke-width="4"/>
+            <rect class="tapa" x="-40" y="102" width="80" height="20" rx="7" fill="#B8332A"/>
+            <g transform="translate(0 196)">
+              <circle r="31" fill="#E4483C"/>
+              <path d="M-17 -15 L-6 -9 M17 -15 L6 -9" stroke="#5A1410" stroke-width="3.4" stroke-linecap="round"/>
+              <circle cx="-10" cy="-2" r="3.6" fill="#5A1410"/><circle cx="10" cy="-2" r="3.6" fill="#5A1410"/>
+              <path d="M-10 15 Q0 7 10 15" fill="none" stroke="#5A1410" stroke-width="3" stroke-linecap="round"/>
+              <g fill="#FFFFFF" opacity=".9"><circle cx="-22" cy="-42" r="6"/><circle cx="-15" cy="-50" r="4"/><circle cx="22" cy="-42" r="6"/><circle cx="15" cy="-50" r="4"/></g>
+            </g>
+            <path d="M-31 140 Q-36 190 -31 238" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" opacity=".75"/>
+          </g></g>
+          <g transform="translate(530 0)"><g class="bote" data-demo="bote" data-x="130" data-y="-120" role="button" tabindex="0" aria-label="Bote morado, el miedo">
+            <rect x="-48" y="118" width="96" height="144" rx="26" fill="#8E6CC9" fill-opacity=".22" stroke="#FFFFFF" stroke-width="4"/>
+            <rect class="tapa" x="-40" y="102" width="80" height="20" rx="7" fill="#6B4BA6"/>
+            <g transform="translate(0 196)">
+              <circle r="31" fill="#8E6CC9"/>
+              <circle cx="-10" cy="-4" r="7.5" fill="#FFFFFF"/><circle cx="10" cy="-4" r="7.5" fill="#FFFFFF"/>
+              <circle cx="-10" cy="-3" r="2.8" fill="#2A1A4A"/><circle cx="10" cy="-3" r="2.8" fill="#2A1A4A"/>
+              <path d="M-11 14 q2.75 -4 5.5 0 t5.5 0 t5.5 0 t5.5 0" fill="none" stroke="#2A1A4A" stroke-width="2.6" stroke-linecap="round"/>
+              <path d="M-41 -6 l4 4 l-4 4 M41 -6 l-4 4 l4 4" fill="none" stroke="#8E6CC9" stroke-width="2.4" stroke-linecap="round"/>
+            </g>
+            <path d="M-31 140 Q-36 190 -31 238" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" opacity=".75"/>
+          </g></g>
+          <g transform="translate(660 0)"><g class="bote" data-demo="bote" data-x="260" data-y="-120" role="button" tabindex="0" aria-label="Bote verde, la calma">
+            <rect x="-48" y="118" width="96" height="144" rx="26" fill="#3DB06B" fill-opacity=".22" stroke="#FFFFFF" stroke-width="4"/>
+            <rect class="tapa" x="-40" y="102" width="80" height="20" rx="7" fill="#2B8A50"/>
+            <g transform="translate(0 196)">
+              <circle r="31" fill="#3DB06B"/>
+              <path d="M2 -30 q12 -16 22 -10 q-8 12 -22 10 Z" fill="#2B8A50"/>
+              <path d="M-14 -3 q4.5 4 9 0 M5 -3 q4.5 4 9 0" fill="none" stroke="#14462A" stroke-width="3" stroke-linecap="round"/>
+              <path d="M-7 10 Q0 15 7 10" fill="none" stroke="#14462A" stroke-width="3" stroke-linecap="round"/>
+            </g>
+            <path d="M-31 140 Q-36 190 -31 238" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" opacity=".75"/>
+          </g></g>
+          <path class="pista" d="M372 300 C330 250 220 250 168 176" fill="none" stroke="#1D2B53" stroke-width="3" stroke-dasharray="1 10" stroke-linecap="round" opacity=".45"/>
+          <g transform="translate(400 318)">
+            <g class="ficha">
+              <circle r="35" fill="#FFFFFF" filter="url(#sombra)"/>
+              <g clip-path="url(#p1-recorte)"><rect x="-30" y="-30" width="60" height="60" fill="#CFE9F8"/><use href="#ninia" x="-31" y="-25" width="62" height="72"/></g>
+              <circle r="29" fill="none" stroke="#F4B623" stroke-width="3"/>
+            </g>
+          </g>
+          <use class="mano" href="#ui-mano" x="416" y="320" width="36" height="45"/>
+          <use href="#ui-casa" x="14" y="12" width="52" height="52"/>
+          <use href="#ui-voz" x="734" y="12" width="52" height="52"/>
+        </svg>
+      </div>
+      <figcaption><b>¿Cómo te sientes hoy?</b><span class="voz">Se oye: «¿Cómo te sientes hoy? Pon tu foto en un bote». Son colores de emociones, como en clase, pero con personajes nuestros.</span><br><span class="prueba">Toca un bote</span></figcaption>
+    </figure>
+
+    <figure class="pantalla">
+      <div class="dispositivo">
+        <svg viewBox="0 0 800 370" role="img" aria-labelledby="p1s3-t">
+          <title id="p1s3-t">Rincón de las letras: trazar la M con el dedo y buscar cosas que empiezan por M</title>
+          <rect width="800" height="370" fill="#DCF1E8"/>
+          <rect y="306" width="800" height="64" fill="#E6B47C"/>
+          <path d="M0 338 H800" stroke="#D49B5E" stroke-width="2"/>
+          <g transform="translate(58 74) rotate(-5)">
+            <rect width="150" height="186" rx="6" fill="#FFFFFF" filter="url(#sombra)"/>
+            <rect x="12" y="12" width="126" height="122" fill="#FCE3D2"/>
+            <svg x="12" y="12" width="126" height="122" viewBox="18 4 84 82"><use href="#adulta" width="120" height="220"/></svg>
+            <text x="75" y="170" text-anchor="middle" class="t-letra" font-size="30" fill="#1D2B53"><tspan fill="#E4483C">M</tspan>A<tspan fill="#E4483C">M</tspan>Á</text>
+          </g>
+          <rect x="250" y="28" width="300" height="266" rx="12" fill="#FFFFFF" filter="url(#sombra)"/>
+          <path d="M326 250 V84 L400 186 L474 84 V250" fill="none" stroke="#E8EDF6" stroke-width="46" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M326 250 V84 L400 186 L474 84 V250" fill="none" stroke="#A9B5CE" stroke-width="4" stroke-dasharray="1 12" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M326 84 V250" fill="none" stroke="#E4483C" stroke-width="20" stroke-linecap="round"/>
+          <path d="M326 84 L364 136" fill="none" stroke="#E4483C" stroke-width="20" stroke-linecap="round"/>
+          <circle cx="326" cy="84" r="15" fill="#2E9E5B"/>
+          <text x="326" y="90" text-anchor="middle" class="t-letra" font-size="17" fill="#FFFFFF">1</text>
+          <use href="#ui-mano" x="352" y="130" width="40" height="50"/>
+          <g transform="translate(652 92)">
+            <circle r="44" fill="#FFFFFF" filter="url(#sombra)"/>
+            <circle cy="5" r="22" fill="#E4483C"/>
+            <ellipse cx="-8" cy="-2" rx="5" ry="7" fill="#FFFFFF" opacity=".35"/>
+            <path d="M0 -15 q1 -8 6 -11" fill="none" stroke="#6B3E26" stroke-width="3" stroke-linecap="round"/>
+            <path d="M3 -14 q9 -11 17 -5 q-8 9 -17 5 Z" fill="#2E9E5B"/>
+            <circle r="44" fill="none" stroke="#2E9E5B" stroke-width="5"/>
+            <circle cx="32" cy="-32" r="13" fill="#2E9E5B"/>
+            <path d="M26 -32 l4 4 l8 -8" fill="none" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+          <g transform="translate(652 188)">
+            <circle r="44" fill="#FFFFFF" filter="url(#sombra)"/>
+            <ellipse cx="-13" cy="-9" rx="14" ry="12" fill="#F4B623"/><ellipse cx="13" cy="-9" rx="14" ry="12" fill="#F4B623"/>
+            <ellipse cx="-11" cy="11" rx="10" ry="9" fill="#F7962B"/><ellipse cx="11" cy="11" rx="10" ry="9" fill="#F7962B"/>
+            <circle cx="-14" cy="-9" r="4" fill="#FFFFFF" opacity=".7"/><circle cx="14" cy="-9" r="4" fill="#FFFFFF" opacity=".7"/>
+            <rect x="-3.5" y="-20" width="7" height="40" rx="3.5" fill="#3A2A24"/>
+            <path d="M-2 -20 q-4 -8 -9 -10 M2 -20 q4 -8 9 -10" fill="none" stroke="#3A2A24" stroke-width="2" stroke-linecap="round"/>
+          </g>
+          <g transform="translate(652 284)">
+            <circle r="44" fill="#FFFFFF" filter="url(#sombra)"/>
+            <path d="M0 -32 V-25 M0 25 V32 M-32 0 H-25 M25 0 H32 M-22.6 -22.6 l5 5 M17.6 17.6 l5 5 M-22.6 22.6 l5 -5 M17.6 -17.6 l5 -5" stroke="#F4B623" stroke-width="4" stroke-linecap="round"/>
+            <circle r="17" fill="#FFD54A"/>
+          </g>
+          <use href="#ui-casa" x="14" y="12" width="52" height="52"/>
+          <use href="#ui-voz" x="734" y="12" width="52" height="52"/>
+        </svg>
+      </div>
+      <figcaption><b>Rincón de las letras</b><span class="voz">Se oye: «Esta es la M, la de MAMÁ. Sigue el camino con el dedo». Después: «¿Qué empieza por /m/?». Manzana y mariposa sí; el sol, no.</span></figcaption>
+    </figure>
+
+    <figure class="pantalla">
+      <div class="dispositivo">
+        <svg viewBox="0 0 800 370" role="img" aria-labelledby="p1s4-t">
+          <title id="p1s4-t">Salida: alguien de la familia la recoge en la puerta del cole; pegatina y misión para casa</title>
+          <rect width="800" height="370" fill="url(#g-tarde)"/>
+          <rect x="430" y="70" width="352" height="232" fill="#F6DDBD"/>
+          <rect x="418" y="54" width="376" height="24" rx="8" fill="#E4483C"/>
+          <rect x="452" y="104" width="78" height="62" rx="6" fill="#A6DCF6" stroke="#FFFFFF" stroke-width="4"/>
+          <rect x="682" y="104" width="78" height="62" rx="6" fill="#A6DCF6" stroke="#FFFFFF" stroke-width="4"/>
+          <circle cx="476" cy="126" r="9" fill="#FFD54A"/><path d="M462 160 q14 -14 28 0 q14 -14 28 0" fill="#7CCB6B"/>
+          <path d="M700 156 L716 140 L732 156 Z" fill="#E4483C"/><rect x="704" y="156" width="24" height="6" fill="#FFFFFF"/>
+          <rect x="556" y="142" width="104" height="10" rx="4" fill="#1F5BB0"/>
+          <rect x="562" y="150" width="92" height="152" fill="#2C74D8"/>
+          <rect x="576" y="164" width="64" height="40" rx="6" fill="#A6DCF6"/>
+          <rect y="298" width="800" height="72" fill="#EADBC0"/>
+          <path d="M0 330 H800 M100 298 V330 M260 298 V330 M420 298 V330 M580 298 V330 M740 298 V330 M180 330 V370 M340 330 V370 M500 330 V370 M660 330 V370" stroke="#D9C6A2" stroke-width="2"/>
+          <rect x="322" y="196" width="16" height="104" rx="6" fill="#8A5A3C"/>
+          <circle cx="330" cy="176" r="46" fill="#F2A65A"/><circle cx="300" cy="196" r="28" fill="#E9783E"/><circle cx="362" cy="200" r="26" fill="#E9783E"/>
+          <path d="M276 262 q6 -4 10 2 q-6 4 -10 -2 Z M384 280 q6 -4 10 2 q-6 4 -10 -2 Z" fill="#E9783E"/>
+          <use href="#adulta" x="562" y="98" width="110" height="202"/>
+          <path d="M674 106 q8 6 0 14 M684 100 q12 10 0 26" stroke="#1D2B53" stroke-width="3" fill="none" stroke-linecap="round" opacity=".5"/>
+          <use href="#ninia-entera" x="432" y="142" width="96" height="168"/>
+          <path d="M412 222 H386 M416 242 H380 M412 262 H388" stroke="#1D2B53" stroke-width="3" stroke-linecap="round" opacity=".3"/>
+          <g transform="translate(176 118)">
+            <circle r="76" fill="#FFF3C4" opacity=".9"/>
+            <path d="M-26 34 L-38 76 L-22 68 L-14 82 L-4 44 Z" fill="#E4483C"/>
+            <path d="M26 34 L38 76 L22 68 L14 82 L4 44 Z" fill="#2C74D8"/>
+            <circle r="54" fill="#FFFFFF" filter="url(#sombra)"/>
+            <circle r="46" fill="#F4B623"/>
+            <use href="#estrella" x="-30" y="-31" width="60" height="60" fill="#FFFFFF"/>
+            <use href="#chispa" x="-92" y="-62" width="22" height="22" fill="#F4B623"/>
+            <use href="#chispa" x="66" y="-74" width="16" height="16" fill="#F4B623"/>
+            <use href="#chispa" x="72" y="20" width="20" height="20" fill="#F4B623"/>
+          </g>
+          <g transform="translate(34 246)">
+            <rect width="238" height="100" rx="18" fill="#FFFFFF" filter="url(#sombra)"/>
+            <path d="M24 54 L48 32 L72 54 V80 H24 Z" fill="none" stroke="#1D2B53" stroke-width="4" stroke-linejoin="round"/>
+            <rect x="42" y="62" width="12" height="18" fill="#1D2B53"/>
+            <path d="M94 54 Q120 30 146 54 Q120 78 94 54 Z" fill="none" stroke="#1D2B53" stroke-width="4" stroke-linejoin="round"/>
+            <circle cx="120" cy="54" r="8" fill="#1D2B53"/>
+            <circle cx="196" cy="52" r="26" fill="#F4B623"/>
+            <text x="196" y="62" text-anchor="middle" class="t-disp" font-size="28" fill="#FFFFFF">?</text>
+          </g>
+          <use href="#ui-casa" x="14" y="12" width="52" height="52"/>
+          <use href="#ui-voz" x="734" y="12" width="52" height="52"/>
+        </svg>
+      </div>
+      <figcaption><b>¡Hasta mañana!</b><span class="voz">Se oye: «¡Qué bien lo has hecho hoy, encargada! Misión para casa: busca algo amarillo y enséñaselo a tu tía». La recoge alguien de la familia, con su foto.</span></figcaption>
+    </figure>
+  </div>
+
+  <div class="detalle">
+    <div>
+      <h3>Una partida, unos 10 minutos</h3>
+      <ol class="partida">
+        <li><span><b>Llegada.</b> Cuelga el abrigo en su percha, la que tiene su foto.</span></li>
+        <li><span><b>Asamblea.</b> Pasa lista contando a sus compañeros, mira qué día es y qué tiempo hace, y pone su foto en el bote de cómo se siente.</span></li>
+        <li><span><b>Rincones.</b> Elige dos de cuatro: letras (la letra de la semana), números, arte o cuentos.</span></li>
+        <li><span><b>Recreo.</b> Un rato de juego libre en el patio.</span></li>
+        <li><span><b>Salida.</b> La recoge alguien de la familia; se lleva una pegatina y una misión para casa.</span></li>
+      </ol>
+    </div>
+    <div>
+      <h3>Qué aprende</h3>
+      <ul>
+        <li>La letra de la semana en mayúscula, sus trazos y las sílabas con palmadas.</li>
+        <li>Contar hasta 10 con la recta numérica, los días de la semana, el tiempo y las estaciones.</li>
+        <li>Decir cómo se siente, las rutinas y hacer cosas sola.</li>
+      </ul>
+      <h3>Lo mejor de</h3>
+      <ul>
+        <li><b>Khan Academy Kids</b>: un guía y una ruta que alterna temas.</li>
+        <li><b>Sago Mini School</b>: temas que cambian cada semana.</li>
+        <li><b>Pok Pok</b>: calma y cero fallos.</li>
+        <li><b>El aula real</b>: asamblea, encargado, rincones y emociones por colores.</li>
+        <li><b>ABN e Innovamat</b>: contar manipulando. <b>Leo con Grin</b>: sílabas.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>A favor</h3>
+      <ul>
+        <li>Le anticipa su día real en el cole, y eso da seguridad en el primer año.</li>
+        <li>En casa se habla de lo mismo que en clase.</li>
+        <li>Cada partida se acaba sola, con la salida del cole.</li>
+      </ul>
+      <h3>En contra</h3>
+      <ul class="contra">
+        <li>Puede sentirse como «más cole».</li>
+        <li>Necesita variedad para no repetirse: letra y número de la semana, estaciones, cumpleaños.</li>
+      </ul>
+      <h3>Esfuerzo</h3>
+      <p class="esfuerzo">Medio-alto: muchas actividades distintas, aunque cada una es sencilla. La primera versión tendría llegada, asamblea, dos rincones (letras y números) y salida.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROPUESTA 2 ============ -->
+<section class="seccion propuesta" id="p2" style="--c:var(--verde)">
+  <span class="gomet" aria-hidden="true">2</span>
+  <h2>La isla de <span data-nombre-texto>Lucía</span></h2>
+  <p class="propuesta-frase">Un pequeño mundo suyo para explorar sin reglas: casa, huerto, mercado, granja y playa. Lo que aprende está escondido en lo que hace.</p>
+
+  <div class="pantallas">
+    <figure class="pantalla">
+      <div class="dispositivo">
+        <svg viewBox="0 0 800 370" role="img" aria-labelledby="p2s1-t">
+          <title id="p2s1-t">Mapa de la isla con la casa, el huerto, el mercado, la granja y la playa</title>
+          <rect width="800" height="370" fill="url(#g-mar)"/>
+          <g fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" opacity=".45"><path d="M40 112 q10 -8 20 0 t20 0"/><path d="M690 300 q10 -8 20 0 t20 0"/><path d="M70 344 q10 -8 20 0 t20 0"/><path d="M712 150 q10 -8 20 0 t20 0"/><path d="M600 352 q10 -8 20 0 t20 0"/></g>
+          <path d="M140 190 C140 110 230 60 340 64 C430 50 560 60 630 110 C690 150 690 230 640 280 C590 330 470 340 380 332 C280 340 180 320 150 270 C135 245 140 215 140 190 Z" fill="#F6DFA6"/>
+          <path d="M172 188 C174 126 246 90 340 94 C428 82 546 92 600 128 C646 160 646 222 604 260 C560 298 462 306 382 300 C294 306 208 290 184 254 C172 236 170 210 172 188 Z" fill="#93D46E"/>
+          <ellipse cx="460" cy="200" rx="60" ry="22" fill="#86C862"/><ellipse cx="250" cy="250" rx="44" ry="16" fill="#86C862"/>
+          <path d="M268 196 C306 166 346 128 400 132 C470 128 518 150 552 182 M262 206 C278 236 302 250 324 262 M556 192 C566 228 556 262 538 290" fill="none" stroke="#FFF7DE" stroke-width="9" stroke-dasharray="0.1 16" stroke-linecap="round"/>
+          <g><rect x="196" y="140" width="6" height="16" fill="#8A5A3C"/><circle cx="199" cy="130" r="18" fill="#F2A65A"/></g>
+          <g><rect x="297" y="104" width="6" height="16" fill="#8A5A3C"/><circle cx="300" cy="96" r="16" fill="#5DB55A"/></g>
+          <g><rect x="477" y="94" width="6" height="16" fill="#8A5A3C"/><circle cx="480" cy="86" r="15" fill="#E9783E"/></g>
+          <g><rect x="617" y="230" width="6" height="16" fill="#8A5A3C"/><circle cx="620" cy="222" r="17" fill="#F2A65A"/></g>
+          <g><rect x="447" y="246" width="6" height="16" fill="#8A5A3C"/><circle cx="450" cy="238" r="18" fill="#5DB55A"/></g>
+          <g transform="translate(250 170)">
+            <ellipse cy="30" rx="40" ry="8" fill="#6FB24F" opacity=".5"/>
+            <rect x="-28" y="-10" width="56" height="40" rx="3" fill="#FFF3E3"/>
+            <path d="M-36 -6 L0 -38 L36 -6 Z" fill="#E4483C"/>
+            <rect x="-7" y="8" width="14" height="22" rx="2" fill="#8A5A3C"/>
+            <rect x="12" y="2" width="11" height="11" fill="#A6DCF6"/>
+            <rect x="16" y="-34" width="8" height="16" fill="#B8332A"/>
+          </g>
+          <g transform="translate(400 128)">
+            <rect x="-46" y="-20" width="92" height="44" rx="10" fill="#A8754D"/>
+            <path d="M-38 -6 H38 M-38 8 H38" stroke="#8C5E3A" stroke-width="4" stroke-linecap="round"/>
+            <path d="M-30 -8 l-4 -8 M-30 -8 l4 -8 M-10 -8 l-4 -8 M-10 -8 l4 -8 M10 -8 l-4 -8 M10 -8 l4 -8 M30 -8 l-4 -8 M30 -8 l4 -8 M-20 6 l-4 -8 M-20 6 l4 -8 M0 6 l-4 -8 M0 6 l4 -8 M20 6 l-4 -8 M20 6 l4 -8" stroke="#2E9E5B" stroke-width="3" stroke-linecap="round"/>
+            <ellipse cx="36" cy="20" rx="12" ry="9" fill="#F7962B"/>
+          </g>
+          <g transform="translate(556 168)">
+            <rect x="-38" y="-6" width="76" height="34" rx="4" fill="#C98A4B"/>
+            <rect x="-40" y="-36" width="5" height="40" fill="#B57A45"/><rect x="35" y="-36" width="5" height="40" fill="#B57A45"/>
+            <rect x="-44" y="-42" width="88" height="16" rx="4" fill="#E4483C"/>
+            <path d="M-28 -42 V-26 M-10 -42 V-26 M8 -42 V-26 M26 -42 V-26" stroke="#FFFFFF" stroke-width="7"/>
+            <circle cx="-24" cy="-8" r="7" fill="#E4483C"/><circle cx="-8" cy="-8" r="7" fill="#F4B623"/><circle cx="8" cy="-8" r="7" fill="#F7962B"/><circle cx="24" cy="-8" r="7" fill="#2E9E5B"/>
+          </g>
+          <g transform="translate(330 252)">
+            <ellipse cy="28" rx="44" ry="8" fill="#6FB24F" opacity=".5"/>
+            <rect x="-30" y="-14" width="60" height="42" fill="#D9534A"/>
+            <path d="M-36 -10 L0 -38 L36 -10 Z" fill="#A83A33"/>
+            <rect x="-12" y="4" width="24" height="24" fill="#FFFFFF"/>
+            <path d="M-12 4 L12 28 M12 4 L-12 28" stroke="#D9534A" stroke-width="3"/>
+            <g transform="translate(54 18)"><circle r="9" fill="#FFFFFF"/><circle cx="-6" cy="-3" r="7" fill="#FFFFFF"/><circle cx="6" cy="-4" r="7" fill="#FFFFFF"/><circle cx="12" cy="0" r="5" fill="#3A2A24"/></g>
+          </g>
+          <g transform="translate(538 300)">
+            <rect x="-2" y="-2" width="4" height="22" fill="#8A5A3C"/>
+            <path d="M-32 0 A32 26 0 0 1 32 0 Z" fill="#F4B623"/>
+            <path d="M-32 0 A32 26 0 0 1 -20 -20 L0 0 Z M20 -20 A32 26 0 0 1 32 0 L0 0 Z" fill="#FFFFFF"/>
+            <rect x="14" y="10" width="34" height="13" rx="3" fill="#2C74D8"/><rect x="14" y="15" width="34" height="3" fill="#FFFFFF"/>
+          </g>
+          <ellipse cx="226" cy="236" rx="22" ry="6" fill="#5FA244" opacity=".5"/>
+          <use href="#ninia" x="196" y="178" width="58" height="66"/>
+          <g transform="translate(400 32)">
+            <rect x="-118" y="-20" width="236" height="40" rx="10" fill="#B57A45"/>
+            <rect x="-110" y="-14" width="220" height="28" rx="7" fill="#E2A868"/>
+            <text y="8" text-anchor="middle" class="t-disp" font-size="20" fill="#5A3825" data-nombre data-prefijo="ISLA DE " data-maxw="204">ISLA DE LUCÍA</text>
+          </g>
+          <g transform="translate(96 292)">
+            <path d="M-36 0 H36 L25 18 H-25 Z" fill="#B5643A"/>
+            <rect x="0" y="-48" width="4" height="48" fill="#8A5A3C"/>
+            <path d="M6 -46 V-4 H32 Z" fill="#FFFFFF"/><path d="M6 -24 H18 L23 -16 H6 Z" fill="#E4483C"/>
+          </g>
+          <path d="M690 92 q8 -8 16 0 q8 -8 16 0" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="652" cy="44" r="22" fill="#FFE27A"/>
+          <use href="#ui-casa" x="14" y="12" width="52" height="52"/>
+          <use href="#ui-voz" x="734" y="12" width="52" height="52"/>
+        </svg>
+      </div>
+      <figcaption><b>El mapa</b><span class="voz">Sin instrucciones escritas ni sitios cerrados: va donde quiera. Los árboles naranjas avisan de que es otoño, porque la isla sigue el calendario de verdad.</span></figcaption>
+    </figure>
+
+    <figure class="pantalla">
+      <div class="dispositivo">
+        <svg viewBox="0 0 800 370" role="img" aria-labelledby="p2s2-t">
+          <title id="p2s2-t">El mercado: la lista de la compra con dibujos y la cesta con dos tomates de tres</title>
+          <rect width="800" height="370" fill="#C5E9F7"/>
+          <g fill="#FFFFFF" opacity=".9"><ellipse cx="660" cy="96" rx="40" ry="14"/><ellipse cx="690" cy="86" rx="26" ry="14"/><ellipse cx="96" cy="250" rx="0" ry="0"/></g>
+          <rect y="292" width="800" height="78" fill="#F0D3A0"/>
+          <rect x="200" y="96" width="400" height="200" fill="#EBC48F"/>
+          <path d="M240 96 V292 M280 96 V292 M320 96 V292 M360 96 V292 M440 96 V292 M480 96 V292 M520 96 V292 M560 96 V292" stroke="#DDB078" stroke-width="2"/>
+          <rect x="192" y="90" width="14" height="210" rx="4" fill="#B57A45"/><rect x="594" y="90" width="14" height="210" rx="4" fill="#B57A45"/>
+          <g>
+            <rect x="180" y="50" width="440" height="54" fill="#E4483C"/>
+            <g fill="#FFFFFF"><rect x="220" y="50" width="40" height="54"/><rect x="300" y="50" width="40" height="54"/><rect x="380" y="50" width="40" height="54"/><rect x="460" y="50" width="40" height="54"/><rect x="540" y="50" width="40" height="54"/></g>
+            <g fill="#E4483C"><circle cx="200" cy="104" r="20"/><circle cx="280" cy="104" r="20"/><circle cx="360" cy="104" r="20"/><circle cx="440" cy="104" r="20"/><circle cx="520" cy="104" r="20"/><circle cx="600" cy="104" r="20"/></g>
+            <g fill="#FFFFFF"><circle cx="240" cy="104" r="20"/><circle cx="320" cy="104" r="20"/><circle cx="400" cy="104" r="20"/><circle cx="480" cy="104" r="20"/><circle cx="560" cy="104" r="20"/></g>
+            <rect x="172" y="42" width="456" height="14" rx="7" fill="#B8332A"/>
+          </g>
+          <g transform="translate(262 124)"><path d="M0 0 V10" stroke="#8A5A3C" stroke-width="4"/><path d="M-4 10 Q-22 30 -10 50 Q-8 34 2 14 Z" fill="#F4C430"/><path d="M0 10 Q-2 34 8 52 Q12 34 6 12 Z" fill="#F7D04E"/><path d="M4 10 Q22 28 22 46 Q12 36 2 14 Z" fill="#F4C430"/></g>
+          <g transform="translate(538 124)"><path d="M0 0 V10" stroke="#8A5A3C" stroke-width="4"/><path d="M-4 10 Q-22 30 -10 50 Q-8 34 2 14 Z" fill="#F4C430"/><path d="M0 10 Q-2 34 8 52 Q12 34 6 12 Z" fill="#F7D04E"/><path d="M4 10 Q22 28 22 46 Q12 36 2 14 Z" fill="#F4C430"/></g>
+          <ellipse cx="400" cy="232" rx="50" ry="40" fill="#96603D"/>
+          <path d="M374 206 H426 V264 H374 Z" fill="#FFFFFF"/>
+          <use href="#oso" x="356" y="126" width="88" height="92"/>
+          <rect x="186" y="236" width="428" height="64" rx="6" fill="#C98A4B"/>
+          <path d="M186 258 H614 M186 280 H614" stroke="#B57A45" stroke-width="2"/>
+          <rect x="214" y="204" width="110" height="34" rx="4" fill="#D9A066"/><path d="M214 216 H324 M214 228 H324" stroke="#C48B52" stroke-width="2"/>
+          <g fill="#E4483C"><circle cx="234" cy="200" r="12"/><circle cx="258" cy="196" r="12"/><circle cx="282" cy="200" r="12"/><circle cx="306" cy="196" r="12"/><circle cx="246" cy="184" r="12"/><circle cx="294" cy="182" r="12"/></g>
+          <g fill="#2E9E5B"><path d="M229 190 l5 3 l5 -3 l-2 5 Z"/><path d="M253 186 l5 3 l5 -3 l-2 5 Z"/><path d="M277 190 l5 3 l5 -3 l-2 5 Z"/><path d="M301 186 l5 3 l5 -3 l-2 5 Z"/><path d="M241 174 l5 3 l5 -3 l-2 5 Z"/><path d="M289 172 l5 3 l5 -3 l-2 5 Z"/></g>
+          <rect x="476" y="204" width="110" height="34" rx="4" fill="#D9A066"/><path d="M476 216 H586 M476 228 H586" stroke="#C48B52" stroke-width="2"/>
+          <g fill="#F7962B"><circle cx="496" cy="200" r="12"/><circle cx="520" cy="196" r="12"/><circle cx="544" cy="200" r="12"/><circle cx="568" cy="196" r="12"/><circle cx="508" cy="182" r="12"/><circle cx="556" cy="182" r="12"/></g>
+          <g transform="translate(26 74) rotate(-4)">
+            <rect width="152" height="128" rx="10" fill="#FFFFFF" filter="url(#sombra)"/>
+            <path d="M16 20 H136" stroke="#E4483C" stroke-width="3" stroke-linecap="round" opacity=".45"/>
+            <g transform="translate(32 52)"><circle r="13" fill="#E4483C"/><path d="M-5 -11 l5 3 l5 -3 l-2 5 Z" fill="#2E9E5B"/></g>
+            <circle cx="66" cy="52" r="7" fill="#E4483C"/><circle cx="88" cy="52" r="7" fill="#E4483C"/><circle cx="110" cy="52" r="6" fill="none" stroke="#E4483C" stroke-width="2.6"/>
+            <path d="M18 92 Q30 112 46 96 Q32 102 22 88 Z" fill="#F4C430" stroke="#C99A12" stroke-width="1.5"/>
+            <circle cx="66" cy="98" r="7" fill="#F4B623"/><circle cx="88" cy="98" r="7" fill="#F4B623"/>
+            <circle cx="126" cy="98" r="11" fill="#2E9E5B"/>
+            <path d="M121 98 l3.5 3.5 l7 -7" stroke="#FFFFFF" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+          <g>
+            <ellipse cx="102" cy="352" rx="9" ry="4" fill="#F4A23C"/><ellipse cx="124" cy="352" rx="9" ry="4" fill="#F4A23C"/>
+            <ellipse cx="112" cy="316" rx="54" ry="38" fill="#FFFFFF"/>
+            <path d="M84 314 q26 -16 50 6 q-24 16 -50 -6 Z" fill="#EEF1F7"/>
+            <path d="M144 300 q12 -40 2 -70" fill="none" stroke="#FFFFFF" stroke-width="20" stroke-linecap="round"/>
+            <circle cx="148" cy="226" r="20" fill="#FFFFFF"/>
+            <path d="M164 222 L184 228 L164 234 Z" fill="#F4A23C"/>
+            <circle cx="152" cy="221" r="3.2" fill="#2A2238"/>
+            <circle cx="158" cy="232" r="4" fill="#FF8FA3" opacity=".5"/>
+            <path d="M128 222 q18 -28 38 -8 l-4 10 q-16 -12 -32 -6 Z" fill="#9B6BD3"/>
+          </g>
+          <path class="pista" d="M300 182 C420 120 560 150 672 278" fill="none" stroke="#1D2B53" stroke-width="3" stroke-dasharray="1 10" stroke-linecap="round" opacity=".45"/>
+          <g transform="translate(472 150)"><circle r="14" fill="#E4483C"/><ellipse cx="-5" cy="-3" rx="3" ry="4.5" fill="#FFFFFF" opacity=".35"/><path d="M-5 -12 l5 3 l5 -3 l-2 5 Z" fill="#2E9E5B"/></g>
+          <use href="#ui-mano" x="470" y="156" width="36" height="45"/>
+          <g transform="translate(688 316)">
+            <path d="M-46 -26 C-46 -86 46 -86 46 -26" fill="none" stroke="#A86E37" stroke-width="8" stroke-linecap="round"/>
+            <circle cx="-16" cy="-30" r="13" fill="#E4483C"/><circle cx="12" cy="-32" r="13" fill="#E4483C"/>
+            <path d="M-62 -26 H62 L50 28 H-50 Z" fill="#C98A4B"/>
+            <path d="M-56 -8 H56 M-52 10 H52" stroke="#A86E37" stroke-width="3"/>
+          </g>
+          <use href="#ui-casa" x="14" y="12" width="52" height="52"/>
+          <use href="#ui-voz" x="734" y="12" width="52" height="52"/>
+        </svg>
+      </div>
+      <figcaption><b>El mercado</b><span class="voz">Se oye: «La abuela Oca necesita tres tomates para la ensalada. ¿Me los das?». La lista va con dibujos y puntos, sin letras; los plátanos ya están.</span></figcaption>
+    </figure>
+
+    <figure class="pantalla">
+      <div class="dispositivo">
+        <svg viewBox="0 0 800 370" role="img" aria-labelledby="p2s3-t">
+          <title id="p2s3-t">La playa: llevar cada residuo a su contenedor, amarillo, azul, verde o marrón</title>
+          <rect width="800" height="370" fill="#BFE8F7"/>
+          <circle cx="112" cy="62" r="28" fill="#FFE27A"/>
+          <path d="M520 60 q8 -8 16 0 q8 -8 16 0" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>
+          <rect y="150" width="800" height="64" fill="#4CC3DA"/>
+          <path d="M0 168 q20 -8 40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0" fill="none" stroke="#FFFFFF" stroke-width="3" opacity=".5"/>
+          <path d="M0 206 Q100 194 200 206 T400 206 T600 206 T800 206 V370 H0 Z" fill="#F4DDA3"/>
+          <g transform="translate(70 304)"><rect x="-30" y="-30" width="60" height="30" fill="#E6C98A"/><rect x="-18" y="-52" width="36" height="24" fill="#E6C98A"/><path d="M-30 -30 h8 v-6 h8 v6 h8 v-6 h8 v6 h8 v-6 h8 v6 h6" fill="none" stroke="#D9B970" stroke-width="2"/><path d="M0 -52 V-70" stroke="#8A5A3C" stroke-width="2"/><path d="M0 -70 L14 -65 L0 -60 Z" fill="#E4483C"/></g>
+          <g transform="translate(244 322) rotate(-8)"><rect x="-30" y="-20" width="60" height="40" rx="2" fill="#F2F4F8"/><path d="M-22 -10 H22 M-22 -2 H22 M-22 6 H10" stroke="#A9B5CE" stroke-width="3"/></g>
+          <g transform="translate(320 270)"><rect x="-14" y="-16" width="28" height="34" rx="6" fill="#9FD8C0" opacity=".85"/><rect x="-12" y="-24" width="24" height="9" rx="2" fill="#7FBFA0"/></g>
+          <path d="M140 338 q10 -22 26 -16 q-6 10 6 20 q-14 4 -18 -6 q-6 8 -14 2 Z" fill="#F4C430"/>
+          <g transform="translate(380 334)">
+            <ellipse rx="22" ry="14" fill="#E4483C"/>
+            <path d="M-14 -10 l-6 -12 M14 -10 l6 -12" stroke="#E4483C" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="-20" cy="-24" r="5" fill="#E4483C"/><circle cx="20" cy="-24" r="5" fill="#E4483C"/>
+            <circle cx="-8" cy="-4" r="3" fill="#2A2238"/><circle cx="8" cy="-4" r="3" fill="#2A2238"/>
+            <path d="M-6 4 Q0 8 6 4" fill="none" stroke="#7A1E16" stroke-width="2" stroke-linecap="round"/>
+          </g>
+          <g transform="translate(452 304)">
+            <rect x="-34" y="-104" width="68" height="104" rx="10" fill="#F4C430"/>
+            <rect x="-38" y="-118" width="76" height="18" rx="7" fill="#D9A80F"/>
+            <rect x="-16" y="-114" width="32" height="6" rx="3" fill="#7A5A00"/>
+            <rect x="-20" y="-70" width="14" height="30" rx="4" fill="#FFFFFF"/><rect x="-17" y="-80" width="8" height="12" rx="2" fill="#FFFFFF"/><rect x="2" y="-64" width="16" height="24" rx="3" fill="#FFFFFF"/>
+            <g class="brillo"><use href="#chispa" x="-50" y="-150" width="20" height="20" fill="#FFFFFF"/><use href="#chispa" x="26" y="-160" width="16" height="16" fill="#FFFFFF"/></g>
+          </g>
+          <g transform="translate(534 304)">
+            <rect x="-34" y="-104" width="68" height="104" rx="10" fill="#2C74D8"/>
+            <rect x="-38" y="-118" width="76" height="18" rx="7" fill="#1F5BB0"/>
+            <rect x="-16" y="-114" width="32" height="6" rx="3" fill="#0F3570"/>
+            <rect x="-18" y="-72" width="36" height="30" rx="2" fill="#FFFFFF"/><path d="M-12 -64 H12 M-12 -57 H12 M-12 -50 H4" stroke="#2C74D8" stroke-width="2.5"/>
+          </g>
+          <g transform="translate(616 304)">
+            <rect x="-34" y="-104" width="68" height="104" rx="10" fill="#2E9E5B"/>
+            <rect x="-38" y="-118" width="76" height="18" rx="7" fill="#227A45"/>
+            <rect x="-16" y="-114" width="32" height="6" rx="3" fill="#0F4A27"/>
+            <path d="M-14 -66 h28 v24 q0 6 -6 6 h-16 q-6 0 -6 -6 Z" fill="#FFFFFF"/><rect x="-12" y="-74" width="24" height="8" rx="2" fill="#FFFFFF"/>
+          </g>
+          <g transform="translate(698 304)">
+            <rect x="-34" y="-104" width="68" height="104" rx="10" fill="#8A5A3C"/>
+            <rect x="-38" y="-118" width="76" height="18" rx="7" fill="#6B432B"/>
+            <rect x="-16" y="-114" width="32" height="6" rx="3" fill="#3A2416"/>
+            <path d="M-10 -74 q10 6 20 0 q-6 10 -2 18 q-4 8 2 16 q-10 -4 -20 0 q6 -8 2 -16 q4 -8 -2 -18 Z" fill="#FFFFFF"/>
+            <path d="M0 -74 q1 -6 5 -8" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round"/>
+          </g>
+          <path class="pista" d="M214 248 C270 150 380 132 440 176" fill="none" stroke="#1D2B53" stroke-width="3" stroke-dasharray="1 10" stroke-linecap="round" opacity=".45"/>
+          <g transform="translate(196 270)">
+            <g class="botella" data-demo="botella" role="button" tabindex="0" aria-label="Botella de plástico: llevarla al contenedor amarillo">
+              <g transform="rotate(-24)">
+                <rect x="-13" y="-30" width="26" height="54" rx="9" fill="#CDEBFA" stroke="#7FBFE0" stroke-width="2.5"/>
+                <rect x="-6" y="-42" width="12" height="14" rx="3" fill="#CDEBFA" stroke="#7FBFE0" stroke-width="2.5"/>
+                <rect x="-7" y="-48" width="14" height="8" rx="2" fill="#2C74D8"/>
+                <rect x="-12" y="-6" width="24" height="14" fill="#2C74D8" opacity=".5"/>
+              </g>
+            </g>
+          </g>
+          <use class="mano" href="#ui-mano" x="200" y="280" width="36" height="45"/>
+          <use href="#ui-casa" x="14" y="12" width="52" height="52"/>
+          <use href="#ui-voz" x="734" y="12" width="52" height="52"/>
+        </svg>
+      </div>
+      <figcaption><b>La playa limpia</b><span class="voz">Se oye: «¡Una botella en la arena! ¿En qué contenedor va?». Son los colores de los contenedores de aquí: amarillo, azul, verde y marrón.</span><br><span class="prueba">Toca la botella</span></figcaption>
+    </figure>
+
+    <figure class="pantalla">
+      <div class="dispositivo">
+        <svg viewBox="0 0 800 370" role="img" aria-labelledby="p2s4-t">
+          <title id="p2s4-t">Libro de descubrimientos: pegatinas conseguidas y huecos por descubrir</title>
+          <rect width="800" height="370" fill="#C98A4B"/>
+          <g fill="none" stroke="#B57A45" stroke-width="2" opacity=".7"><path d="M0 22 Q200 12 400 26 T800 20"/><path d="M0 352 Q200 342 400 356 T800 350"/></g>
+          <rect x="62" y="40" width="680" height="304" rx="16" fill="#3A2416" opacity=".2"/>
+          <path d="M80 30 H400 V330 H80 Q66 330 66 316 V44 Q66 30 80 30 Z" fill="#FFF8EC"/>
+          <path d="M400 30 H720 Q734 30 734 44 V316 Q734 330 720 330 H400 Z" fill="#FFF8EC"/>
+          <rect x="386" y="30" width="28" height="300" fill="url(#g-lomo)"/>
+          <g fill="#2E9E5B"><rect x="734" y="66" width="16" height="40" rx="5"/></g><rect x="734" y="112" width="16" height="40" rx="5" fill="#F4B623"/><rect x="734" y="158" width="16" height="40" rx="5" fill="#2C74D8"/><rect x="734" y="204" width="16" height="40" rx="5" fill="#E4483C"/>
+          <g transform="translate(150 118) rotate(-6)"><circle r="40" fill="#FFFFFF" filter="url(#sombra)"/><circle r="34" fill="#FFE8CC"/><path d="M-7 -14 L7 -14 L0 24 Z" fill="#F7962B"/><path d="M0 -14 q-10 -12 -14 -8 M0 -14 q0 -14 4 -16 M0 -14 q10 -10 14 -6" fill="none" stroke="#2E9E5B" stroke-width="3.4" stroke-linecap="round"/></g>
+          <g transform="translate(240 118) rotate(4)"><circle r="40" fill="#FFFFFF" filter="url(#sombra)"/><circle r="34" fill="#DDF0FB"/><ellipse cx="-3" rx="17" ry="11" fill="#2C74D8"/><path d="M12 0 L26 -10 V10 Z" fill="#2C74D8"/><circle cx="-11" cy="-3" r="2.6" fill="#FFFFFF"/></g>
+          <g transform="translate(330 118) rotate(-3)"><circle r="40" fill="#FFFFFF" filter="url(#sombra)"/><circle r="34" fill="#FFE9EE"/><path d="M0 18 L-20 -6 Q0 -26 20 -6 Z" fill="#FFB8C9"/><path d="M0 18 L-10 -12 M0 18 L0 -16 M0 18 L10 -12" stroke="#F28AA4" stroke-width="2.4"/></g>
+          <g transform="translate(150 236) rotate(5)"><circle r="40" fill="#FFFFFF" filter="url(#sombra)"/><circle r="34" fill="#FFE5E2"/><circle cy="4" r="16" fill="#E4483C"/><path d="M-6 -12 l6 4 l6 -4 l-3 6 Z" fill="#2E9E5B"/></g>
+          <g transform="translate(240 236) rotate(-4)"><circle r="40" fill="#FFFFFF" filter="url(#sombra)"/><circle r="34" fill="#F3EBDD"/><path d="M-20 8 Q0 24 20 8 Q22 2 18 0 H-18 Q-22 2 -20 8 Z" fill="#B57A45"/><ellipse cy="-6" rx="11" ry="14" fill="#FFFFFF" stroke="#E6DCC6" stroke-width="2"/></g>
+          <g transform="translate(330 236) rotate(3)"><circle r="40" fill="#FFFFFF" filter="url(#sombra)"/><circle r="34" fill="#FFF1D9"/><use href="#estrella" x="-22" y="-22" width="44" height="44" fill="#F7962B"/></g>
+          <g transform="translate(470 118) rotate(-5)">
+            <circle r="48" fill="none" stroke="#F4B623" stroke-width="4" stroke-dasharray="6 8"/>
+            <circle r="40" fill="#FFFFFF" filter="url(#sombra)"/><circle r="34" fill="#FFF3D6"/>
+            <path d="M-15 6 Q-18 -16 0 -20 Q18 -16 15 6 Z" fill="#8A4B2E"/><path d="M-16 4 Q0 18 16 4 Q14 -2 0 0 Q-14 -2 -16 4 Z" fill="#E3BC95"/><path d="M0 -20 V-26" stroke="#5A3020" stroke-width="3" stroke-linecap="round"/>
+            <use href="#chispa" x="30" y="-52" width="20" height="20" fill="#F4B623"/><use href="#chispa" x="-56" y="-34" width="14" height="14" fill="#F4B623"/>
+          </g>
+          <g transform="translate(560 118) rotate(4)"><circle r="40" fill="#FFFFFF" filter="url(#sombra)"/><circle r="34" fill="#FFE8D6"/><path d="M0 -22 Q16 -10 14 4 Q10 16 0 22 Q-10 16 -14 4 Q-16 -10 0 -22 Z" fill="#E9783E"/><path d="M0 -18 V24" stroke="#B5501F" stroke-width="2.4"/></g>
+          <g fill="none" stroke="#C9BFA9" stroke-width="3" stroke-dasharray="6 7">
+            <circle cx="650" cy="118" r="34"/><circle cx="470" cy="236" r="34"/><circle cx="560" cy="236" r="34"/><circle cx="650" cy="236" r="34"/>
+          </g>
+          <g fill="#E8DFCC">
+            <path d="M636 128 Q636 106 652 104 Q668 106 666 122 Q664 132 654 130 Q646 128 648 120 M630 132 H672 Q676 132 674 128" />
+            <ellipse cx="470" cy="242" rx="18" ry="15"/><path d="M466 226 q4 -6 8 0 Z"/>
+            <circle cx="560" cy="248" r="14"/><circle cx="560" cy="226" r="10"/>
+            <path d="M650 214 L670 236 L650 258 L630 236 Z"/>
+          </g>
+          <use href="#ui-casa" x="14" y="12" width="52" height="52"/>
+          <use href="#ui-voz" x="734" y="12" width="52" height="52"/>
+        </svg>
+      </div>
+      <figcaption><b>El libro de descubrimientos</b><span class="voz">Se oye: «¡Has encontrado una castaña! Ya tienes ocho pegatinas». Los huecos vacíos son cosas que aún no ha descubierto, como el muñeco de nieve que llegará en invierno.</span></figcaption>
+    </figure>
+  </div>
+
+  <div class="detalle">
+    <div>
+      <h3>Una partida, unos 10 minutos</h3>
+      <ol class="partida">
+        <li><span><b>El mapa.</b> Elige adónde ir: casa, huerto, mercado, granja o playa.</span></li>
+        <li><span><b>Juego libre.</b> Todo reacciona al tocarlo y no hay nada que hacer «bien».</span></li>
+        <li><span><b>Encargos.</b> Si quiere, ayuda a un vecino: «la abuela Oca necesita tres tomates».</span></li>
+        <li><span><b>Descubrimientos.</b> Cada cosa nueva que encuentra es una pegatina para su libro.</span></li>
+        <li><span><b>Anochece.</b> La isla se va a dormir y el juego se despide.</span></li>
+      </ol>
+    </div>
+    <div>
+      <h3>Qué aprende</h3>
+      <ul>
+        <li>Cantidades y monedas hasta 5; clasificar por color, forma y tamaño; cómo crece una planta.</li>
+        <li>Las estaciones (ahora, castañas y hojas) y reciclar con los colores de los contenedores de aquí.</li>
+        <li>Hábitos: lavarse los dientes, bañarse, comer sano y cuidar animales.</li>
+        <li>Vocabulario y juego simbólico: contar lo que ha hecho.</li>
+      </ul>
+      <h3>Lo mejor de</h3>
+      <ul>
+        <li><b>Toca Boca World</b>: un mundo libre, la app infantil mejor colocada en España.</li>
+        <li><b>Sago Mini World</b>: sin reglas, ni tiempo, ni puntos.</li>
+        <li><b>Pok Pok</b>: sonidos solo al tocar.</li>
+        <li><b>Bluey: Let's Play!</b>: explorar un sitio querido. <b>Dr. Panda</b>: jugar a los oficios.</li>
+        <li><b>Applaydu</b>: hábitos y reciclaje.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>A favor</h3>
+      <ul>
+        <li>La más rejugable: cada día puede inventar algo distinto.</li>
+        <li>Perfecta para inventar historias juntos.</li>
+        <li>Cero frustración.</li>
+      </ul>
+      <h3>En contra</h3>
+      <ul class="contra">
+        <li>Aprende de forma más implícita: pocas letras y números.</li>
+        <li>Es la que más dibujos y animaciones necesita.</li>
+      </ul>
+      <h3>Esfuerzo</h3>
+      <p class="esfuerzo">Alto, sobre todo de dibujo. La primera versión tendría casa, huerto y mercado, y el libro de pegatinas.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROPUESTA 3 ============ -->
+<section class="seccion propuesta" id="p3" style="--c:var(--azul)">
+  <span class="gomet" aria-hidden="true">3</span>
+  <h2>Mi monstruo Coco</h2>
+  <p class="propuesta-frase">De un huevo nace un monstruo que no sabe nada y ella le enseña las letras, los números y las emociones. Coco aprende, crece y se ríe con ella.</p>
+
+  <div class="pantallas">
+    <figure class="pantalla">
+      <div class="dispositivo">
+        <svg viewBox="0 0 800 370" role="img" aria-labelledby="p3s1-t">
+          <title id="p3s1-t">Nace el monstruo: sale del huevo y se elige su color y sus cuernos</title>
+          <rect width="800" height="370" fill="url(#g-cielo-lila)"/>
+          <g fill="#FFFFFF" opacity=".85">
+            <use href="#chispa" x="150" y="54" width="18" height="18"/><use href="#chispa" x="250" y="110" width="12" height="12"/><use href="#chispa" x="560" y="60" width="16" height="16"/><use href="#chispa" x="610" y="150" width="12" height="12"/><use href="#chispa" x="200" y="220" width="10" height="10"/><use href="#chispa" x="575" y="250" width="14" height="14"/>
+          </g>
+          <ellipse cx="400" cy="334" rx="170" ry="34" fill="#E79BBA"/>
+          <ellipse cx="400" cy="326" rx="150" ry="24" fill="#F6B9D0"/>
+          <path d="M352 130 Q344 98 360 92 Q368 110 368 126 Z" fill="#FFD36E"/>
+          <path d="M448 130 Q456 98 440 92 Q432 110 432 126 Z" fill="#FFD36E"/>
+          <ellipse cx="400" cy="184" rx="74" ry="66" fill="#4FD1B0"/>
+          <g class="ojos"><circle cx="374" cy="172" r="18" fill="#FFFFFF"/><circle cx="426" cy="172" r="18" fill="#FFFFFF"/><circle cx="377" cy="176" r="8.5" fill="#2A2238"/><circle cx="429" cy="176" r="8.5" fill="#2A2238"/><circle cx="380" cy="172" r="3" fill="#FFFFFF"/><circle cx="432" cy="172" r="3" fill="#FFFFFF"/></g>
+          <circle cx="350" cy="194" r="8" fill="#FF7AA8" opacity=".85"/><circle cx="450" cy="194" r="8" fill="#FF7AA8" opacity=".85"/>
+          <ellipse cx="400" cy="200" rx="8" ry="6.5" fill="#2A2238"/>
+          <path d="M312 232 C312 296 352 336 400 336 C448 336 488 296 488 232 L472 216 L454 234 L434 212 L414 234 L394 212 L374 234 L354 212 L334 232 L320 218 Z" fill="#FFF6E5"/>
+          <g fill="#F7C9D6"><circle cx="352" cy="276" r="10"/><circle cx="436" cy="300" r="8"/><circle cx="454" cy="258" r="6"/><circle cx="386" cy="312" r="5"/></g>
+          <ellipse cx="336" cy="222" rx="14" ry="11" fill="#4FD1B0"/><ellipse cx="464" cy="222" rx="14" ry="11" fill="#4FD1B0"/>
+          <g transform="translate(402 116) rotate(10) scale(.8)"><path d="M-40 6 C-40 -30 40 -30 40 6 L28 -4 L14 8 L0 -6 L-14 8 L-28 -4 Z" fill="#FFF6E5"/><circle cx="-10" cy="-12" r="6" fill="#F7C9D6"/></g>
+          <use href="#chispa" x="282" y="150" width="22" height="22" fill="#FFD36E"/><use href="#chispa" x="500" y="128" width="18" height="18" fill="#FFD36E"/>
+          <rect x="52" y="92" width="68" height="236" rx="34" fill="#FFFFFF" opacity=".22"/>
+          <circle cx="86" cy="126" r="31" fill="none" stroke="#FFFFFF" stroke-width="4"/>
+          <circle cx="86" cy="126" r="24" fill="#4FD1B0"/><circle cx="86" cy="184" r="24" fill="#FF8FB1"/><circle cx="86" cy="242" r="24" fill="#FFA552"/><circle cx="86" cy="300" r="24" fill="#9B7BEA"/>
+          <rect x="680" y="104" width="68" height="196" rx="34" fill="#FFFFFF" opacity=".22"/>
+          <circle cx="714" cy="142" r="26" fill="#FFFFFF"/><circle cx="714" cy="142" r="32" fill="none" stroke="#FFFFFF" stroke-width="4"/>
+          <path d="M702 152 Q698 132 706 128 Q710 140 710 150 Z M726 152 Q730 132 722 128 Q718 140 718 150 Z" fill="#E8B23A"/>
+          <circle cx="714" cy="202" r="26" fill="#FFFFFF"/><circle cx="702" cy="198" r="8" fill="#FF8FB1"/><circle cx="726" cy="198" r="8" fill="#FF8FB1"/>
+          <circle cx="714" cy="262" r="26" fill="#FFFFFF"/><path d="M706 272 L700 250 M722 272 L728 250" stroke="#1D2B53" stroke-width="3" stroke-linecap="round"/><circle cx="700" cy="248" r="5" fill="#9B7BEA"/><circle cx="728" cy="248" r="5" fill="#9B7BEA"/>
+          <g transform="translate(400 50)">
+            <path d="M-92 -20 H92 L80 0 L92 20 H-92 L-80 0 Z" fill="#FF8FB1"/>
+            <text y="10" text-anchor="middle" class="t-disp" font-size="28" fill="#FFFFFF">COCO</text>
+          </g>
+          <use href="#ui-casa" x="14" y="12" width="52" height="52"/>
+          <use href="#ui-voz" x="734" y="12" width="52" height="52"/>
+        </svg>
+      </div>
+      <figcaption><b>Nace tu monstruo</b><span class="voz">Se oye: «¡Ha nacido tu monstruo! ¿De qué color lo quieres?». Ella elige el color, los cuernos o las orejas, y el nombre (que escribe un mayor).</span></figcaption>
+    </figure>
+
+    <figure class="pantalla">
+      <div class="dispositivo">
+        <svg viewBox="0 0 800 370" role="img" aria-labelledby="p3s2-t">
+          <title id="p3s2-t">Comeletras: el monstruo quiere la A de avión y hay tres galletas con letras</title>
+          <defs><pattern id="p3-topos" width="60" height="60" patternUnits="userSpaceOnUse"><circle cx="30" cy="30" r="6" fill="#E2D8FF"/></pattern></defs>
+          <rect width="800" height="370" fill="#EFE9FF"/>
+          <rect width="800" height="290" fill="url(#p3-topos)"/>
+          <rect y="286" width="800" height="84" fill="#CDBEF4"/>
+          <rect x="436" y="268" width="330" height="18" rx="6" fill="#C98A4B"/>
+          <rect x="460" y="286" width="14" height="70" fill="#A86E37"/><rect x="728" y="286" width="14" height="70" fill="#A86E37"/>
+          <ellipse cx="600" cy="266" rx="152" ry="22" fill="#FFFFFF"/>
+          <ellipse cx="600" cy="263" rx="128" ry="13" fill="#F1F2F8"/>
+          <path d="M180 140 Q170 96 196 88 Q204 116 204 134 Z" fill="#FFD36E"/>
+          <path d="M282 136 Q296 94 270 86 Q260 114 258 132 Z" fill="#FFD36E"/>
+          <ellipse cx="118" cy="262" rx="18" ry="30" fill="#3FBF9F" transform="rotate(25 118 262)"/>
+          <ellipse cx="350" cy="250" rx="18" ry="30" fill="#3FBF9F" transform="rotate(-35 350 250)"/>
+          <path d="M120 330 C96 238 120 134 232 128 C344 122 372 232 348 330 Z" fill="#4FD1B0"/>
+          <ellipse cx="236" cy="288" rx="70" ry="42" fill="#9BEBD5"/>
+          <ellipse cx="180" cy="334" rx="30" ry="12" fill="#3FBF9F"/><ellipse cx="290" cy="334" rx="30" ry="12" fill="#3FBF9F"/>
+          <g class="ojos"><circle cx="200" cy="184" r="21" fill="#FFFFFF"/><circle cx="262" cy="180" r="21" fill="#FFFFFF"/><circle cx="208" cy="186" r="9.5" fill="#2A2238"/><circle cx="270" cy="182" r="9.5" fill="#2A2238"/><circle cx="211" cy="182" r="3.2" fill="#FFFFFF"/><circle cx="273" cy="178" r="3.2" fill="#FFFFFF"/></g>
+          <circle cx="168" cy="214" r="9" fill="#FF7AA8" opacity=".85"/><circle cx="298" cy="210" r="9" fill="#FF7AA8" opacity=".85"/>
+          <g class="boca-abierta"><ellipse cx="232" cy="238" rx="44" ry="31" fill="#3A2241"/><ellipse cx="232" cy="256" rx="26" ry="11" fill="#FF7FA0"/><rect x="210" y="207" width="12" height="12" rx="3" fill="#FFFFFF"/><rect x="242" y="207" width="12" height="12" rx="3" fill="#FFFFFF"/></g>
+          <g class="boca-feliz"><path d="M200 232 Q232 264 264 232" fill="none" stroke="#2A2238" stroke-width="5" stroke-linecap="round"/><ellipse cx="232" cy="230" rx="20" ry="7" fill="#4FD1B0"/></g>
+          <g class="boca-rara"><path d="M204 240 q7 -9 14 0 t14 0 t14 0 t14 0" fill="none" stroke="#2A2238" stroke-width="5" stroke-linecap="round"/></g>
+          <circle cx="318" cy="132" r="7" fill="#FFFFFF"/><circle cx="342" cy="110" r="11" fill="#FFFFFF"/>
+          <ellipse cx="456" cy="86" rx="96" ry="58" fill="#FFFFFF" filter="url(#sombra)"/>
+          <g transform="translate(456 88)">
+            <path d="M-6 -8 L14 -36 H24 L14 -8 Z" fill="#2C74D8"/>
+            <path d="M-48 -6 L-58 -28 H-46 L-36 -8 Z" fill="#E4483C"/>
+            <path d="M-52 2 Q-52 -10 -40 -10 H40 Q56 -10 56 0 Q56 10 40 10 H-40 Q-52 10 -52 2 Z" fill="#F4F6FB" stroke="#1D2B53" stroke-width="3"/>
+            <path d="M-6 8 L14 32 H24 L14 8 Z" fill="#2C74D8"/>
+            <g fill="#8CCBF0"><circle cx="-26" cy="0" r="3.5"/><circle cx="-14" cy="0" r="3.5"/><circle cx="-2" cy="0" r="3.5"/><circle cx="28" cy="0" r="3.5"/></g>
+          </g>
+          <g class="nam">
+            <text x="318" y="178" class="t-disp" font-size="34" fill="#E4483C">¡ÑAM!</text>
+            <use href="#chispa" x="300" y="190" width="18" height="18" fill="#F4B623"/><use href="#chispa" x="420" y="150" width="14" height="14" fill="#F4B623"/>
+          </g>
+          <path class="pista" d="M594 200 C520 160 380 168 286 226" fill="none" stroke="#1D2B53" stroke-width="3" stroke-dasharray="1 10" stroke-linecap="round" opacity=".4"/>
+          <g transform="translate(520 236)"><g data-demo="galleta" role="button" tabindex="0" aria-label="Galleta con la letra E">
+            <circle r="38" fill="#E9B36A"/><circle r="36" fill="none" stroke="#D49A4E" stroke-width="4"/>
+            <g fill="#A7693A"><circle cx="-22" cy="-14" r="3"/><circle cx="23" cy="13" r="3"/><circle cx="-16" cy="21" r="2.6"/></g>
+            <text y="16" text-anchor="middle" class="t-letra" font-size="44" fill="#6B3E26">E</text>
+          </g></g>
+          <g transform="translate(608 236)"><g class="galleta-a" data-demo="galleta" data-ok role="button" tabindex="0" aria-label="Galleta con la letra A">
+            <circle r="38" fill="#E9B36A"/><circle r="36" fill="none" stroke="#D49A4E" stroke-width="4"/>
+            <g fill="#A7693A"><circle cx="-23" cy="12" r="3"/><circle cx="20" cy="-18" r="3"/><circle cx="18" cy="22" r="2.6"/></g>
+            <text y="16" text-anchor="middle" class="t-letra" font-size="44" fill="#6B3E26">A</text>
+          </g></g>
+          <g transform="translate(696 236)"><g data-demo="galleta" role="button" tabindex="0" aria-label="Galleta con la letra O">
+            <circle r="38" fill="#E9B36A"/><circle r="36" fill="none" stroke="#D49A4E" stroke-width="4"/>
+            <g fill="#A7693A"><circle cx="-20" cy="-18" r="3"/><circle cx="24" cy="6" r="3"/><circle cx="-6" cy="24" r="2.6"/></g>
+            <text y="16" text-anchor="middle" class="t-letra" font-size="44" fill="#6B3E26">O</text>
+          </g></g>
+          <use class="mano" href="#ui-mano" x="616" y="248" width="38" height="48"/>
+          <use href="#ui-casa" x="14" y="12" width="52" height="52"/>
+          <use href="#ui-voz" x="734" y="12" width="52" height="52"/>
+        </svg>
+      </div>
+      <figcaption><b>Comeletras</b><span class="voz">Se oye: «¡Tengo hambre! Quiero la A de AVIÓN». Si le da otra, Coco pone cara rara y lo vuelve a pedir, sin ningún «¡mal!».</span><br><span class="prueba">Dale una galleta</span></figcaption>
+    </figure>
+
+    <figure class="pantalla">
+      <div class="dispositivo">
+        <svg viewBox="0 0 800 370" role="img" aria-labelledby="p3s3-t">
+          <title id="p3s3-t">Mapa de islas: vocales, números, formas, colores y emociones, con el monstruo en la de los números</title>
+          <rect width="800" height="370" fill="url(#g-mar-lila)"/>
+          <g fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" opacity=".3"><path d="M60 80 q10 -8 20 0 t20 0"/><path d="M420 70 q10 -8 20 0 t20 0"/><path d="M640 330 q10 -8 20 0 t20 0"/><path d="M200 340 q10 -8 20 0 t20 0"/></g>
+          <path d="M150 248 C176 210 206 186 238 172" fill="none" stroke="#FFFFFF" stroke-width="6" stroke-dasharray="0.1 14" stroke-linecap="round"/>
+          <path d="M306 168 C340 190 372 226 402 250 M466 250 C496 214 530 178 560 162 M622 160 C652 188 680 222 700 244" fill="none" stroke="#FFFFFF" stroke-width="6" stroke-dasharray="0.1 14" stroke-linecap="round" opacity=".45"/>
+          <g transform="translate(112 272)">
+            <ellipse rx="76" ry="36" fill="#F6DFA6"/><ellipse cy="-6" rx="60" ry="26" fill="#93D46E"/>
+            <g fill="#E6E9F2"><ellipse cx="-40" cy="-8" rx="11" ry="10"/><ellipse cx="-20" cy="2" rx="11" ry="10"/><ellipse cx="0" cy="-8" rx="11" ry="10"/><ellipse cx="20" cy="2" rx="11" ry="10"/><ellipse cx="40" cy="-8" rx="11" ry="10"/></g>
+            <g class="t-letra" font-size="15" text-anchor="middle" fill="#1D2B53"><text x="-40" y="-3">A</text><text x="-20" y="7">E</text><text x="0" y="-3">I</text><text x="20" y="7">O</text><text x="40" y="-3">U</text></g>
+            <path d="M52 -14 V-64" stroke="#8A5A3C" stroke-width="4" stroke-linecap="round"/><path d="M52 -64 L80 -56 L52 -48 Z" fill="#2E9E5B"/>
+          </g>
+          <g transform="translate(272 152)">
+            <ellipse rx="96" ry="56" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-dasharray="10 10" opacity=".85"/>
+            <ellipse rx="76" ry="36" fill="#F6DFA6"/><ellipse cy="-6" rx="60" ry="26" fill="#93D46E"/>
+            <g fill="#FFFFFF"><circle cx="-42" cy="-6" r="12"/><circle cx="-16" cy="4" r="12"/><circle cx="10" cy="-6" r="12"/></g>
+            <g class="t-letra" font-size="16" text-anchor="middle" fill="#2C74D8"><text x="-42" y="0">1</text><text x="-16" y="10">2</text><text x="10" y="0">3</text></g>
+            <use href="#coco" x="14" y="-86" width="58" height="64"/>
+          </g>
+          <g transform="translate(434 268)">
+            <ellipse rx="76" ry="36" fill="#F6DFA6"/><ellipse cy="-6" rx="60" ry="26" fill="#93D46E"/>
+            <circle cx="-30" cy="-12" r="13" fill="#E4483C"/><path d="M-6 -2 L6 -27 L18 -2 Z" fill="#F4B623"/><rect x="26" y="-25" width="22" height="22" rx="3" fill="#2C74D8"/>
+          </g>
+          <g transform="translate(590 148)">
+            <ellipse rx="76" ry="36" fill="#F6DFA6"/><ellipse cy="-6" rx="60" ry="26" fill="#93D46E"/>
+            <g fill="none" stroke-width="7" stroke-linecap="round"><path d="M-40 -8 A40 40 0 0 1 40 -8" stroke="#E4483C"/><path d="M-32 -8 A32 32 0 0 1 32 -8" stroke="#F4B623"/><path d="M-24 -8 A24 24 0 0 1 24 -8" stroke="#2E9E5B"/><path d="M-16 -8 A16 16 0 0 1 16 -8" stroke="#2C74D8"/></g>
+          </g>
+          <g transform="translate(718 270)">
+            <ellipse rx="70" ry="34" fill="#F6DFA6"/><ellipse cy="-6" rx="55" ry="24" fill="#93D46E"/>
+            <path d="M-26 -4 V-24 M0 -4 V-30 M26 -4 V-22" stroke="#2E9E5B" stroke-width="3"/>
+            <circle cx="-26" cy="-28" r="11" fill="#F4C430"/><circle cx="0" cy="-34" r="11" fill="#4A90D9"/><circle cx="26" cy="-26" r="11" fill="#3DB06B"/>
+            <path d="M-30 -27 q4 4 8 0 M-4 -30 q4 -3 8 0 M22 -26 q4 3 8 0" fill="none" stroke="#1D2B53" stroke-width="2" stroke-linecap="round"/>
+          </g>
+          <g transform="translate(300 318)">
+            <path d="M-30 0 H30 L21 15 H-21 Z" fill="#FFFFFF"/>
+            <rect x="-2" y="-34" width="4" height="34" fill="#FFFFFF"/>
+            <path d="M4 -32 V-4 H24 Z" fill="#FF8FB1"/>
+          </g>
+          <use href="#ui-casa" x="14" y="12" width="52" height="52"/>
+          <use href="#ui-voz" x="734" y="12" width="52" height="52"/>
+        </svg>
+      </div>
+      <figcaption><b>El mapa de las islas</b><span class="voz">Se oye: «Hoy vamos a la isla de los números». Ya han estado en la de las vocales (bandera verde). Ninguna isla está cerrada; el camino solo sugiere un orden.</span></figcaption>
+    </figure>
+
+    <figure class="pantalla">
+      <div class="dispositivo">
+        <svg viewBox="0 0 800 370" role="img" aria-labelledby="p3s4-t">
+          <title id="p3s4-t">Habla con Coco: ella dice mariposa y Coco lo repite dando una palmada por sílaba</title>
+          <rect width="800" height="370" fill="url(#g-cielo-lila)"/>
+          <ellipse cx="400" cy="292" rx="200" ry="38" fill="#FFFFFF" opacity=".18"/>
+          <use href="#ninia" x="40" y="148" width="130" height="152"/>
+          <path d="M178 196 q10 14 0 28 M192 186 q18 24 0 48" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/>
+          <path d="M366 128 Q362 100 374 96 Q380 110 380 124 Z" fill="#FFD36E"/>
+          <path d="M434 128 Q438 100 426 96 Q420 110 420 124 Z" fill="#FFD36E"/>
+          <ellipse cx="324" cy="150" rx="15" ry="32" fill="#3FBF9F" transform="rotate(-35 324 150)"/>
+          <ellipse cx="476" cy="150" rx="15" ry="32" fill="#3FBF9F" transform="rotate(35 476 150)"/>
+          <use href="#chispa" x="282" y="92" width="24" height="24" fill="#FFD36E"/>
+          <use href="#chispa" x="494" y="92" width="24" height="24" fill="#FFD36E"/>
+          <ellipse cx="400" cy="200" rx="76" ry="84" fill="#4FD1B0"/>
+          <ellipse cx="400" cy="238" rx="45" ry="38" fill="#9BEBD5"/>
+          <g class="ojos"><circle cx="374" cy="168" r="18" fill="#FFFFFF"/><circle cx="426" cy="168" r="18" fill="#FFFFFF"/><circle cx="376" cy="171" r="8" fill="#2A2238"/><circle cx="428" cy="171" r="8" fill="#2A2238"/><circle cx="379" cy="167" r="2.8" fill="#FFFFFF"/><circle cx="431" cy="167" r="2.8" fill="#FFFFFF"/></g>
+          <circle cx="350" cy="194" r="8" fill="#FF7AA8" opacity=".85"/><circle cx="450" cy="194" r="8" fill="#FF7AA8" opacity=".85"/>
+          <ellipse cx="400" cy="206" rx="15" ry="13" fill="#3A2241"/>
+          <ellipse cx="400" cy="213" rx="8" ry="4.5" fill="#FF7FA0"/>
+          <ellipse cx="372" cy="284" rx="22" ry="9" fill="#3FBF9F"/><ellipse cx="428" cy="284" rx="22" ry="9" fill="#3FBF9F"/>
+          <g transform="translate(672 136)">
+            <circle r="58" fill="#FFFFFF" opacity=".92"/>
+            <g transform="scale(1.3)">
+              <ellipse cx="-13" cy="-9" rx="14" ry="12" fill="#F4B623"/><ellipse cx="13" cy="-9" rx="14" ry="12" fill="#F4B623"/>
+              <ellipse cx="-11" cy="11" rx="10" ry="9" fill="#F7962B"/><ellipse cx="11" cy="11" rx="10" ry="9" fill="#F7962B"/>
+              <circle cx="-14" cy="-9" r="4" fill="#FFFFFF" opacity=".7"/><circle cx="14" cy="-9" r="4" fill="#FFFFFF" opacity=".7"/>
+              <rect x="-3.5" y="-20" width="7" height="40" rx="3.5" fill="#3A2A24"/>
+              <path d="M-2 -20 q-4 -8 -9 -10 M2 -20 q4 -8 9 -10" fill="none" stroke="#3A2A24" stroke-width="2" stroke-linecap="round"/>
+            </g>
+          </g>
+          <g transform="translate(214 300)">
+            <rect x="0" y="0" width="96" height="54" rx="14" fill="#E4483C"/>
+            <rect x="108" y="0" width="96" height="54" rx="14" fill="#2C74D8"/>
+            <rect x="216" y="0" width="96" height="54" rx="14" fill="#FFFFFF" opacity=".88"/>
+            <rect x="324" y="0" width="96" height="54" rx="14" fill="#FFFFFF" opacity=".88"/>
+            <g class="t-letra" font-size="30" text-anchor="middle"><text x="48" y="38" fill="#FFFFFF">MA</text><text x="156" y="38" fill="#FFFFFF">RI</text><text x="264" y="38" fill="#1D2B53" opacity=".45">PO</text><text x="372" y="38" fill="#1D2B53" opacity=".45">SA</text></g>
+            <g fill="#FFD36E"><use href="#chispa" x="36" y="-34" width="24" height="24"/><use href="#chispa" x="144" y="-34" width="24" height="24"/></g>
+          </g>
+          <g transform="translate(724 312)">
+            <circle class="latido" r="44" fill="#FFFFFF" opacity=".4"/>
+            <circle r="34" fill="#E4483C"/>
+            <rect x="-8" y="-20" width="16" height="26" rx="8" fill="#FFFFFF"/>
+            <path d="M-14 0 Q-14 16 0 16 Q14 16 14 0 M0 16 V24 M-8 24 H8" fill="none" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round"/>
+          </g>
+          <use href="#ui-casa" x="14" y="12" width="52" height="52"/>
+          <use href="#ui-voz" x="734" y="12" width="52" height="52"/>
+        </svg>
+      </div>
+      <figcaption><b>Habla con Coco</b><span class="voz">Se oye: «¡Dime MARIPOSA!». Coco lo repite con voz graciosa y da una palmada por sílaba: MA-RI-PO-SA, cuatro palmadas. No hace falta reconocer la voz: basta con grabarla y reproducirla.</span></figcaption>
+    </figure>
+  </div>
+
+  <div class="detalle">
+    <div>
+      <h3>Una partida, unos 10 minutos</h3>
+      <ol class="partida">
+        <li><span><b>Saludo.</b> Coco la saluda y le pide algo: «¡tengo hambre de letras!».</span></li>
+        <li><span><b>El mapa.</b> Van a la isla del día.</span></li>
+        <li><span><b>Minijuegos.</b> Tres o cuatro en los que ella le enseña: darle la letra que pide, contarle fresas, construirle la casa con formas, trazarle el camino.</span></li>
+        <li><span><b>Coco crece.</b> Aprende, cambia y gana un gorro o unas gafas.</span></li>
+        <li><span><b>Habla con Coco.</b> Ella dice una palabra y Coco la repite dando palmas por sílabas.</span></li>
+        <li><span><b>A dormir.</b> Coco bosteza: «¡Hasta mañana!». Nunca se pone triste si ella no juega.</span></li>
+      </ol>
+    </div>
+    <div>
+      <h3>Qué aprende</h3>
+      <ul>
+        <li>Vocales y consonantes en mayúscula (M, P, L, S…), el sonido inicial, sílabas con palmadas y trazos.</li>
+        <li>Números hasta 10, formas, colores y series.</li>
+        <li>Emociones (Coco cambia de color según cómo se siente) y cuidar de otro.</li>
+      </ul>
+      <h3>Lo mejor de</h3>
+      <ul>
+        <li><b>Teach Your Monster to Read</b>: crear un monstruo y enseñarle. Nº 6 de pago en España.</li>
+        <li><b>Endless Alphabet</b>: letras que suenan y animaciones para reírse.</li>
+        <li><b>Duolingo ABC</b>: lecciones cortas en una ruta.</li>
+        <li><b>Khan Academy Kids</b>: los premios son ropa para el personaje.</li>
+        <li><b>Talking Tom</b>: repite lo que dices. <b>Funexpected</b>: pistas en vez de soluciones. <b>Leo con Grin</b>: sílabas a la española.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>A favor</h3>
+      <ul>
+        <li>Mucha motivación: cuidarlo y reírse con él.</li>
+        <li>Aprende enseñando, que es cuando más se esfuerzan (el «efecto protegido»).</li>
+        <li>Progresión clara y fácil de ampliar con islas nuevas según avance en clase.</li>
+      </ul>
+      <h3>En contra</h3>
+      <ul class="contra">
+        <li>Si los minijuegos se repiten, sabe a ficha.</li>
+        <li>Hay que cuidar que Coco no presione: ni hambre, ni pena, ni enfermedades si no juega.</li>
+      </ul>
+      <h3>Esfuerzo</h3>
+      <p class="esfuerzo">Medio: un personaje con varias caras y minijuegos que se reutilizan con contenido nuevo. La primera versión tendría el nacimiento, Comeletras con las vocales, contar hasta 5, trazos y un mapa con dos islas.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROPUESTA 4 ============ -->
+<section class="seccion propuesta" id="p4" style="--c:var(--amarillo);--ct:var(--tinta)">
+  <span class="gomet" aria-hidden="true">4</span>
+  <h2>Los cuentos de <span data-nombre-texto>Lucía</span></h2>
+  <p class="propuesta-frase">Cuentos interactivos en los que ella y su familia son los personajes, narrados con la voz de la familia. En cada página hace algo.</p>
+
+  <div class="pantallas">
+    <figure class="pantalla">
+      <div class="dispositivo">
+        <svg viewBox="0 0 800 370" role="img" aria-labelledby="p4s1-t">
+          <title id="p4s1-t">La estantería de cuentos: tres disponibles y tres por llegar envueltos como regalo</title>
+          <rect width="800" height="370" fill="#F6ECDD"/>
+          <rect y="350" width="800" height="20" fill="#E3D2B8"/>
+          <g transform="translate(400 40)">
+            <rect x="-156" y="-22" width="312" height="44" rx="10" fill="#B7814F"/>
+            <rect x="-148" y="-15" width="296" height="30" rx="7" fill="#D9A066"/>
+            <text y="8" text-anchor="middle" class="t-disp" font-size="19" fill="#5A3825" data-nombre data-prefijo="LOS CUENTOS DE " data-maxw="280">LOS CUENTOS DE LUCÍA</text>
+          </g>
+          <rect x="130" y="70" width="540" height="290" rx="10" fill="#B7814F"/>
+          <rect x="146" y="86" width="508" height="258" fill="#9C6A3F"/>
+          <rect x="140" y="210" width="520" height="14" fill="#C99363"/>
+          <rect x="140" y="344" width="520" height="14" fill="#C99363"/>
+          <g transform="translate(172 96)">
+            <rect width="126" height="112" rx="8" fill="#F2C14E"/><rect width="14" height="112" rx="4" fill="#C9962A" opacity=".5"/>
+            <circle cx="72" cy="46" r="20" fill="#FFF3C4"/>
+            <path d="M72 18 V12 M72 80 V74 M44 46 H38 M106 46 H100 M52 26 l-4 -4 M92 66 l4 4 M52 66 l-4 4 M92 26 l4 -4" stroke="#FFF3C4" stroke-width="4" stroke-linecap="round"/>
+            <use href="#ninia" x="84" y="66" width="34" height="40"/>
+            <path d="M100 -6 V30 L108 22 L116 30 V-6 Z" fill="#E4483C"/>
+          </g>
+          <g transform="translate(338 96)">
+            <rect x="-6" y="-6" width="138" height="124" rx="12" fill="none" stroke="#FFFFFF" stroke-width="4" class="latido"/>
+            <rect width="126" height="112" rx="8" fill="#6FA8DC"/><rect width="14" height="112" rx="4" fill="#3F7AB5" opacity=".5"/>
+            <g fill="#FFFFFF"><circle cx="58" cy="40" r="14"/><circle cx="76" cy="34" r="17"/><circle cx="92" cy="42" r="12"/><rect x="48" y="40" width="54" height="14" rx="7"/></g>
+            <g fill="#CFE6FF"><use href="#gota" x="56" y="60" width="9" height="12"/><use href="#gota" x="74" y="66" width="9" height="12"/><use href="#gota" x="92" y="60" width="9" height="12"/></g>
+            <use href="#ninia" x="84" y="66" width="34" height="40"/>
+            <use href="#chispa" x="104" y="-14" width="22" height="22" fill="#FFFFFF"/>
+          </g>
+          <g transform="translate(504 96)">
+            <rect width="126" height="112" rx="8" fill="#E06C5A"/><rect width="14" height="112" rx="4" fill="#B04434" opacity=".5"/>
+            <path d="M40 84 L64 36 L80 36 L104 84 Z" fill="#8A4B2E"/>
+            <path d="M64 36 Q72 22 80 36 Z" fill="#F4B623"/>
+            <g fill="#FFFFFF" opacity=".8"><circle cx="66" cy="20" r="6"/><circle cx="78" cy="14" r="7"/></g>
+            <use href="#ninia" x="84" y="66" width="34" height="40"/>
+          </g>
+          <g transform="translate(172 230)">
+            <g opacity=".55"><rect width="126" height="112" rx="8" fill="#9B7BEA"/><path d="M70 30 a22 22 0 1 0 16 38 a18 18 0 1 1 -16 -38 Z" fill="#FFF3C4"/></g>
+            <rect x="55" width="16" height="112" fill="#F4B623"/><rect y="48" width="126" height="16" fill="#F4B623"/>
+            <path d="M63 56 q-22 -24 -26 -8 q4 12 26 8 q22 4 26 -8 q-4 -16 -26 8 Z" fill="#E89B0C"/>
+          </g>
+          <g transform="translate(338 230)">
+            <g opacity=".55"><rect width="126" height="112" rx="8" fill="#79B97A"/><path d="M63 90 V64" stroke="#5A3825" stroke-width="6"/><circle cx="63" cy="48" r="24" fill="#3E8E4F"/></g>
+            <rect x="55" width="16" height="112" fill="#F4B623"/><rect y="48" width="126" height="16" fill="#F4B623"/>
+            <path d="M63 56 q-22 -24 -26 -8 q4 12 26 8 q22 4 26 -8 q-4 -16 -26 8 Z" fill="#E89B0C"/>
+          </g>
+          <g transform="translate(504 230)">
+            <g opacity=".55"><rect width="126" height="112" rx="8" fill="#F2A7B8"/><path d="M63 84 C30 62 34 32 52 32 C60 32 63 40 63 40 C63 40 66 32 74 32 C92 32 96 62 63 84 Z" fill="#E4483C"/></g>
+            <rect x="55" width="16" height="112" fill="#F4B623"/><rect y="48" width="126" height="16" fill="#F4B623"/>
+            <path d="M63 56 q-22 -24 -26 -8 q4 12 26 8 q22 4 26 -8 q-4 -16 -26 8 Z" fill="#E89B0C"/>
+          </g>
+          <g transform="translate(70 300)"><path d="M-22 0 H22 L16 44 H-16 Z" fill="#E06C5A"/><path d="M0 0 Q-24 -36 -32 -20 Q-20 -4 0 0 Q4 -44 16 -40 Q18 -14 0 0 Q30 -26 36 -12 Q24 2 0 0 Z" fill="#79B97A"/></g>
+          <g transform="translate(730 326)"><circle r="22" fill="#2C74D8"/><path d="M-22 0 Q0 -10 22 0 M0 -22 Q-10 0 0 22" fill="none" stroke="#FFFFFF" stroke-width="3"/></g>
+          <use href="#ui-mano" x="420" y="160" width="40" height="50"/>
+          <use href="#ui-casa" x="14" y="12" width="52" height="52"/>
+          <use href="#ui-voz" x="734" y="12" width="52" height="52"/>
+        </svg>
+      </div>
+      <figcaption><b>La estantería</b><span class="voz">Se oye: «¿Qué cuento leemos hoy?». El amarillo ya está leído (cinta roja) y el azul es nuevo. Los de abajo llegan envueltos: cada cuento nuevo puede ser un regalo tuyo.</span></figcaption>
+    </figure>
+
+    <figure class="pantalla">
+      <div class="dispositivo">
+        <svg viewBox="0 0 800 370" role="img" aria-labelledby="p4s2-t">
+          <title id="p4s2-t">Página del cuento: ella con chubasquero y paraguas, un pajarito triste y gotas para contar</title>
+          <rect width="800" height="370" fill="url(#g-lluvia)"/>
+          <g fill="#FFFFFF" opacity=".75"><ellipse cx="180" cy="46" rx="90" ry="26"/><ellipse cx="250" cy="34" rx="60" ry="24"/><ellipse cx="560" cy="40" rx="110" ry="28"/><ellipse cx="660" cy="30" rx="60" ry="22"/></g>
+          <g fill="#9FBFDF" opacity=".8">
+            <use href="#gota" x="110" y="96" width="10" height="13"/><use href="#gota" x="180" y="140" width="10" height="13"/><use href="#gota" x="330" y="80" width="10" height="13"/><use href="#gota" x="470" y="120" width="10" height="13"/><use href="#gota" x="560" y="90" width="10" height="13"/><use href="#gota" x="740" y="110" width="10" height="13"/><use href="#gota" x="90" y="200" width="10" height="13"/><use href="#gota" x="560" y="200" width="10" height="13"/><use href="#gota" x="730" y="240" width="10" height="13"/><use href="#gota" x="350" y="190" width="10" height="13"/>
+          </g>
+          <path d="M0 292 Q200 262 400 286 T800 280 V370 H0 Z" fill="#A8C69F"/>
+          <path d="M0 330 Q200 310 400 326 T800 322 V370 H0 Z" fill="#94B98B"/>
+          <ellipse cx="452" cy="318" rx="52" ry="9" fill="#9FC3E3"/>
+          <ellipse cx="128" cy="336" rx="40" ry="7" fill="#9FC3E3"/>
+          <use href="#ninia-entera" x="210" y="146" width="112" height="196" style="--ropa:#F4C430"/>
+          <path d="M290 172 V276 q0 10 -9 10" fill="none" stroke="#3A2A24" stroke-width="5" stroke-linecap="round"/>
+          <path d="M202 172 A88 56 0 0 1 378 172 Q356 160 334 172 Q312 160 290 172 Q268 160 246 172 Q224 160 202 172 Z" fill="#E4483C"/>
+          <path d="M290 116 V108" stroke="#3A2A24" stroke-width="5" stroke-linecap="round"/>
+          <path d="M540 244 Q600 196 676 236 Q612 226 540 244 Z" fill="#79B97A"/>
+          <path d="M600 222 Q604 250 600 270" fill="none" stroke="#5E9E5F" stroke-width="4"/>
+          <g transform="translate(606 286)">
+            <circle r="26" fill="#86A9CF"/>
+            <ellipse cy="8" rx="15" ry="12" fill="#C9DAEE"/>
+            <path d="M-26 0 Q-36 14 -22 20 Q-24 8 -18 0 Z" fill="#6F92BA"/>
+            <path d="M-12 -6 q4 3 8 0 M4 -6 q4 3 8 0" fill="none" stroke="#22314F" stroke-width="2.4" stroke-linecap="round"/>
+            <path d="M-4 2 L4 2 L0 8 Z" fill="#F4A23C"/>
+            <path d="M-12 0 q-3 5 0 7 q3 -2 0 -7 Z" fill="#CFE6FF"/>
+            <path d="M-6 26 v6 M6 26 v6" stroke="#F4A23C" stroke-width="3" stroke-linecap="round"/>
+          </g>
+          <g fill="#2F7BD3" stroke="#FFFFFF" stroke-width="1.6">
+            <use href="#gota" x="404" y="88" width="30" height="38"/><use href="#gota" x="480" y="158" width="30" height="38"/><use href="#gota" x="394" y="218" width="30" height="38"/><use href="#gota" x="634" y="100" width="30" height="38"/><use href="#gota" x="698" y="178" width="30" height="38"/>
+          </g>
+          <g class="t-letra" font-size="16" text-anchor="middle">
+            <circle cx="442" cy="90" r="12" fill="#FFFFFF"/><text x="442" y="96" fill="#1D2B53">1</text>
+            <circle cx="518" cy="160" r="12" fill="#FFFFFF"/><text x="518" y="166" fill="#1D2B53">2</text>
+            <circle cx="432" cy="220" r="12" fill="#FFFFFF"/><text x="432" y="226" fill="#1D2B53">3</text>
+          </g>
+          <g transform="translate(400 352)" fill="#FFFFFF" opacity=".85"><circle cx="-63" r="5"/><circle cx="-45" r="5"/><circle cx="-27" r="7" fill="#3A3557"/><circle cx="-9" r="5"/><circle cx="9" r="5"/><circle cx="27" r="5"/><circle cx="45" r="5"/><circle cx="63" r="5"/></g>
+          <path d="M800 304 L800 370 L736 370 Q758 326 800 304 Z" fill="#F6F0E4"/>
+          <path d="M736 370 Q758 326 800 304" fill="none" stroke="#D9CDB6" stroke-width="2"/>
+          <use href="#ui-casa" x="14" y="12" width="52" height="52"/>
+          <use href="#ui-voz" x="734" y="12" width="52" height="52"/>
+        </svg>
+      </div>
+      <figcaption><b>Una página del cuento</b><span class="voz">Con la voz de la tía: «<span data-nombre-texto>Lucía</span> vio a Pajarito muy triste bajo la lluvia… ¿Contamos las gotas gordas?». Lleva tres contadas. La esquina doblada pasa la página.</span></figcaption>
+    </figure>
+
+    <figure class="pantalla">
+      <div class="dispositivo">
+        <svg viewBox="0 0 800 370" role="img" aria-labelledby="p4s3-t">
+          <title id="p4s3-t">Emociones y calma: elegir cómo se siente el pajarito y respirar inflando un globo</title>
+          <rect width="400" height="370" fill="#DCE9F5"/>
+          <rect x="400" width="400" height="370" fill="#E3F1E0"/>
+          <path d="M400 0 V370" stroke="#FFFFFF" stroke-width="6" stroke-dasharray="2 14" stroke-linecap="round"/>
+          <g>
+            <circle cx="200" cy="146" r="76" fill="#86A9CF"/>
+            <ellipse cx="200" cy="180" rx="46" ry="36" fill="#C9DAEE"/>
+            <path d="M128 150 Q110 192 152 208 Q140 178 150 150 Z" fill="#6F92BA"/>
+            <path d="M272 150 Q290 192 248 208 Q260 178 250 150 Z" fill="#6F92BA"/>
+            <path d="M192 72 q6 -18 18 -14 q-8 6 -6 16 Z" fill="#6F92BA"/>
+            <circle cx="176" cy="128" r="8" fill="#22314F"/><circle cx="224" cy="128" r="8" fill="#22314F"/>
+            <circle cx="179" cy="125" r="2.6" fill="#FFFFFF"/><circle cx="227" cy="125" r="2.6" fill="#FFFFFF"/>
+            <path d="M162 116 L182 108 M238 116 L218 108" stroke="#22314F" stroke-width="3.6" stroke-linecap="round"/>
+            <path d="M190 142 L210 142 L200 156 Z" fill="#F4A23C"/>
+            <path d="M168 140 q-6 9 0 13 q6 -4 0 -13 Z" fill="#CFE6FF"/>
+          </g>
+          <g transform="translate(70 298)"><circle r="30" fill="#F4C430"/><path d="M-10 -6 q4 -6 8 0 M2 -6 q4 -6 8 0" fill="none" stroke="#5A3A00" stroke-width="2.6" stroke-linecap="round"/><path d="M-10 4 Q0 18 10 4 Z" fill="#5A3A00"/></g>
+          <g transform="translate(150 298)"><circle r="36" fill="none" stroke="#1D2B53" stroke-width="4"/><circle r="30" fill="#4A90D9"/><path d="M-13 -9 L-5 -12 M13 -9 L5 -12" stroke="#1B3B66" stroke-width="2.6" stroke-linecap="round"/><circle cx="-8" cy="-2" r="3" fill="#1B3B66"/><circle cx="8" cy="-2" r="3" fill="#1B3B66"/><path d="M-7 13 Q0 6 7 13" fill="none" stroke="#1B3B66" stroke-width="2.6" stroke-linecap="round"/><circle cx="26" cy="-26" r="11" fill="#2E9E5B"/><path d="M21 -26 l3.5 3.5 l6 -6" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></g>
+          <g transform="translate(230 298)"><circle r="30" fill="#E4483C"/><path d="M-14 -12 L-5 -7 M14 -12 L5 -7" stroke="#5A1410" stroke-width="3" stroke-linecap="round"/><circle cx="-8" cy="-1" r="3" fill="#5A1410"/><circle cx="8" cy="-1" r="3" fill="#5A1410"/><path d="M-8 13 Q0 7 8 13" fill="none" stroke="#5A1410" stroke-width="2.6" stroke-linecap="round"/></g>
+          <g transform="translate(310 298)"><circle r="30" fill="#8E6CC9"/><circle cx="-8" cy="-4" r="6.5" fill="#FFFFFF"/><circle cx="8" cy="-4" r="6.5" fill="#FFFFFF"/><circle cx="-8" cy="-3" r="2.4" fill="#2A1A4A"/><circle cx="8" cy="-3" r="2.4" fill="#2A1A4A"/><path d="M-9 12 q2.25 -3 4.5 0 t4.5 0 t4.5 0 t4.5 0" fill="none" stroke="#2A1A4A" stroke-width="2.2" stroke-linecap="round"/></g>
+          <circle cx="600" cy="136" r="118" fill="none" stroke="#79B97A" stroke-width="3" opacity=".18"/>
+          <circle cx="600" cy="136" r="96" fill="none" stroke="#79B97A" stroke-width="3" opacity=".28"/>
+          <g class="globo">
+            <path d="M600 62 C550 62 538 118 554 150 C566 176 588 194 600 196 C612 194 634 176 646 150 C662 118 650 62 600 62 Z" fill="#79B97A"/>
+            <ellipse cx="580" cy="100" rx="10" ry="18" fill="#FFFFFF" opacity=".35"/>
+            <path d="M594 196 H606 L600 204 Z" fill="#5E9E5F"/>
+          </g>
+          <path d="M600 204 q-10 20 0 40 t0 26" fill="none" stroke="#3A3557" stroke-width="2"/>
+          <g transform="translate(600 306)" data-globo role="button" tabindex="0" aria-label="Mantén pulsado para inflar el globo; suelta para deshincharlo">
+            <circle r="36" fill="#FFFFFF" filter="url(#sombra)"/>
+            <circle r="36" fill="none" stroke="#DDEBD9" stroke-width="6"/>
+            <circle class="aro" r="36" fill="none" stroke="#2E9E5B" stroke-width="6" stroke-linecap="round" transform="rotate(-90)"/>
+            <use href="#ui-mano" x="-16" y="-20" width="32" height="40"/>
+          </g>
+          <use href="#ui-casa" x="14" y="12" width="52" height="52"/>
+          <use href="#ui-voz" x="734" y="12" width="52" height="52"/>
+        </svg>
+      </div>
+      <figcaption><b>¿Cómo se siente Pajarito?</b><span class="voz">Se oye: «¿Cómo se siente Pajarito?» (triste, azul). «¿Le ayudamos a calmarse? Mantén el dedo y el globo se hincha; suelta y se deshincha». Es la respiración del rincón de la calma.</span><br><span class="prueba">Mantén pulsado el botón</span></figcaption>
+    </figure>
+
+    <figure class="pantalla">
+      <div class="dispositivo">
+        <svg viewBox="0 0 800 370" role="img" aria-labelledby="p4s4-t">
+          <title id="p4s4-t">Zona de mayores: grabar la narración de cada página con la voz de la familia</title>
+          <rect width="800" height="370" fill="#F6F7FB"/>
+          <rect width="800" height="62" fill="#FFFFFF"/>
+          <path d="M0 62 H800" stroke="#E3E7F0" stroke-width="2"/>
+          <g transform="translate(34 31)"><path d="M-7 -3 V-8 a7 7 0 0 1 14 0 V-3" fill="none" stroke="#1D2B53" stroke-width="3"/><rect x="-11" y="-4" width="22" height="17" rx="4" fill="#1D2B53"/></g>
+          <text x="58" y="39" class="t-ui" font-size="22" fill="#1D2B53">Zona de mayores</text>
+          <text x="776" y="39" text-anchor="end" class="t-texto" font-size="18" fill="#46526F">Cuento 2: El día de lluvia</text>
+          <g transform="translate(24 84)">
+            <rect width="392" height="56" rx="12" fill="#FFFFFF" stroke="#E3E7F0" stroke-width="2"/>
+            <rect x="10" y="8" width="56" height="40" rx="6" fill="#B9D3EA"/>
+            <text x="82" y="35" class="t-ui" font-size="19" fill="#1D2B53">Página 1</text>
+            <rect x="288" y="14" width="92" height="28" rx="14" fill="#E3F4EA"/><text x="334" y="34" text-anchor="middle" class="t-ui" font-size="15" fill="#1F7A44">Grabada</text>
+          </g>
+          <g transform="translate(24 152)">
+            <rect width="392" height="56" rx="12" fill="#FFFFFF" stroke="#E3E7F0" stroke-width="2"/>
+            <rect x="10" y="8" width="56" height="40" rx="6" fill="#A8C69F"/>
+            <text x="82" y="35" class="t-ui" font-size="19" fill="#1D2B53">Página 2</text>
+            <rect x="288" y="14" width="92" height="28" rx="14" fill="#E3F4EA"/><text x="334" y="34" text-anchor="middle" class="t-ui" font-size="15" fill="#1F7A44">Grabada</text>
+          </g>
+          <g transform="translate(24 220)">
+            <rect width="392" height="56" rx="12" fill="#FFFFFF" stroke="#E4483C" stroke-width="3"/>
+            <rect x="10" y="8" width="56" height="40" rx="6" fill="#86A9CF"/>
+            <text x="82" y="35" class="t-ui" font-size="19" fill="#1D2B53">Página 3</text>
+            <rect x="288" y="14" width="92" height="28" rx="14" fill="#FDE3E0"/><text x="334" y="34" text-anchor="middle" class="t-ui" font-size="15" fill="#B7332A">Grabando</text>
+          </g>
+          <g transform="translate(24 288)">
+            <rect width="392" height="56" rx="12" fill="#FFFFFF" stroke="#E3E7F0" stroke-width="2"/>
+            <rect x="10" y="8" width="56" height="40" rx="6" fill="#DCE9F5"/>
+            <text x="82" y="35" class="t-ui" font-size="19" fill="#1D2B53">Página 4</text>
+            <rect x="288" y="14" width="92" height="28" rx="14" fill="#EEF1F7"/><text x="334" y="34" text-anchor="middle" class="t-ui" font-size="15" fill="#46526F">Falta</text>
+          </g>
+          <rect x="440" y="84" width="336" height="260" rx="16" fill="#FFFFFF" stroke="#E3E7F0" stroke-width="2"/>
+          <text x="462" y="124" class="t-texto" font-size="17" fill="#46526F">Voz de</text>
+          <g class="t-ui" font-size="17" text-anchor="middle">
+            <rect x="524" y="104" width="64" height="32" rx="16" fill="#1D2B53"/><text x="556" y="126" fill="#FFFFFF">Tía</text>
+            <rect x="596" y="104" width="76" height="32" rx="16" fill="#FFFFFF" stroke="#CFDCEC" stroke-width="2"/><text x="634" y="126" fill="#1D2B53">Mamá</text>
+            <rect x="680" y="104" width="80" height="32" rx="16" fill="#FFFFFF" stroke="#CFDCEC" stroke-width="2"/><text x="720" y="126" fill="#1D2B53">Abuelo</text>
+          </g>
+          <g fill="#E4483C" opacity=".75">
+            <rect x="468" y="210" width="6" height="22" rx="3"/><rect x="480" y="202" width="6" height="38" rx="3"/><rect x="492" y="194" width="6" height="54" rx="3"/><rect x="504" y="206" width="6" height="30" rx="3"/><rect x="516" y="198" width="6" height="46" rx="3"/><rect x="528" y="212" width="6" height="18" rx="3"/><rect x="540" y="204" width="6" height="34" rx="3"/>
+            <rect x="672" y="204" width="6" height="34" rx="3"/><rect x="684" y="196" width="6" height="50" rx="3"/><rect x="696" y="208" width="6" height="26" rx="3"/><rect x="708" y="200" width="6" height="42" rx="3"/><rect x="720" y="210" width="6" height="22" rx="3"/><rect x="732" y="204" width="6" height="34" rx="3"/><rect x="744" y="212" width="6" height="18" rx="3"/>
+          </g>
+          <g transform="translate(608 221)">
+            <circle r="50" fill="#FDE3E0"/>
+            <circle r="38" fill="#E4483C"/>
+            <rect x="-12" y="-12" width="24" height="24" rx="5" fill="#FFFFFF"/>
+          </g>
+          <text x="608" y="312" text-anchor="middle" class="t-ui" font-size="20" fill="#1D2B53">0:07</text>
+        </svg>
+      </div>
+      <figcaption><b>Grabar las voces (zona de mayores)</b><span class="voz">Esta pantalla la usas tú: eliges quién lee y grabas la narración página a página. Es la única con texto, y queda tras el candado.</span></figcaption>
+    </figure>
+  </div>
+
+  <div class="detalle">
+    <div>
+      <h3>Una partida, unos 10 minutos</h3>
+      <ol class="partida">
+        <li><span><b>La estantería.</b> Elige un cuento; los nuevos llegan como regalo.</span></li>
+        <li><span><b>El cuento.</b> De seis a ocho páginas narradas con la voz de la familia. En cada una hace algo: buscar, contar, arrastrar o trazar un camino.</span></li>
+        <li><span><b>Emociones.</b> ¿Cómo se siente el personaje? Y, si toca, respirar con el globo.</span></li>
+        <li><span><b>El final.</b> Ella elige cómo acaba.</span></li>
+        <li><span><b>Misión.</b> Algo para hacer después, fuera de la pantalla.</span></li>
+      </ol>
+      <p class="temporada">Temporada 1, «<span data-nombre-texto>Lucía</span> y los colores revueltos»: un viento ha revuelto los colores del pueblo y en cada cuento recupera uno. Amarillo (alegría), azul (tristeza), rojo (enfado), morado (miedo), verde (calma) y rosa (cariño).</p>
+    </div>
+    <div>
+      <h3>Qué aprende</h3>
+      <ul>
+        <li>Reconocer y nombrar emociones, calmarse y ponerse en el lugar del otro.</li>
+        <li>Escuchar, vocabulario, el orden de una historia e inventar finales.</li>
+        <li>Contar, colores, el día y la noche, el tiempo.</li>
+      </ul>
+      <h3>Lo mejor de</h3>
+      <ul>
+        <li><b>Los estudios de Kucirkova</b>: con su nombre y su foto, más risas y más palabras aprendidas.</li>
+        <li><b>El aula</b>: emociones por colores, con personajes propios.</li>
+        <li><b>Applaydu</b>: inventar cuentos. <b>Khan Academy Kids</b>: libros leídos en voz alta.</li>
+        <li><b>Pok Pok</b>: calma. <b>Bluey</b>: situaciones de familia.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>A favor</h3>
+      <ul>
+        <li>La más personal: ella y su familia son los personajes y la voz es la vuestra.</li>
+        <li>La mejor para jugar juntos.</li>
+        <li>Un cuento nuevo puede ser tu regalo cada cierto tiempo.</li>
+      </ul>
+      <h3>En contra</h3>
+      <ul class="contra">
+        <li>Menos rejugable una vez conocidos, aunque a los 4 años repiten cuentos sin parar.</li>
+        <li>Cada cuento pide ilustraciones y grabar la narración.</li>
+      </ul>
+      <h3>Esfuerzo</h3>
+      <p class="esfuerzo">Medio en programación y alto en contenido. La primera versión tendría el lector de cuentos, dos cuentos y la grabación de voces.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMPARATIVA ============ -->
+<section class="seccion" id="comparar">
+  <span class="gomet" style="--c:var(--tinta)" aria-hidden="true"></span>
+  <h2>Las cuatro, lado a lado</h2>
+  <div class="tabla-scroll">
+    <table class="comparativa">
+      <thead>
+        <tr>
+          <th scope="col"><span class="sr">Criterio</span></th>
+          <th scope="col" style="--c:var(--rojo)"><span class="gomet-mini">1</span>¡Buenos días, cole!</th>
+          <th scope="col" style="--c:var(--verde)"><span class="gomet-mini">2</span>La isla</th>
+          <th scope="col" style="--c:var(--azul)"><span class="gomet-mini">3</span>Mi monstruo</th>
+          <th scope="col" style="--c:var(--amarillo);--ct:var(--tinta)"><span class="gomet-mini">4</span>Los cuentos</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">Letras y números</th>
+          <td style="--c:var(--rojo)"><span class="puntos"><i class="si"></i><i class="si"></i><i class="si"></i><i class="si"></i><i></i></span><span class="sr">4 de 5</span></td>
+          <td style="--c:var(--verde)"><span class="puntos"><i class="si"></i><i class="si"></i><i></i><i></i><i></i></span><span class="sr">2 de 5</span></td>
+          <td style="--c:var(--azul)"><span class="puntos"><i class="si"></i><i class="si"></i><i class="si"></i><i class="si"></i><i class="si"></i></span><span class="sr">5 de 5</span></td>
+          <td style="--c:var(--amarillo)"><span class="puntos"><i class="si"></i><i class="si"></i><i class="si"></i><i></i><i></i></span><span class="sr">3 de 5</span></td></tr>
+        <tr><th scope="row">Emociones y hábitos</th>
+          <td style="--c:var(--rojo)"><span class="puntos"><i class="si"></i><i class="si"></i><i class="si"></i><i class="si"></i><i></i></span><span class="sr">4 de 5</span></td>
+          <td style="--c:var(--verde)"><span class="puntos"><i class="si"></i><i class="si"></i><i class="si"></i><i class="si"></i><i></i></span><span class="sr">4 de 5</span></td>
+          <td style="--c:var(--azul)"><span class="puntos"><i class="si"></i><i class="si"></i><i class="si"></i><i></i><i></i></span><span class="sr">3 de 5</span></td>
+          <td style="--c:var(--amarillo)"><span class="puntos"><i class="si"></i><i class="si"></i><i class="si"></i><i class="si"></i><i class="si"></i></span><span class="sr">5 de 5</span></td></tr>
+        <tr><th scope="row">Ganas de volver a jugar</th>
+          <td style="--c:var(--rojo)"><span class="puntos"><i class="si"></i><i class="si"></i><i class="si"></i><i></i><i></i></span><span class="sr">3 de 5</span></td>
+          <td style="--c:var(--verde)"><span class="puntos"><i class="si"></i><i class="si"></i><i class="si"></i><i class="si"></i><i class="si"></i></span><span class="sr">5 de 5</span></td>
+          <td style="--c:var(--azul)"><span class="puntos"><i class="si"></i><i class="si"></i><i class="si"></i><i class="si"></i><i></i></span><span class="sr">4 de 5</span></td>
+          <td style="--c:var(--amarillo)"><span class="puntos"><i class="si"></i><i class="si"></i><i class="si"></i><i></i><i></i></span><span class="sr">3 de 5</span></td></tr>
+        <tr><th scope="row">Para jugar juntos</th>
+          <td style="--c:var(--rojo)"><span class="puntos"><i class="si"></i><i class="si"></i><i class="si"></i><i></i><i></i></span><span class="sr">3 de 5</span></td>
+          <td style="--c:var(--verde)"><span class="puntos"><i class="si"></i><i class="si"></i><i class="si"></i><i class="si"></i><i></i></span><span class="sr">4 de 5</span></td>
+          <td style="--c:var(--azul)"><span class="puntos"><i class="si"></i><i class="si"></i><i class="si"></i><i></i><i></i></span><span class="sr">3 de 5</span></td>
+          <td style="--c:var(--amarillo)"><span class="puntos"><i class="si"></i><i class="si"></i><i class="si"></i><i class="si"></i><i class="si"></i></span><span class="sr">5 de 5</span></td></tr>
+        <tr><th scope="row">Toque personal</th>
+          <td style="--c:var(--rojo)"><span class="puntos"><i class="si"></i><i class="si"></i><i class="si"></i><i class="si"></i><i></i></span><span class="sr">4 de 5</span></td>
+          <td style="--c:var(--verde)"><span class="puntos"><i class="si"></i><i class="si"></i><i class="si"></i><i></i><i></i></span><span class="sr">3 de 5</span></td>
+          <td style="--c:var(--azul)"><span class="puntos"><i class="si"></i><i class="si"></i><i class="si"></i><i class="si"></i><i></i></span><span class="sr">4 de 5</span></td>
+          <td style="--c:var(--amarillo)"><span class="puntos"><i class="si"></i><i class="si"></i><i class="si"></i><i class="si"></i><i class="si"></i></span><span class="sr">5 de 5</span></td></tr>
+        <tr><th scope="row">Facilidad de hacerla</th>
+          <td style="--c:var(--rojo)"><span class="puntos"><i class="si"></i><i class="si"></i><i class="si"></i><i></i><i></i></span><span class="sr">3 de 5</span></td>
+          <td style="--c:var(--verde)"><span class="puntos"><i class="si"></i><i class="si"></i><i></i><i></i><i></i></span><span class="sr">2 de 5</span></td>
+          <td style="--c:var(--azul)"><span class="puntos"><i class="si"></i><i class="si"></i><i class="si"></i><i class="si"></i><i></i></span><span class="sr">4 de 5</span></td>
+          <td style="--c:var(--amarillo)"><span class="puntos"><i class="si"></i><i class="si"></i><i class="si"></i><i></i><i></i></span><span class="sr">3 de 5</span></td></tr>
+        <tr><th scope="row">Primera versión</th>
+          <td>Llegada, asamblea, dos rincones y salida</td>
+          <td>Casa, huerto, mercado y libro de pegatinas</td>
+          <td>Nacimiento, vocales, contar hasta 5 y dos islas</td>
+          <td>Lector de cuentos, dos cuentos y grabación de voces</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="recomendacion" style="--c:var(--azul)">
+    <span class="gomet" aria-hidden="true">3</span>
+    <h3>Mi recomendación: Mi monstruo Coco, con las cuatro piezas comunes</h3>
+    <div>
+      <p>Es la que mejor junta lo que divierte a los 4 años (cuidar a alguien y reírse con él) con lo que trabaja en el cole (letras, sílabas y números). Se apoya en lo que mejor funciona en el mercado y en la investigación: aprender enseñando. Y se puede hacer por partes: primero las vocales y los números hasta 5, y después islas nuevas según avance en clase.</p>
+      <p>Si lo que más pesa es el regalo emocional, la 4. Si le está costando adaptarse al cole, la 1. Y se pueden mezclar: Coco puede ir al cole con ella o protagonizar los cuentos.</p>
+    </div>
+  </div>
+
+  <div class="siguiente panel">
+    <h3>Para empezar</h3>
+    <p>Dime cuál eliges, o qué mezcla. Y cuando puedas: cómo se llama, qué le encanta (animales, colores, personajes, juguetes) y en qué aparato jugará (móvil o tablet, Android o iPhone/iPad). Con eso diseño el personaje y la primera versión.</p>
+  </div>
+</section>
+
+<!-- ============ FUENTES ============ -->
+<section class="seccion" id="fuentes">
+  <span class="gomet" style="--c:var(--tinta)" aria-hidden="true"></span>
+  <h2>Fuentes</h2>
+  <p>El informe completo, con todas las cifras y enlaces, está en <a href="investigacion.md">investigacion.md</a>. Las principales:</p>
+  <ul class="fuentes">
+    <li><a href="https://itunes.apple.com/es/rss/topfreeapplications/limit=100/genre=6017/json">Listas del App Store de España, Educación (2-11-2026)</a></li>
+    <li><a href="https://www.skwigly.co.uk/2026-kidscreen-awards-winners/">Kidscreen Awards 2026</a> y <a href="https://www.licenseglobal.com/streaming-tv/kidscreen-announces-2025-awards-winners">2025</a></li>
+    <li><a href="https://www.commonsensemedia.org/app-reviews/khan-academy-kids">Khan Academy Kids en Common Sense Media</a></li>
+    <li><a href="https://marketing4ecommerce.net/que-es-lingokids/">Lingokids: cifras de 2025</a></li>
+    <li><a href="https://playpokpok.com/blog/pok-pok-playroom-is-a-2021-apple-design-award-winner-cf07e4b1f450/">Pok Pok y su Apple Design Award</a></li>
+    <li><a href="https://www.educationalappstore.com/app/teach-your-monster-to-read">Teach Your Monster to Read</a></li>
+    <li><a href="https://www.boe.es/buscar/doc.php?id=BOE-A-2022-1654">Real Decreto 95/2022 (BOE)</a></li>
+    <li><a href="https://www.actiludis.com/wp-content/uploads/2016/07/SECUENCIA-DE-NUMERACIO%CC%81N-ABN-EN-4-AN%CC%83OS-NUMEROS.pdf">Secuencia de numeración ABN en 4 años</a></li>
+    <li><a href="https://journals.sagepub.com/doi/10.1177/1529100615569721">Hirsh-Pasek y otros (2015): los cuatro pilares</a></li>
+    <li><a href="https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2793493">Radesky y otros (2022): diseño manipulador</a></li>
+    <li><a href="https://www.researchgate.net/publication/262232193_Reading_personalized_books_with_preschool_children_enhances_their_word_acquisition">Kucirkova y otros (2014): libros personalizados</a></li>
+    <li><a href="https://aaalab.stanford.edu/assets/papers/2009/Protege_Effect_Teachable_Agents.pdf">Chase y otros (2009): el efecto protegido</a></li>
+    <li><a href="https://www.nngroup.com/articles/children-ux-physical-development/">Nielsen Norman Group: diseñar para niños</a></li>
+    <li><a href="https://plandigitalfamiliar.aeped.es/plandigitalfamiliar.php">AEP: Plan Digital Familiar</a></li>
+  </ul>
+  <footer>Investigación hecha el 2 de noviembre de 2026. Las pantallas son maquetas para elegir una propuesta, no el arte final.</footer>
+</section>
+
+</div>
+
+<script>
+(() => {
+  const NS = 'http://www.w3.org/2000/svg';
+  const COLORES = ['#E4483C', '#2C74D8', '#2E9E5B', '#F4B623', '#9B6BD3'];
+  const POR_DEFECTO = 'LUCÍA';
+  const CLAVE = 'juego-sobrina:nombre';
+  const entrada = document.getElementById('nombre');
+  const portada = document.getElementById('portada-nombre');
+
+  const limpiar = v => (v || '').normalize('NFC').replace(/\s+/g, ' ').trim().slice(0, 16).toLocaleUpperCase('es-ES');
+  const capitalizar = n => n.toLocaleLowerCase('es-ES').replace(/(^|[\s-])(\p{L})/gu, (m, a, b) => a + b.toLocaleUpperCase('es-ES'));
+
+  function ajustar(el) {
+    el.removeAttribute('textLength');
+    el.removeAttribute('lengthAdjust');
+    const max = Number(el.dataset.maxw);
+    if (!max) return;
+    try {
+      if (el.getComputedTextLength() > max) {
+        el.setAttribute('textLength', max);
+        el.setAttribute('lengthAdjust', 'spacingAndGlyphs');
+      }
+    } catch (e) { /* aún no se ha pintado */ }
+  }
+
+  function pintarPortada(nombre, animar) {
+    portada.textContent = '';
+    [...nombre].forEach((letra, i) => {
+      const t = document.createElementNS(NS, 'tspan');
+      t.textContent = letra;
+      t.setAttribute('fill', COLORES[i % COLORES.length]);
+      portada.appendChild(t);
+    });
+    const tam = Math.min(230, 980 / (Math.max(nombre.length, 1) * 0.72));
+    portada.setAttribute('font-size', Math.round(tam));
+    // La pauta se ajusta al tamaño de la letra: la mayúscula de Andika mide unos 0,69 em.
+    const base = 210, alto = tam * 0.69;
+    const ponerY = (sel, y) => { const l = portada.ownerSVGElement.querySelector(sel); l.setAttribute('y1', y.toFixed(1)); l.setAttribute('y2', y.toFixed(1)); };
+    ponerY('.pauta-arriba', base - alto);
+    ponerY('.pauta-medio', base - alto / 2);
+    ponerY('.pauta-abajo', base + tam * 0.17);
+    if (animar) {
+      portada.classList.remove('trazando');
+      void portada.getBBox();
+      portada.classList.add('trazando');
+    }
+  }
+
+  function aplicar(nombre, animar) {
+    pintarPortada(nombre, animar);
+    document.querySelectorAll('[data-nombre]').forEach(el => {
+      el.textContent = (el.dataset.prefijo || '') + nombre;
+      ajustar(el);
+    });
+    const bonito = capitalizar(nombre);
+    document.querySelectorAll('[data-nombre-texto]').forEach(el => { el.textContent = bonito; });
+    document.title = 'Un juego para ' + bonito + ': investigación y propuestas';
+  }
+
+  let guardado = null;
+  try { guardado = localStorage.getItem(CLAVE); } catch (e) { /* sin almacenamiento */ }
+  const inicial = limpiar(guardado) || POR_DEFECTO;
+  entrada.value = inicial;
+  aplicar(inicial, true);
+
+  let espera;
+  entrada.addEventListener('input', () => {
+    clearTimeout(espera);
+    espera = setTimeout(() => {
+      const n = limpiar(entrada.value) || POR_DEFECTO;
+      aplicar(n, true);
+      try { localStorage.setItem(CLAVE, n); } catch (e) { /* sin almacenamiento */ }
+    }, 350);
+  });
+
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(() => document.querySelectorAll('[data-maxw]').forEach(ajustar));
+  }
+
+  const demos = {
+    lista(el) { el.ownerSVGElement.classList.toggle('hecho'); },
+    bote(el) {
+      const svg = el.ownerSVGElement;
+      const ficha = svg.querySelector('.ficha');
+      ficha.style.transform = `translate(${el.dataset.x}px, ${el.dataset.y}px) scale(.62)`;
+      svg.classList.add('hecho');
+      svg.querySelectorAll('.bote').forEach(b => b.classList.toggle('elegido', b === el));
+    },
+    botella(el) { el.ownerSVGElement.classList.toggle('hecho'); },
+    galleta(el) {
+      const svg = el.ownerSVGElement;
+      if ('ok' in el.dataset) {
+        if (svg.classList.contains('comiendo')) return;
+        svg.classList.add('comiendo');
+        setTimeout(() => svg.classList.remove('comiendo'), 2600);
+      } else {
+        el.classList.remove('meneo');
+        void el.getBBox();
+        el.classList.add('meneo');
+        svg.classList.add('raro');
+        clearTimeout(svg._raro);
+        svg._raro = setTimeout(() => svg.classList.remove('raro'), 1100);
+      }
+    }
+  };
+
+  document.querySelectorAll('[data-demo]').forEach(el => {
+    const lanzar = () => demos[el.dataset.demo](el);
+    el.addEventListener('click', lanzar);
+    el.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); lanzar(); }
+    });
+  });
+
+  document.querySelectorAll('[data-globo]').forEach(el => {
+    const svg = el.ownerSVGElement;
+    const inflar = e => { e.preventDefault(); svg.classList.add('inflando'); };
+    const soltar = () => svg.classList.remove('inflando');
+    el.addEventListener('pointerdown', inflar);
+    ['pointerup', 'pointerleave', 'pointercancel'].forEach(t => el.addEventListener(t, soltar));
+    el.addEventListener('keydown', e => {
+      if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); svg.classList.add('inflando'); }
+    });
+    el.addEventListener('keyup', soltar);
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+package com.fanguskdev.mymonsterbruno.ui
+
+import com.fanguskdev.mymonsterbruno.audio.Audio
+import com.fanguskdev.mymonsterbruno.audio.SilentPlayer
+import com.fanguskdev.mymonsterbruno.game.SaveData
+import com.fanguskdev.mymonsterbruno.game.SaveStore
+import com.fanguskdev.mymonsterbruno.game.Session
+import com.fanguskdev.mymonsterbruno.storage.MemoryStore
+import kotlinx.coroutines.CoroutineScope
+import kotlin.coroutines.EmptyCoroutineContext
+import kotlin.random.Random
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
+
+/** When Bruno goes to bed (ADR 0006): at once between things, at the end of an island inside one, never halfway. */
+class GameStateTest {
+    private val monday = 20261102
+
+    /** A game with Bruno hatched and [left] seconds of the day to play. */
+    private fun game(left: Int): GameState {
+        val store = MemoryStore()
+        val minutes = 5
+        val played = minutes * Session.SECONDS_IN_MINUTE - left
+        SaveStore.save(store, SaveData(hatched = true, dailyMinutes = minutes, playedDay = monday, playedSeconds = played))
+        return GameState(store, Audio(SilentPlayer(), CoroutineScope(EmptyCoroutineContext)), Random(1)) { monday }
+    }
+
+    @Test
+    fun inTheRoomBrunoGoesToBedWhenTheTimeIsOver() {
+        val game = game(left = 1)
+        assertEquals(Scene.Home, game.scene)
+        game.tick()
+        assertEquals(Scene.Sleep, game.scene)
+        assertTrue(game.wentToBed)
+    }
+
+    @Test
+    fun onTheMapToo() {
+        val game = game(left = 2)
+        game.play()
+        assertEquals(Scene.Map, game.scene)
+        game.tick()
+        assertEquals(Scene.Map, game.scene)
+        game.tick()
+        assertEquals(Scene.Sleep, game.scene)
+    }
+
+    @Test
+    fun noNewIslandOnceTheTimeIsOver() {
+        val game = game(left = 60)
+        game.play()
+        game.update { it.copy(playedSeconds = it.dailyMinutes * Session.SECONDS_IN_MINUTE) }
+        game.goTo(Island.VOWELS)
+        assertEquals(Scene.Sleep, game.scene)
+    }
+
+    @Test
+    fun inAnIslandBrunoWaitsForItsPresent() {
+        val game = game(left = 1)
+        game.play()
+        game.goTo(Island.VOWELS)
+        val feed = Scene.Play(Island.VOWELS, 0)
+        assertEquals(feed, game.scene)
+        repeat(30) { game.tick() }
+        assertEquals(feed, game.scene)
+        game.finished(feed)
+        assertEquals(Scene.Play(Island.VOWELS, 1), game.scene)
+        game.finished(Scene.Play(Island.VOWELS, 1))
+        assertEquals(Scene.Present(Island.VOWELS), game.scene)
+        game.presentGiven(Island.VOWELS)
+        assertEquals(Scene.Sleep, game.scene)
+        assertEquals(Island.VOWELS, game.lastIsland)
+    }
+
+    @Test
+    fun openedAfterTheTimeBrunoIsAlreadyAsleep() {
+        val game = game(left = 0)
+        assertEquals(Scene.Sleep, game.scene)
+        assertFalse(game.wentToBed)
+        // A grown-up gives ten minutes more: back to the room.
+        game.go(Scene.GrownUps)
+        game.update { Session.moreTime(it, monday, 10) }
+        game.leaveGrownUps()
+        assertEquals(Scene.Home, game.scene)
+    }
+
+    @Test
+    fun theEggComesFirst() {
+        val game = GameState(MemoryStore(), Audio(SilentPlayer(), CoroutineScope(EmptyCoroutineContext)), Random(1)) { monday }
+        assertEquals(Scene.Hatch, game.scene)
+        game.tick()
+        assertEquals(0, game.data.playedSeconds)
+    }
+}

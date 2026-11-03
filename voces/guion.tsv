@@ -1,0 +1,80 @@
+id	voz	texto
+n_huevo	narrador	¡Mira! Un huevo. ¡Tócalo, a ver qué hay dentro!
+n_huevo_otra	narrador	¡Se mueve! ¡Otra vez!
+b_hola_soy_bruno	bruno	¡Hola! ¡Soy Bruno! No sé nada de nada... ¿Me enseñas?
+n_elige_color	narrador	¿De qué color quieres a Bruno?
+n_elige_cabeza	narrador	¿Y qué le ponemos en la cabeza?
+n_boton_verde	narrador	Cuando te guste, toca el botón verde.
+b_me_encanta	bruno	¡Me encanta!
+b_que_guapo	bruno	¡Qué guapo estoy!
+b_hola	bruno	¡Hola! ¡Qué bien que has venido!
+b_vamos_isla	bruno	¿Vamos a la isla? ¡Toca el botón grande!
+b_jiji	bruno	¡Ji, ji! ¡Me haces cosquillas!
+b_jiji_corto	bruno	¡Ji, ji, ji!
+n_que_isla	narrador	¿A qué isla vamos hoy?
+n_isla_vocales	narrador	¡A la isla de las vocales!
+n_isla_numeros	narrador	¡A la isla de los números!
+n_isla_lejos	narrador	Esa isla está muy lejos. ¡Pronto iremos!
+b_hambre_letras	bruno	¡Tengo hambre de letras!
+n_arrastra	narrador	Dale a Bruno la galleta con su letra.
+b_quiero_a	bruno	¡Quiero la a! La a de avión.
+b_quiero_e	bruno	¡Quiero la e! La e de elefante.
+b_quiero_i	bruno	¡Quiero la i! La i de iglú.
+b_quiero_o	bruno	¡Quiero la o! La o de oso.
+b_quiero_u	bruno	¡Quiero la u! La u de uva.
+b_nam_a	bruno	¡Ñam! ¡La a de avión!
+b_nam_e	bruno	¡Ñam! ¡La e de elefante!
+b_nam_i	bruno	¡Ñam! ¡La i de iglú!
+b_nam_o	bruno	¡Ñam! ¡La o de oso!
+b_nam_u	bruno	¡Ñam! ¡La u de uva!
+b_esa_es_a	bruno	Mmm... esa es la a.
+b_esa_es_e	bruno	Mmm... esa es la e.
+b_esa_es_i	bruno	Mmm... esa es la i.
+b_esa_es_o	bruno	Mmm... esa es la o.
+b_esa_es_u	bruno	Mmm... esa es la u.
+b_yo_quiero_a	bruno	¡Yo quiero la a!
+b_yo_quiero_e	bruno	¡Yo quiero la e!
+b_yo_quiero_i	bruno	¡Yo quiero la i!
+b_yo_quiero_o	bruno	¡Yo quiero la o!
+b_yo_quiero_u	bruno	¡Yo quiero la u!
+b_gracias_letras	bruno	¡Gracias! ¡Qué bien me enseñas!
+n_trazar_a	narrador	Esta es la a. Sigue el camino con el dedo.
+n_trazar_e	narrador	Esta es la e. Sigue el camino con el dedo.
+n_trazar_i	narrador	Esta es la i. Sigue el camino con el dedo.
+n_trazar_o	narrador	Esta es la o. Sigue el camino con el dedo.
+n_trazar_u	narrador	Esta es la u. Sigue el camino con el dedo.
+n_trazo_bien	narrador	¡Muy bien!
+b_letra_a	bruno	¡La a! ¡Ya sé hacer la a!
+b_letra_e	bruno	¡La e! ¡Ya sé hacer la e!
+b_letra_i	bruno	¡La i! ¡Ya sé hacer la i!
+b_letra_o	bruno	¡La o! ¡Ya sé hacer la o!
+b_letra_u	bruno	¡La u! ¡Ya sé hacer la u!
+n_contar_1	narrador	Bruno quiere una fresa. ¿Se la das?
+n_contar_2	narrador	Bruno quiere dos fresas. ¿Se las das?
+n_contar_3	narrador	Bruno quiere tres fresas. ¿Se las das?
+n_contar_4	narrador	Bruno quiere cuatro fresas. ¿Se las das?
+n_contar_5	narrador	Bruno quiere cinco fresas. ¿Se las das?
+n_num_1	narrador	Una.
+n_num_2	narrador	Dos.
+n_num_3	narrador	Tres.
+n_num_4	narrador	Cuatro.
+n_num_5	narrador	Cinco.
+b_fresas_1	bruno	¡Ñam! ¡Una fresa!
+b_fresas_2	bruno	¡Ñam! ¡Dos fresas!
+b_fresas_3	bruno	¡Ñam! ¡Tres fresas!
+b_fresas_4	bruno	¡Ñam! ¡Cuatro fresas!
+b_fresas_5	bruno	¡Ñam! ¡Cinco fresas!
+b_gracias_fresas	bruno	¡Qué ricas! ¡Ya sé contar!
+n_regalo	narrador	¡Bruno ha aprendido mucho! Hay un regalo. ¡Tócalo!
+b_gracias_regalo	bruno	¡Gracias! ¡Me encanta!
+b_crezco	bruno	¡Mira! ¡Estoy creciendo!
+b_bostezo	bruno	Aaah... Tengo sueño.
+n_mision_letra	narrador	Misión para casa: busca algo que empiece por a, como avión, y enséñaselo a tu familia.
+n_mision_contar	narrador	Misión para casa: cuenta cuántas sillas hay en la cocina.
+n_mision_color	narrador	Misión para casa: busca algo amarillo y enséñaselo a tu familia.
+b_hasta_manana	bruno	¡Hasta mañana!
+b_dormido	bruno	Mmm... Mañana jugamos más.
+n_calma_intro	narrador	Vamos a respirar con Bruno. Mantén el dedo, y el globo se hincha.
+n_calma_suelta	narrador	Ahora suelta, despacito.
+n_calma_otra	narrador	Otra vez.
+n_calma_fin	narrador	¡Qué tranquilos estamos!
