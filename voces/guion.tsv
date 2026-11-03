@@ -115,3 +115,25 @@ b_si_morado	bruno	¡Sí! ¡El morado!
 b_ese_es_morado	bruno	Huum... Ese es el morado.
 b_yo_quiero_globo_morado	bruno	¡Yo quiero el morado!
 n_color_morado	narrador	Morado.
+n_isla_formas	narrador	¡A la isla de las formas!
+n_casa	narrador	¡Vamos a construir la casa de Bruno!
+b_gracias_casa	bruno	¡Qué casa tan bonita! ¡Gracias!
+n_mision_forma	narrador	Misión para casa: busca algo redondo, como un círculo, y enséñaselo a tu familia.
+b_pide_paredes	bruno	¡Primero, las paredes! Dame el cuadrado.
+b_pide_tejado	bruno	¡Ahora, el tejado! Dame el triángulo.
+b_pide_puerta	bruno	¡Ahora, la puerta! Dame el rectángulo.
+b_pide_ventana_redonda	bruno	¡Una ventana redonda! Dame el círculo.
+b_pide_ventana	bruno	¡Otra ventana! Dame el cuadrado.
+b_pide_chimenea	bruno	¡Y la chimenea! Dame el rectángulo.
+b_si_cuadrado	bruno	¡Sí! ¡El cuadrado!
+b_ese_es_cuadrado	bruno	Huum... Ese es el cuadrado.
+b_yo_quiero_cuadrado	bruno	¡Yo quiero el cuadrado!
+b_si_triangulo	bruno	¡Sí! ¡El triángulo!
+b_ese_es_triangulo	bruno	Huum... Ese es el triángulo.
+b_yo_quiero_triangulo	bruno	¡Yo quiero el triángulo!
+b_si_circulo	bruno	¡Sí! ¡El círculo!
+b_ese_es_circulo	bruno	Huum... Ese es el círculo.
+b_yo_quiero_circulo	bruno	¡Yo quiero el círculo!
+b_si_rectangulo	bruno	¡Sí! ¡El rectángulo!
+b_ese_es_rectangulo	bruno	Huum... Ese es el rectángulo.
+b_yo_quiero_rectangulo	bruno	¡Yo quiero el rectángulo!

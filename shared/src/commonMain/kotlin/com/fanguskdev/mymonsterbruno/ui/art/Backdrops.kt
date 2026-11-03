@@ -212,6 +212,29 @@ private val RAINBOW = listOf(
     Color(0xFF9B6BD3),
 )
 
+/** The meadow of the island of shapes: sky, a sun, hills far away and grass, with a path to where Bruno's house goes. */
+internal fun DrawScope.drawMeadow(stage: Stage, time: Float) {
+    gradient(stage, Color(0xFFBFE3F8), Color(0xFFEAF6FD))
+    circle(Color(0xFFFFE27A), Offset(600f, 64f), 28f)
+    val drift = 8f * sin(time * 0.25f)
+    for ((x, y) in listOf(60f to 58f, 440f to 34f)) {
+        for ((dx, r) in listOf(0f to 16f, 20f to 22f, 42f to 15f)) circle(Color.White, Offset(x + dx + drift, y), r)
+    }
+    ellipse(Color(0xFFA9DD86), Offset(120f, 318f), 250f, 48f)
+    ellipse(Color(0xFFA9DD86), Offset(690f, 322f), 270f, 54f)
+    band(stage, Color(0xFF93D46E), 300f, stage.bottom)
+    fill(
+        path {
+            moveTo(282f, 300f)
+            lineTo(318f, 300f)
+            lineTo(352f, stage.bottom)
+            lineTo(248f, stage.bottom)
+            close()
+        },
+        Color(0xFFE9CF9A),
+    )
+}
+
 /** The calm corner: soft green, with the circles of breathing. */
 internal fun DrawScope.drawCalm(stage: Stage) {
     gradient(stage, Color(0xFFE3F1E0), Color(0xFFCFE8C9))

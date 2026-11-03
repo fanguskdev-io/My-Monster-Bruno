@@ -18,3 +18,4 @@ y estas decisiones existen antes de G4 porque Fangusk pidió desarrollar ya. Las
 | [0005](0005-un-regalo-sin-conexion.md) | Un regalo sin conexión: sin anuncios, compras, cuentas ni datos fuera del dispositivo | Propuesta |
 | [0006](0006-diez-minutos-y-a-dormir.md) | Diez minutos al día, que eligen los mayores, y Bruno se va a dormir al terminar lo que ella esté haciendo | Propuesta |
 | [0007](0007-la-isla-de-los-colores.md) | La isla de los colores: Bruno pide globos de un color y hay series de globos | Aceptada; los detalles, propuesta |
+| [0008](0008-la-isla-de-las-formas.md) | La isla de las formas: construirle la casa a Bruno, pieza a pieza | Aceptada; los detalles, propuesta |

@@ -2,6 +2,8 @@ package com.fanguskdev.mymonsterbruno.ui.art
 
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.geometry.RoundRect
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
@@ -13,6 +15,7 @@ import androidx.compose.ui.text.TextMeasurer
 import androidx.compose.ui.text.font.FontFamily
 import com.fanguskdev.mymonsterbruno.game.Accessory
 import com.fanguskdev.mymonsterbruno.game.Hue
+import com.fanguskdev.mymonsterbruno.game.Shape
 import com.fanguskdev.mymonsterbruno.game.Slot
 import com.fanguskdev.mymonsterbruno.game.Word
 import com.fanguskdev.mymonsterbruno.ui.circle
@@ -491,6 +494,32 @@ internal fun DrawScope.drawTiedBalloon(
         2f,
     )
     drawBalloon(center, size, color)
+}
+
+/** The outline of [shape] filling [box]: the square and the rectangle with soft corners, the triangle pointing up. */
+internal fun shapePath(shape: Shape, box: Rect): Path = when (shape) {
+    Shape.SQUARE, Shape.RECTANGLE -> Path().apply { addRoundRect(RoundRect(box, CornerRadius(6f))) }
+    Shape.TRIANGLE -> path {
+        moveTo(box.center.x, box.top)
+        lineTo(box.right, box.bottom)
+        lineTo(box.left, box.bottom)
+        close()
+    }
+    Shape.CIRCLE -> Path().apply { addOval(box) }
+}
+
+/** The box a loose piece of [shape] takes centred on [center], about [size] units: a rectangle stands up, like a door. */
+internal fun pieceBox(shape: Shape, center: Offset, size: Float): Rect = when (shape) {
+    Shape.SQUARE -> Rect(center, size * 0.43f)
+    Shape.TRIANGLE -> Rect(center.x - size * 0.5f, center.y - size * 0.43f, center.x + size * 0.5f, center.y + size * 0.43f)
+    Shape.CIRCLE -> Rect(center, size * 0.45f)
+    Shape.RECTANGLE -> Rect(center.x - size * 0.28f, center.y - size * 0.5f, center.x + size * 0.28f, center.y + size * 0.5f)
+}
+
+/** A piece of [shape] filling [box] in [color], with its shadow under it. */
+internal fun DrawScope.drawShapePiece(shape: Shape, box: Rect, color: Color) {
+    fill(shapePath(shape, box.translate(0f, 5f)), Shadow)
+    fill(shapePath(shape, box), color)
 }
 
 /** The colour of [hue] on the screen: bright, and different enough from the others to tell them apart at a glance. */

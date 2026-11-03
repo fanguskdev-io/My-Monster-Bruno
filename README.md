@@ -6,7 +6,7 @@ curso ha empezado el cole en España. La [página de diseño](docs/diseno.md) cu
 decisiones, y la [investigación](docs/investigacion/investigacion.md), de dónde sale.
 
 > En construcción: la primera versión (M1) se juega de principio a fin en Android e iOS, y Fangusk ya la está probando.
-> De M3 está hecha la isla de los colores. Lo que viene después (más islas, las voces de la familia y «Habla con Bruno»)
+> De M3 están hechas la isla de los colores y la de las formas. Lo que viene después (más islas, las voces de la familia y «Habla con Bruno»)
 > lo decide él ([proceso](docs/proceso.md)).
 
 ## Estructura

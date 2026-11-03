@@ -87,3 +87,32 @@ internal const val BALLOONS = 3
 internal const val BALLOON_ROUNDS = 5
 internal val SERIES_SIZES = listOf(2, 2, 3, 3)
 internal const val SERIES_CHOICES = 3
+
+/** The shapes of the island of shapes (ADR 0008), with the word that names them (without accents: it is a file name). */
+internal enum class Shape(val word: String) {
+    SQUARE("cuadrado"),
+    TRIANGLE("triangulo"),
+    CIRCLE("circulo"),
+    RECTANGLE("rectangulo"),
+}
+
+/** The parts of Bruno's house, in the order they are built, each with its shape. */
+internal enum class HousePart(val shape: Shape, val word: String) {
+    WALLS(Shape.SQUARE, "paredes"),
+    ROOF(Shape.TRIANGLE, "tejado"),
+    DOOR(Shape.RECTANGLE, "puerta"),
+    ROUND_WINDOW(Shape.CIRCLE, "ventana_redonda"),
+    WINDOW(Shape.SQUARE, "ventana"),
+    CHIMNEY(Shape.RECTANGLE, "chimenea"),
+}
+
+/** A round of the house: Bruno wants [part], and there are three pieces, [pieces], one of them its shape. */
+internal data class HouseRound(val part: HousePart, val pieces: List<Shape>)
+
+/** The six rounds of the house, in the order it is built, each with two other shapes to choose from. */
+internal fun houseRounds(random: Random): List<HouseRound> = HousePart.entries.map { part ->
+    val others = (Shape.entries - part.shape).shuffled(random).take(HOUSE_PIECES - 1)
+    HouseRound(part, (others + part.shape).shuffled(random))
+}
+
+internal const val HOUSE_PIECES = 3

@@ -73,6 +73,22 @@ class RoundsTest {
     }
 
     @Test
+    fun theHouseIsBuiltInOrderAndItsPieceIsAlwaysAmongTheThree() {
+        repeat(200) { seed ->
+            val rounds = houseRounds(Random(seed))
+            assertEquals(HousePart.entries, rounds.map { it.part })
+            for (round in rounds) {
+                assertEquals(HOUSE_PIECES, round.pieces.toSet().size, "piezas repetidas: $round")
+                assertEquals(1, round.pieces.count { it == round.part.shape })
+            }
+        }
+        assertEquals(
+            listOf(Shape.SQUARE, Shape.TRIANGLE, Shape.RECTANGLE, Shape.CIRCLE, Shape.SQUARE, Shape.RECTANGLE),
+            HousePart.entries.map { it.shape },
+        )
+    }
+
+    @Test
     fun everyVowelHasItsWord() {
         assertEquals(VOWELS, Word.entries.map { it.vowel })
         assertEquals(Word.OSO, Word.of('o'))

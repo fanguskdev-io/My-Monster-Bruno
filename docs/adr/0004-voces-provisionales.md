@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Estado** | propuesta: la tomó el agente. Las voces de la familia son de la propuesta que eligió Fangusk, y cuándo llegan lo decide él |
+| **Estado** | propuesta: la tomó el agente. Las voces de la familia son de la propuesta que eligió Fangusk, y cuándo llegan lo decide él. El narrador sigue con la Mónica básica hasta entonces: en el Mac no hay una Mónica mejorada, y de las opciones (una voz neuronal en el Mac, Jorge, una voz de estudio en la nube o dejarla) eligió «Dejarla como está» (Fangusk, 2026-11-03) |
 | **Fecha** | 2026-11-02 · **Fase:** P0 · Borrador anticipado, sin ninguna puerta confirmada |
 | **Propone · decide** | agente (Claude Code, Opus 5.5) · Fangusk |
 | **Reversibilidad** | alta: cambiar una voz es cambiar su fichero WAV, con el mismo nombre |

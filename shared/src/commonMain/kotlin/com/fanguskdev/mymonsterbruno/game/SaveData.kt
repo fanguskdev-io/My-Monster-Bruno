@@ -23,6 +23,10 @@ data class SaveData(
     val balloons: Map<String, Int> = emptyMap(),
     /** Series of balloons she has finished. */
     val series: Int = 0,
+    /** Pieces she put in Bruno's house, by shape (Shape.word). */
+    val shapes: Map<String, Int> = emptyMap(),
+    /** Houses she has built for Bruno. */
+    val houses: Int = 0,
     /** Times she finished each island, by its name. */
     val islands: Map<String, Int> = emptyMap(),
     val dailyMinutes: Int = DEFAULT_MINUTES,

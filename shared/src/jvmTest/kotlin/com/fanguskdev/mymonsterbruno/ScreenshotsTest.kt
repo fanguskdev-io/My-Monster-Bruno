@@ -43,6 +43,7 @@ class ScreenshotsTest {
             "10-mayores" to Scene.GrownUps,
             "11-globos" to Scene.Play(Island.COLORS, 0),
             "12-series" to Scene.Play(Island.COLORS, 1),
+            "13-casa" to Scene.Play(Island.SHAPES, 0),
         )
         for ((device, size) in SIZES) {
             for ((name, scene) in scenes) {

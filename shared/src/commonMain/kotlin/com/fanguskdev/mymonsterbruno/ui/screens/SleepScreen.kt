@@ -36,6 +36,7 @@ import com.fanguskdev.mymonsterbruno.ui.fill
 import com.fanguskdev.mymonsterbruno.ui.label
 import com.fanguskdev.mymonsterbruno.ui.path
 import com.fanguskdev.mymonsterbruno.ui.rememberClock
+import com.fanguskdev.mymonsterbruno.ui.ring
 import com.fanguskdev.mymonsterbruno.ui.stroke
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -52,6 +53,7 @@ private enum class Mission(val line: String) {
     LETTER(Voice.MISSION_LETTER),
     COUNT(Voice.MISSION_COUNT),
     COLOR(Voice.MISSION_COLOR),
+    SHAPE(Voice.MISSION_SHAPE),
 }
 
 /**
@@ -70,6 +72,7 @@ internal fun SleepScreen(game: GameState) {
         when (game.lastIsland) {
             Island.VOWELS -> Mission.LETTER
             Island.NUMBERS -> Mission.COUNT
+            Island.SHAPES -> Mission.SHAPE
             Island.COLORS, null -> Mission.COLOR
         }
     }
@@ -185,6 +188,10 @@ private fun DrawScope.drawMissionCard(mission: Mission, measurer: TextMeasurer, 
             }
             fill(eye, Color.White)
             circle(Color(0xFF1D2B53), what, 7f)
+        }
+        Mission.SHAPE -> {
+            circle(Color(0xFF2E9E5B), what, 34f)
+            ring(Color.White, what, 17f, 6f)
         }
     }
 }

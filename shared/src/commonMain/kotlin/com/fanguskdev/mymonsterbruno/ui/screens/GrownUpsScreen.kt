@@ -43,6 +43,7 @@ import com.fanguskdev.mymonsterbruno.game.Hue
 import com.fanguskdev.mymonsterbruno.game.MAX_COUNT
 import com.fanguskdev.mymonsterbruno.game.SaveData
 import com.fanguskdev.mymonsterbruno.game.Session
+import com.fanguskdev.mymonsterbruno.game.Shape
 import com.fanguskdev.mymonsterbruno.game.VOWELS
 import com.fanguskdev.mymonsterbruno.ui.GameState
 import com.fanguskdev.mymonsterbruno.ui.andika
@@ -137,6 +138,9 @@ internal fun GrownUpsScreen(game: GameState) {
                 val balloons = Hue.entries.joinToString("   ") { "${it.word} ${data.balloons[it.word] ?: 0}" }
                 Text("Globos bien dados, por color:   $balloons", font, 16)
                 Text("Series de globos terminadas: ${data.series}.", font, 16)
+                val shapes = Shape.entries.joinToString("   ") { "${it.spoken} ${data.shapes[it.word] ?: 0}" }
+                Text("Piezas de la casa bien puestas, por forma:   $shapes", font, 16)
+                Text("Casas construidas: ${data.houses}.", font, 16)
                 Text("Islas terminadas: ${data.islandsDone}. Regalos de Bruno: ${data.look.accessories.size} de 6.", font, 16)
             }
             Section("Bruno", font) {
@@ -220,6 +224,14 @@ private fun Chip(
             ),
         )
     }
+}
+
+/** The name of [Shape] as a grown-up reads it, with its accent. */
+private val Shape.spoken: String get() = when (this) {
+    Shape.SQUARE -> "cuadrado"
+    Shape.TRIANGLE -> "triángulo"
+    Shape.CIRCLE -> "círculo"
+    Shape.RECTANGLE -> "rectángulo"
 }
 
 private const val NAME_LENGTH = 12

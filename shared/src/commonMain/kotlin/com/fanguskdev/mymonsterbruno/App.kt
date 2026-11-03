@@ -27,6 +27,7 @@ import com.fanguskdev.mymonsterbruno.ui.screens.FeedScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.GrownUpsScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.HatchScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.HomeScreen
+import com.fanguskdev.mymonsterbruno.ui.screens.HouseScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.MapScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.PresentScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.SeriesScreen
@@ -83,6 +84,7 @@ internal fun AppContent(game: GameState) {
                 Step.COUNT -> CountScreen(game) { game.finished(scene) }
                 Step.BALLOONS -> BalloonScreen(game) { game.finished(scene) }
                 Step.SERIES -> SeriesScreen(game) { game.finished(scene) }
+                Step.HOUSE -> HouseScreen(game) { game.finished(scene) }
             }
             is Scene.Present -> PresentScreen(game, scene.island) { game.presentGiven(scene.island) }
             Scene.Sleep -> SleepScreen(game)

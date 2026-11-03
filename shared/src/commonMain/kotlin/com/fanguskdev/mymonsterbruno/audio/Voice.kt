@@ -1,7 +1,9 @@
 package com.fanguskdev.mymonsterbruno.audio
 
+import com.fanguskdev.mymonsterbruno.game.HousePart
 import com.fanguskdev.mymonsterbruno.game.Hue
 import com.fanguskdev.mymonsterbruno.game.MAX_COUNT
+import com.fanguskdev.mymonsterbruno.game.Shape
 import com.fanguskdev.mymonsterbruno.game.VOWELS
 
 /**
@@ -50,6 +52,10 @@ internal object Voice {
     const val WHICH_NEXT = "n_cual_va_ahora"
     const val LOOK_AGAIN = "n_mira_otra_vez"
     const val THANKS_SERIES = "b_gracias_series"
+    const val TO_SHAPES = "n_isla_formas"
+    const val BUILD_HOUSE = "n_casa"
+    const val THANKS_HOUSE = "b_gracias_casa"
+    const val MISSION_SHAPE = "n_mision_forma"
 
     /** «¡Quiero la a! La a de avión.» */
     fun want(vowel: Char) = "b_quiero_$vowel"
@@ -93,17 +99,32 @@ internal object Voice {
     /** «Rojo.», to read a series out. */
     fun color(hue: Hue) = "n_color_${hue.word}"
 
+    /** «¡Ahora, el tejado! Dame el triángulo.» */
+    fun askPart(part: HousePart) = "b_pide_${part.word}"
+
+    /** «¡Sí! ¡El triángulo!» */
+    fun yes(shape: Shape) = "b_si_${shape.word}"
+
+    /** «Huum... Ese es el círculo.» */
+    fun thatShape(shape: Shape) = "b_ese_es_${shape.word}"
+
+    /** «¡Yo quiero el triángulo!» */
+    fun iWantShape(shape: Shape) = "b_yo_quiero_${shape.word}"
+
     /** Every line, to load them all when the game opens. */
     val ALL: List<String> = listOf(
         EGG, EGG_AGAIN, HELLO_I_AM_BRUNO, CHOOSE_COLOR, CHOOSE_TOP, GREEN_BUTTON, LOVE_IT, HANDSOME, HELLO, GO_TO_ISLAND,
         TICKLES, GIGGLE, WHICH_ISLAND, TO_VOWELS, TO_NUMBERS, TOO_FAR, HUNGRY_FOR_LETTERS, DRAG_HINT, THANKS_LETTERS,
         WELL_DONE, THANKS_STRAWBERRIES, PRESENT, THANKS_PRESENT, GROWING, YAWN, MISSION_LETTER, MISSION_COUNT,
         MISSION_COLOR, SEE_YOU_TOMORROW, ASLEEP, CALM_INTRO, CALM_LET_GO, CALM_AGAIN, CALM_END, TO_COLORS, LOVE_BALLOONS,
-        THANKS_BALLOONS, LOOK_AT_THE_ROW, WHICH_NEXT, LOOK_AGAIN, THANKS_SERIES,
+        THANKS_BALLOONS, LOOK_AT_THE_ROW, WHICH_NEXT, LOOK_AGAIN, THANKS_SERIES, TO_SHAPES, BUILD_HOUSE, THANKS_HOUSE,
+        MISSION_SHAPE,
     ) +
         VOWELS.flatMap { listOf(want(it), yum(it), thatIs(it), iWant(it), trace(it), traced(it)) } +
         (1..MAX_COUNT).flatMap { listOf(askCount(it), number(it), strawberries(it)) } +
-        Hue.entries.flatMap { listOf(wantBalloon(it), yes(it), thatColor(it), iWantBalloon(it), color(it)) }
+        Hue.entries.flatMap { listOf(wantBalloon(it), yes(it), thatColor(it), iWantBalloon(it), color(it)) } +
+        HousePart.entries.map { askPart(it) } +
+        Shape.entries.flatMap { listOf(yes(it), thatShape(it), iWantShape(it)) }
 }
 
 /** The sound effects, by the names of their files in `files/sonidos/` (tools/sonidos.py makes them). */
