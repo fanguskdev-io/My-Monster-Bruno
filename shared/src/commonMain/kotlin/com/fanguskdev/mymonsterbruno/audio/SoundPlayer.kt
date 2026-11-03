@@ -4,7 +4,7 @@ import kotlin.math.min
 
 /**
  * Plays short sounds, each from its start: the voice lines and the effects. Each platform does it its own way (a SoundPool
- * on Android, an AVAudioPlayer for each sound on iOS, a Clip on the desktop), never on the thread that asks.
+ * on Android, an AVAudioPlayer for each sound on iOS, one line mixed by hand on the desktop), never on the thread that asks.
  */
 interface SoundPlayer {
     /** Gets [wav] ready to be played as [name]. */
