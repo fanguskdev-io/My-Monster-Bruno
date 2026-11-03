@@ -219,6 +219,10 @@ internal fun DrawScope.drawWord(word: Word, center: Offset, size: Float) {
             Word.IGLU -> igloo()
             Word.OSO -> bear()
             Word.UVA -> grapes()
+            Word.MANZANA -> apple()
+            Word.PELOTA -> ball()
+            Word.LUNA -> moon()
+            Word.SOL -> sun()
         }
     }
 }
@@ -366,6 +370,76 @@ private fun DrawScope.grapes() {
             circle(light, c + Offset(-3f, -3f), 2.6f)
         }
     }
+}
+
+private fun DrawScope.apple() {
+    circle(Color(0xFFE4483C), Offset(-10f, 6f), 26f)
+    circle(Color(0xFFE4483C), Offset(10f, 6f), 26f)
+    circle(Color(0xFFFF8A80), Offset(-14f, -4f), 6f, alpha = 0.7f)
+    line(Color(0xFF6B4A2E), Offset(0f, -18f), Offset(3f, -34f), 4f)
+    fill(
+        path {
+            moveTo(3f, -28f)
+            quadraticTo(20f, -40f, 28f, -26f)
+            quadraticTo(14f, -20f, 3f, -28f)
+            close()
+        },
+        Color(0xFF2E9E5B),
+    )
+}
+
+private fun DrawScope.ball() {
+    circle(Color(0xFF2C74D8), Offset.Zero, 34f)
+    stroke(
+        path {
+            moveTo(-34f, 0f)
+            quadraticTo(0f, -22f, 34f, 0f)
+        },
+        Color.White,
+        6f,
+    )
+    stroke(
+        path {
+            moveTo(-30f, 16f)
+            quadraticTo(0f, -4f, 30f, 16f)
+        },
+        Color(0xFFF4C423),
+        6f,
+    )
+    circle(Color.White, Offset(-12f, -16f), 5f, alpha = 0.6f)
+}
+
+private fun DrawScope.moon() {
+    fill(
+        path {
+            moveTo(6f, -36f)
+            cubicTo(-36f, -30f, -36f, 30f, 6f, 36f)
+            cubicTo(-14f, 22f, -14f, -22f, 6f, -36f)
+            close()
+        },
+        Color(0xFFF4C423),
+    )
+    fill(star(Offset(22f, -12f), 7f), Color(0xFFF4C423))
+}
+
+private fun DrawScope.sun() {
+    for (i in 0 until 8) {
+        val angle = i * PI / 4
+        val from = Offset((24 * cos(angle)).toFloat(), (24 * sin(angle)).toFloat())
+        val to = Offset((38 * cos(angle)).toFloat(), (38 * sin(angle)).toFloat())
+        line(Color(0xFFF28B2E), from, to, 6f)
+    }
+    circle(Color(0xFFF4C423), Offset.Zero, 22f)
+    circle(Color(0xFF1D2B53), Offset(-7f, -4f), 2.5f)
+    circle(Color(0xFF1D2B53), Offset(7f, -4f), 2.5f)
+    stroke(
+        path {
+            moveTo(-8f, 6f)
+            quadraticTo(0f, 13f, 8f, 6f)
+        },
+        Color(0xFF1D2B53),
+        2.5f,
+    )
 }
 
 /** A present box, [size] units: [open] from 0 to 1 lifts its lid away. */

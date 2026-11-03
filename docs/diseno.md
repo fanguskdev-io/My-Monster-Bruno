@@ -38,7 +38,9 @@ amigable», menos robótico. Como en su Mac no hay una Mónica mejorada, prefiri
 sus voces. Después, «Continúa», y la isla de las formas: «Construirle la casa a Bruno: ella arrastra un cuadrado, un
 triángulo, un círculo y un rectángulo a su hueco, y Bruno dice el nombre de cada forma»
 ([ADR 0008](adr/0008-la-isla-de-las-formas.md)). Y al ver que no había botón para salir: «Sí, añádelo», en la zona de
-mayores. Para seguir eligió «Más islas primero» y, entre las que le propuso el agente, «Colores»: «Bruno
+mayores. Después, otra vez «Continúa», y ampliar las islas que ya había: «consonantes (M, P, L, S) con su palabra en
+Comeletras y en los trazos, junto a las vocales», y «fresas hasta el 10, con las dos manos en la tarjeta»
+([ADR 0009](adr/0009-mas-letras-y-numeros-hasta-el-diez.md)). Para seguir eligió «Más islas primero» y, entre las que le propuso el agente, «Colores»: «Bruno
 pide un color (“¡Quiero el globo rojo!”) y después series: rojo, azul, rojo… ¿cuál va ahora?»
 ([ADR 0007](adr/0007-la-isla-de-los-colores.md)).
 
@@ -62,19 +64,23 @@ La propuesta 3, tal como la leyó (en la [maqueta](investigacion/propuestas.html
 2. **El cuarto de Bruno**, la casa. Bruno la saluda y la invita a la isla. Si le toca, se ríe con cosquillas. El botón
    grande lleva al mapa y el globo, al rincón de la calma. Arriba cuelga un banderín con su nombre, si los mayores lo han
    escrito, o con estrellas.
-3. **El mapa**. Bruno va en su barca. Hay cuatro islas con algo que hacer: la de las vocales, la de los números, la de los
+3. **El mapa**. Bruno va en su barca. Hay cuatro islas con algo que hacer: la de las letras, la de los números, la de los
    colores y la de las formas. La que queda está «muy lejos. ¡Pronto iremos!». Una isla terminada lleva su bandera.
-4. **La isla de las vocales**:
+4. **La isla de las letras**, las vocales y la M, la P, la L y la S
+   ([ADR 0009](adr/0009-mas-letras-y-numeros-hasta-el-diez.md)):
    - **Comeletras**. «¡Tengo hambre de letras!». Bruno pide una vocal con su palabra («¡Quiero la a! La a de avión») y en
      el plato hay tres galletas con vocales. Ella le da una, arrastrándola a la boca o tocándola. Si es la que quería:
      «¡Ñam!». Si no, Bruno pone cara rara, la galleta vuelve al plato y él dice cuál era y cuál quiere («Huum... Esa es la
-     e. ¡Yo quiero la a!»). Son cinco rondas, cada vocal una vez.
-   - **Trazar**. Dos vocales en mayúscula, las que menos ha trazado, con los trazos en el orden del cole. Un punto verde
+     e. ¡Yo quiero la a!»). Son cinco rondas, con las letras que menos le ha dado: el primer día, las vocales; luego
+     entran las consonantes («¡Quiero la eme! La eme de manzana»).
+   - **Trazar**. Dos letras en mayúscula, las que menos ha trazado (las vocales primero), con los trazos en el orden del
+     cole. Un punto verde
      dice dónde empezar y una flecha, hacia dónde. El dedo no tiene que ir exacto: el camino perdona. Al acabar la letra,
      Bruno la celebra: «¡La a! ¡Ya sé hacer la a!».
 5. **La isla de los números**: **las fresas**. «Bruno quiere tres fresas. ¿Se las das?». Ella toca fresas del arbusto y
-   cada una se cuenta en voz alta. Al llegar al número, Bruno se las come. La tarjeta enseña el número, los dedos de una
-   mano y sus puntos. Son cinco rondas, del 1 al 5, y la primera nunca es el 5.
+   cada una se cuenta en voz alta. Al llegar al número, Bruno se las come. La tarjeta enseña el número, los dedos (desde
+   el 6, una mano entera y la otra) y sus puntos. Son cinco rondas: del 1 al 5 hasta que los ha contado todos, y luego
+   dos del 1 al 5 y tres del 6 al 10.
 6. **La isla de los colores** ([ADR 0007](adr/0007-la-isla-de-los-colores.md)):
    - **Los globos**. «¡Quiero el globo rojo!». Hay tres globos, y ella le da uno a Bruno arrastrándolo hasta él o
      tocándolo. El que acierta se queda atado en su mano, así que al final tiene un ramo. Si no es el suyo, Bruno dice de
@@ -130,16 +136,16 @@ Salen de la [investigación §6](investigacion/investigacion.md#6-reglas-que-sal
 
 **Trae** lo que la propuesta pide a la primera versión: el nacimiento, Comeletras con las vocales, contar hasta 5, los
 trazos y el mapa con dos islas. De las piezas comunes, el rincón de la calma, la misión para casa y la zona de mayores
-(sin foto ni voces). Y dos islas de M3: la de los colores, con sus globos y sus series, y la de las formas, con la casa
-de Bruno.
+(sin foto ni voces). Y de M3: la isla de los colores, con sus globos y sus series; la de las formas, con la casa de
+Bruno; y las letras M, P, L y S y los números hasta el 10 en las islas que ya había.
 
 **Falta**, de la propuesta 3 que eligió Fangusk. El orden y el alcance de cada pieza los decide él.
 
 - **Las voces de la familia**: que la tía, mamá o el abuelo graben lo que dice Bruno o el narrador. Pide el micrófono en
   la zona de mayores. Hasta entonces suena una voz sintética provisional ([ADR 0004](adr/0004-voces-provisionales.md)).
 - **Habla con Bruno**: ella dice una palabra y Bruno la repite con voz graciosa y una palmada por sílaba (MA-RI-PO-SA).
-- **Más islas**: las consonantes (M, P, L, S…), el sonido inicial, los números hasta 10 y las emociones, con Bruno
-  cambiando de color según cómo se siente.
+- **Más islas**: el sonido inicial, más consonantes y las emociones, con Bruno cambiando de color según cómo se
+  siente.
 - **Su foto** y que la voz diga **su nombre**.
 
 ## Pantalla, dibujo, voz y sonido
@@ -149,7 +155,7 @@ de Bruno.
 - **Bruno y todo lo demás se dibujan con vectores**, sin imágenes: Bruno respira, parpadea, mira y cambia de cara (ocho
   bocas, cuatro ojos, tres posturas de brazos).
 - **Las voces** son las de un narrador y la de Bruno, algo más aguda y más despacio, a unas 4 sílabas por segundo. Hay
-  138 frases pregrabadas con la voz del sistema del Mac y **los efectos** (13) se sintetizan desde cero
+  177 frases pregrabadas con la voz del sistema del Mac y **los efectos** (13) se sintetizan desde cero
   ([ADR 0004](adr/0004-voces-provisionales.md)). Las frases están en [`voces/guion.tsv`](../voces/guion.tsv).
 - **La letra** de la zona de mayores, de los números y del banderín es Andika, una tipografía pensada para quien aprende a
   leer (licencia OFL, en [`licencias/`](../licencias/Andika-OFL.txt)).

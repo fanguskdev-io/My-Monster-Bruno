@@ -22,8 +22,8 @@ class TracingTest {
     }
 
     @Test
-    fun everyVowelCanBeTracedToTheEnd() {
-        for (vowel in VOWELS) {
+    fun everyLetterCanBeTracedToTheEnd() {
+        for (vowel in LETTERS) {
             val progress = TraceProgress(Glyphs.of(vowel))
             traceAll(progress)
             assertTrue(progress.done, "la $vowel no se acaba")
@@ -32,7 +32,7 @@ class TracingTest {
 
     @Test
     fun aShakyFingerStillTraces() {
-        for (vowel in VOWELS) {
+        for (vowel in LETTERS) {
             val progress = TraceProgress(Glyphs.of(vowel))
             traceAll(progress, wobble = 18f)
             assertTrue(progress.done, "la $vowel no se acaba con un dedo que tiembla")
@@ -53,6 +53,17 @@ class TracingTest {
         assertEquals(55f, o.first().x, 0.01f)
         assertEquals(0f, o.first().y, 0.01f)
         assertTrue(o[5].x < o.first().x, "la O tiene que ir hacia la izquierda")
+        // The M and the P, their stick first and then the rest from the top; the L and the S, in one go.
+        for (letter in listOf('m', 'p')) {
+            val strokes = Glyphs.of(letter).strokes
+            assertEquals(2, strokes.size)
+            assertEquals(Offset(10f, 0f), strokes[0].first())
+            assertEquals(Offset(10f, 0f), strokes[1].first())
+        }
+        assertEquals(1, Glyphs.of('l').strokes.size)
+        val s = Glyphs.of('s').strokes.single()
+        assertTrue(s.first().x > 60f && s.first().y < 30f, "la S empieza arriba a la derecha")
+        assertTrue(s.last().x < 30f && s.last().y > 110f, "la S acaba abajo a la izquierda")
     }
 
     @Test

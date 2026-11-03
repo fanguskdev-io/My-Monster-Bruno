@@ -47,17 +47,38 @@ private val BRUNO_CENTER = Offset(172f, 226f)
 private const val BRUNO_HEIGHT = 220f
 private val PLATE = Offset(330f, 340f)
 private val BUSH = Offset(610f, 262f)
+
+/** Twelve strawberries on the bush, so even the tenth is a choice. */
 private val BERRIES = listOf(
-    Offset(530f, 214f),
-    Offset(612f, 188f),
-    Offset(694f, 214f),
-    Offset(548f, 296f),
-    Offset(632f, 284f),
-    Offset(712f, 302f),
+    Offset(528f, 200f),
+    Offset(588f, 180f),
+    Offset(648f, 180f),
+    Offset(706f, 200f),
+    Offset(512f, 254f),
+    Offset(572f, 238f),
+    Offset(632f, 238f),
+    Offset(692f, 254f),
+    Offset(538f, 304f),
+    Offset(598f, 292f),
+    Offset(658f, 292f),
+    Offset(716f, 306f),
 )
-private val ON_PLATE = listOf(Offset(276f, 328f), Offset(306f, 318f), Offset(336f, 328f), Offset(366f, 318f), Offset(396f, 328f))
-private const val BERRY_RADIUS = 30f
-private const val BERRY_TOUCH = 40f
+
+/** Where the strawberries she gives land on the plate: a row of five and, from six on, a second row in front. */
+private val ON_PLATE = listOf(
+    Offset(276f, 322f),
+    Offset(304f, 314f),
+    Offset(332f, 322f),
+    Offset(360f, 314f),
+    Offset(388f, 322f),
+    Offset(290f, 340f),
+    Offset(318f, 334f),
+    Offset(346f, 340f),
+    Offset(374f, 334f),
+    Offset(402f, 340f),
+)
+private const val BERRY_RADIUS = 26f
+private const val BERRY_TOUCH = 30f
 private val CARD = Offset(400f, 62f)
 
 /**
@@ -72,7 +93,7 @@ internal fun CountScreen(game: GameState, onDone: () -> Unit) {
     val measurer = rememberTextMeasurer()
     val font = andika()
     val audio = game.audio
-    val rounds = remember { countRounds(game.random) }
+    val rounds = remember { countRounds(game.random, game.data.counted) }
     var round by remember { mutableStateOf(0) }
     val picked = remember { mutableStateListOf<Int>() }
     val pickedAt = remember { mutableStateListOf<Float>() }
@@ -143,7 +164,7 @@ internal fun CountScreen(game: GameState, onDone: () -> Unit) {
         }
         drawBruno(game.data.look, BRUNO_CENTER, BRUNO_HEIGHT, pose, t)
         drawPlate(PLATE, 190f)
-        drawBush(BUSH, 300f)
+        drawBush(BUSH, 320f)
         BERRIES.forEachIndexed { i, home ->
             if (i in picked) return@forEachIndexed
             drawStrawberry(home + Offset(0f, 2f * sin(t * 2f + i)), BERRY_RADIUS)
@@ -161,23 +182,38 @@ internal fun CountScreen(game: GameState, onDone: () -> Unit) {
     }
 }
 
-/** The card of how many: the number, a hand with as many fingers, and a dot for each one counted. */
+/**
+ * The card of how many: the number, the hands with as many fingers (from six on, a full hand and the other), and a dot
+ * for each one counted, in rows of five.
+ */
 private fun androidx.compose.ui.graphics.drawscope.DrawScope.drawCountCard(
     wanted: Int,
     counted: Int,
     measurer: androidx.compose.ui.text.TextMeasurer,
     font: androidx.compose.ui.text.font.FontFamily,
 ) {
-    drawRoundRect(Shadow, Offset(CARD.x - 110f, CARD.y - 46f + 5f), Size(220f, 92f), CornerRadius(18f))
-    drawRoundRect(Color.White, Offset(CARD.x - 110f, CARD.y - 46f), Size(220f, 92f), CornerRadius(18f))
-    label(measurer, wanted.toString(), Offset(CARD.x - 58f, CARD.y - 2f), 78f, Color(0xFFE4483C), font)
-    drawHand(Offset(CARD.x + 40f, CARD.y + 6f), 82f, wanted)
+    val two = wanted > HAND
+    val half = if (two) 150f else 110f
+    drawRoundRect(Shadow, Offset(CARD.x - half, CARD.y - 46f + 5f), Size(2 * half, 92f), CornerRadius(18f))
+    drawRoundRect(Color.White, Offset(CARD.x - half, CARD.y - 46f), Size(2 * half, 92f), CornerRadius(18f))
+    label(measurer, wanted.toString(), Offset(CARD.x - half + 52f, CARD.y - 2f), 78f, Color(0xFFE4483C), font)
+    if (two) {
+        drawHand(Offset(CARD.x + 20f, CARD.y + 6f), 78f, HAND)
+        drawHand(Offset(CARD.x + 92f, CARD.y + 6f), 78f, wanted - HAND)
+    } else {
+        drawHand(Offset(CARD.x + 40f, CARD.y + 6f), 82f, wanted)
+    }
     for (i in 0 until wanted) {
-        val center = Offset(CARD.x - 12f * (wanted - 1) + 24f * i, CARD.y + 62f)
+        val row = i / HAND
+        val inRow = minOf(HAND, wanted - row * HAND)
+        val center = Offset(CARD.x - 12f * (inRow - 1) + 24f * (i % HAND), CARD.y + 62f + 22f * row)
         circle(if (i < counted) Color(0xFFE4483C) else Color.White, center, 8f)
         circle(Color(0xFFE4483C), center, 8f, alpha = if (i < counted) 1f else 0.25f)
     }
 }
+
+/** The fingers of a hand: up to five the card shows one hand; from six, two. */
+private const val HAND = 5
 
 private const val FLY_SECONDS = 0.4f
 private const val PAUSE_MILLIS = 400L

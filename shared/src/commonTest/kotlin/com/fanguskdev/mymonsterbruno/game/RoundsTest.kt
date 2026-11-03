@@ -8,35 +8,46 @@ import kotlin.test.assertTrue
 
 class RoundsTest {
     @Test
-    fun comeletrasAsksForEachVowelOnceWithTwoOthersOnThePlate() {
+    fun comeletrasStartsWithTheVowelsAndThenAsksForWhatSheKnowsLeast() {
         repeat(200) { seed ->
-            val rounds = letterRounds(Random(seed))
-            assertEquals(VOWELS.toSet(), rounds.map { it.wanted }.toSet())
-            for (round in rounds) {
-                assertEquals(COOKIES, round.cookies.size)
+            val first = letterRounds(Random(seed))
+            assertEquals(VOWELS.toSet(), first.map { it.wanted }.toSet(), "el primer día, las vocales")
+            for (round in first) {
                 assertEquals(COOKIES, round.cookies.toSet().size, "galletas repetidas: $round")
                 assertEquals(1, round.cookies.count { it == round.wanted })
-                assertTrue(round.cookies.all { it in VOWELS })
+                assertTrue(round.cookies.all { it in LETTERS })
             }
+            // With each vowel fed once, the consonants come in: the four of them and one vowel.
+            val then = letterRounds(Random(seed), VOWELS.associate { it.toString() to 1 })
+            assertEquals(CONSONANTS.toSet(), then.map { it.wanted }.filter { it in CONSONANTS }.toSet())
+            assertEquals(LETTER_ROUNDS, then.map { it.wanted }.toSet().size)
         }
     }
 
     @Test
-    fun theStrawberriesGoFromOneToFiveAndNeverStartWithFive() {
+    fun theStrawberriesGoFromOneToFiveAndThenUpToTen() {
         repeat(200) { seed ->
-            val rounds = countRounds(Random(seed))
-            assertEquals((1..MAX_COUNT).toList(), rounds.sorted())
-            assertNotEquals(MAX_COUNT, rounds.first())
+            val first = countRounds(Random(seed))
+            assertEquals((1..SMALL_COUNT).toList(), first.sorted())
+            assertNotEquals(SMALL_COUNT, first.first())
+            // Once she has counted one to five, two of them and three of six to ten.
+            val then = countRounds(Random(seed), (1..SMALL_COUNT).associate { it.toString() to 1 })
+            assertEquals(5, then.toSet().size)
+            assertEquals(2, then.count { it <= SMALL_COUNT })
+            assertEquals(3, then.count { it in SMALL_COUNT + 1..MAX_COUNT })
+            assertNotEquals(then.max(), then.first())
         }
     }
 
     @Test
-    fun theVowelsToTraceAreTheLeastTraced() {
+    fun theLettersToTraceAreTheLeastTracedTheVowelsFirst() {
         val traced = mapOf("a" to 4, "e" to 3, "i" to 0, "o" to 2, "u" to 0)
         repeat(50) { seed ->
             assertEquals(setOf('i', 'u'), tracePicks(traced, Random(seed)).toSet())
         }
         assertEquals(TRACED_LETTERS, tracePicks(emptyMap(), Random(1)).size)
+        val vowelsDone = VOWELS.associate { it.toString() to 1 }
+        repeat(50) { seed -> assertTrue(tracePicks(vowelsDone, Random(seed)).all { it in CONSONANTS }) }
     }
 
     @Test
@@ -89,8 +100,9 @@ class RoundsTest {
     }
 
     @Test
-    fun everyVowelHasItsWord() {
-        assertEquals(VOWELS, Word.entries.map { it.vowel })
+    fun everyLetterHasItsWord() {
+        assertEquals(LETTERS, Word.entries.map { it.letter })
         assertEquals(Word.OSO, Word.of('o'))
+        assertEquals(Word.SOL, Word.of('s'))
     }
 }

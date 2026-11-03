@@ -11,7 +11,9 @@ import kotlin.math.sin
  * The capital letters to trace, «letra de palo» as in the classroom of four-year-olds, in a box [GLYPH_HEIGHT] units
  * high and [width] wide, with their strokes in the order the school teaches them (docs/diseno.md): the A, two slopes
  * from the top and the bar; the E, the stick and the three bars from the left; the I, a stick; the O, from the top and
- * round to the left; the U, down, round and up.
+ * round to the left; the U, down, round and up. And the first consonants (ADR 0009): the M, its left stick and then the
+ * peak and the right stick without lifting the finger; the P, the stick and then its belly from the top; the L, down and
+ * to the right; the S, from its top right, round to the left and back round to the right.
  */
 internal class Glyph(val letter: Char, val width: Float, val strokes: List<List<Offset>>)
 
@@ -39,7 +41,54 @@ internal object Glyphs {
         'i' -> Glyph('i', 20f, listOf(line(Offset(10f, 0f), Offset(10f, GLYPH_HEIGHT))))
         'o' -> Glyph('o', 110f, listOf(oval(Offset(55f, 70f), 52f, 70f)))
         'u' -> Glyph('u', 110f, listOf(cup()))
+        'm' -> Glyph(
+            'm',
+            120f,
+            listOf(
+                line(Offset(10f, 0f), Offset(10f, GLYPH_HEIGHT)),
+                line(Offset(10f, 0f), Offset(60f, 92f)) +
+                    line(Offset(60f, 92f), Offset(110f, 0f)).drop(1) +
+                    line(Offset(110f, 0f), Offset(110f, GLYPH_HEIGHT)).drop(1),
+            ),
+        )
+        'p' -> Glyph(
+            'p',
+            90f,
+            listOf(
+                line(Offset(10f, 0f), Offset(10f, GLYPH_HEIGHT)),
+                line(Offset(10f, 0f), Offset(44f, 0f)) +
+                    arc(Offset(44f, 38f), 38f, -PI / 2, PI / 2).drop(1) +
+                    line(Offset(44f, 76f), Offset(10f, 76f)).drop(1),
+            ),
+        )
+        'l' -> Glyph(
+            'l',
+            80f,
+            listOf(line(Offset(10f, 0f), Offset(10f, GLYPH_HEIGHT)) + line(Offset(10f, GLYPH_HEIGHT), Offset(74f, GLYPH_HEIGHT)).drop(1)),
+        )
+        's' -> Glyph(
+            's',
+            90f,
+            listOf(
+                arc(Offset(45f, 35f), 35f, -PI / 6, -3 * PI / 2) +
+                    arc(Offset(45f, 105f), 35f, -PI / 2, 5 * PI / 6).drop(1),
+            ),
+        )
         else -> error("No hay trazo para «$letter»")
+    }
+
+    /** A round stroke around [center], [radius] units, from [from] to [to] radians (y grows down, as on the screen). */
+    private fun arc(
+        center: Offset,
+        radius: Float,
+        from: Double,
+        to: Double,
+    ): List<Offset> {
+        val steps = max(1, (kotlin.math.abs(to - from) * radius / STEP).toInt())
+        return (0..steps).map {
+            val angle = from + (to - from) * it / steps
+            Offset(center.x + radius * cos(angle).toFloat(), center.y + radius * sin(angle).toFloat())
+        }
     }
 
     /** A straight stroke from [from] to [to], a point every [STEP] units. */

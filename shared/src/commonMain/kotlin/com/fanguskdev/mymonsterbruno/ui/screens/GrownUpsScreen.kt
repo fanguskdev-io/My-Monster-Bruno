@@ -40,11 +40,11 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.fanguskdev.mymonsterbruno.game.Hue
+import com.fanguskdev.mymonsterbruno.game.LETTERS
 import com.fanguskdev.mymonsterbruno.game.MAX_COUNT
 import com.fanguskdev.mymonsterbruno.game.SaveData
 import com.fanguskdev.mymonsterbruno.game.Session
 import com.fanguskdev.mymonsterbruno.game.Shape
-import com.fanguskdev.mymonsterbruno.game.VOWELS
 import com.fanguskdev.mymonsterbruno.ui.GameState
 import com.fanguskdev.mymonsterbruno.ui.andika
 
@@ -140,11 +140,11 @@ internal fun GrownUpsScreen(game: GameState, onExit: (() -> Unit)? = null) {
                 }
             }
             Section("Lo que ha practicado", font) {
-                val fed = VOWELS.joinToString("   ") { "${it.uppercaseChar()} ${data.fed[it.toString()] ?: 0}" }
-                val traced = VOWELS.joinToString("   ") { "${it.uppercaseChar()} ${data.traced[it.toString()] ?: 0}" }
+                val fed = LETTERS.joinToString("   ") { "${it.uppercaseChar()} ${data.fed[it.toString()] ?: 0}" }
+                val traced = LETTERS.joinToString("   ") { "${it.uppercaseChar()} ${data.traced[it.toString()] ?: 0}" }
                 val counted = (1..MAX_COUNT).joinToString("   ") { "$it: ${data.counted[it.toString()] ?: 0}" }
-                Text("Galletas bien dadas, por vocal:   $fed", font, 16)
-                Text("Vocales trazadas enteras:   $traced", font, 16)
+                Text("Galletas bien dadas, por letra:   $fed", font, 16)
+                Text("Letras trazadas enteras:   $traced", font, 16)
                 Text("Fresas contadas, por número:   $counted", font, 16)
                 val balloons = Hue.entries.joinToString("   ") { "${it.word} ${data.balloons[it.word] ?: 0}" }
                 Text("Globos bien dados, por color:   $balloons", font, 16)

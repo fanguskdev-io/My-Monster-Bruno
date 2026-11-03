@@ -13,14 +13,14 @@ Qué se prueba en cada cambio y en cada hito, y cómo. Los criterios de salida d
 
 | Qué | Prueba | Dónde |
 |---|---|---|
-| Trazar: cada vocal se puede trazar entera, también con el dedo temblón; los trazos van en el orden del cole; un dedo lejos no empieza ni avanza; no se puede saltar al final de la O; levantar el dedo guarda lo hecho | `TracingTest` | Común |
-| Las rondas: Comeletras pide cada vocal una vez con otras dos en el plato; las fresas van del 1 al 5 y nunca empiezan por el 5; se trazan las menos trazadas; cada vocal tiene su palabra; los globos piden cinco colores distintos con otros dos; las series son dos de dos colores y dos de tres, y su respuesta está entre las opciones; la casa se construye en orden y su pieza siempre está entre las tres | `RoundsTest` | Común |
+| Trazar: cada letra (vocales, M, P, L y S) se puede trazar entera, también con el dedo temblón; los trazos van en el orden del cole; un dedo lejos no empieza ni avanza; no se puede saltar al final de la O; levantar el dedo guarda lo hecho | `TracingTest` | Común |
+| Las rondas: Comeletras pide el primer día las vocales y después las letras menos dadas, con las consonantes; las fresas van del 1 al 5 y, cuando los ha contado, mezclan hasta el 10, nunca empezando por el más grande; se trazan las menos trazadas, las vocales primero; cada letra tiene su palabra; los globos piden cinco colores distintos con otros dos; las series son dos de dos colores y dos de tres, y su respuesta está entre las opciones; la casa se construye en orden y su pieza siempre está entre las tres | `RoundsTest` | Común |
 | Los minutos del día, el día nuevo y los minutos de más; la partida se guarda y se recupera, y una rota empieza de cero; lo que lleva Bruno y cuánto crece | `SessionTest` | Común |
 | Cuándo se va Bruno a dormir: enseguida en el cuarto y en el mapa, al terminar la isla dentro de una, dormido si se abre sin tiempo, y el huevo no cuenta | `GameStateTest` | Común |
 | Leer los WAV | `WavTest` | Común |
 | El sonido del escritorio: la mezcla suma sin desbordarse, respeta el volumen y pasa todo a un canal a 22 050 Hz; y cortar una voz tras otra, como al contar fresas, no atasca su hilo | `DesktopSoundTest` | JVM |
 | Cada frase del juego tiene su fichero y dura lo que una frase; el guion y el código tienen las mismas frases; cada efecto tiene su fichero | `AudioFilesTest` | JVM |
-| Las trece pantallas se dibujan, en móvil (2,17:1) y en tableta (4:3) | `ScreenshotsTest` | JVM |
+| Las trece pantallas y, cuando ya sabe las vocales y del 1 al 5, Comeletras, los trazos y las fresas con lo nuevo, se dibujan en móvil (2,17:1) y en tableta (4:3) | `ScreenshotsTest` | JVM |
 | La salida de la zona de mayores: «Salir del juego» guarda la partida y cierra; sin salida en la plataforma, como en iOS, no hay botón | `GrownUpsExitTest` | JVM |
 | El icono de iOS es el de Android: lo dibuja del vector de `androidApp` en `shared/build/icono/` y lo compara con el del proyecto de Xcode; si cambia el de Android, se copia el nuevo | `AppIconTest` | JVM |
 
@@ -48,7 +48,7 @@ xcrun simctl launch booted com.fanguskdev.mymonsterbruno.MyMonsterBruno -silenci
 
 | Dispositivo | Pantalla en horizontal | Uso |
 |---|---|---|
-| Emulador Android `Pixel_10_Pro_XL` | 2992 × 1344 | El de cada prueba en Android |
+| Emulador Android `Tester_API36` | 2400 × 1080 | El de cada prueba en Android. El `Pixel_10_Pro_XL` es el de la sesión de CaroFarty: no se usa desde aquí (acordado el 2026-11-03) |
 | Simulador iPad (A16), iOS 26.3 | 2360 × 1640 | El de cada prueba en iOS: la tableta, la proporción más cuadrada |
 | Simulador iPhone 17 Pro, iOS 26.5 | 2622 × 1206 | El iPhone; con este juego, todavía sin probar |
 
@@ -90,3 +90,11 @@ Dónde jugará ella, con qué dispositivo, está por saber.
 - [ ] Bruno pide cada pieza y su hueco brilla; la buena, arrastrada o tocada, crece hasta su sitio; la que no es vuelve y
   Bruno dice qué forma es. Son seis piezas, y la casa queda entera.
 - [ ] Al terminar, regalo y bandera; en la zona de mayores, las piezas por forma y las casas construidas.
+
+### M3 · Más letras y números
+
+- [ ] El primer día, Comeletras pide las vocales; la vez siguiente entran la M, la P, la L y la S, con su dibujo en el
+  bocadillo (manzana, pelota, luna, sol) y su frase («¡Quiero la eme! La eme de manzana»).
+- [ ] Las consonantes se trazan en el orden del cole y se pueden acabar.
+- [ ] Cuando ha contado del 1 al 5, las fresas mezclan números hasta el 10; la tarjeta enseña dos manos y los puntos en
+  dos filas, y en el plato caben diez.

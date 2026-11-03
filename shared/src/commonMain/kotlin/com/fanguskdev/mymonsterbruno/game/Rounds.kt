@@ -5,42 +5,71 @@ import kotlin.random.Random
 /** The vowels, the first letters of the classroom of four-year-olds (docs/diseno.md). */
 internal val VOWELS = listOf('a', 'e', 'i', 'o', 'u')
 
-/** The word of each vowel, the one Bruno says and the bubble draws: «la a de avión». */
-internal enum class Word(val vowel: Char) {
+/** The first consonants of the classroom of four-year-olds (ADR 0009). */
+internal val CONSONANTS = listOf('m', 'p', 'l', 's')
+
+/** Every letter of the island of letters: the vowels first, then the consonants. */
+internal val LETTERS = VOWELS + CONSONANTS
+
+/** The word of each letter, the one Bruno says and the bubble draws: «la a de avión», «la eme de manzana». */
+internal enum class Word(val letter: Char) {
     AVION('a'),
     ELEFANTE('e'),
     IGLU('i'),
     OSO('o'),
     UVA('u'),
+    MANZANA('m'),
+    PELOTA('p'),
+    LUNA('l'),
+    SOL('s'),
     ;
 
     companion object {
-        fun of(vowel: Char): Word = entries.first { it.vowel == vowel }
+        fun of(letter: Char): Word = entries.first { it.letter == letter }
     }
 }
+
+/**
+ * The letters she has practised least in [practised] (by letter), [count] of them: ties at random, but the vowels before
+ * the consonants, so the first day is the vowels and the consonants come in once she knows them.
+ */
+internal fun leastPractised(practised: Map<String, Int>, count: Int, random: Random): List<Char> = LETTERS.shuffled(random)
+    .sortedWith(compareBy<Char>({ practised[it.toString()] ?: 0 }, { if (it in VOWELS) 0 else 1 }))
+    .take(count)
 
 /** A round of Comeletras: Bruno wants [wanted] and the plate has three cookies, [cookies], one of them his. */
 internal data class LetterRound(val wanted: Char, val cookies: List<Char>)
 
-/** The five rounds of Comeletras: each vowel once, in any order, with two other vowels on the plate. */
-internal fun letterRounds(random: Random): List<LetterRound> = VOWELS.shuffled(random).map { wanted ->
-    val others = (VOWELS - wanted).shuffled(random).take(COOKIES - 1)
-    LetterRound(wanted, (others + wanted).shuffled(random))
-}
+/** The five rounds of Comeletras: the letters she has fed Bruno least ([fed]), each with two other letters on the plate. */
+internal fun letterRounds(random: Random, fed: Map<String, Int> = emptyMap()): List<LetterRound> =
+    leastPractised(fed, LETTER_ROUNDS, random).map { wanted ->
+        val others = (LETTERS - wanted).shuffled(random).take(COOKIES - 1)
+        LetterRound(wanted, (others + wanted).shuffled(random))
+    }
 
-/** How many strawberries Bruno wants in each round: one to five, each once, never five in the first round. */
-internal fun countRounds(random: Random): List<Int> {
-    val rounds = (1..MAX_COUNT).shuffled(random).toMutableList()
-    if (rounds.first() == MAX_COUNT) rounds.add(rounds.removeAt(0))
+/**
+ * How many strawberries Bruno wants in each of the five rounds. Until she has counted each of one to five ([counted]),
+ * those, each once, never five first. Then two of one to five and three of six to ten, the ones she has counted least,
+ * never the biggest first.
+ */
+internal fun countRounds(random: Random, counted: Map<String, Int> = emptyMap()): List<Int> {
+    fun least(numbers: IntRange, count: Int) = numbers.shuffled(random).sortedBy { counted[it.toString()] ?: 0 }.take(count)
+    val small = 1..SMALL_COUNT
+    val knowsSmall = small.all { (counted[it.toString()] ?: 0) > 0 }
+    val rounds = (if (knowsSmall) least(small, 2) + least(SMALL_COUNT + 1..MAX_COUNT, 3) else small.toList())
+        .shuffled(random)
+        .toMutableList()
+    if (rounds.first() == rounds.max()) rounds.add(rounds.removeAt(0))
     return rounds
 }
 
-/** The two vowels to trace: the ones she has traced least, ties at random. */
-internal fun tracePicks(traced: Map<String, Int>, random: Random): List<Char> =
-    VOWELS.shuffled(random).sortedBy { traced[it.toString()] ?: 0 }.take(TRACED_LETTERS)
+/** The two letters to trace: the ones she has traced least, the vowels first, ties at random. */
+internal fun tracePicks(traced: Map<String, Int>, random: Random): List<Char> = leastPractised(traced, TRACED_LETTERS, random)
 
 internal const val COOKIES = 3
-internal const val MAX_COUNT = 5
+internal const val LETTER_ROUNDS = 5
+internal const val SMALL_COUNT = 5
+internal const val MAX_COUNT = 10
 internal const val TRACED_LETTERS = 2
 
 /** The colours of the island of colours (ADR 0007), with the word that names them: «el globo rojo». */

@@ -10,6 +10,7 @@ import com.fanguskdev.mymonsterbruno.game.BrunoLook
 import com.fanguskdev.mymonsterbruno.game.SaveData
 import com.fanguskdev.mymonsterbruno.game.SaveStore
 import com.fanguskdev.mymonsterbruno.game.Topping
+import com.fanguskdev.mymonsterbruno.game.VOWELS
 import com.fanguskdev.mymonsterbruno.storage.MemoryStore
 import com.fanguskdev.mymonsterbruno.ui.GameState
 import com.fanguskdev.mymonsterbruno.ui.Island
@@ -45,23 +46,46 @@ class ScreenshotsTest {
             "12-series" to Scene.Play(Island.COLORS, 1),
             "13-casa" to Scene.Play(Island.SHAPES, 0),
         )
+        // The same games once she knows the vowels and one to five: the consonants and the numbers up to ten.
+        val knows = { save: SaveData ->
+            save.copy(
+                fed = VOWELS.associate { it.toString() to 1 },
+                traced = VOWELS.associate { it.toString() to 1 },
+                counted = (1..5).associate { it.toString() to 1 },
+            )
+        }
+        val later = listOf(
+            "14-comeletras-consonantes" to Scene.Play(Island.VOWELS, 0),
+            "15-trazos-consonantes" to Scene.Play(Island.VOWELS, 1),
+            "16-fresas-hasta-diez" to Scene.Play(Island.NUMBERS, 0),
+        )
         for ((device, size) in SIZES) {
             for ((name, scene) in scenes) {
                 val file = File(folder, "$device-$name.png")
                 file.writeBytes(render(scene, size.first, size.second))
                 assertTrue(file.length() > MIN_BYTES, "$file está vacía")
             }
+            for ((name, scene) in later) {
+                val file = File(folder, "$device-$name.png")
+                file.writeBytes(render(scene, size.first, size.second, knows))
+                assertTrue(file.length() > MIN_BYTES, "$file está vacía")
+            }
         }
     }
 
-    private fun render(scene: Scene, width: Int, height: Int): ByteArray {
+    private fun render(
+        scene: Scene,
+        width: Int,
+        height: Int,
+        practised: (SaveData) -> SaveData = { it },
+    ): ByteArray {
         val store = MemoryStore()
         val save = SaveData(
             hatched = scene != Scene.Hatch,
             childName = "Lucía",
             look = BrunoLook(BrunoColor.MINT, Topping.HORNS, listOf(Accessory.BEANIE, Accessory.BOW_TIE)),
         )
-        SaveStore.save(store, save)
+        SaveStore.save(store, practised(save))
         val audio = Audio(SilentPlayer(), CoroutineScope(Dispatchers.Unconfined))
         val game = GameState(store, audio, Random(SEED), day = { DAY })
         game.greeted = true

@@ -12,7 +12,7 @@ b_vamos_isla	bruno	¿Vamos a la isla? ¡Toca el botón grande!
 b_jiji	bruno	¡Ji, ji! ¡Me haces cosquillas!
 b_jiji_corto	bruno	¡Ji, ji, ji!
 n_que_isla	narrador	¿A qué isla vamos hoy?
-n_isla_vocales	narrador	¡A la isla de las vocales!
+n_isla_letras	narrador	¡A la isla de las letras!
 n_isla_numeros	narrador	¡A la isla de los números!
 n_isla_lejos	narrador	Esa isla está muy lejos. ¡Pronto iremos!
 b_hambre_letras	bruno	¡Tengo hambre de letras!
@@ -137,3 +137,42 @@ b_yo_quiero_circulo	bruno	¡Yo quiero el círculo!
 b_si_rectangulo	bruno	¡Sí! ¡El rectángulo!
 b_ese_es_rectangulo	bruno	Huum... Ese es el rectángulo.
 b_yo_quiero_rectangulo	bruno	¡Yo quiero el rectángulo!
+b_quiero_m	bruno	¡Quiero la eme! La eme de manzana.
+b_nam_m	bruno	¡Ñam! ¡La eme de manzana!
+b_esa_es_m	bruno	Huum... Esa es la eme.
+b_yo_quiero_m	bruno	¡Yo quiero la eme!
+n_trazar_m	narrador	Esta es la eme. Sigue el camino con el dedo.
+b_letra_m	bruno	¡La eme! ¡Ya sé hacer la eme!
+b_quiero_p	bruno	¡Quiero la pe! La pe de pelota.
+b_nam_p	bruno	¡Ñam! ¡La pe de pelota!
+b_esa_es_p	bruno	Huum... Esa es la pe.
+b_yo_quiero_p	bruno	¡Yo quiero la pe!
+n_trazar_p	narrador	Esta es la pe. Sigue el camino con el dedo.
+b_letra_p	bruno	¡La pe! ¡Ya sé hacer la pe!
+b_quiero_l	bruno	¡Quiero la ele! La ele de luna.
+b_nam_l	bruno	¡Ñam! ¡La ele de luna!
+b_esa_es_l	bruno	Huum... Esa es la ele.
+b_yo_quiero_l	bruno	¡Yo quiero la ele!
+n_trazar_l	narrador	Esta es la ele. Sigue el camino con el dedo.
+b_letra_l	bruno	¡La ele! ¡Ya sé hacer la ele!
+b_quiero_s	bruno	¡Quiero la ese! La ese de sol.
+b_nam_s	bruno	¡Ñam! ¡La ese de sol!
+b_esa_es_s	bruno	Huum... Esa es la ese.
+b_yo_quiero_s	bruno	¡Yo quiero la ese!
+n_trazar_s	narrador	Esta es la ese. Sigue el camino con el dedo.
+b_letra_s	bruno	¡La ese! ¡Ya sé hacer la ese!
+n_contar_6	narrador	Bruno quiere seis fresas. ¿Se las das?
+n_num_6	narrador	Seis.
+b_fresas_6	bruno	¡Ñam! ¡Seis fresas!
+n_contar_7	narrador	Bruno quiere siete fresas. ¿Se las das?
+n_num_7	narrador	Siete.
+b_fresas_7	bruno	¡Ñam! ¡Siete fresas!
+n_contar_8	narrador	Bruno quiere ocho fresas. ¿Se las das?
+n_num_8	narrador	Ocho.
+b_fresas_8	bruno	¡Ñam! ¡Ocho fresas!
+n_contar_9	narrador	Bruno quiere nueve fresas. ¿Se las das?
+n_num_9	narrador	Nueve.
+b_fresas_9	bruno	¡Ñam! ¡Nueve fresas!
+n_contar_10	narrador	Bruno quiere diez fresas. ¿Se las das?
+n_num_10	narrador	Diez.
+b_fresas_10	bruno	¡Ñam! ¡Diez fresas!

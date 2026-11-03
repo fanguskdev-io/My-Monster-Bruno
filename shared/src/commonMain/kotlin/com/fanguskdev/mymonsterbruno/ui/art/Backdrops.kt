@@ -160,7 +160,8 @@ internal fun DrawScope.drawGarden(stage: Stage, time: Float) {
     gradient(stage, Color(0xFFBFE6F5), Color(0xFFE6F6FC))
     circle(Color(0xFFFFE27A), Offset(694f, 64f), 28f)
     val drift = 8f * sin(time * 0.25f)
-    for ((x, y) in listOf(250f to 70f, 520f to 52f)) {
+    // Out of the way of the card of the strawberries, which grows wide from six on.
+    for ((x, y) in listOf(122f to 44f, 588f to 30f)) {
         for ((dx, r) in listOf(0f to 16f, 20f to 22f, 42f to 15f)) circle(Color.White, Offset(x + dx + drift, y), r)
     }
     band(stage, Color(0xFF93D46E), 300f, stage.bottom)

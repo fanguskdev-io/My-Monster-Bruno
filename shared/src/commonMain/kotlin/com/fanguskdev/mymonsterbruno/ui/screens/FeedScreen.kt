@@ -66,7 +66,7 @@ internal fun FeedScreen(game: GameState, onDone: () -> Unit) {
     val measurer = rememberTextMeasurer()
     val font = andika()
     val audio = game.audio
-    val rounds = remember { letterRounds(game.random) }
+    val rounds = remember { letterRounds(game.random, game.data.fed) }
     var round by remember { mutableStateOf(0) }
     var phase by remember { mutableStateOf(FeedPhase.ASKING) }
     var phaseAt by remember { mutableStateOf(0f) }

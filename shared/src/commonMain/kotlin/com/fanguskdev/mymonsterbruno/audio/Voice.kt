@@ -2,9 +2,9 @@ package com.fanguskdev.mymonsterbruno.audio
 
 import com.fanguskdev.mymonsterbruno.game.HousePart
 import com.fanguskdev.mymonsterbruno.game.Hue
+import com.fanguskdev.mymonsterbruno.game.LETTERS
 import com.fanguskdev.mymonsterbruno.game.MAX_COUNT
 import com.fanguskdev.mymonsterbruno.game.Shape
-import com.fanguskdev.mymonsterbruno.game.VOWELS
 
 /**
  * The voice lines, by the names of their files in `files/voces/`. What each one says is in voces/guion.tsv, where
@@ -24,7 +24,7 @@ internal object Voice {
     const val TICKLES = "b_jiji"
     const val GIGGLE = "b_jiji_corto"
     const val WHICH_ISLAND = "n_que_isla"
-    const val TO_VOWELS = "n_isla_vocales"
+    const val TO_LETTERS = "n_isla_letras"
     const val TO_NUMBERS = "n_isla_numeros"
     const val TOO_FAR = "n_isla_lejos"
     const val HUNGRY_FOR_LETTERS = "b_hambre_letras"
@@ -114,13 +114,13 @@ internal object Voice {
     /** Every line, to load them all when the game opens. */
     val ALL: List<String> = listOf(
         EGG, EGG_AGAIN, HELLO_I_AM_BRUNO, CHOOSE_COLOR, CHOOSE_TOP, GREEN_BUTTON, LOVE_IT, HANDSOME, HELLO, GO_TO_ISLAND,
-        TICKLES, GIGGLE, WHICH_ISLAND, TO_VOWELS, TO_NUMBERS, TOO_FAR, HUNGRY_FOR_LETTERS, DRAG_HINT, THANKS_LETTERS,
+        TICKLES, GIGGLE, WHICH_ISLAND, TO_LETTERS, TO_NUMBERS, TOO_FAR, HUNGRY_FOR_LETTERS, DRAG_HINT, THANKS_LETTERS,
         WELL_DONE, THANKS_STRAWBERRIES, PRESENT, THANKS_PRESENT, GROWING, YAWN, MISSION_LETTER, MISSION_COUNT,
         MISSION_COLOR, SEE_YOU_TOMORROW, ASLEEP, CALM_INTRO, CALM_LET_GO, CALM_AGAIN, CALM_END, TO_COLORS, LOVE_BALLOONS,
         THANKS_BALLOONS, LOOK_AT_THE_ROW, WHICH_NEXT, LOOK_AGAIN, THANKS_SERIES, TO_SHAPES, BUILD_HOUSE, THANKS_HOUSE,
         MISSION_SHAPE,
     ) +
-        VOWELS.flatMap { listOf(want(it), yum(it), thatIs(it), iWant(it), trace(it), traced(it)) } +
+        LETTERS.flatMap { listOf(want(it), yum(it), thatIs(it), iWant(it), trace(it), traced(it)) } +
         (1..MAX_COUNT).flatMap { listOf(askCount(it), number(it), strawberries(it)) } +
         Hue.entries.flatMap { listOf(wantBalloon(it), yes(it), thatColor(it), iWantBalloon(it), color(it)) } +
         HousePart.entries.map { askPart(it) } +

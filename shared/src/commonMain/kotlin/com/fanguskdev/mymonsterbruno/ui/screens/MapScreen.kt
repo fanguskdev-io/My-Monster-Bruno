@@ -76,7 +76,7 @@ internal fun MapScreen(game: GameState) {
                         audio.sfx(Sfx.TAP)
                         game.back()
                     }
-                    inIsland(point, VOWELS_ISLAND) -> go(Island.VOWELS, Voice.TO_VOWELS)
+                    inIsland(point, VOWELS_ISLAND) -> go(Island.VOWELS, Voice.TO_LETTERS)
                     inIsland(point, NUMBERS_ISLAND) -> go(Island.NUMBERS, Voice.TO_NUMBERS)
                     inIsland(point, COLORS_ISLAND) -> go(Island.COLORS, Voice.TO_COLORS)
                     inIsland(point, SHAPES_ISLAND) -> go(Island.SHAPES, Voice.TO_SHAPES)
@@ -131,21 +131,29 @@ private fun DrawScope.drawIsland(center: Offset, t: Float) {
     ellipse(Color(0xFF93D46E), center + Offset(0f, -8f), ISLAND_RX - 20f, ISLAND_RY - 16f)
 }
 
-private fun DrawScope.drawVowelRocks(center: Offset, measurer: TextMeasurer, font: FontFamily) {
-    val colors = listOf(Color(0xFFE4483C), Color(0xFF2C74D8), Color(0xFF2E9E5B), Color(0xFFF4B623), Color(0xFF9B6BD3))
-    listOf('A', 'E', 'I', 'O', 'U').forEachIndexed { i, letter ->
-        val p = center + Offset(-68f + 34f * i, if (i % 2 == 0) -18f else -2f)
-        circle(Color.White, p, 17f)
-        label(measurer, letter.toString(), p + Offset(0f, 1f), 24f, colors[i], font)
-    }
-}
+/** The rocks of the island of letters: the vowels in a row and the consonants in front. */
+private fun DrawScope.drawVowelRocks(center: Offset, measurer: TextMeasurer, font: FontFamily) =
+    drawRocks(center, listOf("A", "E", "I", "O", "U"), listOf("M", "P", "L", "S"), measurer, font)
 
-private fun DrawScope.drawNumberRocks(center: Offset, measurer: TextMeasurer, font: FontFamily) {
+/** The rocks of the island of numbers: one to five in a row and six to ten in front. */
+private fun DrawScope.drawNumberRocks(center: Offset, measurer: TextMeasurer, font: FontFamily) =
+    drawRocks(center, (1..5).map { it.toString() }, (6..10).map { it.toString() }, measurer, font)
+
+/** Two rows of white rocks on an island, each with its sign in a colour. */
+private fun DrawScope.drawRocks(
+    center: Offset,
+    back: List<String>,
+    front: List<String>,
+    measurer: TextMeasurer,
+    font: FontFamily,
+) {
     val colors = listOf(Color(0xFFE4483C), Color(0xFF2C74D8), Color(0xFF2E9E5B), Color(0xFFF4B623), Color(0xFF9B6BD3))
-    for (n in 1..5) {
-        val p = center + Offset(-68f + 34f * (n - 1), if (n % 2 == 1) -18f else -2f)
-        circle(Color.White, p, 17f)
-        label(measurer, n.toString(), p + Offset(0f, 1f), 24f, colors[n - 1], font)
+    for ((row, signs) in listOf(back, front).withIndex()) {
+        signs.forEachIndexed { i, sign ->
+            val p = center + Offset(-15.5f * (signs.size - 1) + 31f * i, -22f + 26f * row)
+            circle(Color.White, p, 14f)
+            label(measurer, sign, p + Offset(0f, 1f), if (sign.length > 1) 16f else 20f, colors[(i + row * 2) % colors.size], font)
+        }
     }
 }
 
