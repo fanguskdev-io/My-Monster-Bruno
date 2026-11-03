@@ -33,7 +33,8 @@ actuales, sin las de la familia ([ADR 0004](0004-voces-provisionales.md)), así 
   un fichero temporal que se borra en cuanto se lee), suena una vez y se olvida: ni se guarda ni sale del aparato. Lo
   único que se apunta es cuántas veces ha dicho cada palabra, que se ve en la zona de mayores.
 - **No hay reconocimiento de voz**: Bruno no sabe si la ha dicho bien, y no hace falta. Lo que se practica es decir la
-  palabra y partirla en sílabas, y nunca hay un «¡mal!».
+  palabra y partirla en sílabas, y nunca hay un «¡mal!». *Cambiado después: Bruno la comprueba con el reconocimiento del
+  propio aparato ([ADR 0015](0015-bruno-comprueba-la-palabra.md)).*
 
 ## Alternativas consideradas
 

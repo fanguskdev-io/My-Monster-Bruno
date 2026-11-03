@@ -15,8 +15,10 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.repeatOnLifecycle
 import com.fanguskdev.mymonsterbruno.audio.Audio
 import com.fanguskdev.mymonsterbruno.audio.DeafMicrophone
+import com.fanguskdev.mymonsterbruno.audio.NoWordCheck
 import com.fanguskdev.mymonsterbruno.audio.SilentPlayer
 import com.fanguskdev.mymonsterbruno.audio.rememberMicrophone
+import com.fanguskdev.mymonsterbruno.audio.rememberWordCheck
 import com.fanguskdev.mymonsterbruno.audio.soundPlayer
 import com.fanguskdev.mymonsterbruno.storage.KeyValueStore
 import com.fanguskdev.mymonsterbruno.ui.GameState
@@ -102,7 +104,11 @@ internal fun AppContent(game: GameState, onExit: (() -> Unit)? = null, listen: B
             is Scene.Present -> PresentScreen(game, scene.island) { game.presentGiven(scene.island) }
             Scene.Sleep -> SleepScreen(game)
             Scene.Calm -> CalmScreen(game)
-            Scene.Talk -> TalkScreen(game, if (listen) rememberMicrophone() else remember { DeafMicrophone() }) { game.back() }
+            Scene.Talk -> {
+                val microphone = if (listen) rememberMicrophone() else remember { DeafMicrophone() }
+                val check = if (listen) rememberWordCheck() else remember { NoWordCheck() }
+                TalkScreen(game, microphone, check) { game.back() }
+            }
             Scene.GrownUps -> GrownUpsScreen(game, onExit)
         }
     }

@@ -44,7 +44,8 @@ propuso el agente: «Así» ([ADR 0010](adr/0010-la-isla-de-las-emociones.md)). 
 las voces de la familia, seguiremos con las voces actuales» ([ADR 0004](adr/0004-voces-provisionales.md)), y «Habla con
 Bruno» como se lo propuso el agente, con micrófono: «Sí, así» ([ADR 0011](adr/0011-habla-con-bruno.md)). Para la
 entrega en su iPhone, «Mejor ad hoc» ([ADR 0012](adr/0012-la-entrega-ad-hoc.md)). Y de lo que faltaba, «La isla lejana: el
-sonido inicial», tal como se la propuso el agente: «Así» ([ADR 0013](adr/0013-la-isla-de-las-palabras.md)). Para seguir eligió «Más islas primero» y, entre las que le propuso el agente, «Colores»: «Bruno
+sonido inicial», tal como se la propuso el agente: «Así» ([ADR 0013](adr/0013-la-isla-de-las-palabras.md)). Después, de
+lo que quedaba, «T, N y D» ([ADR 0014](adr/0014-la-t-la-n-y-la-d.md)). Para seguir eligió «Más islas primero» y, entre las que le propuso el agente, «Colores»: «Bruno
 pide un color (“¡Quiero el globo rojo!”) y después series: rojo, azul, rojo… ¿cuál va ahora?»
 ([ADR 0007](adr/0007-la-isla-de-los-colores.md)).
 
@@ -71,14 +72,15 @@ La propuesta 3, tal como la leyó (en la [maqueta](investigacion/propuestas.html
 3. **El mapa**. Bruno va en su barca. Hay seis islas: la de las letras, la de los números, la de los colores, la de las
    formas, la de las emociones y, la más pequeña, arriba a la derecha, la de las palabras. Una isla terminada lleva su
    bandera.
-4. **La isla de las letras**, las vocales y la M, la P, la L y la S
-   ([ADR 0009](adr/0009-mas-letras-y-numeros-hasta-el-diez.md)):
+4. **La isla de las letras**, las vocales, la M, la P, la L y la S, y la T, la N y la D
+   ([ADR 0009](adr/0009-mas-letras-y-numeros-hasta-el-diez.md), [ADR 0014](adr/0014-la-t-la-n-y-la-d.md)):
    - **Comeletras**. «¡Tengo hambre de letras!». Bruno pide una vocal con su palabra («¡Quiero la a! La a de avión») y en
      el plato hay tres galletas con vocales. Ella le da una, arrastrándola a la boca o tocándola. Si es la que quería:
      «¡Ñam!». Si no, Bruno pone cara rara, la galleta vuelve al plato y él dice cuál era y cuál quiere («Huum... Esa es la
      e. ¡Yo quiero la a!»). Son cinco rondas, con las letras que menos le ha dado: el primer día, las vocales; luego
-     entran las consonantes («¡Quiero la eme! La eme de manzana»).
-   - **Trazar**. Dos letras en mayúscula, las que menos ha trazado (las vocales primero), con los trazos en el orden del
+     entran la M, la P, la L y la S («¡Quiero la eme! La eme de manzana»), y cuando las conoce, la T, la N y la D («¡Quiero
+     la te! La te de tomate»).
+   - **Trazar**. Dos letras en mayúscula, las que menos ha trazado (entran por los mismos pasos), con los trazos en el orden del
      cole. Un punto verde
      dice dónde empezar y una flecha, hacia dónde. El dedo no tiene que ir exacto: el camino perdona. Al acabar la letra,
      Bruno la celebra: «¡La a! ¡Ya sé hacer la a!».
@@ -126,8 +128,11 @@ Fuera del camino:
   de ella, más aguda, como un monstruo. Después da una palmada por sílaba diciéndola («¡Ma! ¡Ri! ¡Po! ¡Sa!»), cada sílaba
   sale en una tarjeta de color y el narrador cuenta las palmadas. Son cuatro de diez palabras (de sol a elefante, de una a
   cuatro palmadas), las que menos ha dicho y de menos palmadas a más. Si no la oye, se lo pide otra vez; a la segunda, o
-  si no hay micrófono, la dice Bruno y da las palmadas igual. Su voz suena una vez y se olvida: no se guarda ni sale del
-  aparato. El permiso del micrófono se pide la primera vez que se entra.
+  si no hay micrófono, la dice Bruno y da las palmadas igual. Si el aparato entiende que ha dicho otra palabra, Bruno se
+  lo dice con cariño: «Huum... Eso no es manzana. ¿Me dices manzana?», y a la segunda la dice él
+  ([ADR 0015](adr/0015-bruno-comprueba-la-palabra.md)). Su voz suena una vez y se olvida: no se guarda ni sale del
+  aparato, y lo que dice lo reconoce el propio aparato, sin conexión. El permiso del micrófono (y en el iPhone, el del
+  reconocimiento de voz) se pide la primera vez que se entra.
 - **El rincón de la calma**, el de su clase. Mientras mantiene el dedo, el globo se hincha y ella toma aire. Al soltar, el
   globo se deshincha despacio. Son tres respiraciones con Bruno.
 - **La zona de mayores**, detrás del candado de la esquina, que se abre manteniendo el dedo 2,5 segundos. En ella se puede
@@ -169,7 +174,8 @@ palabras, con el sonido inicial por la sílaba.
 
 **Falta**, de la propuesta 3 que eligió Fangusk. El orden y el alcance de cada pieza los decide él.
 
-- **Más contenido**: más consonantes. El sonido inicial ya está, por la sílaba, en la isla de las palabras.
+- **Más contenido**: más consonantes, después de la T, la N y la D. El sonido inicial ya está, por la sílaba, en la isla
+  de las palabras.
 - **Su foto**, en la zona de mayores.
 
 Las **voces de la familia** no se harán: «para M2 no vamos a utilizar las voces de la familia, seguiremos con las voces actuales» (Fangusk, 2026-11-03).
@@ -181,7 +187,7 @@ Las **voces de la familia** no se harán: «para M2 no vamos a utilizar las voce
 - **Bruno y todo lo demás se dibujan con vectores**, sin imágenes: Bruno respira, parpadea, mira y cambia de cara (ocho
   bocas, cuatro ojos, tres posturas de brazos).
 - **Las voces** son las de un narrador y la de Bruno, algo más aguda y más despacio, a unas 4 sílabas por segundo. Hay
-  345 frases pregrabadas con la voz del sistema del Mac y **los efectos** (14) se sintetizan desde cero
+  373 frases pregrabadas con la voz del sistema del Mac y **los efectos** (14) se sintetizan desde cero
   ([ADR 0004](adr/0004-voces-provisionales.md)). Las frases están en [`voces/guion.tsv`](../voces/guion.tsv).
 - **La letra** de la zona de mayores, de los números y del banderín es Andika, una tipografía pensada para quien aprende a
   leer (licencia OFL, en [`licencias/`](../licencias/Andika-OFL.txt)).

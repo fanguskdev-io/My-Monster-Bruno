@@ -15,6 +15,7 @@ import com.fanguskdev.mymonsterbruno.audio.SilentPlayer
 import com.fanguskdev.mymonsterbruno.game.Accessory
 import com.fanguskdev.mymonsterbruno.game.BrunoColor
 import com.fanguskdev.mymonsterbruno.game.BrunoLook
+import com.fanguskdev.mymonsterbruno.game.CONSONANTS
 import com.fanguskdev.mymonsterbruno.game.SaveData
 import com.fanguskdev.mymonsterbruno.game.SaveStore
 import com.fanguskdev.mymonsterbruno.game.Topping
@@ -74,6 +75,17 @@ class ScreenshotsTest {
             "15-trazos-consonantes" to Scene.Play(Island.VOWELS, 1),
             "16-fresas-hasta-diez" to Scene.Play(Island.NUMBERS, 0),
         )
+        // And once she knows the M, the P, the L and the S: the T, the N and the D.
+        val knowsMore = { save: SaveData ->
+            knows(save).copy(
+                fed = (VOWELS + CONSONANTS).associate { it.toString() to 1 },
+                traced = (VOWELS + CONSONANTS).associate { it.toString() to 1 },
+            )
+        }
+        val more = listOf(
+            "21-comeletras-t-n-d" to Scene.Play(Island.VOWELS, 0),
+            "22-trazos-t-n-d" to Scene.Play(Island.VOWELS, 1),
+        )
         // And the map once she has finished every island, with all its flags.
         val finished = { save: SaveData -> save.copy(islands = Island.entries.associate { it.name to 1 }) }
         for (screen in SCREENS) {
@@ -88,6 +100,11 @@ class ScreenshotsTest {
             for ((name, scene) in later) {
                 val file = File(folder, "${screen.name}-$name.png")
                 file.writeBytes(render(scene, screen, knows))
+                assertTrue(file.length() > MIN_BYTES, "$file está vacía")
+            }
+            for ((name, scene) in more) {
+                val file = File(folder, "${screen.name}-$name.png")
+                file.writeBytes(render(scene, screen, knowsMore))
                 assertTrue(file.length() > MIN_BYTES, "$file está vacía")
             }
             val file = File(folder, "${screen.name}-20-mapa-terminado.png")

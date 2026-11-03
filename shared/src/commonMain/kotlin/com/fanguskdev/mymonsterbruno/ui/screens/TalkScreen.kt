@@ -13,8 +13,10 @@ import androidx.compose.ui.text.rememberTextMeasurer
 import com.fanguskdev.mymonsterbruno.audio.Microphone
 import com.fanguskdev.mymonsterbruno.audio.Sfx
 import com.fanguskdev.mymonsterbruno.audio.Voice
+import com.fanguskdev.mymonsterbruno.audio.WordCheck
 import com.fanguskdev.mymonsterbruno.audio.higher
 import com.fanguskdev.mymonsterbruno.audio.normalized
+import com.fanguskdev.mymonsterbruno.audio.saysWord
 import com.fanguskdev.mymonsterbruno.audio.trimmed
 import com.fanguskdev.mymonsterbruno.game.TalkWord
 import com.fanguskdev.mymonsterbruno.game.plusOne
@@ -41,6 +43,7 @@ import com.fanguskdev.mymonsterbruno.ui.circle
 import com.fanguskdev.mymonsterbruno.ui.clamp01
 import com.fanguskdev.mymonsterbruno.ui.rememberClock
 import com.fanguskdev.mymonsterbruno.ui.ring
+import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.math.sin
@@ -62,10 +65,17 @@ private enum class TalkPhase { ASKING, LISTENING, HEARING, ECHO, CLAPPING, COUNT
  * big microphone while she says it, and Bruno says it back with her own voice, higher, a monster's. Then he claps it, a
  * clap for each syllable, MA-RI-PO-SA, and the voice counts the claps. Four words, the fewest claps first. Her voice is
  * played once and forgotten: nothing of it is saved nor leaves the device. Without a microphone, or if he does not hear
- * her twice, Bruno says the word himself and claps it all the same.
+ * her twice, Bruno says the word himself and claps it all the same. Where the device can make out words by itself
+ * ([check], ADR 0015), Bruno knows when she said another one: «Huum... Eso no es manzana. ¿Me dices manzana?», and the
+ * second time he says it himself, so that she is never stuck.
  */
 @Composable
-internal fun TalkScreen(game: GameState, microphone: Microphone, onDone: () -> Unit) {
+internal fun TalkScreen(
+    game: GameState,
+    microphone: Microphone,
+    check: WordCheck,
+    onDone: () -> Unit,
+) {
     val clock = rememberClock()
     val scope = rememberCoroutineScope()
     val measurer = rememberTextMeasurer()
@@ -77,6 +87,10 @@ internal fun TalkScreen(game: GameState, microphone: Microphone, onDone: () -> U
 
     // Whether it may listen: null until the platform has asked, which it does the first time.
     var allowed by remember { mutableStateOf<Boolean?>(null) }
+
+    // Whether the device can tell which word she said, and how many times this round it was another one.
+    var checking by remember { mutableStateOf(false) }
+    var wrong by remember { mutableStateOf(0) }
     var missed by remember { mutableStateOf(false) }
     var listeningSince by remember { mutableStateOf(0f) }
     var clapped by remember { mutableStateOf(0) }
@@ -87,9 +101,14 @@ internal fun TalkScreen(game: GameState, microphone: Microphone, onDone: () -> U
 
     LaunchedEffect(round) {
         missed = false
+        wrong = 0
         clapped = 0
         phase = TalkPhase.ASKING
-        if (allowed == null) allowed = microphone.allowed()
+        if (allowed == null) {
+            val listens = microphone.allowed()
+            checking = listens && check.allowed()
+            allowed = listens
+        }
         if (round == 0) {
             audio.say(Voice.TALK, Voice.tellMe(current()), Voice.HOLD_MIC)
         } else {
@@ -129,7 +148,17 @@ internal fun TalkScreen(game: GameState, microphone: Microphone, onDone: () -> U
             when {
                 voice != null -> {
                     phase = TalkPhase.ECHO
+                    // Bruno says back what he heard while the device makes out which word it was.
+                    val guesses = async { if (checking) check.heard(voice, word.word) else null }
                     audio.echo(voice.normalized().higher(MONSTER_PITCH))
+                    val said = guesses.await()?.let { saysWord(it, word.word) } ?: true
+                    if (!said && wrong == 0) {
+                        wrong++
+                        phase = TalkPhase.ASKING
+                        audio.say(Voice.notThat(word))
+                        return@launch
+                    }
+                    if (!said) audio.say(Voice.word(word))
                 }
                 allowed == true && !missed -> {
                     missed = true

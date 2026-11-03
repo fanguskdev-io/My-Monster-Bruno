@@ -189,7 +189,8 @@ internal fun GrownUpsScreen(game: GameState, onExit: (() -> Unit)? = null) {
             }
             Text("Sin internet, sin anuncios, sin compras y sin datos fuera del dispositivo.", font, 14, color = Soft)
             Text(
-                "El micrófono solo escucha en «Habla con Bruno» mientras ella mantiene el botón, y lo que oye no se guarda.",
+                "El micrófono solo escucha en «Habla con Bruno» mientras ella mantiene el botón. Lo que oye lo reconoce el propio " +
+                    "aparato, sin conexión, y no se guarda.",
                 font,
                 14,
                 color = Soft,

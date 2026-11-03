@@ -13,7 +13,9 @@ import kotlin.math.sin
  * from the top and the bar; the E, the stick and the three bars from the left; the I, a stick; the O, from the top and
  * round to the left; the U, down, round and up. And the first consonants (ADR 0009): the M, its left stick and then the
  * peak and the right stick without lifting the finger; the P, the stick and then its belly from the top; the L, down and
- * to the right; the S, from its top right, round to the left and back round to the right.
+ * to the right; the S, from its top right, round to the left and back round to the right. And the next ones (ADR 0014):
+ * the T, its bar from the left and then its stick from the middle; the N, its left stick and then the slope and the right
+ * stick up without lifting the finger; the D, the stick and then its belly from the top.
  */
 internal class Glyph(val letter: Char, val width: Float, val strokes: List<List<Offset>>)
 
@@ -74,6 +76,32 @@ internal object Glyphs {
                     arc(Offset(45f, 105f), 35f, -PI / 2, 5 * PI / 6).drop(1),
             ),
         )
+        't' -> Glyph(
+            't',
+            100f,
+            listOf(
+                line(Offset(5f, 0f), Offset(95f, 0f)),
+                line(Offset(50f, 0f), Offset(50f, GLYPH_HEIGHT)),
+            ),
+        )
+        'n' -> Glyph(
+            'n',
+            100f,
+            listOf(
+                line(Offset(10f, 0f), Offset(10f, GLYPH_HEIGHT)),
+                line(Offset(10f, 0f), Offset(90f, GLYPH_HEIGHT)) + line(Offset(90f, GLYPH_HEIGHT), Offset(90f, 0f)).drop(1),
+            ),
+        )
+        'd' -> Glyph(
+            'd',
+            100f,
+            listOf(
+                line(Offset(10f, 0f), Offset(10f, GLYPH_HEIGHT)),
+                line(Offset(10f, 0f), Offset(35f, 0f)) +
+                    belly(Offset(35f, GLYPH_HEIGHT / 2), 55f, GLYPH_HEIGHT / 2).drop(1) +
+                    line(Offset(35f, GLYPH_HEIGHT), Offset(10f, GLYPH_HEIGHT)).drop(1),
+            ),
+        )
         else -> error("No hay trazo para «$letter»")
     }
 
@@ -102,6 +130,15 @@ internal object Glyphs {
         val steps = (2 * PI * (rx + ry) / 2 / STEP).toInt()
         return (0..steps).map {
             val angle = -PI / 2 - 2 * PI * it / steps
+            Offset(center.x + rx * cos(angle).toFloat(), center.y + ry * sin(angle).toFloat())
+        }
+    }
+
+    /** The belly of the D: from its top, round the right to its bottom, [rx] units wide and [ry] high from [center]. */
+    private fun belly(center: Offset, rx: Float, ry: Float): List<Offset> {
+        val steps = (PI * (rx + ry) / 2 / STEP).toInt()
+        return (0..steps).map {
+            val angle = -PI / 2 + PI * it / steps
             Offset(center.x + rx * cos(angle).toFloat(), center.y + ry * sin(angle).toFloat())
         }
     }

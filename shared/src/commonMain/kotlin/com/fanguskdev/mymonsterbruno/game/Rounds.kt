@@ -8,8 +8,14 @@ internal val VOWELS = listOf('a', 'e', 'i', 'o', 'u')
 /** The first consonants of the classroom of four-year-olds (ADR 0009). */
 internal val CONSONANTS = listOf('m', 'p', 'l', 's')
 
+/** The next consonants of the classroom (ADR 0014): they come in once she knows the first ones. */
+internal val NEXT_CONSONANTS = listOf('t', 'n', 'd')
+
 /** Every letter of the island of letters: the vowels first, then the consonants. */
-internal val LETTERS = VOWELS + CONSONANTS
+internal val LETTERS = VOWELS + CONSONANTS + NEXT_CONSONANTS
+
+/** The letters in steps, as they come in: each step once she has practised every letter of the one before. */
+private val LETTER_STEPS = listOf(VOWELS, CONSONANTS, NEXT_CONSONANTS)
 
 /** The word of each letter, the one Bruno says and the bubble draws: «la a de avión», «la eme de manzana». */
 internal enum class Word(val letter: Char) {
@@ -22,6 +28,9 @@ internal enum class Word(val letter: Char) {
     PELOTA('p'),
     LUNA('l'),
     SOL('s'),
+    TOMATE('t'),
+    NUBE('n'),
+    DADO('d'),
     ;
 
     companion object {
@@ -30,12 +39,17 @@ internal enum class Word(val letter: Char) {
 }
 
 /**
- * The letters she has practised least in [practised] (by letter), [count] of them: ties at random, but the vowels before
- * the consonants, so the first day is the vowels and the consonants come in once she knows them.
+ * The letters she has practised least in [practised] (by letter), [count] of them, ties at random. They come in steps:
+ * the first day, the vowels; the M, the P, the L and the S once she has practised every vowel; the T, the N and the D
+ * once she has practised those four too.
  */
-internal fun leastPractised(practised: Map<String, Int>, count: Int, random: Random): List<Char> = LETTERS.shuffled(random)
-    .sortedWith(compareBy<Char>({ practised[it.toString()] ?: 0 }, { if (it in VOWELS) 0 else 1 }))
-    .take(count)
+internal fun leastPractised(practised: Map<String, Int>, count: Int, random: Random): List<Char> {
+    fun knows(step: List<Char>) = step.all { (practised[it.toString()] ?: 0) > 0 }
+    val open = LETTER_STEPS.filterIndexed { i, _ -> LETTER_STEPS.take(i).all(::knows) }.flatten()
+    return open.shuffled(random)
+        .sortedWith(compareBy<Char>({ practised[it.toString()] ?: 0 }, { letter -> LETTER_STEPS.indexOfFirst { letter in it } }))
+        .take(count)
+}
 
 /** A round of Comeletras: Bruno wants [wanted] and the plate has three cookies, [cookies], one of them his. */
 internal data class LetterRound(val wanted: Char, val cookies: List<Char>)

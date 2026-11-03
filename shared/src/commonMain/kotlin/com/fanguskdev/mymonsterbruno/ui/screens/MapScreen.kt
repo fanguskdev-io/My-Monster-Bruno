@@ -16,9 +16,12 @@ import androidx.compose.ui.text.rememberTextMeasurer
 import com.fanguskdev.mymonsterbruno.audio.Sfx
 import com.fanguskdev.mymonsterbruno.audio.Voice
 import com.fanguskdev.mymonsterbruno.game.BrunoLook
+import com.fanguskdev.mymonsterbruno.game.CONSONANTS
 import com.fanguskdev.mymonsterbruno.game.Feeling
 import com.fanguskdev.mymonsterbruno.game.Hue
+import com.fanguskdev.mymonsterbruno.game.NEXT_CONSONANTS
 import com.fanguskdev.mymonsterbruno.game.Shape
+import com.fanguskdev.mymonsterbruno.game.VOWELS
 import com.fanguskdev.mymonsterbruno.ui.GameState
 import com.fanguskdev.mymonsterbruno.ui.Island
 import com.fanguskdev.mymonsterbruno.ui.Stage
@@ -154,26 +157,26 @@ private fun DrawScope.drawIsland(
     ellipse(Color(0xFF93D46E), center + Offset(0f, -8f), rx - 20f, ry - 16f)
 }
 
-/** The rocks of the island of letters: the vowels in a row and the consonants in front. */
+/** The rocks of the island of letters: the vowels in a row, and the consonants in front, as they come in. */
 private fun DrawScope.drawVowelRocks(center: Offset, measurer: TextMeasurer, font: FontFamily) =
-    drawRocks(center, listOf("A", "E", "I", "O", "U"), listOf("M", "P", "L", "S"), measurer, font)
+    drawRocks(center, listOf(VOWELS, CONSONANTS, NEXT_CONSONANTS).map { row -> row.map { it.uppercase() } }, measurer, font)
 
 /** The rocks of the island of numbers: one to five in a row and six to ten in front. */
 private fun DrawScope.drawNumberRocks(center: Offset, measurer: TextMeasurer, font: FontFamily) =
-    drawRocks(center, (1..5).map { it.toString() }, (6..10).map { it.toString() }, measurer, font)
+    drawRocks(center, listOf((1..5).map { it.toString() }, (6..10).map { it.toString() }), measurer, font)
 
-/** Two rows of white rocks on an island, each with its sign in a colour. */
+/** Rows of white rocks on an island, each with its sign in a colour, the first row at the back. */
 private fun DrawScope.drawRocks(
     center: Offset,
-    back: List<String>,
-    front: List<String>,
+    rows: List<List<String>>,
     measurer: TextMeasurer,
     font: FontFamily,
 ) {
     val colors = listOf(Color(0xFFE4483C), Color(0xFF2C74D8), Color(0xFF2E9E5B), Color(0xFFF4B623), Color(0xFF9B6BD3))
-    for ((row, signs) in listOf(back, front).withIndex()) {
+    val top = -22f - 8f * (rows.size - 2)
+    for ((row, signs) in rows.withIndex()) {
         signs.forEachIndexed { i, sign ->
-            val p = center + Offset(-15.5f * (signs.size - 1) + 31f * i, -22f + 26f * row)
+            val p = center + Offset(-15.5f * (signs.size - 1) + 31f * i, top + 26f * row)
             circle(Color.White, p, 14f)
             label(measurer, sign, p + Offset(0f, 1f), if (sign.length > 1) 16f else 20f, colors[(i + row * 2) % colors.size], font)
         }

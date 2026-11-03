@@ -223,6 +223,9 @@ internal fun DrawScope.drawWord(word: Word, center: Offset, size: Float) {
             Word.PELOTA -> ball()
             Word.LUNA -> moon()
             Word.SOL -> sun()
+            Word.TOMATE -> tomato()
+            Word.NUBE -> cloud()
+            Word.DADO -> dice()
         }
     }
 }
@@ -441,6 +444,27 @@ private fun DrawScope.sun() {
         Color(0xFF1D2B53),
         2.5f,
     )
+}
+
+private fun DrawScope.tomato() {
+    ellipse(Color(0xFFE4483C), Offset(0f, 6f), 34f, 29f)
+    ellipse(Color(0xFFFF8A80), Offset(-14f, -6f), 7f, 5f, alpha = 0.7f)
+    fill(star(Offset(0f, -21f), 15f, 5f), Color(0xFF2E9E5B))
+    line(Color(0xFF2E9E5B), Offset(0f, -22f), Offset(3f, -34f), 4f)
+}
+
+/** A cloud of the sky, pale blue with a darker edge, so that it shows on the white of a bubble or a card. */
+private fun DrawScope.cloud() {
+    val puffs = listOf(Offset(-22f, 8f) to 17f, Offset(-2f, -6f) to 23f, Offset(20f, 4f) to 19f, Offset(0f, 14f) to 17f)
+    for ((center, radius) in puffs) circle(Color(0xFF7FA7D1), center, radius + 3f)
+    for ((center, radius) in puffs) circle(Color(0xFFDCEBFA), center, radius)
+}
+
+/** A red die showing five, as the ones of the board games. */
+private fun DrawScope.dice() {
+    drawRoundRect(Shadow, Offset(-30f, -25f), Size(60f, 60f), CornerRadius(12f))
+    drawRoundRect(Color(0xFFE4483C), Offset(-30f, -30f), Size(60f, 60f), CornerRadius(12f))
+    for ((x, y) in listOf(-15f to -15f, 15f to -15f, 0f to 0f, -15f to 15f, 15f to 15f)) circle(Color.White, Offset(x, y), 6f)
 }
 
 /** A present box, [size] units: [open] from 0 to 1 lifts its lid away. */

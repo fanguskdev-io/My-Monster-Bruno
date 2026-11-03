@@ -344,3 +344,31 @@ b_silaba_go	bruno	¡Go!
 b_silaba_rro	bruno	¡Ro!
 b_silaba_jo	bruno	¡Jo!
 b_silaba_loj	bruno	¡Loj!
+b_quiero_t	bruno	¡Quiero la te! La te de tomate.
+b_nam_t	bruno	¡Ñam! ¡La te de tomate!
+b_esa_es_t	bruno	Huum... Esa es la te.
+b_yo_quiero_t	bruno	¡Yo quiero la te!
+n_trazar_t	narrador	Esta es la te. Sigue el camino con el dedo.
+b_letra_t	bruno	¡La te! ¡Ya sé hacer la te!
+b_quiero_n	bruno	¡Quiero la ene! La ene de nube.
+b_nam_n	bruno	¡Ñam! ¡La ene de nube!
+b_esa_es_n	bruno	Huum... Esa es la ene.
+b_yo_quiero_n	bruno	¡Yo quiero la ene!
+n_trazar_n	narrador	Esta es la ene. Sigue el camino con el dedo.
+b_letra_n	bruno	¡La ene! ¡Ya sé hacer la ene!
+b_quiero_d	bruno	¡Quiero la de! La de de dado.
+b_nam_d	bruno	¡Ñam! ¡La de de dado!
+b_esa_es_d	bruno	Huum... Esa es la de.
+b_yo_quiero_d	bruno	¡Yo quiero la de!
+n_trazar_d	narrador	Esta es la de. Sigue el camino con el dedo.
+b_letra_d	bruno	¡La de! ¡Ya sé hacer la de!
+b_no_es_sol	bruno	Huum... Eso no es sol. ¿Me dices sol?
+b_no_es_luna	bruno	Huum... Eso no es luna. ¿Me dices luna?
+b_no_es_oso	bruno	Huum... Eso no es oso. ¿Me dices oso?
+b_no_es_fresa	bruno	Huum... Eso no es fresa. ¿Me dices fresa?
+b_no_es_globo	bruno	Huum... Eso no es globo. ¿Me dices globo?
+b_no_es_pelota	bruno	Huum... Eso no es pelota. ¿Me dices pelota?
+b_no_es_manzana	bruno	Huum... Eso no es manzana. ¿Me dices manzana?
+b_no_es_regalo	bruno	Huum... Eso no es regalo. ¿Me dices regalo?
+b_no_es_mariposa	bruno	Huum... Eso no es mariposa. ¿Me dices mariposa?
+b_no_es_elefante	bruno	Huum... Eso no es elefante. ¿Me dices elefante?

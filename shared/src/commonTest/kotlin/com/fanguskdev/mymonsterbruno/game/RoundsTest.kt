@@ -25,6 +25,20 @@ class RoundsTest {
     }
 
     @Test
+    fun theTTheNAndTheDComeInOnceSheKnowsTheFirstConsonants() {
+        repeat(200) { seed ->
+            // With the vowels known, the M, P, L and S, and not yet the T, the N or the D.
+            val vowels = letterRounds(Random(seed), VOWELS.associate { it.toString() to 1 })
+            assertTrue(vowels.none { it.wanted in NEXT_CONSONANTS }, "la T, la N o la D antes de tiempo: $vowels")
+            // With the four known too, the three come in.
+            val four = letterRounds(Random(seed), (VOWELS + CONSONANTS).associate { it.toString() to 1 })
+            assertEquals(NEXT_CONSONANTS.toSet(), four.map { it.wanted }.filter { it in NEXT_CONSONANTS }.toSet())
+            // And the same in the tracing.
+            assertTrue(tracePicks((VOWELS + CONSONANTS).associate { it.toString() to 1 }, Random(seed)).all { it in NEXT_CONSONANTS })
+        }
+    }
+
+    @Test
     fun theStrawberriesGoFromOneToFiveAndThenUpToTen() {
         repeat(200) { seed ->
             val first = countRounds(Random(seed))

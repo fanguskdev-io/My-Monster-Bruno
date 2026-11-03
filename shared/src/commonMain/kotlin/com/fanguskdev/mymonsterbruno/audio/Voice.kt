@@ -148,6 +148,9 @@ internal object Voice {
     /** «¡Mariposa!», when he says it himself: there is no microphone, or he could not hear her. */
     fun word(word: TalkWord) = "b_palabra_${word.word}"
 
+    /** «Huum... Eso no es manzana. ¿Me dices manzana?», when the device made out another word (ADR 0015). */
+    fun notThat(word: TalkWord) = "b_no_es_${word.word}"
+
     /** «¡Ma!», with a clap. */
     fun syllable(syllable: String) = "b_silaba_${plain(syllable)}"
 
@@ -183,7 +186,7 @@ internal object Voice {
         Shape.entries.flatMap { listOf(yes(it), thatShape(it), iWantShape(it)) } +
         Happening.entries.map { happened(it) } +
         Feeling.entries.flatMap { listOf(feels(it), notThatFace(it), help(it), helped(it)) } +
-        TalkWord.entries.flatMap { listOf(tellMe(it), word(it)) } +
+        TalkWord.entries.flatMap { listOf(tellMe(it), word(it), notThat(it)) } +
         (TalkWord.entries.flatMap { it.syllables } + StartWord.entries.flatMap { it.syllables }).map { syllable(it) }.distinct() +
         (1..TalkWord.entries.maxOf { it.syllables.size }).map { claps(it) } +
         StartWord.entries.flatMap { listOf(startsLike(it), startsWith(it)) } +
