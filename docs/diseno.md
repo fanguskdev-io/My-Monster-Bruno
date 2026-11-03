@@ -45,7 +45,9 @@ las voces de la familia, seguiremos con las voces actuales» ([ADR 0004](adr/000
 Bruno» como se lo propuso el agente, con micrófono: «Sí, así» ([ADR 0011](adr/0011-habla-con-bruno.md)). Para la
 entrega en su iPhone, «Mejor ad hoc» ([ADR 0012](adr/0012-la-entrega-ad-hoc.md)). Y de lo que faltaba, «La isla lejana: el
 sonido inicial», tal como se la propuso el agente: «Así» ([ADR 0013](adr/0013-la-isla-de-las-palabras.md)). Después, de
-lo que quedaba, «T, N y D» ([ADR 0014](adr/0014-la-t-la-n-y-la-d.md)). Para seguir eligió «Más islas primero» y, entre las que le propuso el agente, «Colores»: «Bruno
+lo que quedaba, «T, N y D» ([ADR 0014](adr/0014-la-t-la-n-y-la-d.md)), que Bruno compruebe la palabra que le dicen
+([ADR 0015](adr/0015-bruno-comprueba-la-palabra.md)) y su foto, tal como se la propuso el agente: «Así»
+([ADR 0016](adr/0016-su-foto.md)). Para seguir eligió «Más islas primero» y, entre las que le propuso el agente, «Colores»: «Bruno
 pide un color (“¡Quiero el globo rojo!”) y después series: rojo, azul, rojo… ¿cuál va ahora?»
 ([ADR 0007](adr/0007-la-isla-de-los-colores.md)).
 
@@ -68,7 +70,8 @@ La propuesta 3, tal como la leyó (en la [maqueta](investigacion/propuestas.html
    rosa, naranja o morado) y lo que lleva en la cabeza (cuernos, orejas o antenas), y el botón verde se lo queda.
 2. **El cuarto de Bruno**, la casa. Bruno la saluda y la invita a la isla. Si le toca, se ríe con cosquillas. El botón
    grande lleva al mapa, el micrófono a «Habla con Bruno» y el globo, al rincón de la calma. Arriba cuelga un banderín con
-   su nombre, si los mayores lo han escrito, o con estrellas.
+   su nombre, si los mayores lo han escrito, o con estrellas, y en la pared, su foto en un marco, si la han elegido: la
+   primera vez, Bruno la mira y dice «¡Mira! ¡Eres tú!» ([ADR 0016](adr/0016-su-foto.md)).
 3. **El mapa**. Bruno va en su barca. Hay seis islas: la de las letras, la de los números, la de los colores, la de las
    formas, la de las emociones y, la más pequeña, arriba a la derecha, la de las palabras. Una isla terminada lleva su
    bandera.
@@ -136,7 +139,7 @@ Fuera del camino:
 - **El rincón de la calma**, el de su clase. Mientras mantiene el dedo, el globo se hincha y ella toma aire. Al soltar, el
   globo se deshincha despacio. Son tres respiraciones con Bruno.
 - **La zona de mayores**, detrás del candado de la esquina, que se abre manteniendo el dedo 2,5 segundos. En ella se puede
-  escribir su nombre (para el banderín), elegir los minutos al día (5, 10, 15 o 20), dar «10 minutos más, solo hoy»,
+  escribir su nombre (para el banderín), elegir su foto en la galería (para el marco del cuarto) o quitarla, elegir los minutos al día (5, 10, 15 o 20), dar «10 minutos más, solo hoy»,
   quitar la voz o los efectos, ver lo que ha practicado (galletas por vocal, letras trazadas, fresas por número, globos,
   series, piezas de la casa, emociones, palabras dichas a Bruno, parejas que empiezan igual, islas y regalos) y volver a
   empezar, que devuelve a Bruno al huevo y conserva los ajustes. En
@@ -176,7 +179,6 @@ palabras, con el sonido inicial por la sílaba.
 
 - **Más contenido**: más consonantes, después de la T, la N y la D. El sonido inicial ya está, por la sílaba, en la isla
   de las palabras.
-- **Su foto**, en la zona de mayores.
 
 Las **voces de la familia** no se harán: «para M2 no vamos a utilizar las voces de la familia, seguiremos con las voces actuales» (Fangusk, 2026-11-03).
 
@@ -187,7 +189,7 @@ Las **voces de la familia** no se harán: «para M2 no vamos a utilizar las voce
 - **Bruno y todo lo demás se dibujan con vectores**, sin imágenes: Bruno respira, parpadea, mira y cambia de cara (ocho
   bocas, cuatro ojos, tres posturas de brazos).
 - **Las voces** son las de un narrador y la de Bruno, algo más aguda y más despacio, a unas 4 sílabas por segundo. Hay
-  373 frases pregrabadas con la voz del sistema del Mac y **los efectos** (14) se sintetizan desde cero
+  374 frases pregrabadas con la voz del sistema del Mac y **los efectos** (14) se sintetizan desde cero
   ([ADR 0004](adr/0004-voces-provisionales.md)). Las frases están en [`voces/guion.tsv`](../voces/guion.tsv).
 - **La letra** de la zona de mayores, de los números y del banderín es Andika, una tipografía pensada para quien aprende a
   leer (licencia OFL, en [`licencias/`](../licencias/Andika-OFL.txt)).

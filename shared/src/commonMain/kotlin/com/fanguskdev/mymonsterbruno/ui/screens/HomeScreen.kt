@@ -7,12 +7,23 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.geometry.RoundRect
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.FilterQuality
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.DrawScope
+import androidx.compose.ui.graphics.drawscope.clipPath
+import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.text.TextMeasurer
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.rememberTextMeasurer
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.IntSize
 import com.fanguskdev.mymonsterbruno.audio.Sfx
 import com.fanguskdev.mymonsterbruno.audio.Voice
 import com.fanguskdev.mymonsterbruno.ui.GameState
@@ -25,6 +36,7 @@ import com.fanguskdev.mymonsterbruno.ui.art.Arms
 import com.fanguskdev.mymonsterbruno.ui.art.Eyes
 import com.fanguskdev.mymonsterbruno.ui.art.Mouth
 import com.fanguskdev.mymonsterbruno.ui.art.Pose
+import com.fanguskdev.mymonsterbruno.ui.art.Shadow
 import com.fanguskdev.mymonsterbruno.ui.art.drawBalloon
 import com.fanguskdev.mymonsterbruno.ui.art.drawBruno
 import com.fanguskdev.mymonsterbruno.ui.art.drawRoom
@@ -33,6 +45,7 @@ import com.fanguskdev.mymonsterbruno.ui.art.drawSparkles
 import com.fanguskdev.mymonsterbruno.ui.art.drawStar
 import com.fanguskdev.mymonsterbruno.ui.art.micIcon
 import com.fanguskdev.mymonsterbruno.ui.art.playIcon
+import com.fanguskdev.mymonsterbruno.ui.circle
 import com.fanguskdev.mymonsterbruno.ui.fill
 import com.fanguskdev.mymonsterbruno.ui.label
 import com.fanguskdev.mymonsterbruno.ui.line
@@ -41,6 +54,7 @@ import com.fanguskdev.mymonsterbruno.ui.rememberClock
 import com.fanguskdev.mymonsterbruno.ui.stroke
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.decodeToImageBitmap
 import kotlin.math.sin
 
 private val BRUNO_AT_HOME = Offset(390f, 236f)
@@ -51,10 +65,16 @@ private val CALM_BUTTON = Offset(82f, 318f)
 private const val CALM_RADIUS = 46f
 private val TALK_BUTTON = Offset(82f, 200f)
 
+/** Her photo hangs on the wall on the right, over the big button: beside the window it would cover Bruno. */
+private val PHOTO_FRAME = Offset(712f, 152f)
+private const val FRAME_SIZE = 88f
+private const val LOOK_SECONDS = 2.2f
+
 /**
  * Bruno's room, where every game starts: Bruno says hello and waits, laughs if she tickles him, and the big green button
  * goes to the islands. The microphone is «Habla con Bruno», the balloon the calm corner, and the padlock, held a while,
- * the grown-ups' corner. Her name, if the grown-ups wrote it, hangs on the bunting.
+ * the grown-ups' corner. Her name, if the grown-ups wrote it, hangs on the bunting, and her photo, if they chose one, in a
+ * frame on the wall (ADR 0016): the first time, Bruno looks at it, «¡Mira! ¡Eres tú!», and again when she touches it.
  */
 @Composable
 internal fun HomeScreen(game: GameState) {
@@ -65,13 +85,24 @@ internal fun HomeScreen(game: GameState) {
     val audio = game.audio
     var cheerAt by remember { mutableStateOf(-10f) }
     var lockSince by remember { mutableStateOf<Float?>(null) }
+    val photo = remember(game.photo) { game.photo?.let { runCatching { it.decodeToImageBitmap() }.getOrNull() } }
+
+    // When Bruno last looked at her photo.
+    var lookedAt by remember { mutableStateOf(-10f) }
 
     LaunchedEffect(Unit) {
-        if (!game.greeted) {
-            game.greeted = true
+        val greeting = !game.greeted
+        game.greeted = true
+        if (greeting) {
             cheerAt = clock.value
-            audio.say(Voice.HELLO, Voice.GO_TO_ISLAND)
+            audio.say(Voice.HELLO)
         }
+        if (photo != null && !game.data.photoSeen) {
+            lookedAt = clock.value
+            audio.say(Voice.ITS_YOU)
+            game.update { it.copy(photoSeen = true) }
+        }
+        if (greeting) audio.say(Voice.GO_TO_ISLAND)
     }
 
     val touch = remember {
@@ -105,6 +136,11 @@ internal fun HomeScreen(game: GameState) {
                             }
                         }
                     }
+                    game.photo != null && hits(point, PHOTO_FRAME, FRAME_SIZE / 2) -> {
+                        lookedAt = now
+                        audio.sfx(Sfx.POP)
+                        audio.speak(Voice.ITS_YOU)
+                    }
                     hits(point, BRUNO_AT_HOME, BRUNO_HEIGHT / 2) -> {
                         cheerAt = now
                         audio.sfx(Sfx.POP)
@@ -129,11 +165,12 @@ internal fun HomeScreen(game: GameState) {
         val t = clock.value
         drawRoom(stage, t)
         drawBunting(game.data.childName, measurer, font)
+        photo?.let { drawPhotoFrame(it, t) }
         val since = t - cheerAt
-        val pose = if (since < 1.3f) {
-            Pose(Mouth.GRIN, Eyes.HAPPY, Arms.UP, hop = 10f * sin((since / 1.3f) * 3.14f))
-        } else {
-            Pose(lookX = 0.5f * sin(t * 0.4f), hop = 1.5f * sin(t * 1.6f))
+        val pose = when {
+            since < 1.3f -> Pose(Mouth.GRIN, Eyes.HAPPY, Arms.UP, hop = 10f * sin((since / 1.3f) * 3.14f))
+            t - lookedAt < LOOK_SECONDS -> Pose(Mouth.GRIN, Eyes.OPEN, Arms.UP, lookX = 1f, lookY = -0.7f)
+            else -> Pose(lookX = 0.5f * sin(t * 0.4f), hop = 1.5f * sin(t * 1.6f))
         }
         drawBruno(game.data.look, BRUNO_AT_HOME, BRUNO_HEIGHT, pose, t)
         if (since < 1.3f) drawSparkles(BRUNO_AT_HOME, 140f, t)
@@ -145,6 +182,31 @@ internal fun HomeScreen(game: GameState) {
         drawRoundButton(TALK_BUTTON, CALM_RADIUS, Color(0xFFE85A7A)) { micIcon(TALK_BUTTON, 40f) }
         drawGrownUpsLock(stage, t, lockSince)
     }
+}
+
+/** Her [photo] in a wooden frame hanging from a nail, swaying a little, cut to the frame. */
+private fun DrawScope.drawPhotoFrame(photo: ImageBitmap, time: Float) {
+    val half = FRAME_SIZE / 2
+    val nail = PHOTO_FRAME + Offset(0f, -half - 18f)
+    rotate(1.5f * sin(time * 0.8f), nail) {
+        line(Color(0xFF8A5A3C), nail, PHOTO_FRAME + Offset(-half * 0.65f, -half), 2f)
+        line(Color(0xFF8A5A3C), nail, PHOTO_FRAME + Offset(half * 0.65f, -half), 2f)
+        val corner = PHOTO_FRAME - Offset(half, half)
+        drawRoundRect(Shadow, corner + Offset(0f, 5f), Size(FRAME_SIZE, FRAME_SIZE), CornerRadius(8f))
+        drawRoundRect(Color(0xFFB5743F), corner, Size(FRAME_SIZE, FRAME_SIZE), CornerRadius(8f))
+        val inner = FRAME_SIZE - 14f
+        val window = Rect(PHOTO_FRAME - Offset(inner / 2, inner / 2), Size(inner, inner))
+        clipPath(Path().apply { addRoundRect(RoundRect(window, CornerRadius(5f))) }) {
+            drawImage(
+                photo,
+                srcSize = IntSize(photo.width, photo.height),
+                dstOffset = IntOffset(window.left.toInt(), window.top.toInt()),
+                dstSize = IntSize(inner.toInt(), inner.toInt()),
+                filterQuality = FilterQuality.Medium,
+            )
+        }
+    }
+    circle(Color(0xFF6B4A2E), nail, 3f)
 }
 
 /** The bunting over the room: a pennant for each letter of her name, or stars if there is no name. */

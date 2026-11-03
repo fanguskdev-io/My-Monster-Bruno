@@ -7,7 +7,7 @@ decisiones, y la [investigación](docs/investigacion/investigacion.md), de dónd
 
 > En construcción: la primera versión (M1) se juega de principio a fin en Android e iOS, y Fangusk ya la está probando.
 > M3 está hecho: las islas de los colores, las formas y las emociones, y las letras M, P, L y S y los números hasta el 10.
-> Después llegaron la T, la N y la D.
+> Después llegaron la T, la N y la D, y su foto en el cuarto de Bruno.
 > M2 también: «Habla con Bruno», en el que ella le dice palabras con el micrófono y él las repite con su voz y las da en
 > palmadas. Y la isla de las palabras, en la que busca qué empieza como la palabra de Bruno. La entrega en su iPhone
 > está preparada: será ad hoc, instalado el día que se lo dé ([entrega](docs/entrega.md)).

@@ -21,6 +21,8 @@ import com.fanguskdev.mymonsterbruno.game.SaveStore
 import com.fanguskdev.mymonsterbruno.game.Topping
 import com.fanguskdev.mymonsterbruno.game.VOWELS
 import com.fanguskdev.mymonsterbruno.storage.MemoryStore
+import com.fanguskdev.mymonsterbruno.storage.PHOTO_SIZE
+import com.fanguskdev.mymonsterbruno.storage.PhotoStore
 import com.fanguskdev.mymonsterbruno.ui.GameState
 import com.fanguskdev.mymonsterbruno.ui.Iphone
 import com.fanguskdev.mymonsterbruno.ui.Island
@@ -30,7 +32,10 @@ import com.fanguskdev.mymonsterbruno.ui.path
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.skia.EncodedImageFormat
+import java.awt.image.BufferedImage
+import java.io.ByteArrayOutputStream
 import java.io.File
+import javax.imageio.ImageIO
 import kotlin.random.Random
 import kotlin.test.Test
 import kotlin.test.assertTrue
@@ -107,13 +112,37 @@ class ScreenshotsTest {
                 file.writeBytes(render(scene, screen, knowsMore))
                 assertTrue(file.length() > MIN_BYTES, "$file está vacía")
             }
+            val withPhoto = File(folder, "${screen.name}-2-casa-con-foto.png")
+            withPhoto.writeBytes(render(Scene.Home, screen, photo = samplePhoto()))
+            assertTrue(withPhoto.length() > MIN_BYTES, "$withPhoto está vacía")
             val file = File(folder, "${screen.name}-20-mapa-terminado.png")
             file.writeBytes(render(Scene.Map, screen, finished))
             assertTrue(file.length() > MIN_BYTES, "$file está vacía")
         }
     }
 
-    private fun render(scene: Scene, screen: Screen, practised: (SaveData) -> SaveData = { it }): ByteArray {
+    /** A made-up photo, a sky and a round face, as the gallery would give it: a JPEG [PHOTO_SIZE] pixels a side. */
+    private fun samplePhoto(): ByteArray {
+        val image = BufferedImage(PHOTO_SIZE, PHOTO_SIZE, BufferedImage.TYPE_INT_RGB)
+        val g = image.createGraphics()
+        g.color = java.awt.Color(0xA6DCF6)
+        g.fillRect(0, 0, PHOTO_SIZE, PHOTO_SIZE)
+        g.color = java.awt.Color(0xF5C7A1)
+        g.fillOval(90, 70, 180, 200)
+        g.color = java.awt.Color(0x6B3E26)
+        g.fillOval(140, 140, 22, 22)
+        g.fillOval(200, 140, 22, 22)
+        g.fillArc(140, 170, 80, 60, 200, 140)
+        g.dispose()
+        return ByteArrayOutputStream().also { ImageIO.write(image, "jpg", it) }.toByteArray()
+    }
+
+    private fun render(
+        scene: Scene,
+        screen: Screen,
+        practised: (SaveData) -> SaveData = { it },
+        photo: ByteArray? = null,
+    ): ByteArray {
         val store = MemoryStore()
         val save = SaveData(
             hatched = scene != Scene.Hatch,
@@ -121,6 +150,7 @@ class ScreenshotsTest {
             look = BrunoLook(BrunoColor.MINT, Topping.HORNS, listOf(Accessory.BEANIE, Accessory.BOW_TIE)),
         )
         SaveStore.save(store, practised(save))
+        photo?.let { PhotoStore.save(store, it) }
         val audio = Audio(SilentPlayer(), CoroutineScope(Dispatchers.Unconfined))
         val game = GameState(store, audio, Random(SEED), day = { DAY })
         game.greeted = true

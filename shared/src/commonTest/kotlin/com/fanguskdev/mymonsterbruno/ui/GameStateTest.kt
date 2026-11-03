@@ -99,6 +99,22 @@ class GameStateTest {
     }
 
     @Test
+    fun herPhotoIsKeptAndBrunoSeesANewOne() {
+        val store = MemoryStore()
+        SaveStore.save(store, SaveData(hatched = true, photoSeen = true))
+        val game = GameState(store, Audio(SilentPlayer(), CoroutineScope(EmptyCoroutineContext)), Random(1)) { monday }
+        val photo = byteArrayOf(1, 2, 3)
+        game.choosePhoto(photo)
+        assertFalse(game.data.photoSeen, "una foto nueva, y Bruno aún no la ha visto")
+        // The next time the game opens, it is still there.
+        val again = GameState(store, Audio(SilentPlayer(), CoroutineScope(EmptyCoroutineContext)), Random(1)) { monday }
+        assertEquals(photo.toList(), again.photo?.toList())
+        again.removePhoto()
+        assertEquals(null, again.photo)
+        assertEquals(null, GameState(store, Audio(SilentPlayer(), CoroutineScope(EmptyCoroutineContext)), Random(1)) { monday }.photo)
+    }
+
+    @Test
     fun theEggComesFirst() {
         val game = GameState(MemoryStore(), Audio(SilentPlayer(), CoroutineScope(EmptyCoroutineContext)), Random(1)) { monday }
         assertEquals(Scene.Hatch, game.scene)

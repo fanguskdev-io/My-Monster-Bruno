@@ -26,3 +26,4 @@ y estas decisiones existen antes de G4 porque Fangusk pidió desarrollar ya. Las
 | [0013](0013-la-isla-de-las-palabras.md) | La isla de las palabras: Bruno dice una palabra a trozos y ella busca la que empieza igual | Aceptada; los detalles, propuesta |
 | [0014](0014-la-t-la-n-y-la-d.md) | La T, la N y la D en la isla de las letras, cuando ya conoce la M, la P, la L y la S | Aceptada; los trazos y los dibujos, propuesta |
 | [0015](0015-bruno-comprueba-la-palabra.md) | Bruno comprueba la palabra de «Habla con Bruno» con el reconocimiento del propio aparato, sin conexión | Aceptada; cuánto se parece una palabra, propuesta |
+| [0016](0016-su-foto.md) | Su foto, elegida en la galería por los mayores, en un marco del cuarto de Bruno | Aceptada; el sitio del marco, propuesta |

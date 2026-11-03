@@ -1,5 +1,6 @@
 package com.fanguskdev.mymonsterbruno.ui.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -26,9 +28,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
@@ -48,8 +52,11 @@ import com.fanguskdev.mymonsterbruno.game.Session
 import com.fanguskdev.mymonsterbruno.game.Shape
 import com.fanguskdev.mymonsterbruno.game.StartWord
 import com.fanguskdev.mymonsterbruno.game.TalkWord
+import com.fanguskdev.mymonsterbruno.storage.rememberPhotoPicker
 import com.fanguskdev.mymonsterbruno.ui.GameState
 import com.fanguskdev.mymonsterbruno.ui.andika
+import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.decodeToImageBitmap
 
 private val Ink = Color(0xFF1D2B53)
 private val Soft = Color(0xFF46526F)
@@ -114,6 +121,21 @@ internal fun GrownUpsScreen(game: GameState, onExit: (() -> Unit)? = null) {
                         .border(2.dp, Line, RoundedCornerShape(12.dp))
                         .padding(horizontal = 14.dp, vertical = 10.dp),
                 )
+            }
+            Section("Su foto", font) {
+                Text("Sale en un marco del cuarto de Bruno. Se elige en la galería y solo se guarda aquí.", font, 15, color = Soft)
+                val picker = rememberPhotoPicker()
+                val scope = rememberCoroutineScope()
+                val photo = remember(game.photo) { game.photo?.let { runCatching { it.decodeToImageBitmap() }.getOrNull() } }
+                Row(horizontalArrangement = Arrangement.spacedBy(10.dp), verticalAlignment = Alignment.CenterVertically) {
+                    if (photo != null) {
+                        Image(photo, contentDescription = "Su foto", modifier = Modifier.size(64.dp).clip(RoundedCornerShape(10.dp)))
+                    }
+                    Chip(if (photo == null) "Elegir su foto" else "Cambiar su foto", font, selected = false) {
+                        scope.launch { picker.pick()?.let(game::choosePhoto) }
+                    }
+                    if (photo != null) Chip("Quitar su foto", font, selected = false) { game.removePhoto() }
+                }
             }
             Section("Tiempo de juego", font) {
                 Text("Cuando se acaba, Bruno se va a dormir al terminar lo que esté haciendo y vuelve mañana.", font, 15, color = Soft)

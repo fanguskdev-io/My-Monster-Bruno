@@ -8,6 +8,7 @@ import com.fanguskdev.mymonsterbruno.game.SaveData
 import com.fanguskdev.mymonsterbruno.game.SaveStore
 import com.fanguskdev.mymonsterbruno.game.Session
 import com.fanguskdev.mymonsterbruno.storage.KeyValueStore
+import com.fanguskdev.mymonsterbruno.storage.PhotoStore
 import com.fanguskdev.mymonsterbruno.storage.today
 import kotlin.random.Random
 
@@ -66,6 +67,10 @@ internal class GameState(
     var scene: Scene by mutableStateOf(firstScene())
         private set
 
+    /** Her photo, a small square JPEG, if a grown-up chose one (ADR 0016). */
+    var photo: ByteArray? by mutableStateOf(PhotoStore.load(store))
+        private set
+
     /** The last island she finished today, for the mission at bedtime. */
     var lastIsland: Island? = null
         private set
@@ -109,6 +114,19 @@ internal class GameState(
     }
 
     fun save() = SaveStore.save(store, data)
+
+    /** A grown-up chose her [photo]: it hangs in the room, and Bruno will see it the next time she is there. */
+    fun choosePhoto(photo: ByteArray) {
+        PhotoStore.save(store, photo)
+        this.photo = photo
+        update { it.copy(photoSeen = false) }
+    }
+
+    /** A grown-up took her photo away: it is deleted from the device. */
+    fun removePhoto() {
+        PhotoStore.remove(store)
+        photo = null
+    }
 
     fun go(next: Scene) {
         if (next == Scene.Sleep) wentToBed = scene != Scene.Sleep && scene != Scene.GrownUps

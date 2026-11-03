@@ -69,6 +69,7 @@ internal object Voice {
     const val CANT_HEAR = "b_no_te_oigo"
     const val THANKS_WORDS = "b_gracias_palabras"
     const val TO_WORDS = "n_isla_palabras"
+    const val ITS_YOU = "b_eres_tu"
     const val WORDS_INTRO = "n_palabras"
     const val THANKS_STARTS = "b_gracias_sonidos"
     const val MISSION_NAME = "n_mision_nombre"
@@ -177,7 +178,7 @@ internal object Voice {
         MISSION_COLOR, SEE_YOU_TOMORROW, ASLEEP, CALM_INTRO, CALM_LET_GO, CALM_AGAIN, CALM_END, TO_COLORS, LOVE_BALLOONS,
         THANKS_BALLOONS, LOOK_AT_THE_ROW, WHICH_NEXT, LOOK_AGAIN, THANKS_SERIES, TO_SHAPES, BUILD_HOUSE, THANKS_HOUSE,
         MISSION_SHAPE, TO_FEELINGS, HOW_FEELS, THANKS_FEELINGS, MISSION_FEELING, TALK, HOLD_MIC, CANT_HEAR, THANKS_WORDS,
-        TO_WORDS, WORDS_INTRO, THANKS_STARTS, MISSION_NAME,
+        TO_WORDS, WORDS_INTRO, THANKS_STARTS, MISSION_NAME, ITS_YOU,
     ) +
         LETTERS.flatMap { listOf(want(it), yum(it), thatIs(it), iWant(it), trace(it), traced(it)) } +
         (1..MAX_COUNT).flatMap { listOf(askCount(it), number(it), strawberries(it)) } +
