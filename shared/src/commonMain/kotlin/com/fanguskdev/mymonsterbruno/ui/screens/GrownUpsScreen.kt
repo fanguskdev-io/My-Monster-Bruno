@@ -39,6 +39,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.fanguskdev.mymonsterbruno.game.Hue
 import com.fanguskdev.mymonsterbruno.game.MAX_COUNT
 import com.fanguskdev.mymonsterbruno.game.SaveData
 import com.fanguskdev.mymonsterbruno.game.Session
@@ -133,6 +134,9 @@ internal fun GrownUpsScreen(game: GameState) {
                 Text("Galletas bien dadas, por vocal:   $fed", font, 16)
                 Text("Vocales trazadas enteras:   $traced", font, 16)
                 Text("Fresas contadas, por número:   $counted", font, 16)
+                val balloons = Hue.entries.joinToString("   ") { "${it.word} ${data.balloons[it.word] ?: 0}" }
+                Text("Globos bien dados, por color:   $balloons", font, 16)
+                Text("Series de globos terminadas: ${data.series}.", font, 16)
                 Text("Islas terminadas: ${data.islandsDone}. Regalos de Bruno: ${data.look.accessories.size} de 6.", font, 16)
             }
             Section("Bruno", font) {

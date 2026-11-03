@@ -78,3 +78,40 @@ n_calma_intro	narrador	Vamos a respirar con Bruno. Mantén el dedo, y el globo s
 n_calma_suelta	narrador	Ahora suelta, despacito.
 n_calma_otra	narrador	Otra vez.
 n_calma_fin	narrador	¡Qué tranquilos estamos!
+n_isla_colores	narrador	¡A la isla de los colores!
+b_globos	bruno	¡Me encantan los globos!
+b_gracias_globos	bruno	¡Cuántos globos! ¡Ya sé los colores!
+n_mira_fila	narrador	Mira qué fila de globos.
+n_cual_va_ahora	narrador	¿Cuál va ahora?
+n_mira_otra_vez	narrador	Mira otra vez.
+b_gracias_series	bruno	¡Qué fila tan bonita! ¡Ya sé hacer series!
+b_quiero_globo_rojo	bruno	¡Quiero el globo rojo!
+b_si_rojo	bruno	¡Sí! ¡El rojo!
+b_ese_es_rojo	bruno	Mmm... ese es el rojo.
+b_yo_quiero_globo_rojo	bruno	¡Yo quiero el rojo!
+n_color_rojo	narrador	Rojo.
+b_quiero_globo_amarillo	bruno	¡Quiero el globo amarillo!
+b_si_amarillo	bruno	¡Sí! ¡El amarillo!
+b_ese_es_amarillo	bruno	Mmm... ese es el amarillo.
+b_yo_quiero_globo_amarillo	bruno	¡Yo quiero el amarillo!
+n_color_amarillo	narrador	Amarillo.
+b_quiero_globo_azul	bruno	¡Quiero el globo azul!
+b_si_azul	bruno	¡Sí! ¡El azul!
+b_ese_es_azul	bruno	Mmm... ese es el azul.
+b_yo_quiero_globo_azul	bruno	¡Yo quiero el azul!
+n_color_azul	narrador	Azul.
+b_quiero_globo_verde	bruno	¡Quiero el globo verde!
+b_si_verde	bruno	¡Sí! ¡El verde!
+b_ese_es_verde	bruno	Mmm... ese es el verde.
+b_yo_quiero_globo_verde	bruno	¡Yo quiero el verde!
+n_color_verde	narrador	Verde.
+b_quiero_globo_naranja	bruno	¡Quiero el globo naranja!
+b_si_naranja	bruno	¡Sí! ¡El naranja!
+b_ese_es_naranja	bruno	Mmm... ese es el naranja.
+b_yo_quiero_globo_naranja	bruno	¡Yo quiero el naranja!
+n_color_naranja	narrador	Naranja.
+b_quiero_globo_morado	bruno	¡Quiero el globo morado!
+b_si_morado	bruno	¡Sí! ¡El morado!
+b_ese_es_morado	bruno	Mmm... ese es el morado.
+b_yo_quiero_globo_morado	bruno	¡Yo quiero el morado!
+n_color_morado	narrador	Morado.

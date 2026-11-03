@@ -32,6 +32,12 @@ Los pilares, que deciden qué entra y qué no:
    ([ADR 0001](adr/0001-kotlin-multiplatform-como-carofarty.md)). Creó el proyecto, MyMonsterBruno, con el asistente de
    Kotlin Multiplatform de Android Studio: «ya he creado el proyecto».
 
+Después de probar la primera versión (2026-11-03): «He probado un poco y me gusta». Pidió que Bruno hablara «un poco más
+lento, habla demasiado rápido para un niño de 4 años» ([ADR 0004](adr/0004-voces-provisionales.md)) y un narrador «más
+amigable», menos robótico. Para seguir eligió «Más islas primero» y, entre las que le propuso el agente, «Colores»: «Bruno
+pide un color (“¡Quiero el globo rojo!”) y después series: rojo, azul, rojo… ¿cuál va ahora?»
+([ADR 0007](adr/0007-la-isla-de-los-colores.md)).
+
 La propuesta 3, tal como la leyó (en la [maqueta](investigacion/propuestas.html#p3)):
 
 - **Una partida, unos 10 minutos**: el saludo («¡tengo hambre de letras!»), el mapa con la isla del día, minijuegos en los
@@ -44,7 +50,7 @@ La propuesta 3, tal como la leyó (en la [maqueta](investigacion/propuestas.html
 - **Con las cuatro piezas comunes** a todas las propuestas: voces de la familia, rincón de la calma, misión para casa y zona
   de mayores.
 
-## Cómo es una partida (la primera versión)
+## Cómo es una partida
 
 1. **Nace tu monstruo** (solo la primera vez). Es de noche y hay un huevo. Cada toque lo hace temblar y lo agrieta; al
    quinto se rompe y sale Bruno: «¡Hola! ¡Soy Bruno! No sé nada de nada... ¿Me enseñas?». Ella elige su color (menta,
@@ -52,8 +58,8 @@ La propuesta 3, tal como la leyó (en la [maqueta](investigacion/propuestas.html
 2. **El cuarto de Bruno**, la casa. Bruno la saluda y la invita a la isla. Si le toca, se ríe con cosquillas. El botón
    grande lleva al mapa y el globo, al rincón de la calma. Arriba cuelga un banderín con su nombre, si los mayores lo han
    escrito, o con estrellas.
-3. **El mapa**. Bruno va en su barca. Hay dos islas con algo que hacer, la de las vocales y la de los números. Las demás
-   están «muy lejos. ¡Pronto iremos!». Una isla terminada lleva su bandera.
+3. **El mapa**. Bruno va en su barca. Hay tres islas con algo que hacer: la de las vocales, la de los números y la de los
+   colores. Las demás están «muy lejos. ¡Pronto iremos!». Una isla terminada lleva su bandera.
 4. **La isla de las vocales**:
    - **Comeletras**. «¡Tengo hambre de letras!». Bruno pide una vocal con su palabra («¡Quiero la a! La a de avión») y en
      el plato hay tres galletas con vocales. Ella le da una, arrastrándola a la boca o tocándola. Si es la que quería:
@@ -65,10 +71,17 @@ La propuesta 3, tal como la leyó (en la [maqueta](investigacion/propuestas.html
 5. **La isla de los números**: **las fresas**. «Bruno quiere tres fresas. ¿Se las das?». Ella toca fresas del arbusto y
    cada una se cuenta en voz alta. Al llegar al número, Bruno se las come. La tarjeta enseña el número, los dedos de una
    mano y sus puntos. Son cinco rondas, del 1 al 5, y la primera nunca es el 5.
-6. **Bruno crece**. Al terminar una isla hay un regalo. Con un toque se abre la caja y un accesorio vuela hasta Bruno, que
+6. **La isla de los colores** ([ADR 0007](adr/0007-la-isla-de-los-colores.md)):
+   - **Los globos**. «¡Quiero el globo rojo!». Hay tres globos, y ella le da uno a Bruno arrastrándolo hasta él o
+     tocándolo. El que acierta se queda atado en su mano, así que al final tiene un ramo. Si no es el suyo, Bruno dice de
+     qué color es y lo vuelve a pedir, y desde ese momento lo piensa en un bocadillo, como pista. Son cinco rondas.
+   - **Las series**. Una fila de globos atados a una cuerda, como rojo, azul, rojo, azul, y un hueco. El narrador la lee y
+     cada globo salta al oír su nombre: «¿Cuál va ahora?». Ella elige entre tres. Si no es, Bruno dice de qué color es y
+     el narrador vuelve a leer la fila. Son cuatro series, dos de dos colores y dos de tres.
+7. **Bruno crece**. Al terminar una isla hay un regalo. Con un toque se abre la caja y un accesorio vuela hasta Bruno, que
    ya lo lleva siempre: gorro, gafas, pajarita, flores, bufanda y corona. Cada dos islas, además, crece un poco, hasta tres
    veces. Con los seis accesorios, la caja trae chispas y un gracias.
-7. **A dormir**. Cuando se acaban los minutos del día, Bruno se va a dormir en cuanto ella termina lo que está haciendo,
+8. **A dormir**. Cuando se acaban los minutos del día, Bruno se va a dormir en cuanto ella termina lo que está haciendo,
    nunca a medias: enseguida si están en el cuarto o en el mapa, y al terminar la isla, con su regalo, si están en una.
    Bosteza, le da una **misión para casa** que va con lo que han hecho (buscar algo que empiece por la a, contar las sillas
    de la cocina o buscar algo amarillo) y le dice «¡Hasta mañana!». Si se abre otra vez ese día, Bruno sigue dormido:
@@ -102,19 +115,19 @@ Salen de la [investigación §6](investigacion/investigacion.md#6-reglas-que-sal
 | Premios con sentido | Los accesorios de Bruno se ganan terminando islas. No hay cofres sorpresa ni nada que comprar |
 | Limpio | Sin anuncios, compras, cuentas ni internet. En Android no pide el permiso de internet. Todo lo guarda el dispositivo ([ADR 0005](adr/0005-un-regalo-sin-conexion.md)) |
 
-## Lo que trae la primera versión y lo que falta
+## Lo que trae y lo que falta
 
 **Trae** lo que la propuesta pide a la primera versión: el nacimiento, Comeletras con las vocales, contar hasta 5, los
-trazos y el mapa con dos islas. Y de las piezas comunes, el rincón de la calma, la misión para casa y la zona de mayores
-(sin foto ni voces).
+trazos y el mapa con dos islas. De las piezas comunes, el rincón de la calma, la misión para casa y la zona de mayores
+(sin foto ni voces). Y la primera isla de M3, la de los colores, con sus globos y sus series.
 
-**Falta**, de la propuesta 3 que eligió Fangusk. Ni el orden ni el alcance de cada pieza están decididos: los decide él.
+**Falta**, de la propuesta 3 que eligió Fangusk. El orden y el alcance de cada pieza los decide él.
 
 - **Las voces de la familia**: que la tía, mamá o el abuelo graben lo que dice Bruno o el narrador. Pide el micrófono en
   la zona de mayores. Hasta entonces suena una voz sintética provisional ([ADR 0004](adr/0004-voces-provisionales.md)).
 - **Habla con Bruno**: ella dice una palabra y Bruno la repite con voz graciosa y una palmada por sílaba (MA-RI-PO-SA).
 - **Más islas**: las consonantes (M, P, L, S…), el sonido inicial, los números hasta 10, las formas («construirle la casa
-  con formas»), los colores y las series, y las emociones, con Bruno cambiando de color según cómo se siente.
+  con formas») y las emociones, con Bruno cambiando de color según cómo se siente.
 - **Su foto** y que la voz diga **su nombre**.
 
 ## Pantalla, dibujo, voz y sonido
@@ -123,8 +136,8 @@ trazos y el mapa con dos islas. Y de las piezas comunes, el rincón de la calma,
   y cuyo fondo se alarga hasta los bordes de cualquier pantalla ([ADR 0003](adr/0003-escenario-horizontal-dibujado.md)).
 - **Bruno y todo lo demás se dibujan con vectores**, sin imágenes: Bruno respira, parpadea, mira y cambia de cara (ocho
   bocas, cuatro ojos, tres posturas de brazos).
-- **Las voces** son las de un narrador y la de Bruno, algo más aguda. Hay 79 frases pregrabadas con la voz del sistema del
-  Mac y **los efectos** (13) se sintetizan desde cero ([ADR 0004](adr/0004-voces-provisionales.md)). Las frases están en
-  [`voces/guion.tsv`](../voces/guion.tsv).
+- **Las voces** son las de un narrador y la de Bruno, algo más aguda y más despacio, a unas 4 sílabas por segundo. Hay
+  116 frases pregrabadas con la voz del sistema del Mac y **los efectos** (13) se sintetizan desde cero
+  ([ADR 0004](adr/0004-voces-provisionales.md)). Las frases están en [`voces/guion.tsv`](../voces/guion.tsv).
 - **La letra** de la zona de mayores, de los números y del banderín es Andika, una tipografía pensada para quien aprende a
   leer (licencia OFL, en [`licencias/`](../licencias/Andika-OFL.txt)).

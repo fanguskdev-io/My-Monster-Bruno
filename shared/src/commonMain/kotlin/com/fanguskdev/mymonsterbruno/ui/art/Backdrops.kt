@@ -11,6 +11,7 @@ import com.fanguskdev.mymonsterbruno.ui.circle
 import com.fanguskdev.mymonsterbruno.ui.ellipse
 import com.fanguskdev.mymonsterbruno.ui.fill
 import com.fanguskdev.mymonsterbruno.ui.path
+import com.fanguskdev.mymonsterbruno.ui.ring
 import com.fanguskdev.mymonsterbruno.ui.sparkle
 import com.fanguskdev.mymonsterbruno.ui.stroke
 import kotlin.math.sin
@@ -182,6 +183,34 @@ internal fun DrawScope.drawGarden(stage: Stage, time: Float) {
         )
     }
 }
+
+/** The park of the island of colours: a pale rainbow over the hills, clouds that drift and grass. */
+internal fun DrawScope.drawRainbowPark(stage: Stage, time: Float) {
+    gradient(stage, Color(0xFFCBE7FA), Color(0xFFF1F9FE))
+    RAINBOW.forEachIndexed { i, color -> ring(color, Offset(400f, 330f), 310f - 18f * i, 18f, alpha = 0.32f) }
+    val drift = 8f * sin(time * 0.25f)
+    // Up in the corners, out of the way of the balloons.
+    for ((x, y) in listOf(50f to 62f, 300f to 36f)) {
+        for ((dx, r) in listOf(0f to 16f, 20f to 22f, 42f to 15f)) circle(Color.White, Offset(x + dx + drift, y), r)
+    }
+    ellipse(Color(0xFFA9DD86), Offset(120f, 318f), 250f, 48f)
+    ellipse(Color(0xFFA9DD86), Offset(680f, 322f), 270f, 54f)
+    band(stage, Color(0xFF93D46E), 300f, stage.bottom)
+    val flowers = listOf(Color(0xFFE4483C), Color(0xFFF4C423), Color(0xFF9B6BD3), Color(0xFFF28B2E))
+    for ((i, x) in listOf(60f, 300f, 430f, 590f, 770f).withIndex()) {
+        circle(flowers[i % flowers.size], Offset(x, 352f + 14f * (i % 2)), 6f)
+        circle(Color.White, Offset(x, 352f + 14f * (i % 2)), 2.5f)
+    }
+}
+
+private val RAINBOW = listOf(
+    Color(0xFFE4483C),
+    Color(0xFFF28B2E),
+    Color(0xFFF4C423),
+    Color(0xFF2E9E5B),
+    Color(0xFF2C74D8),
+    Color(0xFF9B6BD3),
+)
 
 /** The calm corner: soft green, with the circles of breathing. */
 internal fun DrawScope.drawCalm(stage: Stage) {

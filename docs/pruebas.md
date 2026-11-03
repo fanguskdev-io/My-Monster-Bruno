@@ -14,13 +14,13 @@ Qué se prueba en cada cambio y en cada hito, y cómo. Los criterios de salida d
 | Qué | Prueba | Dónde |
 |---|---|---|
 | Trazar: cada vocal se puede trazar entera, también con el dedo temblón; los trazos van en el orden del cole; un dedo lejos no empieza ni avanza; no se puede saltar al final de la O; levantar el dedo guarda lo hecho | `TracingTest` | Común |
-| Las rondas: Comeletras pide cada vocal una vez con otras dos en el plato; las fresas van del 1 al 5 y nunca empiezan por el 5; se trazan las menos trazadas; cada vocal tiene su palabra | `RoundsTest` | Común |
+| Las rondas: Comeletras pide cada vocal una vez con otras dos en el plato; las fresas van del 1 al 5 y nunca empiezan por el 5; se trazan las menos trazadas; cada vocal tiene su palabra; los globos piden cinco colores distintos con otros dos; las series son dos de dos colores y dos de tres, y su respuesta está entre las opciones | `RoundsTest` | Común |
 | Los minutos del día, el día nuevo y los minutos de más; la partida se guarda y se recupera, y una rota empieza de cero; lo que lleva Bruno y cuánto crece | `SessionTest` | Común |
 | Cuándo se va Bruno a dormir: enseguida en el cuarto y en el mapa, al terminar la isla dentro de una, dormido si se abre sin tiempo, y el huevo no cuenta | `GameStateTest` | Común |
 | Leer los WAV | `WavTest` | Común |
 | El sonido del escritorio: la mezcla suma sin desbordarse, respeta el volumen y pasa todo a un canal a 22 050 Hz; y cortar una voz tras otra, como al contar fresas, no atasca su hilo | `DesktopSoundTest` | JVM |
 | Cada frase del juego tiene su fichero y dura lo que una frase; el guion y el código tienen las mismas frases; cada efecto tiene su fichero | `AudioFilesTest` | JVM |
-| Las diez pantallas se dibujan, en móvil (2,17:1) y en tableta (4:3) | `ScreenshotsTest` | JVM |
+| Las doce pantallas se dibujan, en móvil (2,17:1) y en tableta (4:3) | `ScreenshotsTest` | JVM |
 | El icono de iOS es el de Android: lo dibuja del vector de `androidApp` en `shared/build/icono/` y lo compara con el del proyecto de Xcode; si cambia el de Android, se copia el nuevo | `AppIconTest` | JVM |
 
 Las comunes corren tres veces: en la JVM, en las pruebas de host de Android y en el simulador de iOS. Las de la JVM, solo
@@ -72,3 +72,12 @@ Dónde jugará ella, con qué dispositivo, está por saber.
 - [ ] La zona de mayores se abre manteniendo el candado. El nombre sale en el banderín; los minutos, «10 minutos más»,
   la voz y los efectos funcionan; volver a empezar devuelve a Bruno al huevo y conserva los ajustes.
 - [ ] Todo se ve bien en un móvil y en una tableta, sin franjas.
+
+### M3 · La isla de los colores
+
+- [ ] En el mapa, la isla de los colores lleva a los globos; el camino de puntos llega hasta ella.
+- [ ] Los globos: Bruno pide uno de un color; el bueno, arrastrado o tocado, se queda en su ramo; el que no es vuelve y
+  Bruno dice de qué color es, y desde entonces lo piensa en un bocadillo. Son cinco rondas.
+- [ ] Las series: el narrador lee la fila y cada globo salta con su nombre; el bueno llena el hueco; con el que no es,
+  Bruno dice su color y la fila se vuelve a leer. Son cuatro series, dos de dos colores y dos de tres.
+- [ ] Al terminar, regalo y bandera; en la zona de mayores, los globos por color y las series terminadas.

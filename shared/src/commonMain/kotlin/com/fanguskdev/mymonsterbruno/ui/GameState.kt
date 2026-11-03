@@ -15,10 +15,14 @@ import kotlin.random.Random
 internal enum class Island(val activities: List<Activity>) {
     VOWELS(listOf(Activity.FEED, Activity.TRACE)),
     NUMBERS(listOf(Activity.COUNT)),
+    COLORS(listOf(Activity.BALLOONS, Activity.SERIES)),
 }
 
-/** The things she does on an island: give Bruno the letter he wants, trace a letter, give him strawberries. */
-internal enum class Activity { FEED, TRACE, COUNT }
+/**
+ * The things she does on an island: give Bruno the letter he wants, trace a letter, give him strawberries, give him the
+ * balloon of the colour he wants, and finish a series of balloons.
+ */
+internal enum class Activity { FEED, TRACE, COUNT, BALLOONS, SERIES }
 
 /** Where the game is. */
 internal sealed interface Scene {

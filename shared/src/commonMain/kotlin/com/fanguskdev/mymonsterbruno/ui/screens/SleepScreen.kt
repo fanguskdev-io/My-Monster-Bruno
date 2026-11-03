@@ -70,7 +70,7 @@ internal fun SleepScreen(game: GameState) {
         when (game.lastIsland) {
             Island.VOWELS -> Mission.LETTER
             Island.NUMBERS -> Mission.COUNT
-            null -> Mission.COLOR
+            Island.COLORS, null -> Mission.COLOR
         }
     }
     var asleep by remember { mutableStateOf(!game.wentToBed) }

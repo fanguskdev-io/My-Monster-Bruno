@@ -37,7 +37,6 @@ import com.fanguskdev.mymonsterbruno.ui.art.drawThoughtBubble
 import com.fanguskdev.mymonsterbruno.ui.art.drawWord
 import com.fanguskdev.mymonsterbruno.ui.circle
 import com.fanguskdev.mymonsterbruno.ui.distance
-import com.fanguskdev.mymonsterbruno.ui.easeInOut
 import com.fanguskdev.mymonsterbruno.ui.lerp
 import com.fanguskdev.mymonsterbruno.ui.rememberClock
 import kotlinx.coroutines.delay
@@ -54,18 +53,6 @@ private val BUBBLE = Offset(478f, 96f)
 private val MOUTH: Offset get() = BRUNO_CENTER + BRUNO_MOUTH * (BRUNO_HEIGHT / BRUNO_UNITS)
 
 private enum class FeedPhase { ASKING, EATING, WRONG, THANKS }
-
-/** A cookie that flies from [from] to [to] between [start] and [start] + [length] seconds of the screen's clock. */
-private class Flight(
-    val from: Offset,
-    val to: Offset,
-    val start: Float,
-    val length: Float,
-) {
-    fun at(time: Float): Offset = lerp(from, to, easeInOut((time - start) / length))
-
-    fun over(time: Float) = time >= start + length
-}
 
 /**
  * Comeletras (docs/diseno.md): Bruno wants a vowel, «¡Quiero la a! La a de avión», and the plate has three cookies with

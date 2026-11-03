@@ -20,6 +20,7 @@ import com.fanguskdev.mymonsterbruno.storage.KeyValueStore
 import com.fanguskdev.mymonsterbruno.ui.GameState
 import com.fanguskdev.mymonsterbruno.ui.PlatformBackHandler
 import com.fanguskdev.mymonsterbruno.ui.Scene
+import com.fanguskdev.mymonsterbruno.ui.screens.BalloonScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.CalmScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.CountScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.FeedScreen
@@ -28,6 +29,7 @@ import com.fanguskdev.mymonsterbruno.ui.screens.HatchScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.HomeScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.MapScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.PresentScreen
+import com.fanguskdev.mymonsterbruno.ui.screens.SeriesScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.SleepScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.TraceScreen
 import kotlinx.coroutines.delay
@@ -79,6 +81,8 @@ internal fun AppContent(game: GameState) {
                 Step.FEED -> FeedScreen(game) { game.finished(scene) }
                 Step.TRACE -> TraceScreen(game) { game.finished(scene) }
                 Step.COUNT -> CountScreen(game) { game.finished(scene) }
+                Step.BALLOONS -> BalloonScreen(game) { game.finished(scene) }
+                Step.SERIES -> SeriesScreen(game) { game.finished(scene) }
             }
             is Scene.Present -> PresentScreen(game, scene.island) { game.presentGiven(scene.island) }
             Scene.Sleep -> SleepScreen(game)

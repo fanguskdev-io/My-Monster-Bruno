@@ -19,6 +19,10 @@ data class SaveData(
     val traced: Map<String, Int> = emptyMap(),
     /** Times she gave Bruno that many strawberries, by number. */
     val counted: Map<String, Int> = emptyMap(),
+    /** Times she gave Bruno the balloon he wanted, by colour (Hue.word). */
+    val balloons: Map<String, Int> = emptyMap(),
+    /** Series of balloons she has finished. */
+    val series: Int = 0,
     /** Times she finished each island, by its name. */
     val islands: Map<String, Int> = emptyMap(),
     val dailyMinutes: Int = DEFAULT_MINUTES,

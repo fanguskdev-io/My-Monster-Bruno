@@ -5,9 +5,9 @@ y ella le enseña las vocales, a contar y a trazar las letras. Es un regalo de F
 curso ha empezado el cole en España. La [página de diseño](docs/diseno.md) cuenta lo que pidió, las reglas y las
 decisiones, y la [investigación](docs/investigacion/investigacion.md), de dónde sale.
 
-> En construcción: la primera versión (M1) se juega de principio a fin en Android e iOS, a la espera de que Fangusk la
-> pruebe. Lo que viene después (las voces de la familia, «Habla con Bruno» y más islas) lo decide él
-> ([proceso](docs/proceso.md)).
+> En construcción: la primera versión (M1) se juega de principio a fin en Android e iOS, y Fangusk ya la está probando.
+> De M3 está hecha la isla de los colores. Lo que viene después (más islas, las voces de la familia y «Habla con Bruno»)
+> lo decide él ([proceso](docs/proceso.md)).
 
 ## Estructura
 

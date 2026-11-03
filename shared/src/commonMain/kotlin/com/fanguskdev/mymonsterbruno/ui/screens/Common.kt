@@ -9,6 +9,8 @@ import com.fanguskdev.mymonsterbruno.ui.art.drawRoundButton
 import com.fanguskdev.mymonsterbruno.ui.art.homeIcon
 import com.fanguskdev.mymonsterbruno.ui.art.speakerIcon
 import com.fanguskdev.mymonsterbruno.ui.distance
+import com.fanguskdev.mymonsterbruno.ui.easeInOut
+import com.fanguskdev.mymonsterbruno.ui.lerp
 import com.fanguskdev.mymonsterbruno.ui.ring
 import kotlin.math.sin
 
@@ -60,3 +62,15 @@ internal fun DrawScope.drawCallRing(
 
 /** A gentle up and down, for things that wait to be touched. */
 internal fun bob(time: Float, speed: Float = 2f, amount: Float = 4f) = sin(time * speed) * amount
+
+/** Something that flies from [from] to [to] between [start] and [start] + [length] seconds of the screen's clock. */
+internal class Flight(
+    val from: Offset,
+    val to: Offset,
+    val start: Float,
+    val length: Float,
+) {
+    fun at(time: Float): Offset = lerp(from, to, easeInOut((time - start) / length))
+
+    fun over(time: Float) = time >= start + length
+}

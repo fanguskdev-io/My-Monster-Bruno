@@ -8,7 +8,7 @@ fase: P0
 proxima_puerta: G0
 decisor: Fangusk                       # medido: pide el juego, elige la propuesta y dice cómo se construye en la sesión del 2026-11-02 (docs/diseno.md, docs/adr/README.md); ninguna señal de que decida otra persona (docs/05 §2)
 fecha_revision:                        # vacía: todavía no hay acta, ni criterio de muerte con fecha, ni riesgo aceptado
-actualizado: 2026-11-02
+actualizado: 2026-11-03
 ---
 
 # Estado · MyMonsterBruno
@@ -36,7 +36,7 @@ día quiere revisar G0, se abre la primera ronda de la cola de
 | Qué | Dimensión | Quién | Desde | Estado |
 |---|---|---|---|---|
 | Adopción del arnés ([hilo](entrevistas/one-pager-pending.md)) | PU, PV, EE, EI | agente (Claude Code, Opus 5.5) | 2026-11-02 | `bloqueado por Fangusk`: las rondas de descubrimiento no se abren mientras él no lo pida (lo dijo en BakiFace, ronda 2, 2026-11-01) |
-| Borrador anticipado del juego: código, puerta de calidad y [ADR](../adr/README.md), pedido por Fangusk | AT | agente (Claude Code, Opus 5.5) | 2026-11-02 | `en curso`: M1, la primera versión, se juega de principio a fin en Android e iOS y pasa la puerta, a la espera de que Fangusk la pruebe. ADR 0001 y 0002 aceptados con sus palabras; 0003 a 0006, propuestos. `comprobar` avisa de que se escribe sin criterios de muerte confirmados (docs/07 §1 del arnés): Fangusk pidió desarrollar ya, y el borrador no cuenta como evidencia de ninguna puerta hasta que confirme los del one-pager, cuya ronda está en cola |
+| Borrador anticipado del juego: código, puerta de calidad y [ADR](../adr/README.md), pedido por Fangusk | AT | agente (Claude Code, Opus 5.5) | 2026-11-02 | `en curso`: M1, la primera versión, se juega de principio a fin en Android e iOS y pasa la puerta; Fangusk la probó el 2026-11-03 («me gusta») y pidió a Bruno más lento y un narrador menos robótico. M3 empieza por la isla de los colores, que eligió él. ADR 0001, 0002 y 0007 aceptados con sus palabras; 0003 a 0006, propuestos. `comprobar` avisa de que se escribe sin criterios de muerte confirmados (docs/07 §1 del arnés): Fangusk pidió desarrollar ya, y el borrador no cuenta como evidencia de ninguna puerta hasta que confirme los del one-pager, cuya ronda está en cola |
 
 ## Equipo e hitos (EE)
 
@@ -95,3 +95,4 @@ día quiere revisar G0, se abre la primera ronda de la cola de
 | Fecha | Quién | Qué cambió |
 |---|---|---|
 | 2026-11-02 | agente (Claude Code, Opus 5.5) | Adopción del arnés 1.15.0 en modo nuevo, pedida por Fangusk («basate en como se está cronstruyendo CaroFarty y como se integra con Mayeutic usando KMP»), sobre la investigación y la propuesta que eligió; rondas de descubrimiento en cola sin abrir, como en CaroFarty; el desarrollo sigue como borrador anticipado, con M1 hecho; bloque del arnés en `AGENTS.md` y CI `mayeutic` |
+| 2026-11-03 | agente (Claude Code, Opus 5.5) | Fangusk prueba M1: se arregla el sonido del escritorio, Bruno habla más despacio y empieza M3 con la isla de los colores (ADR 0007), que él eligió antes que M2; el narrador nuevo espera a que descargue una voz mejorada |

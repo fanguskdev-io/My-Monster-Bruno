@@ -4,6 +4,7 @@ import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.rotate
@@ -11,6 +12,7 @@ import androidx.compose.ui.graphics.drawscope.withTransform
 import androidx.compose.ui.text.TextMeasurer
 import androidx.compose.ui.text.font.FontFamily
 import com.fanguskdev.mymonsterbruno.game.Accessory
+import com.fanguskdev.mymonsterbruno.game.Hue
 import com.fanguskdev.mymonsterbruno.game.Slot
 import com.fanguskdev.mymonsterbruno.game.Word
 import com.fanguskdev.mymonsterbruno.ui.circle
@@ -447,13 +449,7 @@ internal fun DrawScope.drawPointer(center: Offset, size: Float) {
 internal fun DrawScope.drawBalloon(center: Offset, size: Float, color: Color) {
     val w = size * 0.42f
     val h = size / 2
-    val balloon = path {
-        moveTo(center.x, center.y - h)
-        cubicTo(center.x + w * 1.3f, center.y - h, center.x + w * 1.1f, center.y + h * 0.55f, center.x, center.y + h)
-        cubicTo(center.x - w * 1.1f, center.y + h * 0.55f, center.x - w * 1.3f, center.y - h, center.x, center.y - h)
-        close()
-    }
-    fill(balloon, color)
+    fill(balloonShape(center, size), color)
     ellipse(Color.White, center + Offset(-w * 0.45f, -h * 0.4f), w * 0.18f, h * 0.25f, alpha = 0.35f)
     fill(
         path {
@@ -464,6 +460,47 @@ internal fun DrawScope.drawBalloon(center: Offset, size: Float, color: Color) {
         },
         color,
     )
+}
+
+/** The outline of a balloon [size] units high centred on [center], without its knot. */
+internal fun balloonShape(center: Offset, size: Float): Path {
+    val w = size * 0.42f
+    val h = size / 2
+    return path {
+        moveTo(center.x, center.y - h)
+        cubicTo(center.x + w * 1.3f, center.y - h, center.x + w * 1.1f, center.y + h * 0.55f, center.x, center.y + h)
+        cubicTo(center.x - w * 1.1f, center.y + h * 0.55f, center.x - w * 1.3f, center.y - h, center.x, center.y - h)
+        close()
+    }
+}
+
+/** A balloon whose string goes from its knot to [tiedTo], bending a little as if the wind moved it. */
+internal fun DrawScope.drawTiedBalloon(
+    center: Offset,
+    size: Float,
+    color: Color,
+    tiedTo: Offset,
+) {
+    val knot = center + Offset(0f, size / 2 + 8f)
+    stroke(
+        path {
+            moveTo(knot.x, knot.y)
+            quadraticTo((knot.x + tiedTo.x) / 2 + 10f, (knot.y + tiedTo.y) / 2, tiedTo.x, tiedTo.y)
+        },
+        Color(0xFF8C8FA6),
+        2f,
+    )
+    drawBalloon(center, size, color)
+}
+
+/** The colour of [hue] on the screen: bright, and different enough from the others to tell them apart at a glance. */
+internal fun Hue.paint(): Color = when (this) {
+    Hue.RED -> Color(0xFFE4483C)
+    Hue.YELLOW -> Color(0xFFF4C423)
+    Hue.BLUE -> Color(0xFF2C74D8)
+    Hue.GREEN -> Color(0xFF2E9E5B)
+    Hue.ORANGE -> Color(0xFFF28B2E)
+    Hue.PURPLE -> Color(0xFF9B6BD3)
 }
 
 /** A hand with [fingers] fingers up, [size] units high: how many, the way they count in the classroom. */

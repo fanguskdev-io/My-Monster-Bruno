@@ -16,6 +16,7 @@ import androidx.compose.ui.text.rememberTextMeasurer
 import com.fanguskdev.mymonsterbruno.audio.Sfx
 import com.fanguskdev.mymonsterbruno.audio.Voice
 import com.fanguskdev.mymonsterbruno.game.BrunoLook
+import com.fanguskdev.mymonsterbruno.game.Hue
 import com.fanguskdev.mymonsterbruno.ui.GameState
 import com.fanguskdev.mymonsterbruno.ui.Island
 import com.fanguskdev.mymonsterbruno.ui.Stage
@@ -25,6 +26,8 @@ import com.fanguskdev.mymonsterbruno.ui.andika
 import com.fanguskdev.mymonsterbruno.ui.art.Pose
 import com.fanguskdev.mymonsterbruno.ui.art.drawBruno
 import com.fanguskdev.mymonsterbruno.ui.art.drawSea
+import com.fanguskdev.mymonsterbruno.ui.art.drawTiedBalloon
+import com.fanguskdev.mymonsterbruno.ui.art.paint
 import com.fanguskdev.mymonsterbruno.ui.circle
 import com.fanguskdev.mymonsterbruno.ui.ellipse
 import com.fanguskdev.mymonsterbruno.ui.fill
@@ -40,12 +43,14 @@ private val VOWELS_ISLAND = Offset(250f, 250f)
 private val NUMBERS_ISLAND = Offset(560f, 168f)
 private const val ISLAND_RX = 120f
 private const val ISLAND_RY = 56f
-private val FAR_ISLANDS = listOf(Offset(712f, 322f), Offset(452f, 64f), Offset(116f, 112f))
+private val COLORS_ISLAND = Offset(668f, 314f)
+private val FAR_ISLANDS = listOf(Offset(452f, 64f), Offset(116f, 112f))
 private val BOAT = Offset(410f, 336f)
 
 /**
- * The map of the islands: the one of the vowels and the one of the numbers, and others far away in the mist that are not
- * ready yet. A touch on an island says where they go and goes there; the flag says she has finished it at least once.
+ * The map of the islands: the one of the vowels, the one of the numbers and the one of the colours, and others far away
+ * in the mist that are not ready yet. A touch on an island says where they go and goes there; the flag says she has
+ * finished it at least once.
  */
 @Composable
 internal fun MapScreen(game: GameState) {
@@ -69,6 +74,7 @@ internal fun MapScreen(game: GameState) {
                     }
                     inIsland(point, VOWELS_ISLAND) -> go(Island.VOWELS, Voice.TO_VOWELS)
                     inIsland(point, NUMBERS_ISLAND) -> go(Island.NUMBERS, Voice.TO_NUMBERS)
+                    inIsland(point, COLORS_ISLAND) -> go(Island.COLORS, Voice.TO_COLORS)
                     FAR_ISLANDS.any { hits(point, it, 50f) } -> audio.speak(Voice.TOO_FAR)
                     else -> return false
                 }
@@ -95,8 +101,11 @@ internal fun MapScreen(game: GameState) {
         drawVowelRocks(VOWELS_ISLAND, measurer, font)
         drawIsland(NUMBERS_ISLAND, t)
         drawNumberRocks(NUMBERS_ISLAND, measurer, font)
+        drawIsland(COLORS_ISLAND, t)
+        drawIslandBalloons(COLORS_ISLAND, t)
         if ((game.data.islands[Island.VOWELS.name] ?: 0) > 0) drawFlag(VOWELS_ISLAND + Offset(92f, -34f))
         if ((game.data.islands[Island.NUMBERS.name] ?: 0) > 0) drawFlag(NUMBERS_ISLAND + Offset(92f, -34f))
+        if ((game.data.islands[Island.COLORS.name] ?: 0) > 0) drawFlag(COLORS_ISLAND + Offset(92f, -34f))
         drawBoat(game.data.look, BOAT + Offset(0f, 4f * sin(t * 1.5f)), t)
         drawHomeButton(stage)
     }
@@ -132,6 +141,15 @@ private fun DrawScope.drawNumberRocks(center: Offset, measurer: TextMeasurer, fo
     }
 }
 
+/** The balloons of the island of colours, one of each, tied to the grass and swaying. */
+private fun DrawScope.drawIslandBalloons(center: Offset, t: Float) {
+    Hue.entries.forEachIndexed { i, hue ->
+        val tie = center + Offset(-62f + 25f * i, -6f + if (i % 2 == 0) -8f else 4f)
+        val at = tie + Offset(6f * sin(t * 1.3f + i), -48f - 10f * (i % 2))
+        drawTiedBalloon(at, 34f, hue.paint(), tie)
+    }
+}
+
 private fun DrawScope.drawFarIsland(center: Offset, t: Float, i: Int) {
     val alpha = 0.55f
     ellipse(Color(0xFFF6DFA6), center, 52f, 22f, alpha = alpha)
@@ -145,6 +163,8 @@ private fun DrawScope.drawPath(t: Float) {
     val dots = path {
         moveTo(VOWELS_ISLAND.x + 60f, VOWELS_ISLAND.y - 40f)
         quadraticTo(400f, 150f, NUMBERS_ISLAND.x - 90f, NUMBERS_ISLAND.y + 10f)
+        moveTo(NUMBERS_ISLAND.x + 70f, NUMBERS_ISLAND.y + 48f)
+        quadraticTo(720f, 230f, COLORS_ISLAND.x + 20f, COLORS_ISLAND.y - 62f)
     }
     drawPath(
         dots,

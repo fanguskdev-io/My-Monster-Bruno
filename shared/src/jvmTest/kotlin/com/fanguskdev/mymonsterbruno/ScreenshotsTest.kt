@@ -41,6 +41,8 @@ class ScreenshotsTest {
             "8-dormir" to Scene.Sleep,
             "9-calma" to Scene.Calm,
             "10-mayores" to Scene.GrownUps,
+            "11-globos" to Scene.Play(Island.COLORS, 0),
+            "12-series" to Scene.Play(Island.COLORS, 1),
         )
         for ((device, size) in SIZES) {
             for ((name, scene) in scenes) {
