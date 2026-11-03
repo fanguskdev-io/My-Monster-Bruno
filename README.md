@@ -8,7 +8,7 @@ decisiones, y la [investigación](docs/investigacion/investigacion.md), de dónd
 > En construcción: la primera versión (M1) se juega de principio a fin en Android e iOS, y Fangusk ya la está probando.
 > M3 está hecho: las islas de los colores, las formas y las emociones, y las letras M, P, L y S y los números hasta el 10.
 > M2 también: «Habla con Bruno», en el que ella le dice palabras con el micrófono y él las repite con su voz y las da en
-> palmadas. La entrega en su iPhone está preparada: falta elegir cómo instalarlo ([entrega](docs/entrega.md)).
+> palmadas. La entrega en su iPhone está preparada: será ad hoc, instalado el día que se lo dé ([entrega](docs/entrega.md)).
 
 ## Estructura
 

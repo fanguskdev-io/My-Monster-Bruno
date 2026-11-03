@@ -22,3 +22,4 @@ y estas decisiones existen antes de G4 porque Fangusk pidió desarrollar ya. Las
 | [0009](0009-mas-letras-y-numeros-hasta-el-diez.md) | Más letras (M, P, L, S) y números hasta el 10 en las islas que ya hay | Aceptada; los detalles, propuesta |
 | [0010](0010-la-isla-de-las-emociones.md) | La isla de las emociones: Bruno se pone del color de cómo se siente, ella lo reconoce y le ayuda | Aceptada; los detalles, propuesta |
 | [0011](0011-habla-con-bruno.md) | Habla con Bruno: ella dice la palabra con el micrófono, Bruno la repite con su voz más aguda y la da en palmadas | Aceptada; los detalles, propuesta |
+| [0012](0012-la-entrega-ad-hoc.md) | La entrega: ad hoc, con el Apple Developer Program, en su iPhone 15 Pro el día que se lo dé | Aceptada |

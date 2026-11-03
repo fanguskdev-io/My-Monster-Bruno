@@ -140,7 +140,10 @@ micrófono del Mac y lo repiten por sus altavoces, así que esa prueba la hace F
   cuarto, el mapa, Comeletras, la calma y la zona de mayores. La casa, el altavoz y el candado se ven enteros; la isla
   solo tapa la punta de la isla de las emociones en el mapa y menos de un punto del borde de la galleta de la derecha en
   Comeletras (2026-11-03).
-- [ ] Instalado en su iPhone 15 Pro por la vía que elija Fangusk ([entrega](entrega.md)), con su icono y el nombre
-  «Bruno».
+- [x] La versión definitiva, con «Habla con Bruno», en un simulador de iPhone 15 Pro (iOS 26.3), en silencio y girado a
+  un lado y al otro: el huevo, el cuarto, «Habla con Bruno», el mapa, las cinco islas, la calma y la zona de mayores. Se
+  ve igual que en el 17 Pro, y el micrófono rosa del cuarto queda a unos 20 puntos de la isla (2026-11-03).
+- [ ] Instalado en su iPhone 15 Pro, ad hoc, el día de la entrega ([ADR 0012](adr/0012-la-entrega-ad-hoc.md),
+  [entrega](entrega.md)), con su icono y el nombre «Bruno».
 - [ ] Allí, con sonido: se juega girado a un lado y al otro, se oyen la voz y los efectos, «Habla con Bruno» repite su
   voz, y al cerrarlo y volver a abrirlo Bruno sigue como estaba.

@@ -48,7 +48,7 @@ día quiere revisar G0, se abre la primera ronda de la cola de
 
 | Hito (EE-E4) | Fecha | Depende de | Colchón | Estado | Si se retrasa tres meses |
 |---|---|---|---|---|---|
-| M1 a M4 ([proceso](../proceso.md): primera versión → para jugar con la familia → más islas → entrega) | sin fecha: Fangusk no la ha fijado (2026-11-02) | Fangusk: su visto bueno a cada hito y el orden de lo que viene | — | M1, M2 y M3 hechos a falta de que Fangusk los pruebe; M4, a falta de que elija la vía y se instale en su iPhone | la niña crece: lo de 4 años (vocales, contar hasta 5) se le queda corto; M3 lo alarga con más islas |
+| M1 a M4 ([proceso](../proceso.md): primera versión → para jugar con la familia → más islas → entrega) | sin fecha: Fangusk no la ha fijado (2026-11-02) | Fangusk: su visto bueno a cada hito y el orden de lo que viene | — | M1, M2 y M3 hechos a falta de que Fangusk los pruebe; M4, ad hoc ([ADR 0012](../adr/0012-la-entrega-ad-hoc.md)), a falta de que se dé de alta en el programa y se instale en su iPhone el día que se lo dé | la niña crece: lo de 4 años (vocales, contar hasta 5) se le queda corto; M3 lo alarga con más islas |
 
 ## Qué espera respuesta humana
 
@@ -90,7 +90,7 @@ día quiere revisar G0, se abre la primera ronda de la cola de
 - R-01 · que sus padres no quieran pantallas a los 4 años · impacto alto, sin hablar con ellos todavía.
 - R-03 · que no entienda qué hacer en alguna pantalla sin leer · sin probar con una niña de 4 años.
 - R-02 · la voz provisional, sintética · Fangusk se queda con ella; falta verla jugar, y oír las sílabas sueltas de «Habla con Bruno».
-- R-04 · la app de su iPhone caduca a los 7 días sin el programa de Apple · falta que Fangusk elija la vía ([entrega](../entrega.md)).
+- R-04 · la app de su iPhone caduca a los 7 días sin el programa de Apple · eligió ad hoc ([ADR 0012](../adr/0012-la-entrega-ad-hoc.md)); falta que se dé de alta en el programa ([entrega](../entrega.md)).
 - R-07 · el micrófono escucha a una menor · solo mientras mantiene el botón y sin guardar nada; falta probarlo en su iPhone.
 
 ## Historial de este fichero
@@ -104,3 +104,4 @@ día quiere revisar G0, se abre la primera ronda de la cola de
 | 2026-11-03 | agente (Claude Code, Opus 5.5) | La isla de las emociones (ADR 0010), con la que M3 queda hecho a falta de que Fangusk lo pruebe |
 | 2026-11-03 | agente (Claude Code, Opus 5.5) | M2: «Habla con Bruno» con el micrófono (ADR 0011), como lo eligió Fangusk, sin las voces de la familia; riesgo R-07 por el micrófono |
 | 2026-11-03 | agente (Claude Code, Opus 5.5) | M4 se une a main con «Sí, únela»: la entrega en su iPhone 15 Pro (docs/entrega.md), el proyecto de Xcode listo para firmar y la prueba de los botones de las esquinas; falta que Fangusk elija la vía |
+| 2026-11-03 | agente (Claude Code, Opus 5.5) | La entrega será ad hoc (ADR 0012), elegida por Fangusk porque no tendrá su iPhone hasta el día que se lo dé; R-04 pasa a mitigando |

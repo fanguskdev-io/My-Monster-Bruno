@@ -2,8 +2,12 @@
 
 Cómo se instala «Mi monstruo Bruno» en el iPhone 15 Pro en el que jugará tu sobrina sin publicarlo en la App Store, y
 cómo se instala en un Android si algún día hiciera falta. Es el hito M4 ([proceso](proceso.md)): sale cuando está
-instalado allí, con su icono, y probado allí. La vía la eliges tú. En cada una están separadas las cosas que haces tú,
-que son las que piden tu Apple ID o tener el iPhone en la mano, de las que hace un agente desde este Mac.
+instalado allí, con su icono, y probado allí. En cada vía están separadas las cosas que haces tú, que son las que piden
+tu Apple ID o tener el iPhone en la mano, de las que hace un agente desde este Mac.
+
+**Elegiste la vía 3, ad hoc** (2026-11-03). No tendrás su iPhone hasta el día de la entrega («No voy a poder tener el
+iphone para probarlo, va a tener que ser en la version definitiva»), así que se instala ese día, una sola vez, y dura un
+año. La gratuita quedó descartada porque pide el iPhone en el Mac cada 7 días.
 
 ## Antes de elegir
 
@@ -111,23 +115,49 @@ Lo que hace el agente:
   `build/subir.plist` lleva `method` = `app-store-connect` y `destination` = `upload`.
 - Antes de los 90 días, sube la siguiente.
 
-## Vía 3 · Ad hoc
+## Vía 3 · Ad hoc, la elegida
+
+### Antes de la entrega, sin su iPhone
 
 Lo que haces tú:
 
-1. **Date de alta en el Apple Developer Program, inicia sesión en Xcode y elige tu equipo**, como en los pasos 1 y 2 de
-   la vía 2.
-2. **Conecta el iPhone al Mac** y toca «Confiar», como en el paso 3 de la vía 1. Aquí no hace falta el Modo de
-   desarrollador.
-3. **Vuelve a conectarlo** cada año, cuando caduca, y con cada versión nueva.
+1. **Date de alta en el Apple Developer Program**, como en el paso 1 de la vía 2. Apple puede tardar uno o dos días en
+   aprobarlo, así que mejor con margen.
+2. **Inicia sesión en Xcode con ese Apple ID y elige tu equipo**, como en los pasos 1 y 2 de la vía 1, pero el del
+   programa, no el «(Personal Team)».
 
 Lo que hace el agente:
 
-- Pasa el Team ID a `Local.xcconfig` y registra el iPhone en tu cuenta del programa por su UDID, que lee de
-  `xcrun devicectl list devices`. Caben 100 aparatos de cada tipo al año.
-- Archiva la versión de lanzamiento como en la vía 2. La exporta con `method` = `release-testing` (la distribución ad
-  hoc) en vez de subirla, y la instala desde el Mac con `xcrun devicectl device install app --device <UDID> <la .ipa>`,
-  o con Apple Configurator.
+- Pasa el Team ID a `Local.xcconfig` y deja `project.pbxproj` como estaba.
+- Comprueba que la puerta pasa y prueba la versión definitiva entera en un simulador de iPhone 15 Pro, girado a los dos
+  lados ([pruebas](pruebas.md)).
+- Archiva la versión de lanzamiento, como en la vía 2. La exportación espera al día de la entrega, porque el perfil ad hoc
+  lleva dentro el UDID de su iPhone.
+
+### El día de la entrega, con su iPhone y tu Mac
+
+Son unos 15 minutos.
+
+Lo que haces tú:
+
+1. **Comprueba que tiene iOS 18.5 o posterior**: Ajustes > General > Información.
+2. **Conecta el iPhone al Mac** con un cable USB-C, desbloquéalo y toca «Confiar».
+3. **Activa el Modo de desarrollador**, como en el paso 4 de la vía 1. Solo sirve para que el agente lo registre y lo
+   instale desde el Mac. Al acabar se puede desactivar, porque la versión ad hoc no lo necesita para abrirse.
+4. **Pruébalo allí con sonido**, como dice «Después de instalarlo», más abajo.
+
+Lo que hace el agente:
+
+- Lee el UDID con `xcrun devicectl list devices` y registra el iPhone en tu cuenta (caben 100 aparatos de cada tipo al
+  año). Con el Modo de desarrollador activado, lo hace Xcode solo al compilar para ese iPhone con
+  `-allowProvisioningDeviceRegistration`.
+- Exporta el archivo con `method` = `release-testing` (la distribución ad hoc), ya con su iPhone dentro del perfil, y
+  lo instala desde el Mac con `xcrun devicectl device install app --device <UDID> <la .ipa>`, o con Apple Configurator.
+
+### Dentro de un año
+
+Antes de que caduque, o si hace falta un arreglo, vuelve a conectarlo. El agente la exporta de nuevo y la instala
+encima, y Bruno sigue como estaba. Para seguir pasado el año hay que renovar el programa.
 
 Con el programa, la vía 1 también dura un año en vez de 7 días: es casi lo mismo que la ad hoc, pero instalando desde
 Xcode.
