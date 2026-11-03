@@ -205,3 +205,54 @@ b_gracias_tristeza	bruno	¡Gracias! Ya estoy mejor.
 b_gracias_enfado	bruno	Uf... Ya estoy más tranquilo.
 b_gracias_miedo	bruno	¡Ya no tengo miedo! ¡Gracias!
 b_gracias_calma	bruno	¡Qué gustito!
+n_habla	narrador	¡Vamos a enseñarle palabras a Bruno!
+n_microfono	narrador	Mantén el dedo en el micrófono mientras se lo dices.
+b_no_te_oigo	bruno	¡No te oigo! ¿Me lo dices otra vez?
+b_gracias_palabras	bruno	¡Gracias! ¡Ya sé un montón de palabras!
+n_palmadas_1	narrador	¡Una palmada!
+n_palmadas_2	narrador	¡Dos palmadas!
+n_palmadas_3	narrador	¡Tres palmadas!
+n_palmadas_4	narrador	¡Cuatro palmadas!
+b_dime_sol	bruno	¡Dime sol!
+b_dime_luna	bruno	¡Dime luna!
+b_dime_oso	bruno	¡Dime oso!
+b_dime_fresa	bruno	¡Dime fresa!
+b_dime_globo	bruno	¡Dime globo!
+b_dime_pelota	bruno	¡Dime pelota!
+b_dime_manzana	bruno	¡Dime manzana!
+b_dime_regalo	bruno	¡Dime regalo!
+b_dime_mariposa	bruno	¡Dime mariposa!
+b_dime_elefante	bruno	¡Dime elefante!
+b_palabra_sol	bruno	¡Sol!
+b_palabra_luna	bruno	¡Luna!
+b_palabra_oso	bruno	¡Oso!
+b_palabra_fresa	bruno	¡Fresa!
+b_palabra_globo	bruno	¡Globo!
+b_palabra_pelota	bruno	¡Pelota!
+b_palabra_manzana	bruno	¡Manzana!
+b_palabra_regalo	bruno	¡Regalo!
+b_palabra_mariposa	bruno	¡Mariposa!
+b_palabra_elefante	bruno	¡Elefante!
+b_silaba_sol	bruno	¡Sol!
+b_silaba_lu	bruno	¡Lu!
+b_silaba_na	bruno	¡Na!
+b_silaba_o	bruno	¡O!
+b_silaba_so	bruno	¡So!
+b_silaba_fre	bruno	¡Fre!
+b_silaba_sa	bruno	¡Sa!
+b_silaba_glo	bruno	¡Glo!
+b_silaba_bo	bruno	¡Bo!
+b_silaba_pe	bruno	¡Pe!
+b_silaba_lo	bruno	¡Lo!
+b_silaba_ta	bruno	¡Ta!
+b_silaba_man	bruno	¡Man!
+b_silaba_za	bruno	¡Za!
+b_silaba_re	bruno	¡Re!
+b_silaba_ga	bruno	¡Ga!
+b_silaba_ma	bruno	¡Ma!
+b_silaba_ri	bruno	¡Ri!
+b_silaba_po	bruno	¡Po!
+b_silaba_e	bruno	¡E!
+b_silaba_le	bruno	¡Le!
+b_silaba_fan	bruno	¡Fan!
+b_silaba_te	bruno	¡Te!

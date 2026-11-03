@@ -26,8 +26,9 @@ no se puede revisar y el proyecto sigue en P0. A la vez, el agente construye el 
 (docs/07 §1 del arnés): el código y los ADR existen antes de G4, los revisan las puertas que los piden y no deciden la
 talla, los criterios de muerte ni ninguna salida.
 
-**Siguiente paso:** ninguno del arnés; el desarrollo sigue por orden de Fangusk. La primera versión (M1) está lista para
-que la pruebe y dé su visto bueno, y lo que viene después (M2 en adelante, [proceso](../proceso.md)) lo decide él. Si un
+**Siguiente paso:** ninguno del arnés; el desarrollo sigue por orden de Fangusk. M1, M2 y M3 están listos para que los
+pruebe y dé su visto bueno, y M4, la entrega en el iPhone 15 Pro en que jugará ella, está en curso
+([proceso](../proceso.md)). Si un
 día quiere revisar G0, se abre la primera ronda de la cola de
 [entrevistas/one-pager-pending.md](entrevistas/one-pager-pending.md).
 
@@ -36,7 +37,7 @@ día quiere revisar G0, se abre la primera ronda de la cola de
 | Qué | Dimensión | Quién | Desde | Estado |
 |---|---|---|---|---|
 | Adopción del arnés ([hilo](entrevistas/one-pager-pending.md)) | PU, PV, EE, EI | agente (Claude Code, Opus 5.5) | 2026-11-02 | `bloqueado por Fangusk`: las rondas de descubrimiento no se abren mientras él no lo pida (lo dijo en BakiFace, ronda 2, 2026-11-01) |
-| Borrador anticipado del juego: código, puerta de calidad y [ADR](../adr/README.md), pedido por Fangusk | AT | agente (Claude Code, Opus 5.5) | 2026-11-02 | `en curso`: M1, la primera versión, se juega de principio a fin en Android e iOS y pasa la puerta; Fangusk la probó el 2026-11-03 («me gusta») y pidió a Bruno más lento y un narrador menos robótico. M3, hecho a falta de que lo pruebe: las islas de los colores, las formas y las emociones, y las letras y números ampliados, que eligió él. ADR 0001, 0002 y 0007 a 0010 aceptados con sus palabras; 0003 a 0006, propuestos. `comprobar` avisa de que se escribe sin criterios de muerte confirmados (docs/07 §1 del arnés): Fangusk pidió desarrollar ya, y el borrador no cuenta como evidencia de ninguna puerta hasta que confirme los del one-pager, cuya ronda está en cola |
+| Borrador anticipado del juego: código, puerta de calidad y [ADR](../adr/README.md), pedido por Fangusk | AT | agente (Claude Code, Opus 5.5) | 2026-11-02 | `en curso`: M1, la primera versión, se juega de principio a fin en Android e iOS y pasa la puerta; Fangusk la probó el 2026-11-03 («me gusta») y pidió a Bruno más lento y un narrador menos robótico. M3, hecho a falta de que lo pruebe: las islas de los colores, las formas y las emociones, y las letras y números ampliados, que eligió él. M2, «Habla con Bruno» con el micrófono, hecho a falta de que lo pruebe con su voz. ADR 0001, 0002 y 0007 a 0011 aceptados con sus palabras; 0003 a 0006, propuestos. `comprobar` avisa de que se escribe sin criterios de muerte confirmados (docs/07 §1 del arnés): Fangusk pidió desarrollar ya, y el borrador no cuenta como evidencia de ninguna puerta hasta que confirme los del one-pager, cuya ronda está en cola |
 
 ## Equipo e hitos (EE)
 
@@ -47,7 +48,7 @@ día quiere revisar G0, se abre la primera ronda de la cola de
 
 | Hito (EE-E4) | Fecha | Depende de | Colchón | Estado | Si se retrasa tres meses |
 |---|---|---|---|---|---|
-| M1 a M4 ([proceso](../proceso.md): primera versión → para jugar con la familia → más islas → entrega) | sin fecha: Fangusk no la ha fijado (2026-11-02) | Fangusk: su visto bueno a cada hito y el orden de lo que viene | — | M1 hecho a falta de que Fangusk lo pruebe | la niña crece: lo de 4 años (vocales, contar hasta 5) se le queda corto; M3 lo alarga con más islas |
+| M1 a M4 ([proceso](../proceso.md): primera versión → para jugar con la familia → más islas → entrega) | sin fecha: Fangusk no la ha fijado (2026-11-02) | Fangusk: su visto bueno a cada hito y el orden de lo que viene | — | M1, M2 y M3 hechos a falta de que Fangusk los pruebe; M4 en curso | la niña crece: lo de 4 años (vocales, contar hasta 5) se le queda corto; M3 lo alarga con más islas |
 
 ## Qué espera respuesta humana
 
@@ -88,7 +89,8 @@ día quiere revisar G0, se abre la primera ronda de la cola de
 
 - R-01 · que sus padres no quieran pantallas a los 4 años · impacto alto, sin hablar con ellos todavía.
 - R-03 · que no entienda qué hacer en alguna pantalla sin leer · sin probar con una niña de 4 años.
-- R-02 · la voz provisional, sintética · hasta que grabe la familia (M2).
+- R-02 · la voz provisional, sintética · Fangusk se queda con ella; falta verla jugar, y oír las sílabas sueltas de «Habla con Bruno».
+- R-07 · el micrófono escucha a una menor · solo mientras mantiene el botón y sin guardar nada; falta probarlo en su iPhone.
 
 ## Historial de este fichero
 
@@ -99,3 +101,4 @@ día quiere revisar G0, se abre la primera ronda de la cola de
 | 2026-11-03 | agente (Claude Code, Opus 5.5) | La isla de las formas (ADR 0008), elegida por Fangusk; el narrador se queda con la voz básica hasta las voces de la familia (ADR 0004) |
 | 2026-11-03 | agente (Claude Code, Opus 5.5) | «Salir del juego» en la zona de mayores, y las letras M, P, L, S y los números hasta el 10 (ADR 0009), elegidos por Fangusk |
 | 2026-11-03 | agente (Claude Code, Opus 5.5) | La isla de las emociones (ADR 0010), con la que M3 queda hecho a falta de que Fangusk lo pruebe |
+| 2026-11-03 | agente (Claude Code, Opus 5.5) | M2: «Habla con Bruno» con el micrófono (ADR 0011), como lo eligió Fangusk, sin las voces de la familia; riesgo R-07 por el micrófono |

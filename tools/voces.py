@@ -10,8 +10,7 @@ como un monstruo pequeño: se remuestrean ×1,2, lo que también las acelera. Pa
 niño de 4 años» (Fangusk), después se alargan sin cambiarles el tono con tools/despacio.swift, que usa el
 AVAudioUnitTimePitch de Apple, y quedan en unas 4 sílabas por segundo. La velocidad de `say` no sirve para eso: Mónica no
 baja de la que tiene a 150 palabras por minuto. Salen en WAV de 16 bits, mono, a 22 050 Hz, sin el silencio de los bordes
-y a la misma altura de volumen. Son provisionales: las grabaciones de la familia las sustituirán con el mismo nombre de
-fichero.
+y a la misma altura de volumen. Si algún día se cambia una voz, basta con sustituir su fichero, con el mismo nombre.
 
 Solo usa la biblioteca estándar de Python; generar necesita macOS (`say`) y, para las de Bruno, Xcode (`swiftc`);
 comprobar no necesita ninguno.

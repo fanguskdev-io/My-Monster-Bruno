@@ -46,6 +46,7 @@ import com.fanguskdev.mymonsterbruno.game.MAX_COUNT
 import com.fanguskdev.mymonsterbruno.game.SaveData
 import com.fanguskdev.mymonsterbruno.game.Session
 import com.fanguskdev.mymonsterbruno.game.Shape
+import com.fanguskdev.mymonsterbruno.game.TalkWord
 import com.fanguskdev.mymonsterbruno.ui.GameState
 import com.fanguskdev.mymonsterbruno.ui.andika
 
@@ -92,7 +93,7 @@ internal fun GrownUpsScreen(game: GameState, onExit: (() -> Unit)? = null) {
                 Chip("Volver al juego", font, selected = true) { game.leaveGrownUps() }
             }
             Section("Su nombre", font) {
-                Text("Se ve en el banderín del cuarto de Bruno. La voz todavía no lo dice.", font, 15, color = Soft)
+                Text("Se ve en el banderín del cuarto de Bruno.", font, 15, color = Soft)
                 var name by remember { mutableStateOf(data.childName) }
                 BasicTextField(
                     value = name,
@@ -155,6 +156,8 @@ internal fun GrownUpsScreen(game: GameState, onExit: (() -> Unit)? = null) {
                 Text("Casas construidas: ${data.houses}.", font, 16)
                 val feelings = Feeling.entries.joinToString("   ") { "${it.spoken} ${data.feelings[it.word] ?: 0}" }
                 Text("Emociones que ha reconocido:   $feelings", font, 16)
+                val talked = TalkWord.entries.joinToString("   ") { "${it.word} ${data.talked[it.word] ?: 0}" }
+                Text("Palabras dichas a Bruno, con sus palmadas:   $talked", font, 16)
                 Text("Islas terminadas: ${data.islandsDone}. Regalos de Bruno: ${data.look.accessories.size} de 6.", font, 16)
             }
             Section("Bruno", font) {
@@ -180,6 +183,12 @@ internal fun GrownUpsScreen(game: GameState, onExit: (() -> Unit)? = null) {
                 }
             }
             Text("Sin internet, sin anuncios, sin compras y sin datos fuera del dispositivo.", font, 14, color = Soft)
+            Text(
+                "El micrófono solo escucha en «Habla con Bruno» mientras ella mantiene el botón, y lo que oye no se guarda.",
+                font,
+                14,
+                color = Soft,
+            )
             Spacer(Modifier.height(12.dp))
         }
     }

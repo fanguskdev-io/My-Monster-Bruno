@@ -22,7 +22,7 @@ adelante y lo que entra en cada uno los decide Fangusk.
 | Hito | Sale cuando | Estado |
 |---|---|---|
 | M1 Primera versión | Lo que la propuesta pide a la primera versión: el nacimiento, Comeletras con las vocales, los trazos, contar hasta 5 y el mapa con dos islas. Además, los regalos, a dormir con la misión para casa, la calma, la zona de mayores y el límite diario. Se juega de principio a fin en el emulador y en el simulador y pasa la puerta. Fangusk lo prueba y da el visto bueno | hecho a falta de que Fangusk lo pruebe |
-| M2 Para jugar con la familia | Las voces de la familia, grabadas en la zona de mayores, y «Habla con Bruno» | sin empezar: decide Fangusk |
+| M2 Para jugar juntos | «Habla con Bruno». Las voces de la familia, no: «seguiremos con las voces actuales» (Fangusk, 2026-11-03) | hecho ([ADR 0011](adr/0011-habla-con-bruno.md)) a falta de que Fangusk lo pruebe con el micrófono de verdad |
 | M3 Más islas | Las que Fangusk elija de la propuesta: consonantes y sonido inicial, números hasta 10, formas, colores y series, y emociones | eligió hacerlo antes que M2; hechas la de los colores ([ADR 0007](adr/0007-la-isla-de-los-colores.md)) y la de las formas ([ADR 0008](adr/0008-la-isla-de-las-formas.md)), ampliadas las letras y los números ([ADR 0009](adr/0009-mas-letras-y-numeros-hasta-el-diez.md)) y hecha la de las emociones ([ADR 0010](adr/0010-la-isla-de-las-emociones.md)): hecho a falta de que Fangusk lo pruebe |
 | M4 Entrega | Instalado en el dispositivo en que ella juega, con su icono, y probado allí | sin empezar: falta saber qué dispositivo es |
 

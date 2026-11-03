@@ -34,14 +34,15 @@ Los pilares, que deciden qué entra y qué no:
 
 Después de probar la primera versión (2026-11-03): «He probado un poco y me gusta». Pidió que Bruno hablara «un poco más
 lento, habla demasiado rápido para un niño de 4 años» ([ADR 0004](adr/0004-voces-provisionales.md)) y un narrador «más
-amigable», menos robótico. Como en su Mac no hay una Mónica mejorada, prefirió dejarlo como está hasta que la familia grabe
-sus voces. Después, «Continúa», y la isla de las formas: «Construirle la casa a Bruno: ella arrastra un cuadrado, un
+amigable», menos robótico. Como en su Mac no hay una Mónica mejorada, prefirió dejarlo como está. Después, «Continúa», y la isla de las formas: «Construirle la casa a Bruno: ella arrastra un cuadrado, un
 triángulo, un círculo y un rectángulo a su hueco, y Bruno dice el nombre de cada forma»
 ([ADR 0008](adr/0008-la-isla-de-las-formas.md)). Y al ver que no había botón para salir: «Sí, añádelo», en la zona de
 mayores. Después, otra vez «Continúa», y ampliar las islas que ya había: «consonantes (M, P, L, S) con su palabra en
 Comeletras y en los trazos, junto a las vocales», y «fresas hasta el 10, con las dos manos en la tarjeta»
 ([ADR 0009](adr/0009-mas-letras-y-numeros-hasta-el-diez.md)). Y por último la isla de las emociones, tal como se la
-propuso el agente: «Así» ([ADR 0010](adr/0010-la-isla-de-las-emociones.md)). Para seguir eligió «Más islas primero» y, entre las que le propuso el agente, «Colores»: «Bruno
+propuso el agente: «Así» ([ADR 0010](adr/0010-la-isla-de-las-emociones.md)). Y para M2: «para M2 no vamos a utilizar
+las voces de la familia, seguiremos con las voces actuales» ([ADR 0004](adr/0004-voces-provisionales.md)), y «Habla con
+Bruno» como se lo propuso el agente, con micrófono: «Sí, así» ([ADR 0011](adr/0011-habla-con-bruno.md)). Para seguir eligió «Más islas primero» y, entre las que le propuso el agente, «Colores»: «Bruno
 pide un color (“¡Quiero el globo rojo!”) y después series: rojo, azul, rojo… ¿cuál va ahora?»
 ([ADR 0007](adr/0007-la-isla-de-los-colores.md)).
 
@@ -63,8 +64,8 @@ La propuesta 3, tal como la leyó (en la [maqueta](investigacion/propuestas.html
    quinto se rompe y sale Bruno: «¡Hola! ¡Soy Bruno! No sé nada de nada... ¿Me enseñas?». Ella elige su color (menta,
    rosa, naranja o morado) y lo que lleva en la cabeza (cuernos, orejas o antenas), y el botón verde se lo queda.
 2. **El cuarto de Bruno**, la casa. Bruno la saluda y la invita a la isla. Si le toca, se ríe con cosquillas. El botón
-   grande lleva al mapa y el globo, al rincón de la calma. Arriba cuelga un banderín con su nombre, si los mayores lo han
-   escrito, o con estrellas.
+   grande lleva al mapa, el micrófono a «Habla con Bruno» y el globo, al rincón de la calma. Arriba cuelga un banderín con
+   su nombre, si los mayores lo han escrito, o con estrellas.
 3. **El mapa**. Bruno va en su barca. Hay cinco islas con algo que hacer: la de las letras, la de los números, la de los
    colores, la de las formas y la de las emociones. Una más, arriba a la derecha, está «muy lejos. ¡Pronto iremos!»: es
    para lo que venga. Una isla terminada lleva su bandera.
@@ -110,12 +111,19 @@ La propuesta 3, tal como la leyó (en la [maqueta](investigacion/propuestas.html
 
 Fuera del camino:
 
+- **Habla con Bruno** ([ADR 0011](adr/0011-habla-con-bruno.md)), desde el cuarto. Bruno enseña un dibujo y pide su
+  palabra: «¡Dime mariposa!». Ella mantiene el dedo en el micrófono grande mientras la dice, y Bruno la repite con la voz
+  de ella, más aguda, como un monstruo. Después da una palmada por sílaba diciéndola («¡Ma! ¡Ri! ¡Po! ¡Sa!»), cada sílaba
+  sale en una tarjeta de color y el narrador cuenta las palmadas. Son cuatro de diez palabras (de sol a elefante, de una a
+  cuatro palmadas), las que menos ha dicho y de menos palmadas a más. Si no la oye, se lo pide otra vez; a la segunda, o
+  si no hay micrófono, la dice Bruno y da las palmadas igual. Su voz suena una vez y se olvida: no se guarda ni sale del
+  aparato. El permiso del micrófono se pide la primera vez que se entra.
 - **El rincón de la calma**, el de su clase. Mientras mantiene el dedo, el globo se hincha y ella toma aire. Al soltar, el
   globo se deshincha despacio. Son tres respiraciones con Bruno.
 - **La zona de mayores**, detrás del candado de la esquina, que se abre manteniendo el dedo 2,5 segundos. En ella se puede
   escribir su nombre (para el banderín), elegir los minutos al día (5, 10, 15 o 20), dar «10 minutos más, solo hoy»,
   quitar la voz o los efectos, ver lo que ha practicado (galletas por vocal, letras trazadas, fresas por número, globos,
-  series, piezas de la casa, islas y regalos) y volver a empezar, que devuelve a Bruno al huevo y conserva los ajustes. En
+  series, piezas de la casa, emociones, palabras dichas a Bruno, islas y regalos) y volver a empezar, que devuelve a Bruno al huevo y conserva los ajustes. En
   Android y en el escritorio también hay «Salir del juego», que guarda la partida y lo cierra. En iPhone y iPad no lo
   hay: se sale con el gesto del sistema, porque Apple no quiere que una app se cierre sola. Es la única pantalla con
   texto.
@@ -132,12 +140,12 @@ Salen de la [investigación §6](investigacion/investigacion.md#6-reglas-que-sal
 | Para dedos de 4 años | Solo tocar, arrastrar y mantener: sin doble toque, pellizcos ni prisas. En un móvil de 6,8″ (el emulador Pixel 10 Pro XL), el botón de jugar mide 2,4 cm, las galletas 1,8 cm y los colores 1,7 cm. Cada uno acepta el dedo hasta 0,3 cm más allá de su borde. Los botones de las esquinas miden 1 cm a propósito. En una tableta, todo es más grande |
 | Equivocarse no castiga | Bruno nunca dice «¡mal!». Pone cara rara, devuelve la galleta y lo vuelve a pedir. No hay vidas, puntos ni tiempo |
 | Unos 10 minutos con final | Límite por día, 10 minutos de serie. Bruno se duerme al terminar lo que ella esté haciendo. No hay rachas, cuentas atrás ni «¡no te vayas!» ([ADR 0006](adr/0006-diez-minutos-y-a-dormir.md)) |
-| Para jugar acompañada | La misión para casa de cada noche. La voz de la familia y «Habla con Bruno», que son para hacer juntos, llegan después |
+| Para jugar acompañada | La misión para casa de cada noche, y «Habla con Bruno», que la primera vez necesita a un mayor para el permiso del micrófono |
 | Lo del cole | Vocales en mayúscula, sus trazos en el orden del cole, y contar del 1 al 5 con los dedos y los puntos, en castellano de España |
-| Hecho para ella | Su nombre en el banderín y su Bruno, con el color y la cabeza que ella elige. La voz todavía no dice su nombre ([ADR 0004](adr/0004-voces-provisionales.md)) |
+| Hecho para ella | Su nombre en el banderín y su Bruno, con el color y la cabeza que ella elige. La voz no dice su nombre: son frases grabadas de antemano ([ADR 0004](adr/0004-voces-provisionales.md)) |
 | Tranquilo | Colores suaves, sonidos cortos que solo suenan al tocar y animaciones lentas. La voz y los efectos se pueden quitar |
 | Premios con sentido | Los accesorios de Bruno se ganan terminando islas. No hay cofres sorpresa ni nada que comprar |
-| Limpio | Sin anuncios, compras, cuentas ni internet. En Android no pide el permiso de internet. Todo lo guarda el dispositivo ([ADR 0005](adr/0005-un-regalo-sin-conexion.md)) |
+| Limpio | Sin anuncios, compras, cuentas ni internet. En Android no pide el permiso de internet. Todo lo guarda el dispositivo ([ADR 0005](adr/0005-un-regalo-sin-conexion.md)). El micrófono solo escucha mientras ella mantiene el botón, y su voz no se guarda ([ADR 0011](adr/0011-habla-con-bruno.md)) |
 
 ## Lo que trae y lo que falta
 
@@ -145,15 +153,14 @@ Salen de la [investigación §6](investigacion/investigacion.md#6-reglas-que-sal
 trazos y el mapa con dos islas. De las piezas comunes, el rincón de la calma, la misión para casa y la zona de mayores
 (sin foto ni voces). Y de M3: la isla de los colores, con sus globos y sus series; la de las formas, con la casa de
 Bruno; las letras M, P, L y S y los números hasta el 10 en las islas que ya había; y la isla de las emociones. Con
-eso está todo lo que la propuesta ponía en el mapa.
+eso está todo lo que la propuesta ponía en el mapa. De M2, «Habla con Bruno».
 
 **Falta**, de la propuesta 3 que eligió Fangusk. El orden y el alcance de cada pieza los decide él.
 
-- **Las voces de la familia**: que la tía, mamá o el abuelo graben lo que dice Bruno o el narrador. Pide el micrófono en
-  la zona de mayores. Hasta entonces suena una voz sintética provisional ([ADR 0004](adr/0004-voces-provisionales.md)).
-- **Habla con Bruno**: ella dice una palabra y Bruno la repite con voz graciosa y una palmada por sílaba (MA-RI-PO-SA).
 - **Más contenido**: el sonido inicial, más consonantes y lo que se quiera poner en la isla lejana.
-- **Su foto** y que la voz diga **su nombre**.
+- **Su foto**, en la zona de mayores.
+
+Las **voces de la familia** no se harán: «para M2 no vamos a utilizar las voces de la familia, seguiremos con las voces actuales» (Fangusk, 2026-11-03).
 
 ## Pantalla, dibujo, voz y sonido
 
@@ -162,7 +169,7 @@ eso está todo lo que la propuesta ponía en el mapa.
 - **Bruno y todo lo demás se dibujan con vectores**, sin imágenes: Bruno respira, parpadea, mira y cambia de cara (ocho
   bocas, cuatro ojos, tres posturas de brazos).
 - **Las voces** son las de un narrador y la de Bruno, algo más aguda y más despacio, a unas 4 sílabas por segundo. Hay
-  206 frases pregrabadas con la voz del sistema del Mac y **los efectos** (13) se sintetizan desde cero
+  257 frases pregrabadas con la voz del sistema del Mac y **los efectos** (14) se sintetizan desde cero
   ([ADR 0004](adr/0004-voces-provisionales.md)). Las frases están en [`voces/guion.tsv`](../voces/guion.tsv).
 - **La letra** de la zona de mayores, de los números y del banderín es Andika, una tipografía pensada para quien aprende a
   leer (licencia OFL, en [`licencias/`](../licencias/Andika-OFL.txt)).

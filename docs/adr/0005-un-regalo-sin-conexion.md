@@ -33,4 +33,5 @@ no hace falta publicarlo ([investigación §5](../investigacion/investigacion.md
 
 - **Si un día se publica** en la categoría de niños de las tiendas, hará falta una política de privacidad y la
   clasificación por edades. Lo demás (sin publicidad de terceros, sin ubicación, puerta para padres) ya se cumple.
-- **Las voces de la familia**, cuando lleguen, se graban y se quedan en el dispositivo.
+- **Lo que oye el micrófono** en «Habla con Bruno» suena una vez y se olvida: ni se guarda ni sale del dispositivo
+  ([ADR 0011](0011-habla-con-bruno.md)). Es el único permiso que pide el juego, y Android sigue sin pedir el de internet.

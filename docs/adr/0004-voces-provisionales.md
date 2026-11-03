@@ -1,8 +1,8 @@
-# ADR-0004 · Voces pregrabadas, provisionales con la voz del Mac, y efectos sintetizados
+# ADR-0004 · Voces pregrabadas con la voz del Mac, y efectos sintetizados
 
 | | |
 |---|---|
-| **Estado** | propuesta: la tomó el agente. Las voces de la familia son de la propuesta que eligió Fangusk, y cuándo llegan lo decide él. El narrador sigue con la Mónica básica hasta entonces: en el Mac no hay una Mónica mejorada, y de las opciones (una voz neuronal en el Mac, Jorge, una voz de estudio en la nube o dejarla) eligió «Dejarla como está» (Fangusk, 2026-11-03) |
+| **Estado** | propuesta en cómo se generan; aceptado quedarse con estas voces, sin las de la familia: «para M2 no vamos a utilizar las voces de la familia, seguiremos con las voces actuales» (Fangusk, 2026-11-03). El narrador sigue con la Mónica básica: en el Mac no hay una Mónica mejorada, y de las opciones (una voz neuronal en el Mac, Jorge, una voz de estudio en la nube o dejarla) eligió «Dejarla como está» (Fangusk, 2026-11-03) |
 | **Fecha** | 2026-11-02 · **Fase:** P0 · Borrador anticipado, sin ninguna puerta confirmada |
 | **Propone · decide** | agente (Claude Code, Opus 5.5) · Fangusk |
 | **Reversibilidad** | alta: cambiar una voz es cambiar su fichero WAV, con el mismo nombre |
@@ -18,7 +18,7 @@ ya una voz, en castellano de España y sin conexión.
 - **Todo lo que se dice está en un guion**, [`voces/guion.tsv`](../../voces/guion.tsv): 79 frases, cada una con su
   identificador, quién la dice (el narrador o Bruno) y su texto. El código las nombra en `audio/Voice.kt`, y una prueba
   comprueba que el guion y el código tienen las mismas frases y que cada una tiene su fichero.
-- **Provisionalmente las genera el Mac** con su voz de castellano de España, Mónica (`say`), a través de
+- **Las genera el Mac** con su voz de castellano de España, Mónica (`say`), a través de
   `python3 tools/voces.py`. La de Bruno se remuestrea ×1,2 para que suene más aguda, como un monstruo pequeño. Eso
   también la acelera, y Fangusk la oyó «demasiado rápido para un niño de 4 años» (2026-11-03). Por eso después se alarga
   un tercio sin cambiar el tono (`tools/despacio.swift`, con el AVAudioUnitTimePitch de Apple) y queda en unas 4 sílabas
@@ -41,6 +41,7 @@ ya una voz, en castellano de España y sin conexión.
 
 ## Consecuencias
 
-- **La voz suena a máquina** y no dice su nombre (R-02 de [riesgos](../harness/riesgos.md)). Se sustituye frase a frase
-  cuando la familia grabe la suya, sin tocar el código.
+- **La voz suena a máquina** y no dice su nombre (R-02 de [riesgos](../harness/riesgos.md)). Fangusk decidió quedarse
+  con ella y no hacer las voces de la familia. Si algún día se cambia una frase, se sustituye su fichero, sin tocar el
+  código.
 - La voz de Mónica es de Apple. Para un regalo no hay problema, pero si un día se publicara habría que cambiarla.

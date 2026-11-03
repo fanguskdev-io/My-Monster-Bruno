@@ -114,6 +114,30 @@ class RoundsTest {
     }
 
     @Test
+    fun talkingAsksForFourWordsSheHasSaidLeastTheFewestClapsFirst() {
+        repeat(200) { seed ->
+            val first = talkRounds(Random(seed))
+            assertEquals(TALK_ROUNDS, first.toSet().size)
+            assertEquals(first.sortedBy { it.syllables.size }, first, "de menos palmadas a más")
+            // With six words said once, the other four come first.
+            val said = TalkWord.entries.shuffled(Random(seed)).take(6)
+            val then = talkRounds(Random(seed), said.associate { it.word to 1 })
+            assertEquals((TalkWord.entries - said.toSet()).toSet(), then.toSet())
+        }
+    }
+
+    @Test
+    fun eachWordToTalkIsItsSyllablesFromOneClapToFour() {
+        assertEquals("mariposa", TalkWord.MARIPOSA.word)
+        assertEquals(listOf("ma", "ri", "po", "sa"), TalkWord.MARIPOSA.syllables)
+        assertEquals(setOf(1, 2, 3, 4), TalkWord.entries.map { it.syllables.size }.toSet())
+        for (word in TalkWord.entries) {
+            assertEquals(word.name.lowercase(), word.word, "su palabra son sus sílabas")
+            assertTrue(word.syllables.all { syllable -> syllable.any { it in "aeiou" } }, "una sílaba sin vocal en $word")
+        }
+    }
+
+    @Test
     fun everyLetterHasItsWord() {
         assertEquals(LETTERS, Word.entries.map { it.letter })
         assertEquals(Word.OSO, Word.of('o'))

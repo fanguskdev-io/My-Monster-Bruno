@@ -60,6 +60,25 @@ internal class Audio(private val player: SoundPlayer, private val scope: Corouti
         }
     }
 
+    /**
+     * Plays [voice], her own voice turned into Bruno's, once and as a voice line (ADR 0011): it cuts whatever was being
+     * said, it is not heard with the voice off, and it returns when it is over. The player forgets it after.
+     */
+    suspend fun echo(voice: Pcm) {
+        val mine = ++turn
+        val me = currentCoroutineContext()[Job]
+        if (background != me) background?.cancel()
+        cut()
+        if (!voiceOn) return
+        try {
+            speaking = ECHO
+            player.playOnce(ECHO, voice.toWav(), VOICE_VOLUME)
+            delay(voice.millis + GAP_MILLIS)
+        } finally {
+            if (turn == mine) cut()
+        }
+    }
+
     /** Says [lines] without waiting for them: the screen goes on while they are said. */
     fun speak(vararg lines: String) {
         background?.cancel()
@@ -97,6 +116,7 @@ internal class Audio(private val player: SoundPlayer, private val scope: Corouti
     private companion object {
         const val VOICES = "files/voces"
         const val SOUNDS = "files/sonidos"
+        const val ECHO = "su_voz"
         const val VOICE_VOLUME = 1f
         const val EFFECTS_VOLUME = 0.7f
         const val GAP_MILLIS = 250L

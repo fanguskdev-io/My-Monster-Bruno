@@ -20,6 +20,16 @@ interface SoundPlayer {
     fun stopAll()
 
     fun release()
+
+    /**
+     * Plays [wav], which was not loaded before, as [name]: her own voice in «Habla con Bruno» (ADR 0011). By default it is
+     * loaded and played at once, which does on iOS and on the desktop; Android loads in the background and plays it when
+     * it is ready.
+     */
+    fun playOnce(name: String, wav: ByteArray, volume: Float = 1f) {
+        load(name, wav)
+        play(name, volume)
+    }
 }
 
 /** The player of sounds of this platform. */

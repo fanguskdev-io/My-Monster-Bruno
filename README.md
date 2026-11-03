@@ -6,8 +6,9 @@ curso ha empezado el cole en España. La [página de diseño](docs/diseno.md) cu
 decisiones, y la [investigación](docs/investigacion/investigacion.md), de dónde sale.
 
 > En construcción: la primera versión (M1) se juega de principio a fin en Android e iOS, y Fangusk ya la está probando.
-> M3 está hecho: las islas de los colores, las formas y las emociones, y las letras M, P, L y S y los números hasta el 10. Lo que viene después (más islas, las voces de la familia y «Habla con Bruno»)
-> lo decide él ([proceso](docs/proceso.md)).
+> M3 está hecho: las islas de los colores, las formas y las emociones, y las letras M, P, L y S y los números hasta el 10.
+> M2 también: «Habla con Bruno», en el que ella le dice palabras con el micrófono y él las repite con su voz y las da en
+> palmadas. Lo que queda es la entrega en su iPhone ([proceso](docs/proceso.md)).
 
 ## Estructura
 
@@ -15,7 +16,7 @@ decisiones, y la [investigación](docs/investigacion/investigacion.md), de dónd
 shared/         el juego entero, común a Android, iOS y el escritorio (Kotlin Multiplatform + Compose Multiplatform)
   src/commonMain/kotlin/com/fanguskdev/mymonsterbruno/
     game/         reglas: Bruno, la partida guardada, los minutos del día, las rondas y el trazado
-    audio/        la voz y los efectos: qué se dice, cuándo y cómo
+    audio/        la voz, los efectos y el micrófono: qué se dice, cuándo y cómo
     storage/      lo que se guarda en el dispositivo y la fecha de hoy
     ui/           el escenario, el estado del juego, el dibujo (art/) y cada pantalla (screens/)
   src/commonMain/composeResources/   las voces, los efectos y la letra Andika
@@ -56,8 +57,8 @@ compilador, pruebas en la JVM, en Android y en el simulador de iOS, lint de Andr
 
 ## Las voces y los efectos
 
-Todo lo que se dice está en [`voces/guion.tsv`](voces/guion.tsv). Las voces son provisionales, con la voz del sistema del
-Mac, hasta que las grabe la familia ([ADR 0004](docs/adr/0004-voces-provisionales.md)):
+Todo lo que se dice está en [`voces/guion.tsv`](voces/guion.tsv). Las voces salen de la voz del sistema del Mac
+([ADR 0004](docs/adr/0004-voces-provisionales.md)):
 
 ```bash
 python3 tools/voces.py

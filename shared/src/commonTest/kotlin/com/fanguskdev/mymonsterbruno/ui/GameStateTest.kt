@@ -75,6 +75,18 @@ class GameStateTest {
     }
 
     @Test
+    fun talkingWithBrunoEndsInTheRoomAndThenToBed() {
+        val game = game(left = 1)
+        game.go(Scene.Talk)
+        repeat(30) { game.tick() }
+        assertEquals(Scene.Talk, game.scene, "no se va a dormir a mitad de una palabra")
+        game.back()
+        assertEquals(Scene.Home, game.scene)
+        game.tick()
+        assertEquals(Scene.Sleep, game.scene)
+    }
+
+    @Test
     fun openedAfterTheTimeBrunoIsAlreadyAsleep() {
         val game = game(left = 0)
         assertEquals(Scene.Sleep, game.scene)

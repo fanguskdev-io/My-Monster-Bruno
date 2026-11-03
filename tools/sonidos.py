@@ -148,6 +148,12 @@ def pop():
     return mezclar(tono(1000, 0.06, caida=60, final=700), ruido(0.03, 40, caida=120, suavizado=0.3), 0.0, 0.4)
 
 
+def palmada():
+    """Una palmada de Bruno en «Habla con Bruno»: un golpe de ruido con cuerpo y otro más flojo detrás, como dos manos."""
+    s = mezclar(ruido(0.09, 50, caida=45, suavizado=0.35), ruido(0.07, 51, caida=55, suavizado=0.45), 0.012, 0.6)
+    return mezclar(s, tono(1100, 0.05, caida=60), 0.0, 0.15)
+
+
 RECETAS = {
     "toque": toque,
     "crac": crac,
@@ -162,6 +168,7 @@ RECETAS = {
     "regalo": regalo,
     "fresa": fresa,
     "pop": pop,
+    "palmada": palmada,
 }
 
 

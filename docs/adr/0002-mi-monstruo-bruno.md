@@ -39,6 +39,8 @@ cuentos de (su nombre). La recomendada era la 3. Fangusk la eligió después de 
 
 ## Consecuencias
 
-- **Lo que falta de la propuesta** queda escrito en la [página de diseño](../diseno.md#lo-que-trae-la-primera-versión-y-lo-que-falta):
-  las voces de la familia, «Habla con Bruno», más islas, su foto y su nombre en la voz. El orden lo decide Fangusk.
+- **Lo que falta de la propuesta** queda escrito en la [página de diseño](../diseno.md#lo-que-trae-y-lo-que-falta):
+  su foto. «Habla con Bruno» ya está ([ADR 0011](0011-habla-con-bruno.md)); las voces de la familia, Fangusk decidió no
+  hacerlas ([ADR 0004](0004-voces-provisionales.md)).
+  El orden lo decide Fangusk.
 - **Se puede ampliar sin rehacer nada**: una isla nueva es una lista de actividades y su voz.

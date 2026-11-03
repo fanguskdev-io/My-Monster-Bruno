@@ -175,3 +175,32 @@ internal fun feelingRounds(random: Random): List<FeelingRound> =
     }
 
 internal const val FEELING_FACES = 3
+
+/**
+ * The words of «Habla con Bruno» (ADR 0011), cut in syllables the way they clap them in the classroom: from one clap to
+ * four. Each has its picture, and none has an accent, so its [word] names its files as it is.
+ */
+internal enum class TalkWord(val syllables: List<String>) {
+    SOL(listOf("sol")),
+    LUNA(listOf("lu", "na")),
+    OSO(listOf("o", "so")),
+    FRESA(listOf("fre", "sa")),
+    GLOBO(listOf("glo", "bo")),
+    PELOTA(listOf("pe", "lo", "ta")),
+    MANZANA(listOf("man", "za", "na")),
+    REGALO(listOf("re", "ga", "lo")),
+    MARIPOSA(listOf("ma", "ri", "po", "sa")),
+    ELEFANTE(listOf("e", "le", "fan", "te")),
+    ;
+
+    /** The word, as Bruno asks for it and the save counts it: «mariposa». */
+    val word: String get() = syllables.joinToString("")
+}
+
+/** The four words of a visit: the ones she has said least ([talked], by word), ties at random, the fewest claps first. */
+internal fun talkRounds(random: Random, talked: Map<String, Int> = emptyMap()): List<TalkWord> = TalkWord.entries.shuffled(random)
+    .sortedBy { talked[it.word] ?: 0 }
+    .take(TALK_ROUNDS)
+    .sortedBy { it.syllables.size }
+
+internal const val TALK_ROUNDS = 4

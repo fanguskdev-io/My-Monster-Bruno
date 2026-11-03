@@ -14,13 +14,14 @@ Qué se prueba en cada cambio y en cada hito, y cómo. Los criterios de salida d
 | Qué | Prueba | Dónde |
 |---|---|---|
 | Trazar: cada letra (vocales, M, P, L y S) se puede trazar entera, también con el dedo temblón; los trazos van en el orden del cole; un dedo lejos no empieza ni avanza; no se puede saltar al final de la O; levantar el dedo guarda lo hecho | `TracingTest` | Común |
-| Las rondas: Comeletras pide el primer día las vocales y después las letras menos dadas, con las consonantes; las fresas van del 1 al 5 y, cuando los ha contado, mezclan hasta el 10, nunca empezando por el más grande; se trazan las menos trazadas, las vocales primero; cada letra tiene su palabra; los globos piden cinco colores distintos con otros dos; las series son dos de dos colores y dos de tres, y su respuesta está entre las opciones; la casa se construye en orden y su pieza siempre está entre las tres; las emociones salen una vez cada una, la nana la última, y su carita está entre las tres | `RoundsTest` | Común |
+| Las rondas: Comeletras pide el primer día las vocales y después las letras menos dadas, con las consonantes; las fresas van del 1 al 5 y, cuando los ha contado, mezclan hasta el 10, nunca empezando por el más grande; se trazan las menos trazadas, las vocales primero; cada letra tiene su palabra; los globos piden cinco colores distintos con otros dos; las series son dos de dos colores y dos de tres, y su respuesta está entre las opciones; la casa se construye en orden y su pieza siempre está entre las tres; las emociones salen una vez cada una, la nana la última, y su carita está entre las tres; «Habla con Bruno» pide cuatro de las palabras que menos ha dicho, de menos palmadas a más, y cada palabra son sus sílabas, de una a cuatro | `RoundsTest` | Común |
 | Los minutos del día, el día nuevo y los minutos de más; la partida se guarda y se recupera, y una rota empieza de cero; lo que lleva Bruno y cuánto crece | `SessionTest` | Común |
-| Cuándo se va Bruno a dormir: enseguida en el cuarto y en el mapa, al terminar la isla dentro de una, dormido si se abre sin tiempo, y el huevo no cuenta | `GameStateTest` | Común |
+| Cuándo se va Bruno a dormir: enseguida en el cuarto y en el mapa, al terminar la isla dentro de una o «Habla con Bruno», dormido si se abre sin tiempo, y el huevo no cuenta | `GameStateTest` | Común |
 | Leer los WAV | `WavTest` | Común |
+| Lo que se hace con su voz antes de que Bruno la repita: sin el silencio de los bordes (y nada si solo hay silencio o un murmullo), a la altura de las voces del juego, más aguda y más rápida, en un canal y de vuelta a WAV | `MicrophoneTest` | Común |
 | El sonido del escritorio: la mezcla suma sin desbordarse, respeta el volumen y pasa todo a un canal a 22 050 Hz; y cortar una voz tras otra, como al contar fresas, no atasca su hilo | `DesktopSoundTest` | JVM |
 | Cada frase del juego tiene su fichero y dura lo que una frase; el guion y el código tienen las mismas frases; cada efecto tiene su fichero | `AudioFilesTest` | JVM |
-| Las catorce pantallas y, cuando ya sabe las vocales y del 1 al 5, Comeletras, los trazos y las fresas con lo nuevo, se dibujan en móvil (2,17:1) y en tableta (4:3) | `ScreenshotsTest` | JVM |
+| Las quince pantallas y, cuando ya sabe las vocales y del 1 al 5, Comeletras, los trazos y las fresas con lo nuevo, se dibujan en móvil (2,17:1) y en tableta (4:3) | `ScreenshotsTest` | JVM |
 | La salida de la zona de mayores: «Salir del juego» guarda la partida y cierra; sin salida en la plataforma, como en iOS, no hay botón | `GrownUpsExitTest` | JVM |
 | El icono de iOS es el de Android: lo dibuja del vector de `androidApp` en `shared/build/icono/` y lo compara con el del proyecto de Xcode; si cambia el de Android, se copia el nuevo | `AppIconTest` | JVM |
 
@@ -52,7 +53,14 @@ xcrun simctl launch booted com.fanguskdev.mymonsterbruno.MyMonsterBruno -silenci
 | Simulador iPad (A16), iOS 26.3 | 2360 × 1640 | El de cada prueba en iOS: la tableta, la proporción más cuadrada |
 | Simulador iPhone 17 Pro, iOS 26.5 | 2622 × 1206 | El iPhone; con este juego, todavía sin probar |
 
-Dónde jugará ella, con qué dispositivo, está por saber.
+Ella jugará en un iPhone 15 Pro (Fangusk, 2026-11-03).
+
+## El micrófono
+
+«Habla con Bruno» es lo único que usa el micrófono ([ADR 0011](adr/0011-habla-con-bruno.md)). Arrancado en silencio, el
+juego tampoco escucha: Bruno dice cada palabra él y da las palmadas, que es lo que se prueba en el emulador (que con
+`-no-audio` no tiene micrófono) y en el simulador. Con sonido, el simulador de iOS y el escritorio escuchan con el
+micrófono del Mac y lo repiten por sus altavoces, así que esa prueba la hace Fangusk, igual que la del iPhone de verdad.
 
 ## En cada hito
 
@@ -74,6 +82,19 @@ Dónde jugará ella, con qué dispositivo, está por saber.
   la voz y los efectos funcionan; volver a empezar devuelve a Bruno al huevo y conserva los ajustes. En Android y en el
   escritorio, «Salir del juego» lo cierra con la partida guardada; en iOS no aparece.
 - [ ] Todo se ve bien en un móvil y en una tableta, sin franjas.
+
+### M2 · Habla con Bruno
+
+- [ ] En el cuarto, el micrófono rosa lleva a «Habla con Bruno». La primera vez se pide el permiso del micrófono.
+- [ ] Bruno enseña el dibujo y pide la palabra («¡Dime luna!»); la primera vez, el narrador explica que hay que mantener
+  el dedo. Mientras se mantiene, el botón crece y echa ondas.
+- [ ] Al soltarlo, Bruno repite lo que ha oído con la voz de ella, más aguda. Luego da una palmada por sílaba diciéndola,
+  cada sílaba sale en su tarjeta y el narrador cuenta las palmadas.
+- [ ] Si no se dice nada, «¡No te oigo!» la primera vez; a la segunda, Bruno dice la palabra él. Sin permiso del
+  micrófono, la dice siempre él.
+- [ ] Son cuatro palabras, de menos palmadas a más; al acabar, Bruno da las gracias y vuelve al cuarto. La zona de
+  mayores cuenta las palabras dichas.
+- [ ] En el iPhone 15 Pro, su voz se oye por el altavoz grande y, al salir, el resto del juego suena como antes.
 
 ### M3 · La isla de los colores
 

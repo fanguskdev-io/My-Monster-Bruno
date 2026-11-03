@@ -18,7 +18,8 @@ class AudioFilesTest {
             val file = File(resources, "voces/$line.wav")
             assertTrue(file.exists(), "falta $file")
             val pcm = readWav(file.readBytes())
-            assertTrue(pcm != null && pcm.millis in 300..9000, "$file no es una voz que se pueda decir")
+            // The shortest are the syllables Bruno claps, «¡Po!», about a quarter of a second.
+            assertTrue(pcm != null && pcm.millis in 200..9000, "$file no es una voz que se pueda decir")
         }
     }
 

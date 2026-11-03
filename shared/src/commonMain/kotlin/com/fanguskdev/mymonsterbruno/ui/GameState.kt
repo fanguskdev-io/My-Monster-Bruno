@@ -42,6 +42,9 @@ internal sealed interface Scene {
 
     data object Calm : Scene
 
+    /** «Habla con Bruno», from the room (ADR 0011). */
+    data object Talk : Scene
+
     data object GrownUps : Scene
 }
 
@@ -131,7 +134,7 @@ internal class GameState(
     /** Back from wherever she is, one step towards the room. */
     fun back() {
         when (scene) {
-            Scene.Map, Scene.Calm, Scene.GrownUps -> go(if (data.hatched) Scene.Home else Scene.Hatch)
+            Scene.Map, Scene.Calm, Scene.Talk, Scene.GrownUps -> go(if (data.hatched) Scene.Home else Scene.Hatch)
             is Scene.Play, is Scene.Present -> go(if (timeUp) Scene.Sleep else Scene.Map)
             else -> Unit
         }

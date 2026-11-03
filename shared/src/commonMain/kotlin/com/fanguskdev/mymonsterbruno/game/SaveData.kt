@@ -29,6 +29,8 @@ data class SaveData(
     val houses: Int = 0,
     /** Times she knew how Bruno felt, by feeling (Feeling.word). */
     val feelings: Map<String, Int> = emptyMap(),
+    /** Words she said to Bruno and clapped with him, by word (TalkWord.word). Her voice itself is never kept. */
+    val talked: Map<String, Int> = emptyMap(),
     /** Times she finished each island, by its name. */
     val islands: Map<String, Int> = emptyMap(),
     val dailyMinutes: Int = DEFAULT_MINUTES,

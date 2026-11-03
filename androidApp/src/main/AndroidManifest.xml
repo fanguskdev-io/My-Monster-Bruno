@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Un regalo sin conexión (ADR 0005): sin permiso de internet. -->
+    <!-- «Habla con Bruno» (ADR 0011): oye la palabra que dice la niña para repetirla; la voz no se guarda ni sale del móvil. -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
     <application
         android:allowBackup="true"
         android:appCategory="game"

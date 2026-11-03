@@ -7,6 +7,7 @@ import com.fanguskdev.mymonsterbruno.game.Hue
 import com.fanguskdev.mymonsterbruno.game.LETTERS
 import com.fanguskdev.mymonsterbruno.game.MAX_COUNT
 import com.fanguskdev.mymonsterbruno.game.Shape
+import com.fanguskdev.mymonsterbruno.game.TalkWord
 
 /**
  * The voice lines, by the names of their files in `files/voces/`. What each one says is in voces/guion.tsv, where
@@ -62,6 +63,10 @@ internal object Voice {
     const val HOW_FEELS = "n_como_se_siente"
     const val THANKS_FEELINGS = "b_gracias_emociones"
     const val MISSION_FEELING = "n_mision_emocion"
+    const val TALK = "n_habla"
+    const val HOLD_MIC = "n_microfono"
+    const val CANT_HEAR = "b_no_te_oigo"
+    const val THANKS_WORDS = "b_gracias_palabras"
 
     /** «¡Quiero la a! La a de avión.» */
     fun want(vowel: Char) = "b_quiero_$vowel"
@@ -132,6 +137,18 @@ internal object Voice {
     /** «¡Gracias! Ya estoy mejor.» */
     fun helped(feeling: Feeling) = "b_gracias_${feeling.word}"
 
+    /** «¡Dime mariposa!» */
+    fun tellMe(word: TalkWord) = "b_dime_${word.word}"
+
+    /** «¡Mariposa!», when he says it himself: there is no microphone, or he could not hear her. */
+    fun word(word: TalkWord) = "b_palabra_${word.word}"
+
+    /** «¡Ma!», with a clap. */
+    fun syllable(syllable: String) = "b_silaba_$syllable"
+
+    /** «¡Cuatro palmadas!» */
+    fun claps(count: Int) = "n_palmadas_$count"
+
     /** Every line, to load them all when the game opens. */
     val ALL: List<String> = listOf(
         EGG, EGG_AGAIN, HELLO_I_AM_BRUNO, CHOOSE_COLOR, CHOOSE_TOP, GREEN_BUTTON, LOVE_IT, HANDSOME, HELLO, GO_TO_ISLAND,
@@ -139,7 +156,7 @@ internal object Voice {
         WELL_DONE, THANKS_STRAWBERRIES, PRESENT, THANKS_PRESENT, GROWING, YAWN, MISSION_LETTER, MISSION_COUNT,
         MISSION_COLOR, SEE_YOU_TOMORROW, ASLEEP, CALM_INTRO, CALM_LET_GO, CALM_AGAIN, CALM_END, TO_COLORS, LOVE_BALLOONS,
         THANKS_BALLOONS, LOOK_AT_THE_ROW, WHICH_NEXT, LOOK_AGAIN, THANKS_SERIES, TO_SHAPES, BUILD_HOUSE, THANKS_HOUSE,
-        MISSION_SHAPE, TO_FEELINGS, HOW_FEELS, THANKS_FEELINGS, MISSION_FEELING,
+        MISSION_SHAPE, TO_FEELINGS, HOW_FEELS, THANKS_FEELINGS, MISSION_FEELING, TALK, HOLD_MIC, CANT_HEAR, THANKS_WORDS,
     ) +
         LETTERS.flatMap { listOf(want(it), yum(it), thatIs(it), iWant(it), trace(it), traced(it)) } +
         (1..MAX_COUNT).flatMap { listOf(askCount(it), number(it), strawberries(it)) } +
@@ -147,7 +164,10 @@ internal object Voice {
         HousePart.entries.map { askPart(it) } +
         Shape.entries.flatMap { listOf(yes(it), thatShape(it), iWantShape(it)) } +
         Happening.entries.map { happened(it) } +
-        Feeling.entries.flatMap { listOf(feels(it), notThatFace(it), help(it), helped(it)) }
+        Feeling.entries.flatMap { listOf(feels(it), notThatFace(it), help(it), helped(it)) } +
+        TalkWord.entries.flatMap { listOf(tellMe(it), word(it)) } +
+        TalkWord.entries.flatMap { it.syllables }.distinct().map { syllable(it) } +
+        (1..TalkWord.entries.maxOf { it.syllables.size }).map { claps(it) }
 }
 
 /** The sound effects, by the names of their files in `files/sonidos/` (tools/sonidos.py makes them). */
@@ -165,4 +185,5 @@ internal enum class Sfx(val file: String) {
     PRESENT("regalo"),
     PICK("fresa"),
     POP("pop"),
+    CLAP("palmada"),
 }

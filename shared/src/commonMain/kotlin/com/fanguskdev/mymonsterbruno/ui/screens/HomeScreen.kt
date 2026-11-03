@@ -31,6 +31,7 @@ import com.fanguskdev.mymonsterbruno.ui.art.drawRoom
 import com.fanguskdev.mymonsterbruno.ui.art.drawRoundButton
 import com.fanguskdev.mymonsterbruno.ui.art.drawSparkles
 import com.fanguskdev.mymonsterbruno.ui.art.drawStar
+import com.fanguskdev.mymonsterbruno.ui.art.micIcon
 import com.fanguskdev.mymonsterbruno.ui.art.playIcon
 import com.fanguskdev.mymonsterbruno.ui.fill
 import com.fanguskdev.mymonsterbruno.ui.label
@@ -48,11 +49,12 @@ private val PLAY_BUTTON = Offset(680f, 290f)
 private const val PLAY_RADIUS = 68f
 private val CALM_BUTTON = Offset(82f, 318f)
 private const val CALM_RADIUS = 46f
+private val TALK_BUTTON = Offset(82f, 200f)
 
 /**
  * Bruno's room, where every game starts: Bruno says hello and waits, laughs if she tickles him, and the big green button
- * goes to the islands. The balloon is the calm corner, and the padlock, held a while, the grown-ups' corner. Her name, if
- * the grown-ups wrote it, hangs on the bunting.
+ * goes to the islands. The microphone is «Habla con Bruno», the balloon the calm corner, and the padlock, held a while,
+ * the grown-ups' corner. Her name, if the grown-ups wrote it, hangs on the bunting.
  */
 @Composable
 internal fun HomeScreen(game: GameState) {
@@ -86,6 +88,11 @@ internal fun HomeScreen(game: GameState) {
                         audio.sfx(Sfx.TAP)
                         audio.hush()
                         game.go(Scene.Calm)
+                    }
+                    hits(point, TALK_BUTTON, CALM_RADIUS) -> {
+                        audio.sfx(Sfx.TAP)
+                        audio.hush()
+                        game.go(Scene.Talk)
                     }
                     hits(point, lockButton(stage), LOCK_RADIUS) -> {
                         lockSince = now
@@ -135,6 +142,7 @@ internal fun HomeScreen(game: GameState) {
             drawBalloon(CALM_BUTTON + Offset(0f, -8f), 52f, Color(0xFF2E9E5B))
             line(Color(0xFF46526F), CALM_BUTTON + Offset(0f, 22f), CALM_BUTTON + Offset(0f, 34f), 2f)
         }
+        drawRoundButton(TALK_BUTTON, CALM_RADIUS, Color(0xFFE85A7A)) { micIcon(TALK_BUTTON, 40f) }
         drawGrownUpsLock(stage, t, lockSince)
     }
 }
