@@ -16,6 +16,7 @@ import androidx.compose.ui.text.rememberTextMeasurer
 import com.fanguskdev.mymonsterbruno.audio.Sfx
 import com.fanguskdev.mymonsterbruno.audio.Voice
 import com.fanguskdev.mymonsterbruno.game.BrunoLook
+import com.fanguskdev.mymonsterbruno.game.Feeling
 import com.fanguskdev.mymonsterbruno.game.Hue
 import com.fanguskdev.mymonsterbruno.game.Shape
 import com.fanguskdev.mymonsterbruno.ui.GameState
@@ -26,6 +27,7 @@ import com.fanguskdev.mymonsterbruno.ui.Touch
 import com.fanguskdev.mymonsterbruno.ui.andika
 import com.fanguskdev.mymonsterbruno.ui.art.Pose
 import com.fanguskdev.mymonsterbruno.ui.art.drawBruno
+import com.fanguskdev.mymonsterbruno.ui.art.drawFeelingFace
 import com.fanguskdev.mymonsterbruno.ui.art.drawSea
 import com.fanguskdev.mymonsterbruno.ui.art.drawShapePiece
 import com.fanguskdev.mymonsterbruno.ui.art.drawTiedBalloon
@@ -42,18 +44,19 @@ import com.fanguskdev.mymonsterbruno.ui.stroke
 import kotlinx.coroutines.launch
 import kotlin.math.sin
 
-private val VOWELS_ISLAND = Offset(250f, 250f)
-private val NUMBERS_ISLAND = Offset(560f, 168f)
-private const val ISLAND_RX = 120f
-private const val ISLAND_RY = 56f
-private val COLORS_ISLAND = Offset(668f, 314f)
-private val SHAPES_ISLAND = Offset(318f, 84f)
-private val FAR_ISLANDS = listOf(Offset(108f, 140f))
+private val VOWELS_ISLAND = Offset(262f, 258f)
+private val NUMBERS_ISLAND = Offset(588f, 150f)
+private const val ISLAND_RX = 110f
+private const val ISLAND_RY = 52f
+private val COLORS_ISLAND = Offset(674f, 318f)
+private val SHAPES_ISLAND = Offset(340f, 78f)
+private val FEELINGS_ISLAND = Offset(112f, 150f)
+private val FAR_ISLANDS = listOf(Offset(744f, 52f))
 private val BOAT = Offset(410f, 336f)
 
 /**
- * The map of the islands: the one of the vowels, the one of the numbers, the one of the colours and the one of the shapes,
- * and another far away in the mist that is not ready yet. A touch on an island says where they go and goes there; the flag says she has
+ * The map of the islands: the one of the letters, the one of the numbers, the one of the colours, the one of the shapes
+ * and the one of the feelings, and another far away in the mist, for what comes. A touch on an island says where they go and goes there; the flag says she has
  * finished it at least once.
  */
 @Composable
@@ -80,6 +83,7 @@ internal fun MapScreen(game: GameState) {
                     inIsland(point, NUMBERS_ISLAND) -> go(Island.NUMBERS, Voice.TO_NUMBERS)
                     inIsland(point, COLORS_ISLAND) -> go(Island.COLORS, Voice.TO_COLORS)
                     inIsland(point, SHAPES_ISLAND) -> go(Island.SHAPES, Voice.TO_SHAPES)
+                    inIsland(point, FEELINGS_ISLAND) -> go(Island.FEELINGS, Voice.TO_FEELINGS)
                     FAR_ISLANDS.any { hits(point, it, 50f) } -> audio.speak(Voice.TOO_FAR)
                     else -> return false
                 }
@@ -110,10 +114,13 @@ internal fun MapScreen(game: GameState) {
         drawIslandBalloons(COLORS_ISLAND, t)
         drawIsland(SHAPES_ISLAND, t)
         drawIslandShapes(SHAPES_ISLAND)
+        drawIsland(FEELINGS_ISLAND, t)
+        drawIslandFaces(FEELINGS_ISLAND)
         if ((game.data.islands[Island.VOWELS.name] ?: 0) > 0) drawFlag(VOWELS_ISLAND + Offset(92f, -34f))
         if ((game.data.islands[Island.NUMBERS.name] ?: 0) > 0) drawFlag(NUMBERS_ISLAND + Offset(92f, -34f))
         if ((game.data.islands[Island.COLORS.name] ?: 0) > 0) drawFlag(COLORS_ISLAND + Offset(92f, -34f))
-        if ((game.data.islands[Island.SHAPES.name] ?: 0) > 0) drawFlag(SHAPES_ISLAND + Offset(112f, -6f))
+        if ((game.data.islands[Island.SHAPES.name] ?: 0) > 0) drawFlag(SHAPES_ISLAND + Offset(102f, -4f))
+        if ((game.data.islands[Island.FEELINGS.name] ?: 0) > 0) drawFlag(FEELINGS_ISLAND + Offset(84f, -30f))
         drawBoat(game.data.look, BOAT + Offset(0f, 4f * sin(t * 1.5f)), t)
         drawHomeButton(stage)
     }
@@ -157,6 +164,13 @@ private fun DrawScope.drawRocks(
     }
 }
 
+/** The faces of the island of feelings, one of each, in a row on the grass. */
+private fun DrawScope.drawIslandFaces(center: Offset) {
+    Feeling.entries.forEachIndexed { i, feeling ->
+        drawFeelingFace(feeling, center + Offset(-64f + 32f * i, -12f + if (i % 2 == 0) 0f else 8f), 14f)
+    }
+}
+
 /** The pieces of the island of shapes, one of each, standing on the grass. */
 private fun DrawScope.drawIslandShapes(center: Offset) {
     Shape.entries.zip(listOf(Hue.RED, Hue.BLUE, Hue.YELLOW, Hue.GREEN)).forEachIndexed { i, (shape, hue) ->
@@ -188,8 +202,10 @@ private fun DrawScope.drawPath(t: Float) {
         quadraticTo(400f, 150f, NUMBERS_ISLAND.x - 90f, NUMBERS_ISLAND.y + 10f)
         moveTo(NUMBERS_ISLAND.x + 70f, NUMBERS_ISLAND.y + 48f)
         quadraticTo(720f, 230f, COLORS_ISLAND.x + 20f, COLORS_ISLAND.y - 62f)
-        moveTo(VOWELS_ISLAND.x - 20f, VOWELS_ISLAND.y - 64f)
-        quadraticTo(232f, 160f, SHAPES_ISLAND.x - 40f, SHAPES_ISLAND.y + 60f)
+        moveTo(VOWELS_ISLAND.x + 10f, VOWELS_ISLAND.y - 60f)
+        quadraticTo(290f, 170f, SHAPES_ISLAND.x - 30f, SHAPES_ISLAND.y + 56f)
+        moveTo(VOWELS_ISLAND.x - 90f, VOWELS_ISLAND.y - 36f)
+        quadraticTo(150f, 228f, FEELINGS_ISLAND.x + 30f, FEELINGS_ISLAND.y + 56f)
     }
     drawPath(
         dots,

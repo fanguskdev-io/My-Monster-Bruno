@@ -100,6 +100,20 @@ class RoundsTest {
     }
 
     @Test
+    fun theFeelingsComeEachOnceTheLullabyLastAndTheirFaceAmongTheThree() {
+        repeat(200) { seed ->
+            val rounds = feelingRounds(Random(seed))
+            assertEquals(Happening.entries.toSet(), rounds.map { it.happening }.toSet())
+            assertEquals(Happening.LULLABY, rounds.last().happening)
+            for (round in rounds) {
+                assertEquals(FEELING_FACES, round.faces.toSet().size, "caritas repetidas: $round")
+                assertEquals(1, round.faces.count { it == round.happening.feeling })
+            }
+        }
+        assertEquals(Feeling.entries.toSet(), Happening.entries.map { it.feeling }.toSet())
+    }
+
+    @Test
     fun everyLetterHasItsWord() {
         assertEquals(LETTERS, Word.entries.map { it.letter })
         assertEquals(Word.OSO, Word.of('o'))

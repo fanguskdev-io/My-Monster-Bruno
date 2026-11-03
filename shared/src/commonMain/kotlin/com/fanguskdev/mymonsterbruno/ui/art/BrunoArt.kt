@@ -6,6 +6,7 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.withTransform
+import androidx.compose.ui.graphics.lerp
 import com.fanguskdev.mymonsterbruno.game.Accessory
 import com.fanguskdev.mymonsterbruno.game.BrunoColor
 import com.fanguskdev.mymonsterbruno.game.BrunoLook
@@ -25,10 +26,10 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 /** Bruno's mouth: how he feels or what he is doing. */
-internal enum class Mouth { SMILE, GRIN, OPEN, MUNCH, WAVY, O, YAWN, SLEEP }
+internal enum class Mouth { SMILE, GRIN, OPEN, MUNCH, WAVY, O, YAWN, SLEEP, FROWN }
 
-/** Bruno's eyes. [OPEN] blinks now and then by itself. */
-internal enum class Eyes { OPEN, HAPPY, CLOSED, WIDE }
+/** Bruno's eyes. [OPEN] blinks now and then by itself; [SAD] and [ANGRY] have their eyebrows, and [SAD] a tear. */
+internal enum class Eyes { OPEN, HAPPY, CLOSED, WIDE, SAD, ANGRY }
 
 /** Bruno's arms. */
 internal enum class Arms { DOWN, UP, CLAP }
@@ -45,6 +46,14 @@ internal data class Pose(
 
 /** The colours of Bruno in each of the colours she can choose: body, arms and feet, belly. */
 internal class BrunoPalette(val body: Color, val dark: Color, val belly: Color)
+
+/** The colours of Bruno when he turns [color], as he does with each feeling (ADR 0010). */
+internal fun feelingPalette(color: Color): BrunoPalette =
+    BrunoPalette(color, lerp(color, Color.Black, 0.18f), lerp(color, Color.White, 0.55f))
+
+/** From this palette to [to], [t] of the way: Bruno turning a colour little by little. */
+internal fun BrunoPalette.towards(to: BrunoPalette, t: Float): BrunoPalette =
+    BrunoPalette(lerp(body, to.body, t), lerp(dark, to.dark, t), lerp(belly, to.belly, t))
 
 internal fun BrunoColor.palette(): BrunoPalette = when (this) {
     BrunoColor.MINT -> BrunoPalette(Color(0xFF4FD1B0), Color(0xFF3FBF9F), Color(0xFF9BEBD5))
@@ -70,7 +79,8 @@ internal val BRUNO_MOUTH = Offset(0f, 8f)
 
 /**
  * Draws Bruno with his [look] and [pose], his body centred on [center] and [height] units high on the stage (more if he
- * has grown). [time] blinks his eyes and moves him a little, so he is never still.
+ * has grown). [time] blinks his eyes and moves him a little, so he is never still. [palette], if given, colours him
+ * instead of his own colour: how he feels, on the island of feelings.
  */
 internal fun DrawScope.drawBruno(
     look: BrunoLook,
@@ -78,8 +88,8 @@ internal fun DrawScope.drawBruno(
     height: Float,
     pose: Pose,
     time: Float,
+    palette: BrunoPalette = look.color.palette(),
 ) {
-    val palette = look.color.palette()
     val k = height * look.size / BRUNO_UNITS
     val breathe = sin(time * 2.2f) * 0.012f
     withTransform({
@@ -197,6 +207,31 @@ private fun DrawScope.drawEyes(eyes: Eyes, lookX: Float, lookY: Float) {
                 3.2f,
             )
         }
+        Eyes.SAD, Eyes.ANGRY -> {
+            val sad = eyes == Eyes.SAD
+            val look = Offset(lookX * 3f, if (sad) 4f else 1f)
+            for (eye in listOf(left, right)) {
+                circle(Ink.white, eye, 12f)
+                circle(Ink.dark, eye + look, 5f)
+                circle(Ink.white, eye + look + Offset(2f, -2.5f), 1.6f)
+            }
+            // The eyebrows: their inner ends up when sad, down when angry.
+            val inner = if (sad) -33f else -24f
+            val outer = if (sad) -27f else -33f
+            line(Ink.dark, Offset(-24f, outer), Offset(-8f, inner), 3.5f)
+            line(Ink.dark, Offset(24f, outer), Offset(8f, inner), 3.5f)
+            if (sad) {
+                fill(
+                    path {
+                        moveTo(-22f, -2f)
+                        quadraticTo(-27f, 6f, -22f, 9f)
+                        quadraticTo(-17f, 6f, -22f, -2f)
+                        close()
+                    },
+                    Color(0xFF8FD0FF),
+                )
+            }
+        }
     }
 }
 
@@ -254,6 +289,14 @@ private fun DrawScope.drawMouth(mouth: Mouth, time: Float) {
             },
             Ink.dark,
             2.5f,
+        )
+        Mouth.FROWN -> stroke(
+            path {
+                moveTo(-11f, 13f)
+                quadraticTo(0f, 3f, 11f, 13f)
+            },
+            Ink.dark,
+            3f,
         )
     }
 }

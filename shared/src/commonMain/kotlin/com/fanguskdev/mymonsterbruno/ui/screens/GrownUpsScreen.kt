@@ -39,6 +39,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.fanguskdev.mymonsterbruno.game.Feeling
 import com.fanguskdev.mymonsterbruno.game.Hue
 import com.fanguskdev.mymonsterbruno.game.LETTERS
 import com.fanguskdev.mymonsterbruno.game.MAX_COUNT
@@ -152,6 +153,8 @@ internal fun GrownUpsScreen(game: GameState, onExit: (() -> Unit)? = null) {
                 val shapes = Shape.entries.joinToString("   ") { "${it.spoken} ${data.shapes[it.word] ?: 0}" }
                 Text("Piezas de la casa bien puestas, por forma:   $shapes", font, 16)
                 Text("Casas construidas: ${data.houses}.", font, 16)
+                val feelings = Feeling.entries.joinToString("   ") { "${it.spoken} ${data.feelings[it.word] ?: 0}" }
+                Text("Emociones que ha reconocido:   $feelings", font, 16)
                 Text("Islas terminadas: ${data.islandsDone}. Regalos de Bruno: ${data.look.accessories.size} de 6.", font, 16)
             }
             Section("Bruno", font) {
@@ -235,6 +238,15 @@ private fun Chip(
             ),
         )
     }
+}
+
+/** The name of a [Feeling] as a grown-up reads it. */
+private val Feeling.spoken: String get() = when (this) {
+    Feeling.JOY -> "alegría"
+    Feeling.SADNESS -> "tristeza"
+    Feeling.ANGER -> "enfado"
+    Feeling.FEAR -> "miedo"
+    Feeling.CALM -> "calma"
 }
 
 /** The name of [Shape] as a grown-up reads it, with its accent. */

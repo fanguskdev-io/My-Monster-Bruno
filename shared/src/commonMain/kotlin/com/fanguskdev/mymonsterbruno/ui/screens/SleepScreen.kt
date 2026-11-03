@@ -54,6 +54,7 @@ private enum class Mission(val line: String) {
     COUNT(Voice.MISSION_COUNT),
     COLOR(Voice.MISSION_COLOR),
     SHAPE(Voice.MISSION_SHAPE),
+    FEELING(Voice.MISSION_FEELING),
 }
 
 /**
@@ -73,6 +74,7 @@ internal fun SleepScreen(game: GameState) {
             Island.VOWELS -> Mission.LETTER
             Island.NUMBERS -> Mission.COUNT
             Island.SHAPES -> Mission.SHAPE
+            Island.FEELINGS -> Mission.FEELING
             Island.COLORS, null -> Mission.COLOR
         }
     }
@@ -192,6 +194,20 @@ private fun DrawScope.drawMissionCard(mission: Mission, measurer: TextMeasurer, 
         Mission.SHAPE -> {
             circle(Color(0xFF2E9E5B), what, 34f)
             ring(Color.White, what, 17f, 6f)
+        }
+        Mission.FEELING -> {
+            circle(Color(0xFFFF6F91), what, 34f)
+            circle(Color.White, what + Offset(-7f, -4f), 8f)
+            circle(Color.White, what + Offset(7f, -4f), 8f)
+            fill(
+                path {
+                    moveTo(what.x - 15f, what.y)
+                    lineTo(what.x + 15f, what.y)
+                    lineTo(what.x, what.y + 17f)
+                    close()
+                },
+                Color.White,
+            )
         }
     }
 }

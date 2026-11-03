@@ -24,6 +24,7 @@ import com.fanguskdev.mymonsterbruno.ui.screens.BalloonScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.CalmScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.CountScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.FeedScreen
+import com.fanguskdev.mymonsterbruno.ui.screens.FeelingsScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.GrownUpsScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.HatchScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.HomeScreen
@@ -87,6 +88,7 @@ internal fun AppContent(game: GameState, onExit: (() -> Unit)? = null) {
                 Step.BALLOONS -> BalloonScreen(game) { game.finished(scene) }
                 Step.SERIES -> SeriesScreen(game) { game.finished(scene) }
                 Step.HOUSE -> HouseScreen(game) { game.finished(scene) }
+                Step.FEELINGS -> FeelingsScreen(game) { game.finished(scene) }
             }
             is Scene.Present -> PresentScreen(game, scene.island) { game.presentGiven(scene.island) }
             Scene.Sleep -> SleepScreen(game)

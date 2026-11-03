@@ -176,3 +176,32 @@ b_fresas_9	bruno	¡Ñam! ¡Nueve fresas!
 n_contar_10	narrador	Bruno quiere diez fresas. ¿Se las das?
 n_num_10	narrador	Diez.
 b_fresas_10	bruno	¡Ñam! ¡Diez fresas!
+n_isla_emociones	narrador	¡A la isla de las emociones!
+n_como_se_siente	narrador	¿Cómo se siente Bruno?
+b_gracias_emociones	bruno	¡Gracias por cuidarme! ¡Ya sé cómo me siento!
+n_mision_emocion	narrador	Misión para casa: cuéntale a tu familia cómo te has sentido hoy.
+n_pasa_cumple	narrador	¡Es el cumpleaños de Bruno!
+n_pasa_helado	narrador	¡Oh, no! A Bruno se le ha caído el helado.
+n_pasa_torre	narrador	¡Oh, no! Se ha caído la torre de Bruno.
+n_pasa_tormenta	narrador	¡Hay tormenta! ¡Truena muy fuerte!
+n_pasa_nana	narrador	Bruno escucha una nana muy bonita.
+n_esta_alegria	narrador	¡Sí! Bruno está contento.
+n_esta_tristeza	narrador	¡Sí! Bruno está triste.
+n_esta_enfado	narrador	¡Sí! Bruno está enfadado.
+n_esta_miedo	narrador	¡Sí! Bruno tiene miedo.
+n_esta_calma	narrador	¡Sí! Bruno está tranquilo.
+n_cara_alegria	narrador	Esa carita está contenta. Mira bien a Bruno.
+n_cara_tristeza	narrador	Esa carita está triste. Mira bien a Bruno.
+n_cara_enfado	narrador	Esa carita está enfadada. Mira bien a Bruno.
+n_cara_miedo	narrador	Esa carita tiene miedo. Mira bien a Bruno.
+n_cara_calma	narrador	Esa carita está tranquila. Mira bien a Bruno.
+n_ayuda_alegria	narrador	¡Vamos a celebrarlo! Toca a Bruno para aplaudir.
+n_ayuda_tristeza	narrador	¿Le das un abrazo? Toca a Bruno.
+n_ayuda_enfado	narrador	Vamos a respirar juntos. Mantén el dedo sobre Bruno.
+n_ayuda_miedo	narrador	Enciende la luz. Toca la lámpara.
+n_ayuda_calma	narrador	Acaricia a Bruno, despacito. Tócale.
+b_gracias_alegria	bruno	¡Bien! ¡Qué cumpleaños tan bonito!
+b_gracias_tristeza	bruno	¡Gracias! Ya estoy mejor.
+b_gracias_enfado	bruno	Uf... Ya estoy más tranquilo.
+b_gracias_miedo	bruno	¡Ya no tengo miedo! ¡Gracias!
+b_gracias_calma	bruno	¡Qué gustito!

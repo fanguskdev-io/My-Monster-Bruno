@@ -14,13 +14,13 @@ Qué se prueba en cada cambio y en cada hito, y cómo. Los criterios de salida d
 | Qué | Prueba | Dónde |
 |---|---|---|
 | Trazar: cada letra (vocales, M, P, L y S) se puede trazar entera, también con el dedo temblón; los trazos van en el orden del cole; un dedo lejos no empieza ni avanza; no se puede saltar al final de la O; levantar el dedo guarda lo hecho | `TracingTest` | Común |
-| Las rondas: Comeletras pide el primer día las vocales y después las letras menos dadas, con las consonantes; las fresas van del 1 al 5 y, cuando los ha contado, mezclan hasta el 10, nunca empezando por el más grande; se trazan las menos trazadas, las vocales primero; cada letra tiene su palabra; los globos piden cinco colores distintos con otros dos; las series son dos de dos colores y dos de tres, y su respuesta está entre las opciones; la casa se construye en orden y su pieza siempre está entre las tres | `RoundsTest` | Común |
+| Las rondas: Comeletras pide el primer día las vocales y después las letras menos dadas, con las consonantes; las fresas van del 1 al 5 y, cuando los ha contado, mezclan hasta el 10, nunca empezando por el más grande; se trazan las menos trazadas, las vocales primero; cada letra tiene su palabra; los globos piden cinco colores distintos con otros dos; las series son dos de dos colores y dos de tres, y su respuesta está entre las opciones; la casa se construye en orden y su pieza siempre está entre las tres; las emociones salen una vez cada una, la nana la última, y su carita está entre las tres | `RoundsTest` | Común |
 | Los minutos del día, el día nuevo y los minutos de más; la partida se guarda y se recupera, y una rota empieza de cero; lo que lleva Bruno y cuánto crece | `SessionTest` | Común |
 | Cuándo se va Bruno a dormir: enseguida en el cuarto y en el mapa, al terminar la isla dentro de una, dormido si se abre sin tiempo, y el huevo no cuenta | `GameStateTest` | Común |
 | Leer los WAV | `WavTest` | Común |
 | El sonido del escritorio: la mezcla suma sin desbordarse, respeta el volumen y pasa todo a un canal a 22 050 Hz; y cortar una voz tras otra, como al contar fresas, no atasca su hilo | `DesktopSoundTest` | JVM |
 | Cada frase del juego tiene su fichero y dura lo que una frase; el guion y el código tienen las mismas frases; cada efecto tiene su fichero | `AudioFilesTest` | JVM |
-| Las trece pantallas y, cuando ya sabe las vocales y del 1 al 5, Comeletras, los trazos y las fresas con lo nuevo, se dibujan en móvil (2,17:1) y en tableta (4:3) | `ScreenshotsTest` | JVM |
+| Las catorce pantallas y, cuando ya sabe las vocales y del 1 al 5, Comeletras, los trazos y las fresas con lo nuevo, se dibujan en móvil (2,17:1) y en tableta (4:3) | `ScreenshotsTest` | JVM |
 | La salida de la zona de mayores: «Salir del juego» guarda la partida y cierra; sin salida en la plataforma, como en iOS, no hay botón | `GrownUpsExitTest` | JVM |
 | El icono de iOS es el de Android: lo dibuja del vector de `androidApp` en `shared/build/icono/` y lo compara con el del proyecto de Xcode; si cambia el de Android, se copia el nuevo | `AppIconTest` | JVM |
 
@@ -98,3 +98,13 @@ Dónde jugará ella, con qué dispositivo, está por saber.
 - [ ] Las consonantes se trazan en el orden del cole y se pueden acabar.
 - [ ] Cuando ha contado del 1 al 5, las fresas mezclan números hasta el 10; la tarjeta enseña dos manos y los puntos en
   dos filas, y en el plato caben diez.
+
+### M3 · La isla de las emociones
+
+- [ ] En el mapa, la isla de las emociones lleva a su juego; el camino de puntos llega hasta ella.
+- [ ] A Bruno le pasa algo, se ve en su bocadillo y se pone del color de cómo se siente; la carita buena hace que el
+  narrador diga la emoción, y otra, que describa esa carita y vuelva a preguntar.
+- [ ] Cada ayuda funciona: aplaudir, el abrazo con corazones, respirar manteniendo el dedo (si se suelta antes, vuelve a
+  empezar), la lámpara que enciende la luz y la caricia. Bruno vuelve a su color.
+- [ ] Son cinco, la nana la última; al terminar, regalo, bandera, la misión de contar cómo se ha sentido y, en la zona
+  de mayores, las emociones reconocidas.

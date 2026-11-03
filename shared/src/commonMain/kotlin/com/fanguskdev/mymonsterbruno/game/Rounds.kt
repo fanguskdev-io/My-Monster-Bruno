@@ -145,3 +145,33 @@ internal fun houseRounds(random: Random): List<HouseRound> = HousePart.entries.m
 }
 
 internal const val HOUSE_PIECES = 3
+
+/** How Bruno feels on the island of feelings (ADR 0010), with the word of its files. */
+internal enum class Feeling(val word: String) {
+    JOY("alegria"),
+    SADNESS("tristeza"),
+    ANGER("enfado"),
+    FEAR("miedo"),
+    CALM("calma"),
+}
+
+/** What happens to Bruno, and how it makes him feel. */
+internal enum class Happening(val feeling: Feeling, val word: String) {
+    BIRTHDAY(Feeling.JOY, "cumple"),
+    ICE_CREAM(Feeling.SADNESS, "helado"),
+    TOWER(Feeling.ANGER, "torre"),
+    STORM(Feeling.FEAR, "tormenta"),
+    LULLABY(Feeling.CALM, "nana"),
+}
+
+/** A round of the feelings: what happens to Bruno, and three faces to say how he feels, one of them right. */
+internal data class FeelingRound(val happening: Happening, val faces: List<Feeling>)
+
+/** The five things that happen to Bruno, in any order but the lullaby last, so the island ends calm. */
+internal fun feelingRounds(random: Random): List<FeelingRound> =
+    ((Happening.entries - Happening.LULLABY).shuffled(random) + Happening.LULLABY).map { happening ->
+        val others = (Feeling.entries - happening.feeling).shuffled(random).take(FEELING_FACES - 1)
+        FeelingRound(happening, (others + happening.feeling).shuffled(random))
+    }
+
+internal const val FEELING_FACES = 3

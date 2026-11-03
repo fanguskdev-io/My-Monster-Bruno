@@ -40,7 +40,8 @@ triángulo, un círculo y un rectángulo a su hueco, y Bruno dice el nombre de c
 ([ADR 0008](adr/0008-la-isla-de-las-formas.md)). Y al ver que no había botón para salir: «Sí, añádelo», en la zona de
 mayores. Después, otra vez «Continúa», y ampliar las islas que ya había: «consonantes (M, P, L, S) con su palabra en
 Comeletras y en los trazos, junto a las vocales», y «fresas hasta el 10, con las dos manos en la tarjeta»
-([ADR 0009](adr/0009-mas-letras-y-numeros-hasta-el-diez.md)). Para seguir eligió «Más islas primero» y, entre las que le propuso el agente, «Colores»: «Bruno
+([ADR 0009](adr/0009-mas-letras-y-numeros-hasta-el-diez.md)). Y por último la isla de las emociones, tal como se la
+propuso el agente: «Así» ([ADR 0010](adr/0010-la-isla-de-las-emociones.md)). Para seguir eligió «Más islas primero» y, entre las que le propuso el agente, «Colores»: «Bruno
 pide un color (“¡Quiero el globo rojo!”) y después series: rojo, azul, rojo… ¿cuál va ahora?»
 ([ADR 0007](adr/0007-la-isla-de-los-colores.md)).
 
@@ -64,8 +65,9 @@ La propuesta 3, tal como la leyó (en la [maqueta](investigacion/propuestas.html
 2. **El cuarto de Bruno**, la casa. Bruno la saluda y la invita a la isla. Si le toca, se ríe con cosquillas. El botón
    grande lleva al mapa y el globo, al rincón de la calma. Arriba cuelga un banderín con su nombre, si los mayores lo han
    escrito, o con estrellas.
-3. **El mapa**. Bruno va en su barca. Hay cuatro islas con algo que hacer: la de las letras, la de los números, la de los
-   colores y la de las formas. La que queda está «muy lejos. ¡Pronto iremos!». Una isla terminada lleva su bandera.
+3. **El mapa**. Bruno va en su barca. Hay cinco islas con algo que hacer: la de las letras, la de los números, la de los
+   colores, la de las formas y la de las emociones. Una más, arriba a la derecha, está «muy lejos. ¡Pronto iremos!»: es
+   para lo que venga. Una isla terminada lleva su bandera.
 4. **La isla de las letras**, las vocales y la M, la P, la L y la S
    ([ADR 0009](adr/0009-mas-letras-y-numeros-hasta-el-diez.md)):
    - **Comeletras**. «¡Tengo hambre de letras!». Bruno pide una vocal con su palabra («¡Quiero la a! La a de avión») y en
@@ -92,13 +94,18 @@ La propuesta 3, tal como la leyó (en la [maqueta](investigacion/propuestas.html
    pieza por su papel y su forma, «¡Ahora, el tejado! Dame el triángulo», y su hueco brilla en la casa. Ella le da una de
    las tres piezas arrastrándola al hueco o tocándola. La buena crece hasta su sitio y Bruno la nombra. Si no es, dice qué
    forma es y la vuelve a pedir. Son seis piezas: las paredes, el tejado, la puerta, dos ventanas y la chimenea.
-8. **Bruno crece**. Al terminar una isla hay un regalo. Con un toque se abre la caja y un accesorio vuela hasta Bruno, que
+8. **La isla de las emociones** ([ADR 0010](adr/0010-la-isla-de-las-emociones.md)). A Bruno le pasa algo («¡Oh, no! A
+   Bruno se le ha caído el helado») y se pone del color de cómo se siente: alegría amarillo, tristeza azul, enfado rojo,
+   miedo morado y calma verde. «¿Cómo se siente Bruno?»: ella elige entre tres caritas, y el narrador dice la emoción.
+   Después le ayuda: aplaudir, un abrazo, respirar juntos manteniendo el dedo, encender la lámpara o acariciarle. Son
+   cinco cosas, y la nana va la última.
+9. **Bruno crece**. Al terminar una isla hay un regalo. Con un toque se abre la caja y un accesorio vuela hasta Bruno, que
    ya lo lleva siempre: gorro, gafas, pajarita, flores, bufanda y corona. Cada dos islas, además, crece un poco, hasta tres
    veces. Con los seis accesorios, la caja trae chispas y un gracias.
-9. **A dormir**. Cuando se acaban los minutos del día, Bruno se va a dormir en cuanto ella termina lo que está haciendo,
+10. **A dormir**. Cuando se acaban los minutos del día, Bruno se va a dormir en cuanto ella termina lo que está haciendo,
    nunca a medias: enseguida si están en el cuarto o en el mapa, y al terminar la isla, con su regalo, si están en una.
    Bosteza, le da una **misión para casa** que va con lo que han hecho (buscar algo que empiece por la a, contar las sillas
-   de la cocina, buscar algo amarillo o algo redondo) y le dice «¡Hasta mañana!». Si se abre otra vez ese día, Bruno sigue dormido:
+   de la cocina, buscar algo amarillo o algo redondo, contar cómo se ha sentido) y le dice «¡Hasta mañana!». Si se abre otra vez ese día, Bruno sigue dormido:
    «Huum... Mañana jugamos más».
 
 Fuera del camino:
@@ -137,15 +144,15 @@ Salen de la [investigación §6](investigacion/investigacion.md#6-reglas-que-sal
 **Trae** lo que la propuesta pide a la primera versión: el nacimiento, Comeletras con las vocales, contar hasta 5, los
 trazos y el mapa con dos islas. De las piezas comunes, el rincón de la calma, la misión para casa y la zona de mayores
 (sin foto ni voces). Y de M3: la isla de los colores, con sus globos y sus series; la de las formas, con la casa de
-Bruno; y las letras M, P, L y S y los números hasta el 10 en las islas que ya había.
+Bruno; las letras M, P, L y S y los números hasta el 10 en las islas que ya había; y la isla de las emociones. Con
+eso está todo lo que la propuesta ponía en el mapa.
 
 **Falta**, de la propuesta 3 que eligió Fangusk. El orden y el alcance de cada pieza los decide él.
 
 - **Las voces de la familia**: que la tía, mamá o el abuelo graben lo que dice Bruno o el narrador. Pide el micrófono en
   la zona de mayores. Hasta entonces suena una voz sintética provisional ([ADR 0004](adr/0004-voces-provisionales.md)).
 - **Habla con Bruno**: ella dice una palabra y Bruno la repite con voz graciosa y una palmada por sílaba (MA-RI-PO-SA).
-- **Más islas**: el sonido inicial, más consonantes y las emociones, con Bruno cambiando de color según cómo se
-  siente.
+- **Más contenido**: el sonido inicial, más consonantes y lo que se quiera poner en la isla lejana.
 - **Su foto** y que la voz diga **su nombre**.
 
 ## Pantalla, dibujo, voz y sonido
@@ -155,7 +162,7 @@ Bruno; y las letras M, P, L y S y los números hasta el 10 en las islas que ya h
 - **Bruno y todo lo demás se dibujan con vectores**, sin imágenes: Bruno respira, parpadea, mira y cambia de cara (ocho
   bocas, cuatro ojos, tres posturas de brazos).
 - **Las voces** son las de un narrador y la de Bruno, algo más aguda y más despacio, a unas 4 sílabas por segundo. Hay
-  177 frases pregrabadas con la voz del sistema del Mac y **los efectos** (13) se sintetizan desde cero
+  206 frases pregrabadas con la voz del sistema del Mac y **los efectos** (13) se sintetizan desde cero
   ([ADR 0004](adr/0004-voces-provisionales.md)). Las frases están en [`voces/guion.tsv`](../voces/guion.tsv).
 - **La letra** de la zona de mayores, de los números y del banderín es Andika, una tipografía pensada para quien aprende a
   leer (licencia OFL, en [`licencias/`](../licencias/Andika-OFL.txt)).

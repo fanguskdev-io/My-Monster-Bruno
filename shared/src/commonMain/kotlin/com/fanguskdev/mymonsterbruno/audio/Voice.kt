@@ -1,5 +1,7 @@
 package com.fanguskdev.mymonsterbruno.audio
 
+import com.fanguskdev.mymonsterbruno.game.Feeling
+import com.fanguskdev.mymonsterbruno.game.Happening
 import com.fanguskdev.mymonsterbruno.game.HousePart
 import com.fanguskdev.mymonsterbruno.game.Hue
 import com.fanguskdev.mymonsterbruno.game.LETTERS
@@ -56,6 +58,10 @@ internal object Voice {
     const val BUILD_HOUSE = "n_casa"
     const val THANKS_HOUSE = "b_gracias_casa"
     const val MISSION_SHAPE = "n_mision_forma"
+    const val TO_FEELINGS = "n_isla_emociones"
+    const val HOW_FEELS = "n_como_se_siente"
+    const val THANKS_FEELINGS = "b_gracias_emociones"
+    const val MISSION_FEELING = "n_mision_emocion"
 
     /** «¡Quiero la a! La a de avión.» */
     fun want(vowel: Char) = "b_quiero_$vowel"
@@ -111,6 +117,21 @@ internal object Voice {
     /** «¡Yo quiero el triángulo!» */
     fun iWantShape(shape: Shape) = "b_yo_quiero_${shape.word}"
 
+    /** «¡Oh, no! A Bruno se le ha caído el helado.» */
+    fun happened(happening: Happening) = "n_pasa_${happening.word}"
+
+    /** «¡Sí! Bruno está triste.» */
+    fun feels(feeling: Feeling) = "n_esta_${feeling.word}"
+
+    /** «Esa carita está contenta. Mira bien a Bruno.» */
+    fun notThatFace(feeling: Feeling) = "n_cara_${feeling.word}"
+
+    /** «¿Le das un abrazo? Toca a Bruno.» */
+    fun help(feeling: Feeling) = "n_ayuda_${feeling.word}"
+
+    /** «¡Gracias! Ya estoy mejor.» */
+    fun helped(feeling: Feeling) = "b_gracias_${feeling.word}"
+
     /** Every line, to load them all when the game opens. */
     val ALL: List<String> = listOf(
         EGG, EGG_AGAIN, HELLO_I_AM_BRUNO, CHOOSE_COLOR, CHOOSE_TOP, GREEN_BUTTON, LOVE_IT, HANDSOME, HELLO, GO_TO_ISLAND,
@@ -118,13 +139,15 @@ internal object Voice {
         WELL_DONE, THANKS_STRAWBERRIES, PRESENT, THANKS_PRESENT, GROWING, YAWN, MISSION_LETTER, MISSION_COUNT,
         MISSION_COLOR, SEE_YOU_TOMORROW, ASLEEP, CALM_INTRO, CALM_LET_GO, CALM_AGAIN, CALM_END, TO_COLORS, LOVE_BALLOONS,
         THANKS_BALLOONS, LOOK_AT_THE_ROW, WHICH_NEXT, LOOK_AGAIN, THANKS_SERIES, TO_SHAPES, BUILD_HOUSE, THANKS_HOUSE,
-        MISSION_SHAPE,
+        MISSION_SHAPE, TO_FEELINGS, HOW_FEELS, THANKS_FEELINGS, MISSION_FEELING,
     ) +
         LETTERS.flatMap { listOf(want(it), yum(it), thatIs(it), iWant(it), trace(it), traced(it)) } +
         (1..MAX_COUNT).flatMap { listOf(askCount(it), number(it), strawberries(it)) } +
         Hue.entries.flatMap { listOf(wantBalloon(it), yes(it), thatColor(it), iWantBalloon(it), color(it)) } +
         HousePart.entries.map { askPart(it) } +
-        Shape.entries.flatMap { listOf(yes(it), thatShape(it), iWantShape(it)) }
+        Shape.entries.flatMap { listOf(yes(it), thatShape(it), iWantShape(it)) } +
+        Happening.entries.map { happened(it) } +
+        Feeling.entries.flatMap { listOf(feels(it), notThatFace(it), help(it), helped(it)) }
 }
 
 /** The sound effects, by the names of their files in `files/sonidos/` (tools/sonidos.py makes them). */
