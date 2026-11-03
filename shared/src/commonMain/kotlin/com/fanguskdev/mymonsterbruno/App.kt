@@ -38,14 +38,16 @@ import com.fanguskdev.mymonsterbruno.ui.Activity as Step
 
 /**
  * Mi monstruo Bruno (docs/diseno.md): the game, the same on Android, iOS and the desktop. What it remembers goes to
- * [store]; [sound] false keeps it silent (the tests, and trying it on the emulator without the Mac's speakers).
+ * [store]; [sound] false keeps it silent (the tests, and trying it on the emulator without the Mac's speakers). [onExit]
+ * closes the game from the grown-ups' corner where the platform allows it: Android and the desktop; not iOS, where Apple
+ * wants apps to be left with the system's gesture, never closed by themselves.
  */
 @Composable
-fun App(store: KeyValueStore, sound: Boolean = true) {
+fun App(store: KeyValueStore, sound: Boolean = true, onExit: (() -> Unit)? = null) {
     val scope = rememberCoroutineScope()
     val audio = remember { Audio(if (sound) soundPlayer() else SilentPlayer(), scope) }
     val game = remember { GameState(store, audio) }
-    AppContent(game)
+    AppContent(game, onExit)
 
     LaunchedEffect(Unit) { audio.load() }
     DisposableEffect(Unit) { onDispose { audio.release() } }
@@ -66,9 +68,9 @@ fun App(store: KeyValueStore, sound: Boolean = true) {
     }
 }
 
-/** The screen of [game]'s scene. */
+/** The screen of [game]'s scene; [onExit], if the platform has it, for the grown-ups' corner. */
 @Composable
-internal fun AppContent(game: GameState) {
+internal fun AppContent(game: GameState, onExit: (() -> Unit)? = null) {
     PlatformBackHandler(enabled = game.scene !is Scene.Home && game.scene !is Scene.Hatch && game.scene !is Scene.Sleep) {
         game.audio.hush()
         game.back()
@@ -89,7 +91,7 @@ internal fun AppContent(game: GameState) {
             is Scene.Present -> PresentScreen(game, scene.island) { game.presentGiven(scene.island) }
             Scene.Sleep -> SleepScreen(game)
             Scene.Calm -> CalmScreen(game)
-            Scene.GrownUps -> GrownUpsScreen(game)
+            Scene.GrownUps -> GrownUpsScreen(game, onExit)
         }
     }
 }

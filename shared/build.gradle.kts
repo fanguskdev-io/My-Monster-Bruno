@@ -55,6 +55,8 @@ kotlin {
         jvmTest.dependencies {
             // Skia de verdad en la JVM, para dibujar las pantallas en PNG sin abrir ventanas (las capturas de las pruebas).
             implementation(compose.desktop.currentOs)
+            // Las pruebas de interfaz: tocar un botón por su texto, como la salida de la zona de mayores.
+            implementation(libs.compose.ui.test)
         }
     }
 }

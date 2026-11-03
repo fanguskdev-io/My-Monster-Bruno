@@ -21,6 +21,7 @@ Qué se prueba en cada cambio y en cada hito, y cómo. Los criterios de salida d
 | El sonido del escritorio: la mezcla suma sin desbordarse, respeta el volumen y pasa todo a un canal a 22 050 Hz; y cortar una voz tras otra, como al contar fresas, no atasca su hilo | `DesktopSoundTest` | JVM |
 | Cada frase del juego tiene su fichero y dura lo que una frase; el guion y el código tienen las mismas frases; cada efecto tiene su fichero | `AudioFilesTest` | JVM |
 | Las trece pantallas se dibujan, en móvil (2,17:1) y en tableta (4:3) | `ScreenshotsTest` | JVM |
+| La salida de la zona de mayores: «Salir del juego» guarda la partida y cierra; sin salida en la plataforma, como en iOS, no hay botón | `GrownUpsExitTest` | JVM |
 | El icono de iOS es el de Android: lo dibuja del vector de `androidApp` en `shared/build/icono/` y lo compara con el del proyecto de Xcode; si cambia el de Android, se copia el nuevo | `AppIconTest` | JVM |
 
 Las comunes corren tres veces: en la JVM, en las pruebas de host de Android y en el simulador de iOS. Las de la JVM, solo
@@ -70,7 +71,8 @@ Dónde jugará ella, con qué dispositivo, está por saber.
   Bosteza, da la misión para casa y dice «¡Hasta mañana!». Al volver a abrir el juego ese día, sigue dormido.
 - [ ] La calma: el globo se hincha mientras se mantiene el dedo; tres respiraciones.
 - [ ] La zona de mayores se abre manteniendo el candado. El nombre sale en el banderín; los minutos, «10 minutos más»,
-  la voz y los efectos funcionan; volver a empezar devuelve a Bruno al huevo y conserva los ajustes.
+  la voz y los efectos funcionan; volver a empezar devuelve a Bruno al huevo y conserva los ajustes. En Android y en el
+  escritorio, «Salir del juego» lo cierra con la partida guardada; en iOS no aparece.
 - [ ] Todo se ve bien en un móvil y en una tableta, sin franjas.
 
 ### M3 · La isla de los colores

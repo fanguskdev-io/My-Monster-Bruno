@@ -17,6 +17,6 @@ fun main(args: Array<String>) = application {
         title = "Bruno",
         state = rememberWindowState(width = 1280.dp, height = 640.dp),
     ) {
-        App(store, sound = "--silencio" !in args)
+        App(store, sound = "--silencio" !in args, onExit = ::exitApplication)
     }
 }

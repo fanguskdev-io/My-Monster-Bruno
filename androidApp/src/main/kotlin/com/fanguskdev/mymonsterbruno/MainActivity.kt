@@ -25,7 +25,8 @@ class MainActivity : ComponentActivity() {
         // sounds off, to try it on the emulator without them coming out of the Mac's speakers.
         val sound = !(BuildConfig.DEBUG && intent.getBooleanExtra("silencio", false))
         setContent {
-            App(store, sound = sound)
+            // «Salir del juego», in the grown-ups' corner, closes the activity: the game is saved first.
+            App(store, sound = sound, onExit = ::finish)
         }
     }
 

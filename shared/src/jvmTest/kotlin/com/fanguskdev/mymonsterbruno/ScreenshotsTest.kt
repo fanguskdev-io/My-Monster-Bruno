@@ -66,7 +66,8 @@ class ScreenshotsTest {
         val game = GameState(store, audio, Random(SEED), day = { DAY })
         game.greeted = true
         game.go(scene)
-        val image = ImageComposeScene(width, height, Density(height / STAGE_DP)) { AppContent(game) }
+        // With a way out, as on Android and the desktop, so the grown-ups' corner shows its «Salir del juego».
+        val image = ImageComposeScene(width, height, Density(height / STAGE_DP)) { AppContent(game, onExit = {}) }
         try {
             var frame = 0L
             repeat(FRAMES) {

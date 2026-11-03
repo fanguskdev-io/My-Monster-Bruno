@@ -37,7 +37,8 @@ lento, habla demasiado rápido para un niño de 4 años» ([ADR 0004](adr/0004-v
 amigable», menos robótico. Como en su Mac no hay una Mónica mejorada, prefirió dejarlo como está hasta que la familia grabe
 sus voces. Después, «Continúa», y la isla de las formas: «Construirle la casa a Bruno: ella arrastra un cuadrado, un
 triángulo, un círculo y un rectángulo a su hueco, y Bruno dice el nombre de cada forma»
-([ADR 0008](adr/0008-la-isla-de-las-formas.md)). Para seguir eligió «Más islas primero» y, entre las que le propuso el agente, «Colores»: «Bruno
+([ADR 0008](adr/0008-la-isla-de-las-formas.md)). Y al ver que no había botón para salir: «Sí, añádelo», en la zona de
+mayores. Para seguir eligió «Más islas primero» y, entre las que le propuso el agente, «Colores»: «Bruno
 pide un color (“¡Quiero el globo rojo!”) y después series: rojo, azul, rojo… ¿cuál va ahora?»
 ([ADR 0007](adr/0007-la-isla-de-los-colores.md)).
 
@@ -100,8 +101,11 @@ Fuera del camino:
   globo se deshincha despacio. Son tres respiraciones con Bruno.
 - **La zona de mayores**, detrás del candado de la esquina, que se abre manteniendo el dedo 2,5 segundos. En ella se puede
   escribir su nombre (para el banderín), elegir los minutos al día (5, 10, 15 o 20), dar «10 minutos más, solo hoy»,
-  quitar la voz o los efectos, ver lo que ha practicado (galletas por vocal, letras trazadas, fresas por número, islas y
-  regalos) y volver a empezar, que devuelve a Bruno al huevo y conserva los ajustes. Es la única pantalla con texto.
+  quitar la voz o los efectos, ver lo que ha practicado (galletas por vocal, letras trazadas, fresas por número, globos,
+  series, piezas de la casa, islas y regalos) y volver a empezar, que devuelve a Bruno al huevo y conserva los ajustes. En
+  Android y en el escritorio también hay «Salir del juego», que guarda la partida y lo cierra. En iPhone y iPad no lo
+  hay: se sale con el gesto del sistema, porque Apple no quiere que una app se cierre sola. Es la única pantalla con
+  texto.
 - **Dos botones pequeños** en las esquinas de arriba. La casa vuelve un paso hacia el cuarto, desde el mapa, los juegos y
   la calma. El altavoz, en los juegos, repite lo que pide Bruno. Son pequeños a propósito, porque no son para jugar.
 

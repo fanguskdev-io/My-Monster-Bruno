@@ -54,10 +54,11 @@ private val Line = Color(0xFFDCE3EF)
 
 /**
  * The grown-ups' corner, behind the padlock: her name for the bunting, the minutes a day, the sound, what she has
- * practised and starting again. The only screen with words to read; nothing of it leaves the device (ADR 0005).
+ * practised, starting again and, where the platform allows it, closing the game ([onExit]). The only screen with words to
+ * read; nothing of it leaves the device (ADR 0005).
  */
 @Composable
-internal fun GrownUpsScreen(game: GameState) {
+internal fun GrownUpsScreen(game: GameState, onExit: (() -> Unit)? = null) {
     val font = andika()
     val data = game.data
     var confirmReset by remember { mutableStateOf(false) }
@@ -75,8 +76,18 @@ internal fun GrownUpsScreen(game: GameState) {
             Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 28.dp, vertical = 20.dp),
             verticalArrangement = Arrangement.spacedBy(18.dp),
         ) {
-            Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+            Row(
+                Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
                 Text("Zona de mayores", font, 26, FontWeight.Bold, Modifier.weight(1f))
+                if (onExit != null) {
+                    Chip("Salir del juego", font, selected = false) {
+                        game.save()
+                        onExit()
+                    }
+                }
                 Chip("Volver al juego", font, selected = true) { game.leaveGrownUps() }
             }
             Section("Su nombre", font) {
