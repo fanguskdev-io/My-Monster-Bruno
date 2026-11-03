@@ -111,3 +111,4 @@ día quiere revisar G0, se abre la primera ronda de la cola de
 | 2026-11-03 | agente (Claude Code, Opus 5.5) | M5: la T, la N y la D (ADR 0014), elegidas por Fangusk, que entran cuando conoce la M, la P, la L y la S |
 | 2026-11-03 | agente (Claude Code, Opus 5.5) | M2: Bruno comprueba la palabra con el reconocimiento del propio aparato (ADR 0015), porque al probarlo daba por buena «pera» por «manzana»; riesgo R-08 |
 | 2026-11-03 | agente (Claude Code, Opus 5.5) | M5: su foto en un marco del cuarto de Bruno (ADR 0016), lo último de la propuesta 3, como lo eligió Fangusk |
+| 2026-11-03 | agente (Claude Code, Opus 5.5) | Recorridos en un iPhone 15 Pro simulado de lo hecho tras la entrega («Habla con Bruno», su foto con el selector de Fotos, la isla de las palabras, la T, la N y la D), elegidos por Fangusk; el conductor de pruebas pasa al repositorio (`tools/conductor-ios`) |

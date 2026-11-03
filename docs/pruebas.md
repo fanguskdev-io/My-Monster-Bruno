@@ -70,6 +70,56 @@ micrófono del Mac y lo repiten por sus altavoces, así que esa prueba la hace F
 Comprobar la palabra solo se puede en un aparato de verdad: el emulador no tiene reconocedor sin conexión y el Mac no
 comprueba ([ADR 0015](adr/0015-bruno-comprueba-la-palabra.md)).
 
+## Recorridos en el iPhone
+
+Para ver el juego en un iPhone 15 Pro simulado, girado a un lado y al otro, sin tocarlo a mano:
+[`tools/conductor-ios`](../tools/conductor-ios) es una prueba de interfaz que toca el escenario de 800 × 400 y, en cada
+punto de control, espera a que `vigilante.sh` saque una captura con lo que tapan la isla y las esquinas pintado de negro.
+Tiene cuatro recorridos: los dos de la entrega (`testWalkThroughHeldBothWays` y `testFinalVersionBothWays`, que empiezan
+en el huevo) y los de después (`testTalkAndPhoto` y `testWordsAndLetters`, que empiezan con Bruno ya nacido). Siempre en
+silencio (`-silencio`) y en un simulador propio que se borra al acabar, nunca en uno de otra sesión.
+
+1. Un simulador temporal con el juego (el de `build/xcode`, que deja la puerta) y, para su foto, una imagen en su galería:
+
+```bash
+U=$(xcrun simctl create "Bruno iPhone 15 Pro temporal" com.apple.CoreSimulator.SimDeviceType.iPhone-15-Pro com.apple.CoreSimulator.SimRuntime.iOS-26-5)
+```
+
+```bash
+xcrun simctl boot "$U" && xcrun simctl install "$U" build/xcode/Build/Products/Debug-iphonesimulator/MyMonsterBruno.app
+```
+
+```bash
+xcrun simctl addmedia "$U" una-foto.jpg
+```
+
+2. La partida de la que se parte se escribe en el fichero de preferencias del juego, dentro de su contenedor (con el
+   juego cerrado). Sin la ruta del contenedor, `defaults write` solo vale antes de abrirlo por primera vez:
+
+```bash
+C=$(xcrun simctl get_app_container "$U" com.fanguskdev.mymonsterbruno.MyMonsterBruno data)
+xcrun simctl spawn "$U" defaults write "$C/Library/Preferences/com.fanguskdev.mymonsterbruno.MyMonsterBruno.plist" partida -string '{"hatched":true,"childName":"Lucía"}'
+```
+
+3. El vigilante en segundo plano y un recorrido:
+
+```bash
+bash tools/conductor-ios/vigilante.sh "$U" /tmp/bruno-conductor/sync /tmp/bruno-capturas ip15 &
+```
+
+```bash
+TEST_RUNNER_CONDUCTOR_DIR=/tmp/bruno-conductor/sync xcodebuild test -project tools/conductor-ios/Driver.xcodeproj -scheme Driver -destination "platform=iOS Simulator,id=$U" -derivedDataPath /tmp/bruno-conductor/dd -only-testing:DriverUITests/BrunoDriverTests/testTalkAndPhoto
+```
+
+4. Al acabar, se para el vigilante y se borra el simulador:
+
+```bash
+touch /tmp/bruno-conductor/sync/stop && xcrun simctl delete "$U"
+```
+
+El selector de fotos es un proceso de Apple: el recorrido toca la primera foto por su sitio, no por su nombre. Y la zona de
+mayores se desplaza arrastrando despacio, porque el deslizar rápido de las pruebas de interfaz no la mueve.
+
 ## En cada hito
 
 ### M1 · Primera versión
@@ -106,6 +156,8 @@ comprueba ([ADR 0015](adr/0015-bruno-comprueba-la-palabra.md)).
 - [ ] Son cuatro palabras, de menos palmadas a más; al acabar, Bruno da las gracias y vuelve al cuarto. La zona de
   mayores cuenta las palabras dichas.
 - [ ] En el iPhone 15 Pro, su voz se oye por el altavoz grande y, al salir, el resto del juego suena como antes.
+- [x] En el simulador de iPhone 15 Pro (iOS 26.5), en silencio y girado a un lado y al otro: el micrófono del cuarto lleva
+  a «Habla con Bruno», Bruno dice la palabra él y da las palmadas, y la isla no tapa nada (2026-11-03).
 
 ### M3 · La isla de los colores
 
@@ -148,6 +200,10 @@ comprueba ([ADR 0015](adr/0015-bruno-comprueba-la-palabra.md)).
 - [ ] Al volver al cuarto, Bruno la mira y dice «¡Mira! ¡Eres tú!»; la siguiente vez ya no, salvo que ella toque la foto.
 - [ ] «Cambiar su foto» pone otra y Bruno la vuelve a ver; «Quitar su foto» la quita del cuarto; «Volver a empezar» la
   conserva. Al cerrar y abrir el juego, sigue.
+- [x] Probado en el emulador Tester_API36 con el selector de Android (pide además tocar «Done») y en el simulador de iPhone
+  15 Pro con el de Fotos («Acceso privado a las fotos»), sin ningún permiso: la foto sale en la zona de mayores y en el
+  marco del cuarto, con el iPhone girado a los dos lados. En Android, además, sigue al cerrar y abrir, Bruno no la vuelve
+  a saludar, y «Quitar su foto» la quita (2026-11-03). Falta tocar la foto, «Cambiar su foto» y «Volver a empezar».
 
 ### M5 · La T, la N y la D
 
@@ -156,6 +212,9 @@ comprueba ([ADR 0015](adr/0015-bruno-comprueba-la-palabra.md)).
 - [ ] Cuando ya las ha trazado, salen también para trazar, con sus trazos en orden: la T, la raya y luego el palo; la N,
   el palo y luego la diagonal y el otro palo sin levantar el dedo; la D, el palo y luego la barriga.
 - [ ] En el mapa, la isla de las letras tiene una fila de rocas más: T, N y D.
+- [x] En el emulador Tester_API36 y en el simulador de iPhone 15 Pro, con la M, la P, la L y la S ya dadas y trazadas:
+  Comeletras pide la te de tomate (y en Android, la de de dado), los trazos ofrecen la N y la D, y el mapa tiene su fila
+  de rocas (2026-11-03).
 
 ### M5 · La isla de las palabras
 
@@ -167,6 +226,8 @@ comprueba ([ADR 0015](adr/0015-bruno-comprueba-la-palabra.md)).
   su primera sílaba sale en morado, Bruno dice por qué empieza y esa carta se aparta.
 - [ ] Son cinco rondas; al terminar, regalo, bandera, la misión de buscar algo que empiece como su nombre (con su
   inicial en la tarjeta si está escrito) y, en la zona de mayores, las parejas encontradas por sílaba.
+- [x] Jugada entera en el emulador Tester_API36, con cartas buenas y malas, hasta el regalo y la bandera; en el simulador
+  de iPhone 15 Pro, la pregunta y una carta mala, girado a los dos lados (2026-11-03).
 
 ### M4 · Entrega
 
