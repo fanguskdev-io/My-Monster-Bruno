@@ -22,6 +22,7 @@ import array
 import csv
 import hashlib
 import json
+import re
 import subprocess
 import sys
 import tempfile
@@ -53,6 +54,10 @@ def leer_guion():
         ident, voz, texto = fila["id"], fila["voz"], fila["texto"]
         if not ident or not texto:
             sys.exit(f"voces/guion.tsv: una fila sin id o sin texto: {fila}")
+        # Una palabra sin vocales la voz la deletrea: «Mmm» sonaba «eme eme eme» (Fangusk, 2026-11-03). «Huum», no.
+        for palabra in re.findall(r"[^\W\d_]+", texto):
+            if len(palabra) > 1 and not re.search(r"[aeiouáéíóúü]", palabra, re.IGNORECASE):
+                sys.exit(f"voces/guion.tsv: «{ident}» dice «{palabra}», sin vocales: la voz lo deletrea")
         if voz not in VOCES:
             sys.exit(f"voces/guion.tsv: «{ident}» tiene la voz «{voz}»; las que hay son {', '.join(VOCES)}")
         if ident in vistos:

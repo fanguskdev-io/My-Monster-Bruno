@@ -57,7 +57,7 @@ internal object Voice {
     /** «¡Ñam! ¡La a de avión!» */
     fun yum(vowel: Char) = "b_nam_$vowel"
 
-    /** «Mmm... esa es la e.» */
+    /** «Huum... Esa es la e.» */
     fun thatIs(vowel: Char) = "b_esa_es_$vowel"
 
     /** «¡Yo quiero la a!» */
@@ -84,7 +84,7 @@ internal object Voice {
     /** «¡Sí! ¡El rojo!» */
     fun yes(hue: Hue) = "b_si_${hue.word}"
 
-    /** «Mmm... ese es el azul.» */
+    /** «Huum... Ese es el azul.» */
     fun thatColor(hue: Hue) = "b_ese_es_${hue.word}"
 
     /** «¡Yo quiero el rojo!» */

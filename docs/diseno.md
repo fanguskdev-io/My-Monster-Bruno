@@ -63,7 +63,7 @@ La propuesta 3, tal como la leyó (en la [maqueta](investigacion/propuestas.html
 4. **La isla de las vocales**:
    - **Comeletras**. «¡Tengo hambre de letras!». Bruno pide una vocal con su palabra («¡Quiero la a! La a de avión») y en
      el plato hay tres galletas con vocales. Ella le da una, arrastrándola a la boca o tocándola. Si es la que quería:
-     «¡Ñam!». Si no, Bruno pone cara rara, la galleta vuelve al plato y él dice cuál era y cuál quiere («Mmm... esa es la
+     «¡Ñam!». Si no, Bruno pone cara rara, la galleta vuelve al plato y él dice cuál era y cuál quiere («Huum... Esa es la
      e. ¡Yo quiero la a!»). Son cinco rondas, cada vocal una vez.
    - **Trazar**. Dos vocales en mayúscula, las que menos ha trazado, con los trazos en el orden del cole. Un punto verde
      dice dónde empezar y una flecha, hacia dónde. El dedo no tiene que ir exacto: el camino perdona. Al acabar la letra,
@@ -85,7 +85,7 @@ La propuesta 3, tal como la leyó (en la [maqueta](investigacion/propuestas.html
    nunca a medias: enseguida si están en el cuarto o en el mapa, y al terminar la isla, con su regalo, si están en una.
    Bosteza, le da una **misión para casa** que va con lo que han hecho (buscar algo que empiece por la a, contar las sillas
    de la cocina o buscar algo amarillo) y le dice «¡Hasta mañana!». Si se abre otra vez ese día, Bruno sigue dormido:
-   «Mmm... Mañana jugamos más».
+   «Huum... Mañana jugamos más».
 
 Fuera del camino:
 

@@ -27,11 +27,11 @@ b_nam_e	bruno	¡Ñam! ¡La e de elefante!
 b_nam_i	bruno	¡Ñam! ¡La i de iglú!
 b_nam_o	bruno	¡Ñam! ¡La o de oso!
 b_nam_u	bruno	¡Ñam! ¡La u de uva!
-b_esa_es_a	bruno	Mmm... esa es la a.
-b_esa_es_e	bruno	Mmm... esa es la e.
-b_esa_es_i	bruno	Mmm... esa es la i.
-b_esa_es_o	bruno	Mmm... esa es la o.
-b_esa_es_u	bruno	Mmm... esa es la u.
+b_esa_es_a	bruno	Huum... Esa es la a.
+b_esa_es_e	bruno	Huum... Esa es la e.
+b_esa_es_i	bruno	Huum... Esa es la i.
+b_esa_es_o	bruno	Huum... Esa es la o.
+b_esa_es_u	bruno	Huum... Esa es la u.
 b_yo_quiero_a	bruno	¡Yo quiero la a!
 b_yo_quiero_e	bruno	¡Yo quiero la e!
 b_yo_quiero_i	bruno	¡Yo quiero la i!
@@ -73,7 +73,7 @@ n_mision_letra	narrador	Misión para casa: busca algo que empiece por a, como av
 n_mision_contar	narrador	Misión para casa: cuenta cuántas sillas hay en la cocina.
 n_mision_color	narrador	Misión para casa: busca algo amarillo y enséñaselo a tu familia.
 b_hasta_manana	bruno	¡Hasta mañana!
-b_dormido	bruno	Mmm... Mañana jugamos más.
+b_dormido	bruno	Huum... Mañana jugamos más.
 n_calma_intro	narrador	Vamos a respirar con Bruno. Mantén el dedo, y el globo se hincha.
 n_calma_suelta	narrador	Ahora suelta, despacito.
 n_calma_otra	narrador	Otra vez.
@@ -87,31 +87,31 @@ n_mira_otra_vez	narrador	Mira otra vez.
 b_gracias_series	bruno	¡Qué fila tan bonita! ¡Ya sé hacer series!
 b_quiero_globo_rojo	bruno	¡Quiero el globo rojo!
 b_si_rojo	bruno	¡Sí! ¡El rojo!
-b_ese_es_rojo	bruno	Mmm... ese es el rojo.
+b_ese_es_rojo	bruno	Huum... Ese es el rojo.
 b_yo_quiero_globo_rojo	bruno	¡Yo quiero el rojo!
 n_color_rojo	narrador	Rojo.
 b_quiero_globo_amarillo	bruno	¡Quiero el globo amarillo!
 b_si_amarillo	bruno	¡Sí! ¡El amarillo!
-b_ese_es_amarillo	bruno	Mmm... ese es el amarillo.
+b_ese_es_amarillo	bruno	Huum... Ese es el amarillo.
 b_yo_quiero_globo_amarillo	bruno	¡Yo quiero el amarillo!
 n_color_amarillo	narrador	Amarillo.
 b_quiero_globo_azul	bruno	¡Quiero el globo azul!
 b_si_azul	bruno	¡Sí! ¡El azul!
-b_ese_es_azul	bruno	Mmm... ese es el azul.
+b_ese_es_azul	bruno	Huum... Ese es el azul.
 b_yo_quiero_globo_azul	bruno	¡Yo quiero el azul!
 n_color_azul	narrador	Azul.
 b_quiero_globo_verde	bruno	¡Quiero el globo verde!
 b_si_verde	bruno	¡Sí! ¡El verde!
-b_ese_es_verde	bruno	Mmm... ese es el verde.
+b_ese_es_verde	bruno	Huum... Ese es el verde.
 b_yo_quiero_globo_verde	bruno	¡Yo quiero el verde!
 n_color_verde	narrador	Verde.
 b_quiero_globo_naranja	bruno	¡Quiero el globo naranja!
 b_si_naranja	bruno	¡Sí! ¡El naranja!
-b_ese_es_naranja	bruno	Mmm... ese es el naranja.
+b_ese_es_naranja	bruno	Huum... Ese es el naranja.
 b_yo_quiero_globo_naranja	bruno	¡Yo quiero el naranja!
 n_color_naranja	narrador	Naranja.
 b_quiero_globo_morado	bruno	¡Quiero el globo morado!
 b_si_morado	bruno	¡Sí! ¡El morado!
-b_ese_es_morado	bruno	Mmm... ese es el morado.
+b_ese_es_morado	bruno	Huum... Ese es el morado.
 b_yo_quiero_globo_morado	bruno	¡Yo quiero el morado!
 n_color_morado	narrador	Morado.

@@ -21,7 +21,7 @@ colores y las series de tres colores ([investigación §2](../investigacion/inve
   atado a la hierba. Tiene dos juegos, como la de las vocales, y al terminarlos hay regalo, como en todas.
 - **Los globos.** Bruno pide un globo de un color, «¡Quiero el globo rojo!», y hay tres. Ella le da uno arrastrándolo hasta
   él o tocándolo. El que acierta se queda atado en su mano, así que reúne un ramo que crece ronda a ronda. Si le da otro
-  color, Bruno pone cara rara, dice de qué color es y vuelve a pedir el suyo: «Mmm... ese es el azul. ¡Yo quiero el
+  color, Bruno pone cara rara, dice de qué color es y vuelve a pedir el suyo: «Huum... Ese es el azul. ¡Yo quiero el
   rojo!». A partir de ese momento piensa en su globo en un bocadillo: una pista en vez de la respuesta. Son cinco rondas,
   con cinco colores distintos.
 - **Las series.** Hay una fila de globos atados a una cuerda, como rojo, azul, rojo, azul, y un hueco al final. El
