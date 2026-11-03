@@ -5,12 +5,16 @@
     python3 tools/voces.py --todas       las genera todas otra vez
     python3 tools/voces.py --comprobar   solo comprueba que están al día (lo usa la puerta, scripts/verificar.sh)
 
-Cada línea se dice con la voz «Mónica» del Mac (español de España) con `say`. Las de Bruno, además, van más agudas y un
-poco más deprisa: se remuestrean ×1,2, como un monstruo pequeño. Salen en WAV de 16 bits, mono, a 22 050 Hz, sin el
-silencio de los bordes y a la misma altura de volumen. Son provisionales: las grabaciones de la familia las sustituirán
-con el mismo nombre de fichero.
+Cada línea se dice con la voz «Mónica» del Mac (español de España) con `say`. Las de Bruno, además, van más agudas,
+como un monstruo pequeño: se remuestrean ×1,2, lo que también las acelera. Para que no hable «demasiado rápido para un
+niño de 4 años» (Fangusk), después se alargan sin cambiarles el tono con tools/despacio.swift, que usa el
+AVAudioUnitTimePitch de Apple, y quedan en unas 4 sílabas por segundo. La velocidad de `say` no sirve para eso: Mónica no
+baja de la que tiene a 150 palabras por minuto. Salen en WAV de 16 bits, mono, a 22 050 Hz, sin el silencio de los bordes
+y a la misma altura de volumen. Son provisionales: las grabaciones de la familia las sustituirán con el mismo nombre de
+fichero.
 
-Solo usa la biblioteca estándar de Python; generar necesita macOS (`say`), comprobar no.
+Solo usa la biblioteca estándar de Python; generar necesita macOS (`say`) y, para las de Bruno, Xcode (`swiftc`);
+comprobar no necesita ninguno.
 """
 
 import argparse
@@ -32,7 +36,7 @@ SALIDA = RAIZ / "shared" / "src" / "commonMain" / "composeResources" / "files" /
 FRECUENCIA = 22050
 VOCES = {
     "narrador": {"voz": "Mónica", "ritmo": 165, "tono": 1.0},
-    "bruno": {"voz": "Mónica", "ritmo": 150, "tono": 1.2},
+    "bruno": {"voz": "Mónica", "ritmo": 150, "tono": 1.2, "tempo": 0.75},
 }
 # Sube si cambia cómo se procesa una voz: obliga a generarlas todas otra vez.
 VERSION = 1
@@ -60,7 +64,14 @@ def leer_guion():
 def huella(fila):
     ajustes = VOCES[fila["voz"]]
     clave = f"{VERSION}|{ajustes['voz']}|{ajustes['ritmo']}|{ajustes['tono']}|{fila['texto']}"
+    if tempo(ajustes) != 1.0:
+        clave += f"|tempo {tempo(ajustes)}"
     return hashlib.sha256(clave.encode("utf-8")).hexdigest()[:16]
+
+
+def tempo(ajustes):
+    """La velocidad final de una voz: 1 es la que sale de `say` (y del remuestreo); 0,75, un tercio más larga."""
+    return ajustes.get("tempo", 1.0)
 
 
 def decir(texto, ajustes, destino):
@@ -89,6 +100,22 @@ def remuestrear(muestras, factor):
         t = x - a
         salida[i] = int(muestras[a] * (1 - t) + muestras[b] * t)
     return salida
+
+
+def alargar(muestras, velocidad, carpeta):
+    """Más despacio sin cambiar el tono: tools/despacio.swift, compilado una vez por ejecución en [carpeta]."""
+    if velocidad == 1.0:
+        return muestras
+    programa = carpeta / "despacio"
+    if not programa.exists():
+        subprocess.run(["swiftc", "-O", str(RAIZ / "tools" / "despacio.swift"), "-o", str(programa)], check=True)
+    entrada, salida = carpeta / "rapida.wav", carpeta / "despacio.wav"
+    escribir(muestras, entrada)
+    subprocess.run([str(programa), str(velocidad), str(entrada), str(salida)], check=True)
+    with wave.open(str(salida), "rb") as w:
+        if w.getnchannels() != 1 or w.getsampwidth() != 2 or w.getframerate() != FRECUENCIA:
+            sys.exit("tools/despacio.swift devolvió un formato inesperado")
+        return array.array("h", w.readframes(w.getnframes()))
 
 
 def recortar_y_nivelar(muestras):
@@ -123,7 +150,8 @@ def generar(filas, todas):
                 continue
             ajustes = VOCES[fila["voz"]]
             muestras = decir(fila["texto"], ajustes, Path(tmp) / "linea.wav")
-            escribir(recortar_y_nivelar(remuestrear(muestras, ajustes["tono"])), destino)
+            muestras = alargar(remuestrear(muestras, ajustes["tono"]), tempo(ajustes), Path(tmp))
+            escribir(recortar_y_nivelar(muestras), destino)
             indice[ident] = huella(fila)
             hechas += 1
     ids = {fila["id"] for fila in filas}

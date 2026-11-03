@@ -19,8 +19,11 @@ ya una voz, en castellano de España y sin conexión.
   identificador, quién la dice (el narrador o Bruno) y su texto. El código las nombra en `audio/Voice.kt`, y una prueba
   comprueba que el guion y el código tienen las mismas frases y que cada una tiene su fichero.
 - **Provisionalmente las genera el Mac** con su voz de castellano de España, Mónica (`say`), a través de
-  `python3 tools/voces.py`. La de Bruno se remuestrea ×1,2 para que suene más aguda y algo más deprisa, como un monstruo
-  pequeño. Se recortan los silencios, se igualan de volumen y se guardan en WAV mono de 22 050 Hz en
+  `python3 tools/voces.py`. La de Bruno se remuestrea ×1,2 para que suene más aguda, como un monstruo pequeño. Eso
+  también la acelera, y Fangusk la oyó «demasiado rápido para un niño de 4 años» (2026-11-03). Por eso después se alarga
+  un tercio sin cambiar el tono (`tools/despacio.swift`, con el AVAudioUnitTimePitch de Apple) y queda en unas 4 sílabas
+  por segundo. La velocidad de `say` no sirve: Mónica no habla más despacio de lo que habla a 150 palabras por minuto. Se
+  recortan los silencios, se igualan de volumen y se guardan en WAV mono de 22 050 Hz en
   `composeResources/files/voces/`. `voces/indice.json` guarda una huella del texto y la voz de cada una, y `--comprobar`
   avisa si alguna falta o está desfasada.
 - **Los efectos** (13: toques, el huevo que se rompe, el ñam, campanitas, el regalo…) se sintetizan desde cero con

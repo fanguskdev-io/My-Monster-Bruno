@@ -67,7 +67,8 @@ python3 tools/voces.py
 python3 tools/sonidos.py
 ```
 
-La primera genera las frases nuevas o cambiadas y necesita macOS. La segunda, los efectos.
+La primera genera las frases nuevas o cambiadas y necesita macOS, y Xcode para alargar las de Bruno. La segunda, los
+efectos.
 
 ## El arnés
 
