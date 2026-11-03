@@ -8,7 +8,7 @@ decisiones, y la [investigación](docs/investigacion/investigacion.md), de dónd
 > En construcción: la primera versión (M1) se juega de principio a fin en Android e iOS, y Fangusk ya la está probando.
 > M3 está hecho: las islas de los colores, las formas y las emociones, y las letras M, P, L y S y los números hasta el 10.
 > M2 también: «Habla con Bruno», en el que ella le dice palabras con el micrófono y él las repite con su voz y las da en
-> palmadas. Lo que queda es la entrega en su iPhone ([proceso](docs/proceso.md)).
+> palmadas. La entrega en su iPhone está preparada: falta elegir cómo instalarlo ([entrega](docs/entrega.md)).
 
 ## Estructura
 
@@ -41,6 +41,7 @@ el plugin de Android 9.5.0 y Gradle 9.8.2.
 - iOS: abrir `iosApp/iosApp.xcodeproj` en Xcode y ejecutar el esquema `iosApp`, o por consola
   `xcodebuild -project iosApp/iosApp.xcodeproj -scheme iosApp -destination 'platform=iOS Simulator,name=iPad (A16)' build`.
 - Escritorio: `./gradlew :desktopApp:run`.
+- Para dárselo, en su iPhone o en un Android, sin publicarlo en las tiendas: [entrega](docs/entrega.md).
 
 La versión de depuración puede arrancar en silencio; cómo, en [pruebas](docs/pruebas.md). La zona de mayores se abre
 manteniendo el dedo en el candado de la esquina durante 2,5 segundos.

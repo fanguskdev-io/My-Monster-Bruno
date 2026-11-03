@@ -1,6 +1,14 @@
 package com.fanguskdev.mymonsterbruno
 
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.ImageComposeScene
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.unit.Density
 import com.fanguskdev.mymonsterbruno.audio.Audio
 import com.fanguskdev.mymonsterbruno.audio.SilentPlayer
@@ -13,8 +21,11 @@ import com.fanguskdev.mymonsterbruno.game.Topping
 import com.fanguskdev.mymonsterbruno.game.VOWELS
 import com.fanguskdev.mymonsterbruno.storage.MemoryStore
 import com.fanguskdev.mymonsterbruno.ui.GameState
+import com.fanguskdev.mymonsterbruno.ui.Iphone
 import com.fanguskdev.mymonsterbruno.ui.Island
 import com.fanguskdev.mymonsterbruno.ui.Scene
+import com.fanguskdev.mymonsterbruno.ui.fill
+import com.fanguskdev.mymonsterbruno.ui.path
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.skia.EncodedImageFormat
@@ -24,8 +35,9 @@ import kotlin.test.Test
 import kotlin.test.assertTrue
 
 /**
- * Every screen drawn in PNG, without opening a window, in `shared/build/capturas/`: on a phone on its side (20:9) and on
- * a tablet (4:3). It checks that each one draws; looking at them is for a person.
+ * Every screen drawn in PNG, without opening a window, in `shared/build/capturas/`: on a phone on its side (20:9), on a
+ * tablet (4:3) and on the iPhone 15 Pro she plays on, held either way, with what its Dynamic Island and its rounded
+ * corners hide painted black. It checks that each one draws; looking at them is for a person.
  */
 class ScreenshotsTest {
     @Test
@@ -61,26 +73,24 @@ class ScreenshotsTest {
             "15-trazos-consonantes" to Scene.Play(Island.VOWELS, 1),
             "16-fresas-hasta-diez" to Scene.Play(Island.NUMBERS, 0),
         )
-        for ((device, size) in SIZES) {
+        for (screen in SCREENS) {
             for ((name, scene) in scenes) {
-                val file = File(folder, "$device-$name.png")
-                file.writeBytes(render(scene, size.first, size.second))
+                // The grown-ups' corner keeps clear of the island with the system's safe area, and here there is none: on
+                // the iPhone it would come out hidden where it is not. The simulator shows it whole (docs/pruebas.md).
+                if (screen.hidden != null && scene == Scene.GrownUps) continue
+                val file = File(folder, "${screen.name}-$name.png")
+                file.writeBytes(render(scene, screen))
                 assertTrue(file.length() > MIN_BYTES, "$file está vacía")
             }
             for ((name, scene) in later) {
-                val file = File(folder, "$device-$name.png")
-                file.writeBytes(render(scene, size.first, size.second, knows))
+                val file = File(folder, "${screen.name}-$name.png")
+                file.writeBytes(render(scene, screen, knows))
                 assertTrue(file.length() > MIN_BYTES, "$file está vacía")
             }
         }
     }
 
-    private fun render(
-        scene: Scene,
-        width: Int,
-        height: Int,
-        practised: (SaveData) -> SaveData = { it },
-    ): ByteArray {
+    private fun render(scene: Scene, screen: Screen, practised: (SaveData) -> SaveData = { it }): ByteArray {
         val store = MemoryStore()
         val save = SaveData(
             hatched = scene != Scene.Hatch,
@@ -93,7 +103,12 @@ class ScreenshotsTest {
         game.greeted = true
         game.go(scene)
         // With a way out, as on Android and the desktop, so the grown-ups' corner shows its «Salir del juego».
-        val image = ImageComposeScene(width, height, Density(height / STAGE_DP)) { AppContent(game, onExit = {}) }
+        val image = ImageComposeScene(screen.width, screen.height, Density(screen.height / STAGE_DP)) {
+            Box(Modifier.fillMaxSize()) {
+                AppContent(game, onExit = {})
+                screen.hidden?.let { Canvas(Modifier.fillMaxSize(), onDraw = it) }
+            }
+        }
         try {
             var frame = 0L
             repeat(FRAMES) {
@@ -106,13 +121,51 @@ class ScreenshotsTest {
         }
     }
 
+    /** A screen [width] by [height] pixels, and what of it cannot be seen, drawn over the game, if there is anything. */
+    private class Screen(
+        val name: String,
+        val width: Int,
+        val height: Int,
+        val hidden: (DrawScope.() -> Unit)? = null,
+    )
+
     private companion object {
-        val SIZES = listOf("movil" to (1560 to 720), "tablet" to (1200 to 900))
+        val IPHONE = Iphone.PRO_15
+        val SCREENS = listOf(Screen("movil", 1560, 720), Screen("tablet", 1200, 900)) +
+            listOf(true, false).map { islandOnLeft ->
+                // Two pixels a point, with the island on one side and then on the other.
+                val side = if (islandOnLeft) "izquierda" else "derecha"
+                Screen("${IPHONE.id}-$side", (IPHONE.width * 2).toInt(), (IPHONE.height * 2).toInt()) {
+                    drawHidden(IPHONE, islandOnLeft)
+                }
+            }
         const val STAGE_DP = 400f
         const val FRAMES = 90
         const val FRAME_NANOS = 16_666_667L
         const val SEED = 7
         const val DAY = 20261102
         const val MIN_BYTES = 10_000L
+    }
+}
+
+/** What [iphone] hides, with its island on the left or on the right, painted black: the island and the four corners. */
+private fun DrawScope.drawHidden(iphone: Iphone, islandOnLeft: Boolean) {
+    val k = size.width / iphone.width
+    val island = iphone.island(islandOnLeft)
+    drawRoundRect(Color.Black, island.topLeft * k, island.size * k, CornerRadius(island.width * k / 2))
+    for (right in listOf(false, true)) {
+        for (bottom in listOf(false, true)) {
+            val corner = (listOf(Offset.Zero) + iphone.cornerEdge).map {
+                Offset(if (right) iphone.width - it.x else it.x, if (bottom) iphone.height - it.y else it.y) * k
+            }
+            fill(
+                path {
+                    moveTo(corner.first().x, corner.first().y)
+                    corner.drop(1).forEach { lineTo(it.x, it.y) }
+                    close()
+                },
+                Color.Black,
+            )
+        }
     }
 }

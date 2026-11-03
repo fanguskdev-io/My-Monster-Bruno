@@ -227,6 +227,7 @@ internal fun DrawScope.drawWord(word: Word, center: Offset, size: Float) {
     }
 }
 
+/** A plane flying to the left: the wings swept back, and the red fin at the tail, behind. */
 private fun DrawScope.plane() {
     fill(
         path {
@@ -240,22 +241,22 @@ private fun DrawScope.plane() {
     )
     fill(
         path {
-            moveTo(-45f, -4f)
-            lineTo(-55f, -28f)
-            lineTo(-44f, -28f)
-            lineTo(-34f, -6f)
+            moveTo(45f, -4f)
+            lineTo(55f, -28f)
+            lineTo(44f, -28f)
+            lineTo(34f, -6f)
             close()
         },
         Color(0xFFE4483C),
     )
     val body = path {
-        moveTo(-50f, 2f)
-        quadraticTo(-50f, -10f, -38f, -10f)
-        lineTo(38f, -10f)
-        quadraticTo(54f, -10f, 54f, 0f)
-        quadraticTo(54f, 10f, 38f, 10f)
-        lineTo(-38f, 10f)
-        quadraticTo(-50f, 10f, -50f, 2f)
+        moveTo(50f, 2f)
+        quadraticTo(50f, -10f, 38f, -10f)
+        lineTo(-38f, -10f)
+        quadraticTo(-54f, -10f, -54f, 0f)
+        quadraticTo(-54f, 10f, -38f, 10f)
+        lineTo(38f, 10f)
+        quadraticTo(50f, 10f, 50f, 2f)
         close()
     }
     fill(body, Color(0xFFF4F6FB))
@@ -270,7 +271,7 @@ private fun DrawScope.plane() {
         },
         Color(0xFF2C74D8),
     )
-    for (x in listOf(-26f, -14f, -2f, 28f)) circle(Color(0xFF8CCBF0), Offset(x, 0f), 3.5f)
+    for (x in listOf(26f, 14f, 2f, -28f)) circle(Color(0xFF8CCBF0), Offset(x, 0f), 3.5f)
 }
 
 private fun DrawScope.elephant() {

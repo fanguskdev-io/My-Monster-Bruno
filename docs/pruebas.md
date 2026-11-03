@@ -24,10 +24,13 @@ Qué se prueba en cada cambio y en cada hito, y cómo. Los criterios de salida d
 | Las quince pantallas y, cuando ya sabe las vocales y del 1 al 5, Comeletras, los trazos y las fresas con lo nuevo, se dibujan en móvil (2,17:1) y en tableta (4:3) | `ScreenshotsTest` | JVM |
 | La salida de la zona de mayores: «Salir del juego» guarda la partida y cierra; sin salida en la plataforma, como en iOS, no hay botón | `GrownUpsExitTest` | JVM |
 | El icono de iOS es el de Android: lo dibuja del vector de `androidApp` en `shared/build/icono/` y lo compara con el del proyecto de Xcode; si cambia el de Android, se copia el nuevo | `AppIconTest` | JVM |
+| En el iPhone 15 Pro de ella y en el 17 Pro del simulador, girados a un lado y al otro, la casa, el altavoz y el candado se ven enteros: ni bajo la Dynamic Island ni cortados por las esquinas redondeadas, medidas en el simulador | `CornerButtonsTest` | Común |
 
 Las comunes corren tres veces: en la JVM, en las pruebas de host de Android y en el simulador de iOS. Las de la JVM, solo
 allí, porque leen ficheros o dibujan con Skia. Las capturas de `ScreenshotsTest` quedan en `shared/build/capturas/`, y
-mirarlas es cosa de una persona.
+mirarlas es cosa de una persona. Las del iPhone 15 Pro (`iphone15pro-izquierda-…` e `iphone15pro-derecha-…`, según el
+lado de la isla) pintan de negro lo que tapan la isla y las esquinas. La zona de mayores no sale en ellas: se aparta
+sola de la isla con el margen seguro del sistema, que en la JVM no existe, y en el simulador se ve entera.
 
 ## Arrancar en silencio
 
@@ -51,7 +54,8 @@ xcrun simctl launch booted com.fanguskdev.mymonsterbruno.MyMonsterBruno -silenci
 |---|---|---|
 | Emulador Android `Tester_API36` | 2400 × 1080 | El de cada prueba en Android. El `Pixel_10_Pro_XL` es el de la sesión de CaroFarty: no se usa desde aquí (acordado el 2026-11-03) |
 | Simulador iPad (A16), iOS 26.3 | 2360 × 1640 | El de cada prueba en iOS: la tableta, la proporción más cuadrada |
-| Simulador iPhone 17 Pro, iOS 26.5 | 2622 × 1206 | El iPhone; con este juego, todavía sin probar |
+| Simulador iPhone 17 Pro, iOS 26.3 (`0632083A…`) | 2622 × 1206 | El más parecido al iPhone 15 Pro de ella: el de la entrega (M4). Para verlo girado al otro lado, Device > Rotate Left o Rotate Right en la app Simulator. Con varios simuladores encendidos, `simctl` va con su UDID y no con `booted` |
+| Simulador iPhone 17 Pro, iOS 26.5 (`F098984F…`) | 2622 × 1206 | Lo usa otra sesión: no se usa desde aquí |
 
 Ella jugará en un iPhone 15 Pro (Fangusk, 2026-11-03).
 
@@ -129,3 +133,14 @@ micrófono del Mac y lo repiten por sus altavoces, así que esa prueba la hace F
   empezar), la lámpara que enciende la luz y la caricia. Bruno vuelve a su color.
 - [ ] Son cinco, la nana la última; al terminar, regalo, bandera, la misión de contar cómo se ha sentido y, en la zona
   de mayores, las emociones reconocidas.
+
+### M4 · Entrega
+
+- [x] En el simulador iPhone 17 Pro (iOS 26.3), en silencio y girado a un lado y al otro: el huevo, elegir su color, el
+  cuarto, el mapa, Comeletras, la calma y la zona de mayores. La casa, el altavoz y el candado se ven enteros; la isla
+  solo tapa la punta de la isla de las emociones en el mapa y menos de un punto del borde de la galleta de la derecha en
+  Comeletras (2026-11-03).
+- [ ] Instalado en su iPhone 15 Pro por la vía que elija Fangusk ([entrega](entrega.md)), con su icono y el nombre
+  «Bruno».
+- [ ] Allí, con sonido: se juega girado a un lado y al otro, se oyen la voz y los efectos, «Habla con Bruno» repite su
+  voz, y al cerrarlo y volver a abrirlo Bruno sigue como estaba.
