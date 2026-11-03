@@ -33,3 +33,6 @@ google-services.json
 
 # Los worktrees de los subagentes de Claude Code
 .claude/
+
+# El equipo de firma de cada Mac (docs/entrega.md)
+iosApp/Configuration/Local.xcconfig
