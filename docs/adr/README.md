@@ -23,3 +23,4 @@ y estas decisiones existen antes de G4 porque Fangusk pidió desarrollar ya. Las
 | [0010](0010-la-isla-de-las-emociones.md) | La isla de las emociones: Bruno se pone del color de cómo se siente, ella lo reconoce y le ayuda | Aceptada; los detalles, propuesta |
 | [0011](0011-habla-con-bruno.md) | Habla con Bruno: ella dice la palabra con el micrófono, Bruno la repite con su voz más aguda y la da en palmadas | Aceptada; los detalles, propuesta |
 | [0012](0012-la-entrega-ad-hoc.md) | La entrega: ad hoc, con el Apple Developer Program, en su iPhone 15 Pro el día que se lo dé | Aceptada |
+| [0013](0013-la-isla-de-las-palabras.md) | La isla de las palabras: Bruno dice una palabra a trozos y ella busca la que empieza igual | Aceptada; los detalles, propuesta |

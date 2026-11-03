@@ -37,6 +37,7 @@ import com.fanguskdev.mymonsterbruno.ui.screens.SeriesScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.SleepScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.TalkScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.TraceScreen
+import com.fanguskdev.mymonsterbruno.ui.screens.WordsScreen
 import kotlinx.coroutines.delay
 import com.fanguskdev.mymonsterbruno.ui.Activity as Step
 
@@ -96,6 +97,7 @@ internal fun AppContent(game: GameState, onExit: (() -> Unit)? = null, listen: B
                 Step.SERIES -> SeriesScreen(game) { game.finished(scene) }
                 Step.HOUSE -> HouseScreen(game) { game.finished(scene) }
                 Step.FEELINGS -> FeelingsScreen(game) { game.finished(scene) }
+                Step.WORDS -> WordsScreen(game) { game.finished(scene) }
             }
             is Scene.Present -> PresentScreen(game, scene.island) { game.presentGiven(scene.island) }
             Scene.Sleep -> SleepScreen(game)

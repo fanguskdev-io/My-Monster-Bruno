@@ -7,7 +7,9 @@ import com.fanguskdev.mymonsterbruno.game.Hue
 import com.fanguskdev.mymonsterbruno.game.LETTERS
 import com.fanguskdev.mymonsterbruno.game.MAX_COUNT
 import com.fanguskdev.mymonsterbruno.game.Shape
+import com.fanguskdev.mymonsterbruno.game.StartWord
 import com.fanguskdev.mymonsterbruno.game.TalkWord
+import com.fanguskdev.mymonsterbruno.game.plain
 
 /**
  * The voice lines, by the names of their files in `files/voces/`. What each one says is in voces/guion.tsv, where
@@ -29,7 +31,6 @@ internal object Voice {
     const val WHICH_ISLAND = "n_que_isla"
     const val TO_LETTERS = "n_isla_letras"
     const val TO_NUMBERS = "n_isla_numeros"
-    const val TOO_FAR = "n_isla_lejos"
     const val HUNGRY_FOR_LETTERS = "b_hambre_letras"
     const val DRAG_HINT = "n_arrastra"
     const val THANKS_LETTERS = "b_gracias_letras"
@@ -67,6 +68,10 @@ internal object Voice {
     const val HOLD_MIC = "n_microfono"
     const val CANT_HEAR = "b_no_te_oigo"
     const val THANKS_WORDS = "b_gracias_palabras"
+    const val TO_WORDS = "n_isla_palabras"
+    const val WORDS_INTRO = "n_palabras"
+    const val THANKS_STARTS = "b_gracias_sonidos"
+    const val MISSION_NAME = "n_mision_nombre"
 
     /** «¡Quiero la a! La a de avión.» */
     fun want(vowel: Char) = "b_quiero_$vowel"
@@ -144,19 +149,32 @@ internal object Voice {
     fun word(word: TalkWord) = "b_palabra_${word.word}"
 
     /** «¡Ma!», with a clap. */
-    fun syllable(syllable: String) = "b_silaba_$syllable"
+    fun syllable(syllable: String) = "b_silaba_${plain(syllable)}"
 
     /** «¡Cuatro palmadas!» */
     fun claps(count: Int) = "n_palmadas_$count"
 
+    /** «¿Qué empieza como pato?» */
+    fun startsLike(word: StartWord) = "n_como_${word.word}"
+
+    /** «¡Sí! Pato y pajarita empiezan por pa.» */
+    fun bothStart(said: StartWord, found: StartWord) = "b_si_${said.word}_${found.word}"
+
+    /** «Huum... Luna empieza por lu.» */
+    fun startsWith(word: StartWord) = "b_empieza_${word.word}"
+
+    /** «Busca otra que empiece por pa.» */
+    fun findAnother(start: String) = "n_busca_${plain(start)}"
+
     /** Every line, to load them all when the game opens. */
     val ALL: List<String> = listOf(
         EGG, EGG_AGAIN, HELLO_I_AM_BRUNO, CHOOSE_COLOR, CHOOSE_TOP, GREEN_BUTTON, LOVE_IT, HANDSOME, HELLO, GO_TO_ISLAND,
-        TICKLES, GIGGLE, WHICH_ISLAND, TO_LETTERS, TO_NUMBERS, TOO_FAR, HUNGRY_FOR_LETTERS, DRAG_HINT, THANKS_LETTERS,
+        TICKLES, GIGGLE, WHICH_ISLAND, TO_LETTERS, TO_NUMBERS, HUNGRY_FOR_LETTERS, DRAG_HINT, THANKS_LETTERS,
         WELL_DONE, THANKS_STRAWBERRIES, PRESENT, THANKS_PRESENT, GROWING, YAWN, MISSION_LETTER, MISSION_COUNT,
         MISSION_COLOR, SEE_YOU_TOMORROW, ASLEEP, CALM_INTRO, CALM_LET_GO, CALM_AGAIN, CALM_END, TO_COLORS, LOVE_BALLOONS,
         THANKS_BALLOONS, LOOK_AT_THE_ROW, WHICH_NEXT, LOOK_AGAIN, THANKS_SERIES, TO_SHAPES, BUILD_HOUSE, THANKS_HOUSE,
         MISSION_SHAPE, TO_FEELINGS, HOW_FEELS, THANKS_FEELINGS, MISSION_FEELING, TALK, HOLD_MIC, CANT_HEAR, THANKS_WORDS,
+        TO_WORDS, WORDS_INTRO, THANKS_STARTS, MISSION_NAME,
     ) +
         LETTERS.flatMap { listOf(want(it), yum(it), thatIs(it), iWant(it), trace(it), traced(it)) } +
         (1..MAX_COUNT).flatMap { listOf(askCount(it), number(it), strawberries(it)) } +
@@ -166,8 +184,13 @@ internal object Voice {
         Happening.entries.map { happened(it) } +
         Feeling.entries.flatMap { listOf(feels(it), notThatFace(it), help(it), helped(it)) } +
         TalkWord.entries.flatMap { listOf(tellMe(it), word(it)) } +
-        TalkWord.entries.flatMap { it.syllables }.distinct().map { syllable(it) } +
-        (1..TalkWord.entries.maxOf { it.syllables.size }).map { claps(it) }
+        (TalkWord.entries.flatMap { it.syllables } + StartWord.entries.flatMap { it.syllables }).map { syllable(it) }.distinct() +
+        (1..TalkWord.entries.maxOf { it.syllables.size }).map { claps(it) } +
+        StartWord.entries.flatMap { listOf(startsLike(it), startsWith(it)) } +
+        StartWord.entries.flatMap { said ->
+            StartWord.entries.filter { it != said && it.start == said.start }.map { bothStart(said, it) }
+        } +
+        StartWord.entries.map { it.start }.distinct().map { findAnother(it) }
 }
 
 /** The sound effects, by the names of their files in `files/sonidos/` (tools/sonidos.py makes them). */

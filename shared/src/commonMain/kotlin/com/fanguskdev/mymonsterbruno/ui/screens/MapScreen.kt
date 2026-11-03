@@ -28,6 +28,7 @@ import com.fanguskdev.mymonsterbruno.ui.andika
 import com.fanguskdev.mymonsterbruno.ui.art.Pose
 import com.fanguskdev.mymonsterbruno.ui.art.drawBruno
 import com.fanguskdev.mymonsterbruno.ui.art.drawFeelingFace
+import com.fanguskdev.mymonsterbruno.ui.art.drawOpenBook
 import com.fanguskdev.mymonsterbruno.ui.art.drawSea
 import com.fanguskdev.mymonsterbruno.ui.art.drawShapePiece
 import com.fanguskdev.mymonsterbruno.ui.art.drawTiedBalloon
@@ -51,13 +52,15 @@ private const val ISLAND_RY = 52f
 private val COLORS_ISLAND = Offset(674f, 318f)
 private val SHAPES_ISLAND = Offset(340f, 78f)
 private val FEELINGS_ISLAND = Offset(112f, 150f)
-private val FAR_ISLANDS = listOf(Offset(744f, 52f))
+private val WORDS_ISLAND = Offset(712f, 56f)
+private const val WORDS_RX = 80f
+private const val WORDS_RY = 38f
 private val BOAT = Offset(410f, 336f)
 
 /**
- * The map of the islands: the one of the letters, the one of the numbers, the one of the colours, the one of the shapes
- * and the one of the feelings, and another far away in the mist, for what comes. A touch on an island says where they go and goes there; the flag says she has
- * finished it at least once.
+ * The map of the islands: the one of the letters, the one of the numbers, the one of the colours, the one of the shapes,
+ * the one of the feelings and, the smallest, far up on the right, the one of the words. A touch on an island says where
+ * they go and goes there; the flag says she has finished it at least once.
  */
 @Composable
 internal fun MapScreen(game: GameState) {
@@ -84,7 +87,7 @@ internal fun MapScreen(game: GameState) {
                     inIsland(point, COLORS_ISLAND) -> go(Island.COLORS, Voice.TO_COLORS)
                     inIsland(point, SHAPES_ISLAND) -> go(Island.SHAPES, Voice.TO_SHAPES)
                     inIsland(point, FEELINGS_ISLAND) -> go(Island.FEELINGS, Voice.TO_FEELINGS)
-                    FAR_ISLANDS.any { hits(point, it, 50f) } -> audio.speak(Voice.TOO_FAR)
+                    inIsland(point, WORDS_ISLAND, WORDS_RX, WORDS_RY) -> go(Island.WORDS, Voice.TO_WORDS)
                     else -> return false
                 }
                 return true
@@ -105,7 +108,6 @@ internal fun MapScreen(game: GameState) {
         val t = clock.value
         drawSea(stage, t)
         drawPath(t)
-        for ((i, far) in FAR_ISLANDS.withIndex()) drawFarIsland(far, t, i)
         drawIsland(VOWELS_ISLAND, t)
         drawVowelRocks(VOWELS_ISLAND, measurer, font)
         drawIsland(NUMBERS_ISLAND, t)
@@ -116,26 +118,40 @@ internal fun MapScreen(game: GameState) {
         drawIslandShapes(SHAPES_ISLAND)
         drawIsland(FEELINGS_ISLAND, t)
         drawIslandFaces(FEELINGS_ISLAND)
+        drawIsland(WORDS_ISLAND, t, WORDS_RX, WORDS_RY)
+        drawOpenBook(WORDS_ISLAND + Offset(0f, -14f), 58f)
         if ((game.data.islands[Island.VOWELS.name] ?: 0) > 0) drawFlag(VOWELS_ISLAND + Offset(92f, -34f))
         if ((game.data.islands[Island.NUMBERS.name] ?: 0) > 0) drawFlag(NUMBERS_ISLAND + Offset(92f, -34f))
         if ((game.data.islands[Island.COLORS.name] ?: 0) > 0) drawFlag(COLORS_ISLAND + Offset(92f, -34f))
         if ((game.data.islands[Island.SHAPES.name] ?: 0) > 0) drawFlag(SHAPES_ISLAND + Offset(102f, -4f))
         if ((game.data.islands[Island.FEELINGS.name] ?: 0) > 0) drawFlag(FEELINGS_ISLAND + Offset(84f, -30f))
+        // Low, beside the book: the island is so high that a flag at its back would go out of the screen.
+        if ((game.data.islands[Island.WORDS.name] ?: 0) > 0) drawFlag(WORDS_ISLAND + Offset(50f, 14f))
         drawBoat(game.data.look, BOAT + Offset(0f, 4f * sin(t * 1.5f)), t)
         drawHomeButton(stage)
     }
 }
 
-private fun inIsland(point: Offset, island: Offset): Boolean {
-    val dx = (point.x - island.x) / (ISLAND_RX + TOUCH_SLACK)
-    val dy = (point.y - island.y) / (ISLAND_RY + 40f)
+private fun inIsland(
+    point: Offset,
+    island: Offset,
+    rx: Float = ISLAND_RX,
+    ry: Float = ISLAND_RY,
+): Boolean {
+    val dx = (point.x - island.x) / (rx + TOUCH_SLACK)
+    val dy = (point.y - island.y) / (ry + 40f)
     return dx * dx + dy * dy <= 1f
 }
 
-private fun DrawScope.drawIsland(center: Offset, t: Float) {
-    ellipse(Color(0x33FFFFFF), center + Offset(0f, 8f), ISLAND_RX + 14f + 3f * sin(t * 1.4f), ISLAND_RY + 10f)
-    ellipse(Color(0xFFF6DFA6), center, ISLAND_RX, ISLAND_RY)
-    ellipse(Color(0xFF93D46E), center + Offset(0f, -8f), ISLAND_RX - 20f, ISLAND_RY - 16f)
+private fun DrawScope.drawIsland(
+    center: Offset,
+    t: Float,
+    rx: Float = ISLAND_RX,
+    ry: Float = ISLAND_RY,
+) {
+    ellipse(Color(0x33FFFFFF), center + Offset(0f, 8f), rx + 14f + 3f * sin(t * 1.4f), ry + 10f)
+    ellipse(Color(0xFFF6DFA6), center, rx, ry)
+    ellipse(Color(0xFF93D46E), center + Offset(0f, -8f), rx - 20f, ry - 16f)
 }
 
 /** The rocks of the island of letters: the vowels in a row and the consonants in front. */
@@ -187,15 +203,6 @@ private fun DrawScope.drawIslandBalloons(center: Offset, t: Float) {
     }
 }
 
-private fun DrawScope.drawFarIsland(center: Offset, t: Float, i: Int) {
-    val alpha = 0.55f
-    ellipse(Color(0xFFF6DFA6), center, 52f, 22f, alpha = alpha)
-    ellipse(Color(0xFF93D46E), center + Offset(0f, -4f), 40f, 14f, alpha = alpha)
-    for (k in 0 until 3) {
-        circle(Color.White, center + Offset(-40f + 40f * k + 6f * sin(t * 0.5f + i + k), -10f), 20f, alpha = 0.55f)
-    }
-}
-
 private fun DrawScope.drawPath(t: Float) {
     val dots = path {
         moveTo(VOWELS_ISLAND.x + 60f, VOWELS_ISLAND.y - 40f)
@@ -206,6 +213,8 @@ private fun DrawScope.drawPath(t: Float) {
         quadraticTo(290f, 170f, SHAPES_ISLAND.x - 30f, SHAPES_ISLAND.y + 56f)
         moveTo(VOWELS_ISLAND.x - 90f, VOWELS_ISLAND.y - 36f)
         quadraticTo(150f, 228f, FEELINGS_ISLAND.x + 30f, FEELINGS_ISLAND.y + 56f)
+        moveTo(SHAPES_ISLAND.x + 116f, SHAPES_ISLAND.y - 10f)
+        quadraticTo(520f, 26f, WORDS_ISLAND.x - WORDS_RX - 8f, WORDS_ISLAND.y)
     }
     drawPath(
         dots,

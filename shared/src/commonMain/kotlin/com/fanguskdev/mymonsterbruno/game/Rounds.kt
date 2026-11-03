@@ -204,3 +204,71 @@ internal fun talkRounds(random: Random, talked: Map<String, Int> = emptyMap()): 
     .sortedBy { it.syllables.size }
 
 internal const val TALK_ROUNDS = 4
+
+/**
+ * The words of the island of words (ADR 0013), cut in syllables as they clap them in the classroom, in pairs that start
+ * the same: «PA-to» and «PA-ja-ri-ta». Each has its picture. The syllables are written as they are said, with their
+ * accent; [word] and the names of the files go without it.
+ */
+internal enum class StartWord(val syllables: List<String>) {
+    GAFAS(listOf("ga", "fas")),
+    GALLETA(listOf("ga", "lle", "ta")),
+    CORONA(listOf("co", "ro", "na")),
+    CORAZON(listOf("co", "ra", "zón")),
+    MANO(listOf("ma", "no")),
+    MARIPOSA(listOf("ma", "ri", "po", "sa")),
+    CASA(listOf("ca", "sa")),
+    CAMA(listOf("ca", "ma")),
+    PATO(listOf("pa", "to")),
+    PAJARITA(listOf("pa", "ja", "ri", "ta")),
+    LUNA(listOf("lu", "na")),
+    LUPA(listOf("lu", "pa")),
+    PELOTA(listOf("pe", "lo", "ta")),
+    PERA(listOf("pe", "ra")),
+    GORRO(listOf("go", "rro")),
+    GOTA(listOf("go", "ta")),
+    OSO(listOf("o", "so")),
+    OJO(listOf("o", "jo")),
+    REGALO(listOf("re", "ga", "lo")),
+    RELOJ(listOf("re", "loj")),
+    ;
+
+    /** The word without its accent, as the save and the files name it: «corazon». */
+    val word: String get() = plain(syllables.joinToString(""))
+
+    /** The syllable it starts with: «pa». */
+    val start: String get() = syllables.first()
+}
+
+/** A round of the island of words: Bruno says [said], and she finds among [choices] the one that starts the same. */
+internal data class StartRound(val said: StartWord, val choices: List<StartWord>) {
+    val answer: StartWord get() = choices.first { it.start == said.start }
+}
+
+/**
+ * The five rounds of the island of words: the pairs whose start she has found least ([found], by syllable), ties at
+ * random. Bruno says one word of the pair, and the other is among three pictures, with two of other pairs.
+ */
+internal fun startRounds(random: Random, found: Map<String, Int> = emptyMap()): List<StartRound> {
+    val pairs = StartWord.entries.groupBy { it.start }.values.toList()
+    return pairs.shuffled(random).sortedBy { found[plain(it.first().start)] ?: 0 }.take(START_ROUNDS).map { pair ->
+        val (said, match) = pair.shuffled(random)
+        val others = (pairs - setOf(pair)).shuffled(random).take(START_CHOICES - 1).map { it.random(random) }
+        StartRound(said, (others + match).shuffled(random))
+    }
+}
+
+/** [text] without the accents of Spanish, for the names of files: «zón» is «zon». */
+internal fun plain(text: String): String = text.map {
+    when (it) {
+        'á' -> 'a'
+        'é' -> 'e'
+        'í' -> 'i'
+        'ó' -> 'o'
+        'ú' -> 'u'
+        else -> it
+    }
+}.joinToString("")
+
+internal const val START_ROUNDS = 5
+internal const val START_CHOICES = 3

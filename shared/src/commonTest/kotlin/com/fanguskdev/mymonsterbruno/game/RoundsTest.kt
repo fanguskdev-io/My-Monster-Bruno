@@ -138,6 +138,35 @@ class RoundsTest {
     }
 
     @Test
+    fun theIslandOfWordsAsksForFivePairsAndOnlyOneCardStartsTheSame() {
+        repeat(200) { seed ->
+            val rounds = startRounds(Random(seed))
+            assertEquals(START_ROUNDS, rounds.map { it.said.start }.toSet().size, "cada ronda, un par distinto")
+            for (round in rounds) {
+                assertEquals(START_CHOICES, round.choices.map { it.start }.toSet().size, "dos cartas empiezan igual: $round")
+                assertTrue(round.said !in round.choices, "la palabra de Bruno está entre las cartas: $round")
+                assertEquals(round.said.start, round.answer.start)
+            }
+            // With five pairs found once, the other five come first.
+            val found = StartWord.entries.map { it.start }.distinct().shuffled(Random(seed)).take(5)
+            val then = startRounds(Random(seed), found.associateWith { 1 })
+            assertTrue(then.none { it.said.start in found }, "repite lo que ya ha encontrado")
+        }
+    }
+
+    @Test
+    fun eachWordOfTheIslandHasItsPartnerAndItsPlainName() {
+        val pairs = StartWord.entries.groupBy { it.start }
+        assertTrue(pairs.values.all { it.size == 2 }, "cada palabra, con otra que empieza igual")
+        assertEquals("corazon", StartWord.CORAZON.word)
+        assertEquals(listOf("co", "ra", "zón"), StartWord.CORAZON.syllables)
+        for (word in StartWord.entries) {
+            assertEquals(word.name.lowercase(), word.word, "su palabra son sus sílabas")
+            assertTrue(word.syllables.all { syllable -> syllable.any { it in "aeiouáéíóú" } }, "una sílaba sin vocal en $word")
+        }
+    }
+
+    @Test
     fun everyLetterHasItsWord() {
         assertEquals(LETTERS, Word.entries.map { it.letter })
         assertEquals(Word.OSO, Word.of('o'))

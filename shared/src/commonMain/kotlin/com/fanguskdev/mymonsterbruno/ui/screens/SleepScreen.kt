@@ -55,6 +55,7 @@ private enum class Mission(val line: String) {
     COLOR(Voice.MISSION_COLOR),
     SHAPE(Voice.MISSION_SHAPE),
     FEELING(Voice.MISSION_FEELING),
+    NAME(Voice.MISSION_NAME),
 }
 
 /**
@@ -75,6 +76,7 @@ internal fun SleepScreen(game: GameState) {
             Island.NUMBERS -> Mission.COUNT
             Island.SHAPES -> Mission.SHAPE
             Island.FEELINGS -> Mission.FEELING
+            Island.WORDS -> Mission.NAME
             Island.COLORS, null -> Mission.COLOR
         }
     }
@@ -128,7 +130,7 @@ internal fun SleepScreen(game: GameState) {
         drawBruno(game.data.look, BRUNO_IN_BED, BRUNO_HEIGHT, pose, t * 0.5f)
         drawBlanket(BED + Offset(0f, 24f))
         if (asleep) drawSnores(BRUNO_IN_BED + Offset(60f, -100f), t, measurer, font)
-        drawMissionCard(mission, measurer, font)
+        drawMissionCard(mission, game.data.childName.firstOrNull { it.isLetter() }, measurer, font)
         drawGrownUpsLock(stage, t, lockSince)
     }
 }
@@ -146,8 +148,13 @@ private fun DrawScope.drawSnores(
     }
 }
 
-/** The mission, drawn without words: a house and what to look for there. */
-private fun DrawScope.drawMissionCard(mission: Mission, measurer: TextMeasurer, font: FontFamily) {
+/** The mission, drawn without words: a house and what to look for there; for her name, its [initial] if they wrote it. */
+private fun DrawScope.drawMissionCard(
+    mission: Mission,
+    initial: Char?,
+    measurer: TextMeasurer,
+    font: FontFamily,
+) {
     val c = MISSION_CARD
     drawRoundRect(Shadow, c + Offset(0f, 6f), MISSION_SIZE, CornerRadius(20f))
     drawRoundRect(Color.White, c, MISSION_SIZE, CornerRadius(20f))
@@ -194,6 +201,14 @@ private fun DrawScope.drawMissionCard(mission: Mission, measurer: TextMeasurer, 
         Mission.SHAPE -> {
             circle(Color(0xFF2E9E5B), what, 34f)
             ring(Color.White, what, 17f, 6f)
+        }
+        Mission.NAME -> {
+            circle(Color(0xFF9B6BD3), what, 34f)
+            if (initial != null) {
+                label(measurer, initial.uppercaseChar().toString(), what + Offset(0f, 2f), 44f, Color.White, font)
+            } else {
+                label(measurer, "ABC", what + Offset(0f, 2f), 24f, Color.White, font)
+            }
         }
         Mission.FEELING -> {
             circle(Color(0xFFFF6F91), what, 34f)

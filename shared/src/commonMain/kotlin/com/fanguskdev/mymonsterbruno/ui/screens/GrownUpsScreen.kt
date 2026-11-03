@@ -46,6 +46,7 @@ import com.fanguskdev.mymonsterbruno.game.MAX_COUNT
 import com.fanguskdev.mymonsterbruno.game.SaveData
 import com.fanguskdev.mymonsterbruno.game.Session
 import com.fanguskdev.mymonsterbruno.game.Shape
+import com.fanguskdev.mymonsterbruno.game.StartWord
 import com.fanguskdev.mymonsterbruno.game.TalkWord
 import com.fanguskdev.mymonsterbruno.ui.GameState
 import com.fanguskdev.mymonsterbruno.ui.andika
@@ -158,6 +159,10 @@ internal fun GrownUpsScreen(game: GameState, onExit: (() -> Unit)? = null) {
                 Text("Emociones que ha reconocido:   $feelings", font, 16)
                 val talked = TalkWord.entries.joinToString("   ") { "${it.word} ${data.talked[it.word] ?: 0}" }
                 Text("Palabras dichas a Bruno, con sus palmadas:   $talked", font, 16)
+                val starts = StartWord.entries.map {
+                    it.start
+                }.distinct().joinToString("   ") { "${it.uppercase()} ${data.starts[it] ?: 0}" }
+                Text("Palabras que empiezan igual, por sílaba:   $starts", font, 16)
                 Text("Islas terminadas: ${data.islandsDone}. Regalos de Bruno: ${data.look.accessories.size} de 6.", font, 16)
             }
             Section("Bruno", font) {

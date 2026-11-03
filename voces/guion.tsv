@@ -14,7 +14,6 @@ b_jiji_corto	bruno	¡Ji, ji, ji!
 n_que_isla	narrador	¿A qué isla vamos hoy?
 n_isla_letras	narrador	¡A la isla de las letras!
 n_isla_numeros	narrador	¡A la isla de los números!
-n_isla_lejos	narrador	Esa isla está muy lejos. ¡Pronto iremos!
 b_hambre_letras	bruno	¡Tengo hambre de letras!
 n_arrastra	narrador	Dale a Bruno la galleta con su letra.
 b_quiero_a	bruno	¡Quiero la a! La a de avión.
@@ -256,3 +255,92 @@ b_silaba_e	bruno	¡E!
 b_silaba_le	bruno	¡Le!
 b_silaba_fan	bruno	¡Fan!
 b_silaba_te	bruno	¡Te!
+n_isla_palabras	narrador	¡A la isla de las palabras!
+n_palabras	narrador	Bruno dice una palabra a trozos. Busca otra que empiece igual.
+b_gracias_sonidos	bruno	¡Gracias! ¡Ya sé cómo empiezan las palabras!
+n_mision_nombre	narrador	Misión para casa: busca algo que empiece como tu nombre.
+n_como_gafas	narrador	¿Qué empieza como gafas?
+n_como_galleta	narrador	¿Qué empieza como galleta?
+n_como_corona	narrador	¿Qué empieza como corona?
+n_como_corazon	narrador	¿Qué empieza como corazón?
+n_como_mano	narrador	¿Qué empieza como mano?
+n_como_mariposa	narrador	¿Qué empieza como mariposa?
+n_como_casa	narrador	¿Qué empieza como casa?
+n_como_cama	narrador	¿Qué empieza como cama?
+n_como_pato	narrador	¿Qué empieza como pato?
+n_como_pajarita	narrador	¿Qué empieza como pajarita?
+n_como_luna	narrador	¿Qué empieza como luna?
+n_como_lupa	narrador	¿Qué empieza como lupa?
+n_como_pelota	narrador	¿Qué empieza como pelota?
+n_como_pera	narrador	¿Qué empieza como pera?
+n_como_gorro	narrador	¿Qué empieza como gorro?
+n_como_gota	narrador	¿Qué empieza como gota?
+n_como_oso	narrador	¿Qué empieza como oso?
+n_como_ojo	narrador	¿Qué empieza como ojo?
+n_como_regalo	narrador	¿Qué empieza como regalo?
+n_como_reloj	narrador	¿Qué empieza como reloj?
+b_si_gafas_galleta	bruno	¡Sí! Gafas y galleta empiezan por ga.
+b_si_galleta_gafas	bruno	¡Sí! Galleta y gafas empiezan por ga.
+b_si_corona_corazon	bruno	¡Sí! Corona y corazón empiezan por co.
+b_si_corazon_corona	bruno	¡Sí! Corazón y corona empiezan por co.
+b_si_mano_mariposa	bruno	¡Sí! Mano y mariposa empiezan por ma.
+b_si_mariposa_mano	bruno	¡Sí! Mariposa y mano empiezan por ma.
+b_si_casa_cama	bruno	¡Sí! Casa y cama empiezan por ca.
+b_si_cama_casa	bruno	¡Sí! Cama y casa empiezan por ca.
+b_si_pato_pajarita	bruno	¡Sí! Pato y pajarita empiezan por pa.
+b_si_pajarita_pato	bruno	¡Sí! Pajarita y pato empiezan por pa.
+b_si_luna_lupa	bruno	¡Sí! Luna y lupa empiezan por lu.
+b_si_lupa_luna	bruno	¡Sí! Lupa y luna empiezan por lu.
+b_si_pelota_pera	bruno	¡Sí! Pelota y pera empiezan por pe.
+b_si_pera_pelota	bruno	¡Sí! Pera y pelota empiezan por pe.
+b_si_gorro_gota	bruno	¡Sí! Gorro y gota empiezan por go.
+b_si_gota_gorro	bruno	¡Sí! Gota y gorro empiezan por go.
+b_si_oso_ojo	bruno	¡Sí! Oso y ojo empiezan por o.
+b_si_ojo_oso	bruno	¡Sí! Ojo y oso empiezan por o.
+b_si_regalo_reloj	bruno	¡Sí! Regalo y reloj empiezan por re.
+b_si_reloj_regalo	bruno	¡Sí! Reloj y regalo empiezan por re.
+b_empieza_gafas	bruno	Huum... Gafas empieza por ga.
+b_empieza_galleta	bruno	Huum... Galleta empieza por ga.
+b_empieza_corona	bruno	Huum... Corona empieza por co.
+b_empieza_corazon	bruno	Huum... Corazón empieza por co.
+b_empieza_mano	bruno	Huum... Mano empieza por ma.
+b_empieza_mariposa	bruno	Huum... Mariposa empieza por ma.
+b_empieza_casa	bruno	Huum... Casa empieza por ca.
+b_empieza_cama	bruno	Huum... Cama empieza por ca.
+b_empieza_pato	bruno	Huum... Pato empieza por pa.
+b_empieza_pajarita	bruno	Huum... Pajarita empieza por pa.
+b_empieza_luna	bruno	Huum... Luna empieza por lu.
+b_empieza_lupa	bruno	Huum... Lupa empieza por lu.
+b_empieza_pelota	bruno	Huum... Pelota empieza por pe.
+b_empieza_pera	bruno	Huum... Pera empieza por pe.
+b_empieza_gorro	bruno	Huum... Gorro empieza por go.
+b_empieza_gota	bruno	Huum... Gota empieza por go.
+b_empieza_oso	bruno	Huum... Oso empieza por o.
+b_empieza_ojo	bruno	Huum... Ojo empieza por o.
+b_empieza_regalo	bruno	Huum... Regalo empieza por re.
+b_empieza_reloj	bruno	Huum... Reloj empieza por re.
+n_busca_ga	narrador	Busca otra que empiece por ga.
+n_busca_co	narrador	Busca otra que empiece por co.
+n_busca_ma	narrador	Busca otra que empiece por ma.
+n_busca_ca	narrador	Busca otra que empiece por ca.
+n_busca_pa	narrador	Busca otra que empiece por pa.
+n_busca_lu	narrador	Busca otra que empiece por lu.
+n_busca_pe	narrador	Busca otra que empiece por pe.
+n_busca_go	narrador	Busca otra que empiece por go.
+n_busca_o	narrador	Busca otra que empiece por o.
+n_busca_re	narrador	Busca otra que empiece por re.
+b_silaba_fas	bruno	¡Fas!
+b_silaba_lle	bruno	¡Lle!
+b_silaba_co	bruno	¡Co!
+b_silaba_ro	bruno	¡Ro!
+b_silaba_ra	bruno	¡Ra!
+b_silaba_zon	bruno	¡Zón!
+b_silaba_no	bruno	¡No!
+b_silaba_ca	bruno	¡Ca!
+b_silaba_pa	bruno	¡Pa!
+b_silaba_to	bruno	¡To!
+b_silaba_ja	bruno	¡Ja!
+b_silaba_go	bruno	¡Go!
+b_silaba_rro	bruno	¡Ro!
+b_silaba_jo	bruno	¡Jo!
+b_silaba_loj	bruno	¡Loj!

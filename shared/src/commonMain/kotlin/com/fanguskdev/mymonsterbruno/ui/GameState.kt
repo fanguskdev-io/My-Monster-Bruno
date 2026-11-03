@@ -18,13 +18,15 @@ internal enum class Island(val activities: List<Activity>) {
     COLORS(listOf(Activity.BALLOONS, Activity.SERIES)),
     SHAPES(listOf(Activity.HOUSE)),
     FEELINGS(listOf(Activity.FEELINGS)),
+    WORDS(listOf(Activity.WORDS)),
 }
 
 /**
  * The things she does on an island: give Bruno the letter he wants, trace a letter, give him strawberries, give him the
- * balloon of the colour he wants, finish a series of balloons, build his house with shapes and know how he feels.
+ * balloon of the colour he wants, finish a series of balloons, build his house with shapes, know how he feels and find
+ * the word that starts as his.
  */
-internal enum class Activity { FEED, TRACE, COUNT, BALLOONS, SERIES, HOUSE, FEELINGS }
+internal enum class Activity { FEED, TRACE, COUNT, BALLOONS, SERIES, HOUSE, FEELINGS, WORDS }
 
 /** Where the game is. */
 internal sealed interface Scene {

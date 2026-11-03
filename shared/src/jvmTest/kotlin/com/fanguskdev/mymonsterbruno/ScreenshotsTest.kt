@@ -59,6 +59,7 @@ class ScreenshotsTest {
             "13-casa" to Scene.Play(Island.SHAPES, 0),
             "17-emociones" to Scene.Play(Island.FEELINGS, 0),
             "18-habla" to Scene.Talk,
+            "19-palabras" to Scene.Play(Island.WORDS, 0),
         )
         // The same games once she knows the vowels and one to five: the consonants and the numbers up to ten.
         val knows = { save: SaveData ->
@@ -73,6 +74,8 @@ class ScreenshotsTest {
             "15-trazos-consonantes" to Scene.Play(Island.VOWELS, 1),
             "16-fresas-hasta-diez" to Scene.Play(Island.NUMBERS, 0),
         )
+        // And the map once she has finished every island, with all its flags.
+        val finished = { save: SaveData -> save.copy(islands = Island.entries.associate { it.name to 1 }) }
         for (screen in SCREENS) {
             for ((name, scene) in scenes) {
                 // The grown-ups' corner keeps clear of the island with the system's safe area, and here there is none: on
@@ -87,6 +90,9 @@ class ScreenshotsTest {
                 file.writeBytes(render(scene, screen, knows))
                 assertTrue(file.length() > MIN_BYTES, "$file está vacía")
             }
+            val file = File(folder, "${screen.name}-20-mapa-terminado.png")
+            file.writeBytes(render(Scene.Map, screen, finished))
+            assertTrue(file.length() > MIN_BYTES, "$file está vacía")
         }
     }
 
