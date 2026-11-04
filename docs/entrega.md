@@ -1,6 +1,6 @@
 # Entrega: el juego en su iPhone
 
-Cómo se instala «Mi monstruo Bruno» en el iPhone 15 Pro en el que jugará tu sobrina sin publicarlo en la App Store, y
+Cómo se instala «Mi amigo Bruno» en el iPhone 15 Pro en el que jugará tu sobrina sin publicarlo en la App Store, y
 cómo se instala en un Android si algún día hiciera falta. Es el hito M4 ([proceso](proceso.md)): sale cuando está
 instalado allí, con su icono, y probado allí. En cada vía están separadas las cosas que haces tú, que son las que piden
 tu Apple ID o tener el iPhone en la mano, de las que hace un agente desde este Mac.
@@ -83,7 +83,7 @@ Lo que haces tú:
    «Nueva app», cuando el agente te diga que ya ha firmado la primera versión. Antes, el identificador no sale en la
    lista.
    - Plataforma: iOS.
-   - Nombre: uno que no tenga ninguna otra app de la App Store. «Bruno» a secas estará cogido; vale «Mi monstruo Bruno».
+   - Nombre: uno que no tenga ninguna otra app de la App Store. «Bruno» a secas estará cogido; vale «Mi amigo Bruno».
      En el iPhone seguirá poniendo «Bruno».
    - Idioma principal: español.
    - Identificador del paquete: `com.fanguskdev.mymonsterbruno.MyMonsterBruno`.

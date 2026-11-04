@@ -6,6 +6,7 @@ import com.fanguskdev.mymonsterbruno.game.HousePart
 import com.fanguskdev.mymonsterbruno.game.Hue
 import com.fanguskdev.mymonsterbruno.game.LETTERS
 import com.fanguskdev.mymonsterbruno.game.MAX_COUNT
+import com.fanguskdev.mymonsterbruno.game.NAME_ALPHABET
 import com.fanguskdev.mymonsterbruno.game.Shape
 import com.fanguskdev.mymonsterbruno.game.StartWord
 import com.fanguskdev.mymonsterbruno.game.TalkWord
@@ -16,6 +17,8 @@ import com.fanguskdev.mymonsterbruno.game.plain
  * tools/voces.py makes them from (ADR 0004); the lines that start with `n_` are the narrator's, with `b_`, Bruno's.
  */
 internal object Voice {
+    const val TITLE = "n_titulo"
+    const val TAP_TO_START = "n_toca_empezar"
     const val EGG = "n_huevo"
     const val EGG_AGAIN = "n_huevo_otra"
     const val HELLO_I_AM_BRUNO = "b_hola_soy_bruno"
@@ -70,6 +73,9 @@ internal object Voice {
     const val THANKS_WORDS = "b_gracias_palabras"
     const val TO_WORDS = "n_isla_palabras"
     const val ITS_YOU = "b_eres_tu"
+    const val NAME_INTRO = "n_nombre_intro"
+    const val TEACH_ME_YOUR_NAME = "b_ensename_nombre"
+    const val KNOWS_YOUR_NAME = "b_ya_se_tu_nombre"
     const val WORDS_INTRO = "n_palabras"
     const val THANKS_STARTS = "b_gracias_sonidos"
     const val MISSION_NAME = "n_mision_nombre"
@@ -152,6 +158,17 @@ internal object Voice {
     /** «Huum... Eso no es manzana. ¿Me dices manzana?», when the device made out another word (ADR 0015). */
     fun notThat(word: TalkWord) = "b_no_es_${word.word}"
 
+    /** «La ele.», «La eñe.», «La a, con tilde.»: a letter of her name (ADR 0017). */
+    fun letterName(letter: Char) = "n_letra_" + when (letter) {
+        'ñ' -> "enye"
+        'á' -> "a_tilde"
+        'é' -> "e_tilde"
+        'í' -> "i_tilde"
+        'ó' -> "o_tilde"
+        'ú' -> "u_tilde"
+        else -> letter.toString()
+    }
+
     /** «¡Ma!», with a clap. */
     fun syllable(syllable: String) = "b_silaba_${plain(syllable)}"
 
@@ -172,13 +189,14 @@ internal object Voice {
 
     /** Every line, to load them all when the game opens. */
     val ALL: List<String> = listOf(
-        EGG, EGG_AGAIN, HELLO_I_AM_BRUNO, CHOOSE_COLOR, CHOOSE_TOP, GREEN_BUTTON, LOVE_IT, HANDSOME, HELLO, GO_TO_ISLAND,
-        TICKLES, GIGGLE, WHICH_ISLAND, TO_LETTERS, TO_NUMBERS, HUNGRY_FOR_LETTERS, DRAG_HINT, THANKS_LETTERS,
+        // The start screen's first: they are said a moment after the game opens, while the rest load.
+        TITLE, TAP_TO_START, EGG, EGG_AGAIN, HELLO_I_AM_BRUNO, CHOOSE_COLOR, CHOOSE_TOP, GREEN_BUTTON, LOVE_IT, HANDSOME, HELLO,
+        GO_TO_ISLAND, TICKLES, GIGGLE, WHICH_ISLAND, TO_LETTERS, TO_NUMBERS, HUNGRY_FOR_LETTERS, DRAG_HINT, THANKS_LETTERS,
         WELL_DONE, THANKS_STRAWBERRIES, PRESENT, THANKS_PRESENT, GROWING, YAWN, MISSION_LETTER, MISSION_COUNT,
         MISSION_COLOR, SEE_YOU_TOMORROW, ASLEEP, CALM_INTRO, CALM_LET_GO, CALM_AGAIN, CALM_END, TO_COLORS, LOVE_BALLOONS,
         THANKS_BALLOONS, LOOK_AT_THE_ROW, WHICH_NEXT, LOOK_AGAIN, THANKS_SERIES, TO_SHAPES, BUILD_HOUSE, THANKS_HOUSE,
         MISSION_SHAPE, TO_FEELINGS, HOW_FEELS, THANKS_FEELINGS, MISSION_FEELING, TALK, HOLD_MIC, CANT_HEAR, THANKS_WORDS,
-        TO_WORDS, WORDS_INTRO, THANKS_STARTS, MISSION_NAME, ITS_YOU,
+        TO_WORDS, WORDS_INTRO, THANKS_STARTS, MISSION_NAME, ITS_YOU, NAME_INTRO, TEACH_ME_YOUR_NAME, KNOWS_YOUR_NAME,
     ) +
         LETTERS.flatMap { listOf(want(it), yum(it), thatIs(it), iWant(it), trace(it), traced(it)) } +
         (1..MAX_COUNT).flatMap { listOf(askCount(it), number(it), strawberries(it)) } +
@@ -194,7 +212,8 @@ internal object Voice {
         StartWord.entries.flatMap { said ->
             StartWord.entries.filter { it != said && it.start == said.start }.map { bothStart(said, it) }
         } +
-        StartWord.entries.map { it.start }.distinct().map { findAnother(it) }
+        StartWord.entries.map { it.start }.distinct().map { findAnother(it) } +
+        NAME_ALPHABET.map { letterName(it) }
 }
 
 /** The sound effects, by the names of their files in `files/sonidos/` (tools/sonidos.py makes them). */
@@ -212,5 +231,6 @@ internal enum class Sfx(val file: String) {
     PRESENT("regalo"),
     PICK("fresa"),
     POP("pop"),
+    START("inicio"),
     CLAP("palmada"),
 }

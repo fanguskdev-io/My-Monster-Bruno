@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import com.fanguskdev.mymonsterbruno.audio.Sfx
 import com.fanguskdev.mymonsterbruno.audio.Voice
+import com.fanguskdev.mymonsterbruno.game.nameLetters
 import com.fanguskdev.mymonsterbruno.ui.GameState
 import com.fanguskdev.mymonsterbruno.ui.Scene
 import com.fanguskdev.mymonsterbruno.ui.Stage
@@ -75,6 +76,8 @@ private const val LOOK_SECONDS = 2.2f
  * goes to the islands. The microphone is «Habla con Bruno», the balloon the calm corner, and the padlock, held a while,
  * the grown-ups' corner. Her name, if the grown-ups wrote it, hangs on the bunting, and her photo, if they chose one, in a
  * frame on the wall (ADR 0016): the first time, Bruno looks at it, «¡Mira! ¡Eres tú!», and again when she touches it.
+ * The bunting with her name leads to writing it (ADR 0017): until she has written it, Bruno asks her once each time the
+ * game opens, «¿Me enseñas a escribir tu nombre? Toca el banderín», and the bunting waves.
  */
 @Composable
 internal fun HomeScreen(game: GameState) {
@@ -87,12 +90,15 @@ internal fun HomeScreen(game: GameState) {
     var lockSince by remember { mutableStateOf<Float?>(null) }
     val photo = remember(game.photo) { game.photo?.let { runCatching { it.decodeToImageBitmap() }.getOrNull() } }
 
-    // When Bruno last looked at her photo.
+    // When Bruno last looked at her photo, and when he asked her to teach him her name.
     var lookedAt by remember { mutableStateOf(-10f) }
+    var invitedAt by remember { mutableStateOf(-10f) }
 
     LaunchedEffect(Unit) {
         val greeting = !game.greeted
         game.greeted = true
+        val inviting = !game.askedForName && game.data.namesWritten == 0 && nameLetters(game.data.childName).isNotEmpty()
+        if (inviting) game.askedForName = true
         if (greeting) {
             cheerAt = clock.value
             audio.say(Voice.HELLO)
@@ -102,7 +108,12 @@ internal fun HomeScreen(game: GameState) {
             audio.say(Voice.ITS_YOU)
             game.update { it.copy(photoSeen = true) }
         }
-        if (greeting) audio.say(Voice.GO_TO_ISLAND)
+        if (inviting) {
+            invitedAt = clock.value
+            audio.say(Voice.TEACH_ME_YOUR_NAME)
+        } else if (greeting) {
+            audio.say(Voice.GO_TO_ISLAND)
+        }
     }
 
     val touch = remember {
@@ -141,6 +152,11 @@ internal fun HomeScreen(game: GameState) {
                         audio.sfx(Sfx.POP)
                         audio.speak(Voice.ITS_YOU)
                     }
+                    nameLetters(game.data.childName).isNotEmpty() && buntingArea(game.data.childName).contains(point) -> {
+                        audio.sfx(Sfx.TAP)
+                        audio.hush()
+                        game.go(Scene.Name)
+                    }
                     hits(point, BRUNO_AT_HOME, BRUNO_HEIGHT / 2) -> {
                         cheerAt = now
                         audio.sfx(Sfx.POP)
@@ -164,12 +180,15 @@ internal fun HomeScreen(game: GameState) {
     StageCanvas(touch) { stage ->
         val t = clock.value
         drawRoom(stage, t)
-        drawBunting(game.data.childName, measurer, font)
+        val inviting = t - invitedAt < INVITE_SECONDS
+        drawBunting(game.data.childName, measurer, font, t, waving = inviting)
+        if (inviting) drawSparkles(Offset(BUNTING_CENTER_X, 70f), 110f, t)
         photo?.let { drawPhotoFrame(it, t) }
         val since = t - cheerAt
         val pose = when {
             since < 1.3f -> Pose(Mouth.GRIN, Eyes.HAPPY, Arms.UP, hop = 10f * sin((since / 1.3f) * 3.14f))
             t - lookedAt < LOOK_SECONDS -> Pose(Mouth.GRIN, Eyes.OPEN, Arms.UP, lookX = 1f, lookY = -0.7f)
+            inviting -> Pose(Mouth.GRIN, Eyes.OPEN, Arms.UP, lookX = 0.6f, lookY = -1f)
             else -> Pose(lookX = 0.5f * sin(t * 0.4f), hop = 1.5f * sin(t * 1.6f))
         }
         drawBruno(game.data.look, BRUNO_AT_HOME, BRUNO_HEIGHT, pose, t)
@@ -209,38 +228,62 @@ private fun DrawScope.drawPhotoFrame(photo: ImageBitmap, time: Float) {
     circle(Color(0xFF6B4A2E), nail, 3f)
 }
 
-/** The bunting over the room: a pennant for each letter of her name, or stars if there is no name. */
-private fun DrawScope.drawBunting(name: String, measurer: TextMeasurer, font: FontFamily) {
-    val letters = name.uppercase().filter { it.isLetter() }.take(MAX_LETTERS)
-    val count = if (letters.isEmpty()) 5 else letters.length
+/** How many pennants the bunting has: one for each letter of her [name], or five stars if there is no name. */
+private fun pennants(name: String): Int = bunting(name).length.takeIf { it > 0 } ?: 5
+
+private fun bunting(name: String): String = name.uppercase().filter { it.isLetter() }.take(MAX_LETTERS)
+
+/** Where the bunting can be touched: its pennants, with some room around them for a small finger. */
+private fun buntingArea(name: String): Rect {
+    val width = PENNANT_WIDTH * pennants(name)
+    return Rect(BUNTING_CENTER_X - width / 2 - 10f, 26f, BUNTING_CENTER_X + width / 2 + 10f, 112f)
+}
+
+/**
+ * The bunting over the room: a pennant for each letter of her name, or stars if there is no name. The pennants sway a
+ * little, as cloth does; [waving], when Bruno asks her to touch it, they wave one after the other.
+ */
+private fun DrawScope.drawBunting(
+    name: String,
+    measurer: TextMeasurer,
+    font: FontFamily,
+    time: Float,
+    waving: Boolean,
+) {
+    val letters = bunting(name)
+    val count = pennants(name)
     val width = PENNANT_WIDTH * count
-    val left = 520f - width / 2
+    val left = BUNTING_CENTER_X - width / 2
     val rope = path {
         moveTo(left - 30f, 36f)
-        quadraticTo(520f, 60f, left + width + 30f, 36f)
+        quadraticTo(BUNTING_CENTER_X, 60f, left + width + 30f, 36f)
     }
     stroke(rope, Color(0xFF8A5A3C), 2.5f)
     val colors = listOf(Color(0xFFE4483C), Color(0xFF2C74D8), Color(0xFF2E9E5B), Color(0xFFF4B623), Color(0xFF9B6BD3))
     for (i in 0 until count) {
         val x = left + PENNANT_WIDTH * i + PENNANT_WIDTH / 2
-        val sag = 18f * (1f - ((x - 520f) / (width / 2 + 30f)).let { it * it })
-        val top = 38f + sag
+        val sag = 18f * (1f - ((x - BUNTING_CENTER_X) / (width / 2 + 30f)).let { it * it })
+        val jump = if (waving) 7f * sin(time * 7f - i * 0.7f).coerceAtLeast(0f) else 0f
+        val top = 38f + sag - jump
+        val sway = (if (waving) 5f else 2f) * sin(time * 1.4f + i * 0.9f)
         fill(
             path {
                 moveTo(x - PENNANT_WIDTH * 0.45f, top)
                 lineTo(x + PENNANT_WIDTH * 0.45f, top)
-                lineTo(x, top + 50f)
+                lineTo(x + sway, top + 50f)
                 close()
             },
             colors[i % colors.size],
         )
         if (letters.isEmpty()) {
-            drawStar(Offset(x, top + 17f), 9f, Color.White)
+            drawStar(Offset(x + sway * 0.3f, top + 17f), 9f, Color.White)
         } else {
-            label(measurer, letters[i].toString(), Offset(x, top + 17f), 24f, Color.White, font)
+            label(measurer, letters[i].toString(), Offset(x + sway * 0.3f, top + 17f), 24f, Color.White, font)
         }
     }
 }
 
 private const val MAX_LETTERS = 10
 private const val PENNANT_WIDTH = 40f
+private const val BUNTING_CENTER_X = 520f
+private const val INVITE_SECONDS = 3.5f

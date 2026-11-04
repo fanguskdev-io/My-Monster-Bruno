@@ -148,6 +148,14 @@ def pop():
     return mezclar(tono(1000, 0.06, caida=60, final=700), ruido(0.03, 40, caida=120, suavizado=0.3), 0.0, 0.4)
 
 
+def inicio():
+    """La pantalla de inicio: un arpegio alegre que sube, sol, do, mi, sol y do, y unas chispas al final."""
+    s = []
+    for i, f in enumerate((392.0, 523.25, 659.25, 783.99, 1046.5)):
+        s = mezclar(s, campana(f, 0.6, caida=5), 0.1 * i, 0.45)
+    return mezclar(s, chispas(), 0.45, 0.4)
+
+
 def palmada():
     """Una palmada de Bruno en «Habla con Bruno»: un golpe de ruido con cuerpo y otro más flojo detrás, como dos manos."""
     s = mezclar(ruido(0.09, 50, caida=45, suavizado=0.35), ruido(0.07, 51, caida=55, suavizado=0.45), 0.012, 0.6)
@@ -169,6 +177,7 @@ RECETAS = {
     "fresa": fresa,
     "pop": pop,
     "palmada": palmada,
+    "inicio": inicio,
 }
 
 

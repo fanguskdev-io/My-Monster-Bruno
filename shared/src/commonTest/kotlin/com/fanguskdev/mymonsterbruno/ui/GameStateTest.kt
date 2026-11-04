@@ -87,6 +87,18 @@ class GameStateTest {
     }
 
     @Test
+    fun writingHerNameEndsInTheRoomAndThenToBed() {
+        val game = game(left = 1)
+        game.go(Scene.Name)
+        repeat(30) { game.tick() }
+        assertEquals(Scene.Name, game.scene, "no se va a dormir a mitad de su nombre")
+        game.back()
+        assertEquals(Scene.Home, game.scene)
+        game.tick()
+        assertEquals(Scene.Sleep, game.scene)
+    }
+
+    @Test
     fun openedAfterTheTimeBrunoIsAlreadyAsleep() {
         val game = game(left = 0)
         assertEquals(Scene.Sleep, game.scene)
@@ -112,6 +124,31 @@ class GameStateTest {
         again.removePhoto()
         assertEquals(null, again.photo)
         assertEquals(null, GameState(store, Audio(SilentPlayer(), CoroutineScope(EmptyCoroutineContext)), Random(1)) { monday }.photo)
+    }
+
+    @Test
+    fun theStartScreenLeadsWhereTheGameWasAndCountsNoTime() {
+        fun opened(save: SaveData): GameState {
+            val store = MemoryStore()
+            SaveStore.save(store, save)
+            return GameState(store, Audio(SilentPlayer(), CoroutineScope(EmptyCoroutineContext)), Random(1), splash = true) { monday }
+        }
+        val egg = opened(SaveData())
+        assertEquals(Scene.Splash, egg.scene)
+        egg.leaveSplash()
+        assertEquals(Scene.Hatch, egg.scene)
+
+        val room = opened(SaveData(hatched = true))
+        repeat(5) { room.tick() }
+        assertEquals(0, room.data.playedSeconds, "la pantalla de inicio no cuenta minutos")
+        room.leaveSplash()
+        assertEquals(Scene.Home, room.scene)
+
+        // Opened after the time of the day: Bruno is already asleep, without yawning nor a mission.
+        val bed = opened(SaveData(hatched = true, dailyMinutes = 5, playedDay = monday, playedSeconds = 5 * Session.SECONDS_IN_MINUTE))
+        bed.leaveSplash()
+        assertEquals(Scene.Sleep, bed.scene)
+        assertFalse(bed.wentToBed)
     }
 
     @Test

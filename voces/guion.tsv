@@ -373,3 +373,40 @@ b_no_es_regalo	bruno	Huum... Eso no es regalo. ¿Me dices regalo?
 b_no_es_mariposa	bruno	Huum... Eso no es mariposa. ¿Me dices mariposa?
 b_no_es_elefante	bruno	Huum... Eso no es elefante. ¿Me dices elefante?
 b_eres_tu	bruno	¡Mira! ¡Eres tú!
+n_titulo	narrador	¡Mi amigo Bruno!
+n_toca_empezar	narrador	¡Toca para empezar!
+n_nombre_intro	narrador	¡Vamos a escribir tu nombre, letra a letra!
+b_ensename_nombre	bruno	¿Me enseñas a escribir tu nombre? Toca el banderín.
+b_ya_se_tu_nombre	bruno	¡Ya sé escribir tu nombre!
+n_letra_a	narrador	La a.
+n_letra_b	narrador	La be.
+n_letra_c	narrador	La ce.
+n_letra_d	narrador	La de.
+n_letra_e	narrador	La e.
+n_letra_f	narrador	La efe.
+n_letra_g	narrador	La ge.
+n_letra_h	narrador	La hache.
+n_letra_i	narrador	La i.
+n_letra_j	narrador	La jota.
+n_letra_k	narrador	La ka.
+n_letra_l	narrador	La ele.
+n_letra_m	narrador	La eme.
+n_letra_n	narrador	La ene.
+n_letra_enye	narrador	La eñe.
+n_letra_o	narrador	La o.
+n_letra_p	narrador	La pe.
+n_letra_q	narrador	La cu.
+n_letra_r	narrador	La erre.
+n_letra_s	narrador	La ese.
+n_letra_t	narrador	La te.
+n_letra_u	narrador	La u.
+n_letra_v	narrador	La uve.
+n_letra_w	narrador	La uve doble.
+n_letra_x	narrador	La equis.
+n_letra_y	narrador	La i griega.
+n_letra_z	narrador	La zeta.
+n_letra_a_tilde	narrador	La a, con tilde.
+n_letra_e_tilde	narrador	La e, con tilde.
+n_letra_i_tilde	narrador	La i, con tilde.
+n_letra_o_tilde	narrador	La o, con tilde.
+n_letra_u_tilde	narrador	La u, con tilde.

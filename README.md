@@ -1,6 +1,6 @@
 # MyMonsterBruno
 
-«Mi monstruo Bruno», un juego educativo para Android e iOS. De un huevo nace Bruno, un monstruo que no sabe nada de nada,
+«Mi amigo Bruno», un juego educativo para Android e iOS. De un huevo nace Bruno, un monstruo que no sabe nada de nada,
 y ella le enseña las vocales, a contar y a trazar las letras. Es un regalo de Fangusk para su sobrina de 4 años, que este
 curso ha empezado el cole en España. La [página de diseño](docs/diseno.md) cuenta lo que pidió, las reglas y las
 decisiones, y la [investigación](docs/investigacion/investigacion.md), de dónde sale.
@@ -9,8 +9,9 @@ decisiones, y la [investigación](docs/investigacion/investigacion.md), de dónd
 > M3 está hecho: las islas de los colores, las formas y las emociones, y las letras M, P, L y S y los números hasta el 10.
 > Después llegaron la T, la N y la D, y su foto en el cuarto de Bruno.
 > M2 también: «Habla con Bruno», en el que ella le dice palabras con el micrófono y él las repite con su voz y las da en
-> palmadas. Y la isla de las palabras, en la que busca qué empieza como la palabra de Bruno. La entrega en su iPhone
-> está preparada: será ad hoc, instalado el día que se lo dé ([entrega](docs/entrega.md)).
+> palmadas. Y la isla de las palabras, en la que busca qué empieza como la palabra de Bruno. Lo último: escribir su
+> nombre, letra a letra, desde el banderín del cuarto, y una pantalla de inicio con Bruno en su barca. La entrega en su
+> iPhone está preparada: será ad hoc, instalado el día que se lo dé ([entrega](docs/entrega.md)).
 
 ## Estructura
 

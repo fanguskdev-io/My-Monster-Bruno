@@ -1,4 +1,4 @@
-# Mi monstruo Bruno · página de diseño
+# Mi amigo Bruno · página de diseño
 
 > **Sin validar todavía.** La redacta el agente con la propuesta que eligió Fangusk y con la primera versión construida.
 > Lo que dijo él va entre comillas; lo demás es propuesta hasta que lo valide ([ADR](adr/README.md)).
@@ -51,6 +51,12 @@ lo que quedaba, «T, N y D» ([ADR 0014](adr/0014-la-t-la-n-y-la-d.md)), que Bru
 pide un color (“¡Quiero el globo rojo!”) y después series: rojo, azul, rojo… ¿cuál va ahora?»
 ([ADR 0007](adr/0007-la-isla-de-los-colores.md)).
 
+El 2026-11-04 pidió una batería de mejoras y ampliaciones ([ideas](ideas.md)) y, de ellas, «Escribir su nombre», tal como
+se la propuso el agente: «Así» ([ADR 0017](adr/0017-escribir-su-nombre.md)). Y una pantalla de inicio: «Añade tambien una
+pantalla de Splash para cuando se inicia el juego, queda un poco soso iniciar el juego como tal, básate en como lo hace
+CaroFarty» ([ADR 0018](adr/0018-la-pantalla-de-inicio.md)). Y otro nombre para el juego: «Sustituye: Mi monstruo Bruno
+por: Mi amigo Bruno» ([ADR 0002](adr/0002-mi-monstruo-bruno.md)).
+
 La propuesta 3, tal como la leyó (en la [maqueta](investigacion/propuestas.html#p3)):
 
 - **Una partida, unos 10 minutos**: el saludo («¡tengo hambre de letras!»), el mapa con la isla del día, minijuegos en los
@@ -65,13 +71,19 @@ La propuesta 3, tal como la leyó (en la [maqueta](investigacion/propuestas.html
 
 ## Cómo es una partida
 
+Al abrir el juego, **la pantalla de inicio** ([ADR 0018](adr/0018-la-pantalla-de-inicio.md)): Bruno se mece en su barca
+(antes de nacer, su huevo) mientras pasan las islas por el horizonte, y las letras de BRUNO caen a su sitio. La voz dice
+«¡Mi amigo Bruno!» y «¡Toca para empezar!», y un toque en cualquier sitio abre el juego donde estaba.
+
 1. **Nace tu monstruo** (solo la primera vez). Es de noche y hay un huevo. Cada toque lo hace temblar y lo agrieta; al
    quinto se rompe y sale Bruno: «¡Hola! ¡Soy Bruno! No sé nada de nada... ¿Me enseñas?». Ella elige su color (menta,
    rosa, naranja o morado) y lo que lleva en la cabeza (cuernos, orejas o antenas), y el botón verde se lo queda.
 2. **El cuarto de Bruno**, la casa. Bruno la saluda y la invita a la isla. Si le toca, se ríe con cosquillas. El botón
    grande lleva al mapa, el micrófono a «Habla con Bruno» y el globo, al rincón de la calma. Arriba cuelga un banderín con
    su nombre, si los mayores lo han escrito, o con estrellas, y en la pared, su foto en un marco, si la han elegido: la
-   primera vez, Bruno la mira y dice «¡Mira! ¡Eres tú!» ([ADR 0016](adr/0016-su-foto.md)).
+   primera vez, Bruno la mira y dice «¡Mira! ¡Eres tú!» ([ADR 0016](adr/0016-su-foto.md)). El banderín con su nombre
+   lleva a escribirlo; mientras no lo haya escrito, Bruno se lo pide cada día que abre el juego: «¿Me enseñas a escribir
+   tu nombre? Toca el banderín».
 3. **El mapa**. Bruno va en su barca. Hay seis islas: la de las letras, la de los números, la de los colores, la de las
    formas, la de las emociones y, la más pequeña, arriba a la derecha, la de las palabras. Una isla terminada lleva su
    bandera.
@@ -136,11 +148,17 @@ Fuera del camino:
   ([ADR 0015](adr/0015-bruno-comprueba-la-palabra.md)). Su voz suena una vez y se olvida: no se guarda ni sale del
   aparato, y lo que dice lo reconoce el propio aparato, sin conexión. El permiso del micrófono (y en el iPhone, el del
   reconocimiento de voz) se pide la primera vez que se entra.
+- **Escribir su nombre** ([ADR 0017](adr/0017-escribir-su-nombre.md)), desde el banderín del cuarto. Arriba cuelga su
+  nombre en un banderín, y abajo, en una hoja, ella traza sus letras una tras otra, con los trazos del cole, mientras el
+  narrador dice cada una («La ele»). La tilde y la virgulilla de la ñ son el último trazo de su letra. Cada letra que
+  acaba vuela a su banderín y le da su color; con todas, su nombre sale entero en la hoja y Bruno dice «¡Ya sé escribir
+  tu nombre!». Son las mayúsculas del abecedario y las vocales con tilde, hasta las diez letras del banderín.
 - **El rincón de la calma**, el de su clase. Mientras mantiene el dedo, el globo se hincha y ella toma aire. Al soltar, el
   globo se deshincha despacio. Son tres respiraciones con Bruno.
 - **La zona de mayores**, detrás del candado de la esquina, que se abre manteniendo el dedo 2,5 segundos. En ella se puede
   escribir su nombre (para el banderín), elegir su foto en la galería (para el marco del cuarto) o quitarla, elegir los minutos al día (5, 10, 15 o 20), dar «10 minutos más, solo hoy»,
-  quitar la voz o los efectos, ver lo que ha practicado (galletas por vocal, letras trazadas, fresas por número, globos,
+  quitar la voz o los efectos, ver lo que ha practicado (galletas por vocal, letras trazadas, veces que ha escrito su
+  nombre, fresas por número, globos,
   series, piezas de la casa, emociones, palabras dichas a Bruno, parejas que empiezan igual, islas y regalos) y volver a
   empezar, que devuelve a Bruno al huevo y conserva los ajustes. En
   Android y en el escritorio también hay «Salir del juego», que guarda la partida y lo cierra. En iPhone y iPad no lo
@@ -160,8 +178,8 @@ Salen de la [investigación §6](investigacion/investigacion.md#6-reglas-que-sal
 | Equivocarse no castiga | Bruno nunca dice «¡mal!». Pone cara rara, devuelve la galleta y lo vuelve a pedir. No hay vidas, puntos ni tiempo |
 | Unos 10 minutos con final | Límite por día, 10 minutos de serie. Bruno se duerme al terminar lo que ella esté haciendo. No hay rachas, cuentas atrás ni «¡no te vayas!» ([ADR 0006](adr/0006-diez-minutos-y-a-dormir.md)) |
 | Para jugar acompañada | La misión para casa de cada noche, y «Habla con Bruno», que la primera vez necesita a un mayor para el permiso del micrófono |
-| Lo del cole | Vocales en mayúscula, sus trazos en el orden del cole, y contar del 1 al 5 con los dedos y los puntos, en castellano de España |
-| Hecho para ella | Su nombre en el banderín y su Bruno, con el color y la cabeza que ella elige. La voz no dice su nombre: son frases grabadas de antemano ([ADR 0004](adr/0004-voces-provisionales.md)) |
+| Lo del cole | Vocales en mayúscula, sus trazos en el orden del cole, escribir su nombre, y contar del 1 al 5 con los dedos y los puntos, en castellano de España |
+| Hecho para ella | Su nombre en el banderín, que aprende a escribir, y su Bruno, con el color y la cabeza que ella elige. La voz no dice su nombre: son frases grabadas de antemano ([ADR 0004](adr/0004-voces-provisionales.md)) |
 | Tranquilo | Colores suaves, sonidos cortos que solo suenan al tocar y animaciones lentas. La voz y los efectos se pueden quitar |
 | Premios con sentido | Los accesorios de Bruno se ganan terminando islas. No hay cofres sorpresa ni nada que comprar |
 | Limpio | Sin anuncios, compras, cuentas ni internet. En Android no pide el permiso de internet. Todo lo guarda el dispositivo ([ADR 0005](adr/0005-un-regalo-sin-conexion.md)). El micrófono solo escucha mientras ella mantiene el botón, y su voz no se guarda ([ADR 0011](adr/0011-habla-con-bruno.md)) |
@@ -173,12 +191,14 @@ trazos y el mapa con dos islas. De las piezas comunes, el rincón de la calma, l
 (sin foto ni voces). Y de M3: la isla de los colores, con sus globos y sus series; la de las formas, con la casa de
 Bruno; las letras M, P, L y S y los números hasta el 10 en las islas que ya había; y la isla de las emociones. Con
 eso está todo lo que la propuesta ponía en el mapa. De M2, «Habla con Bruno». Y de lo que faltaba, la isla de las
-palabras, con el sonido inicial por la sílaba.
+palabras, con el sonido inicial por la sílaba. Y de las ideas, escribir su nombre y la pantalla de inicio.
 
 **Falta**, de la propuesta 3 que eligió Fangusk. El orden y el alcance de cada pieza los decide él.
 
 - **Más contenido**: más consonantes, después de la T, la N y la D. El sonido inicial ya está, por la sílaba, en la isla
   de las palabras.
+
+Una batería de ideas para después, sin decidir, está en [ideas](ideas.md).
 
 Las **voces de la familia** no se harán: «para M2 no vamos a utilizar las voces de la familia, seguiremos con las voces actuales» (Fangusk, 2026-11-03).
 
@@ -189,7 +209,7 @@ Las **voces de la familia** no se harán: «para M2 no vamos a utilizar las voce
 - **Bruno y todo lo demás se dibujan con vectores**, sin imágenes: Bruno respira, parpadea, mira y cambia de cara (ocho
   bocas, cuatro ojos, tres posturas de brazos).
 - **Las voces** son las de un narrador y la de Bruno, algo más aguda y más despacio, a unas 4 sílabas por segundo. Hay
-  374 frases pregrabadas con la voz del sistema del Mac y **los efectos** (14) se sintetizan desde cero
+  411 frases pregrabadas con la voz del sistema del Mac y **los efectos** (15) se sintetizan desde cero
   ([ADR 0004](adr/0004-voces-provisionales.md)). Las frases están en [`voces/guion.tsv`](../voces/guion.tsv).
-- **La letra** de la zona de mayores, de los números y del banderín es Andika, una tipografía pensada para quien aprende a
+- **La letra** de la zona de mayores, de los números, del banderín y del título es Andika, una tipografía pensada para quien aprende a
   leer (licencia OFL, en [`licencias/`](../licencias/Andika-OFL.txt)).

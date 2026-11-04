@@ -50,6 +50,7 @@ class ScreenshotsTest {
     fun everyScreenDraws() {
         val folder = File("build/capturas").apply { mkdirs() }
         val scenes = listOf(
+            "0-inicio" to Scene.Splash,
             "1-nacer" to Scene.Hatch,
             "2-casa" to Scene.Home,
             "3-mapa" to Scene.Map,
@@ -66,6 +67,7 @@ class ScreenshotsTest {
             "17-emociones" to Scene.Play(Island.FEELINGS, 0),
             "18-habla" to Scene.Talk,
             "19-palabras" to Scene.Play(Island.WORDS, 0),
+            "23-nombre" to Scene.Name,
         )
         // The same games once she knows the vowels and one to five: the consonants and the numbers up to ten.
         val knows = { save: SaveData ->
@@ -112,9 +114,16 @@ class ScreenshotsTest {
                 file.writeBytes(render(scene, screen, knowsMore))
                 assertTrue(file.length() > MIN_BYTES, "$file está vacía")
             }
+            val egg = File(folder, "${screen.name}-0-inicio-huevo.png")
+            egg.writeBytes(render(Scene.Splash, screen, { it.copy(hatched = false) }))
+            assertTrue(egg.length() > MIN_BYTES, "$egg está vacía")
             val withPhoto = File(folder, "${screen.name}-2-casa-con-foto.png")
             withPhoto.writeBytes(render(Scene.Home, screen, photo = samplePhoto()))
             assertTrue(withPhoto.length() > MIN_BYTES, "$withPhoto está vacía")
+            // The room when Bruno asks her to teach him her name, and the bunting waves.
+            val asking = File(folder, "${screen.name}-2-casa-banderin.png")
+            asking.writeBytes(render(Scene.Home, screen, asksForName = true))
+            assertTrue(asking.length() > MIN_BYTES, "$asking está vacía")
             val file = File(folder, "${screen.name}-20-mapa-terminado.png")
             file.writeBytes(render(Scene.Map, screen, finished))
             assertTrue(file.length() > MIN_BYTES, "$file está vacía")
@@ -142,6 +151,7 @@ class ScreenshotsTest {
         screen: Screen,
         practised: (SaveData) -> SaveData = { it },
         photo: ByteArray? = null,
+        asksForName: Boolean = false,
     ): ByteArray {
         val store = MemoryStore()
         val save = SaveData(
@@ -154,6 +164,7 @@ class ScreenshotsTest {
         val audio = Audio(SilentPlayer(), CoroutineScope(Dispatchers.Unconfined))
         val game = GameState(store, audio, Random(SEED), day = { DAY })
         game.greeted = true
+        game.askedForName = !asksForName
         game.go(scene)
         // With a way out, as on Android and the desktop, so the grown-ups' corner shows its «Salir del juego».
         val image = ImageComposeScene(screen.width, screen.height, Density(screen.height / STAGE_DP)) {

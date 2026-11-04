@@ -168,7 +168,7 @@ internal fun TraceScreen(game: GameState, onDone: () -> Unit) {
 }
 
 /** The letter: its road, its dots, the red paint up to [mark] (stroke and point) and where to go on. */
-private fun DrawScope.drawGlyph(
+internal fun DrawScope.drawGlyph(
     glyph: Glyph,
     origin: Offset,
     k: Float,

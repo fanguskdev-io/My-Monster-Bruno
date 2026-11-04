@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Estado** | aceptada en la propuesta y el nombre: «Comenzamos con la propuesta 3 Mi monstruo, pero en lugar de Coco, llamemosle Bruno» (Fangusk, 2026-11-02). El alcance de la primera versión es el que la propuesta le daba. Propuesta en los detalles: cuántas rondas tiene cada juego, cuántas letras se trazan, los regalos y cuándo crece |
+| **Estado** | aceptada en la propuesta y el nombre: «Comenzamos con la propuesta 3 Mi monstruo, pero en lugar de Coco, llamemosle Bruno» (Fangusk, 2026-11-02). El juego se llama «Mi amigo Bruno» desde que lo pidió: «Sustituye: Mi monstruo Bruno por: Mi amigo Bruno» (Fangusk, 2026-11-04). El alcance de la primera versión es el que la propuesta le daba. Propuesta en los detalles: cuántas rondas tiene cada juego, cuántas letras se trazan, los regalos y cuándo crece |
 | **Fecha** | 2026-11-02 · **Fase:** P0 · Borrador anticipado, sin ninguna puerta confirmada |
 | **Propone · decide** | agente (Claude Code, Opus 5.5) · Fangusk |
 | **Reversibilidad** | media: el personaje y su mundo se pueden ampliar con islas nuevas; cambiar la idea es otro juego |

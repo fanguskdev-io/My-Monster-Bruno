@@ -12,7 +12,7 @@ y estas decisiones existen antes de G4 porque Fangusk pidió desarrollar ya. Las
 | ADR | Decisión | Estado |
 |---|---|---|
 | [0001](0001-kotlin-multiplatform-como-carofarty.md) | Kotlin Multiplatform y Compose Multiplatform, como CaroFarty, dibujando con vectores sin motor | Aceptada; el dibujo con vectores, propuesta |
-| [0002](0002-mi-monstruo-bruno.md) | Mi monstruo Bruno: la propuesta 3 de la investigación, con la primera versión que describía | Aceptada; los detalles de cada juego, propuesta |
+| [0002](0002-mi-monstruo-bruno.md) | Mi amigo Bruno (al principio, Mi monstruo Bruno): la propuesta 3 de la investigación, con la primera versión que describía | Aceptada; los detalles de cada juego, propuesta |
 | [0003](0003-escenario-horizontal-dibujado.md) | En horizontal, sobre un escenario de 800 × 400 que se adapta a móvil y a tableta | Propuesta |
 | [0004](0004-voces-provisionales.md) | Voces pregrabadas con la voz del Mac, y efectos sintetizados; sin voces de la familia | Propuesta; quedarse con estas voces, aceptada |
 | [0005](0005-un-regalo-sin-conexion.md) | Un regalo sin conexión: sin anuncios, compras, cuentas ni datos fuera del dispositivo | Propuesta |
@@ -27,3 +27,5 @@ y estas decisiones existen antes de G4 porque Fangusk pidió desarrollar ya. Las
 | [0014](0014-la-t-la-n-y-la-d.md) | La T, la N y la D en la isla de las letras, cuando ya conoce la M, la P, la L y la S | Aceptada; los trazos y los dibujos, propuesta |
 | [0015](0015-bruno-comprueba-la-palabra.md) | Bruno comprueba la palabra de «Habla con Bruno» con el reconocimiento del propio aparato, sin conexión | Aceptada; cuánto se parece una palabra, propuesta |
 | [0016](0016-su-foto.md) | Su foto, elegida en la galería por los mayores, en un marco del cuarto de Bruno | Aceptada; el sitio del marco, propuesta |
+| [0017](0017-escribir-su-nombre.md) | Escribir su nombre, letra a letra, desde el banderín del cuarto | Aceptada; los trazos y cuándo la invita Bruno, propuesta |
+| [0018](0018-la-pantalla-de-inicio.md) | La pantalla de inicio, como la de CaroFarty, con el título y Bruno en su barca | Aceptada; lo que sale en ella, propuesta |

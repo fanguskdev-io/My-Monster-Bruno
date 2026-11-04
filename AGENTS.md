@@ -2,7 +2,7 @@
 
 Lo que no se deduce del código. Si algo de aquí discrepa de su fuente, manda la fuente.
 
-- **Qué es**: «Mi monstruo Bruno», un juego educativo para Android e iOS que Fangusk le regala a su sobrina de 4 años. De
+- **Qué es**: «Mi amigo Bruno», un juego educativo para Android e iOS que Fangusk le regala a su sobrina de 4 años. De
   un huevo nace Bruno y ella le enseña las vocales, a contar y a trazar. Lo que pidió, con sus palabras, y las reglas están
   en [docs/diseno.md](docs/diseno.md); la investigación y las cuatro propuestas, en [docs/investigacion/](docs/investigacion/investigacion.md).
 - **Decide Fangusk**: las decisiones están en [docs/adr/](docs/adr/README.md). Las «aceptadas» las dictó él; las

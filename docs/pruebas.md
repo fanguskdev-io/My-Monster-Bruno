@@ -13,17 +13,18 @@ Qué se prueba en cada cambio y en cada hito, y cómo. Los criterios de salida d
 
 | Qué | Prueba | Dónde |
 |---|---|---|
-| Trazar: cada letra (vocales, M, P, L, S, T, N y D) se puede trazar entera, también con el dedo temblón; los trazos van en el orden del cole; un dedo lejos no empieza ni avanza; no se puede saltar al final de la O; levantar el dedo guarda lo hecho | `TracingTest` | Común |
+| Trazar: cada letra (las 27 mayúsculas y las vocales con tilde) se puede trazar entera, también con el dedo temblón; los trazos van en el orden del cole; cada trazo cabe en su caja, y la tilde y la virgulilla, encima; un dedo lejos no empieza ni avanza; no se puede saltar al final de la O; levantar el dedo guarda lo hecho | `TracingTest` | Común |
 | Las rondas: Comeletras pide el primer día las vocales y después las letras menos dadas, con las consonantes; la T, la N y la D no salen hasta que conoce la M, la P, la L y la S, ni en Comeletras ni en los trazos; las fresas van del 1 al 5 y, cuando los ha contado, mezclan hasta el 10, nunca empezando por el más grande; se trazan las menos trazadas, las vocales primero; cada letra tiene su palabra; los globos piden cinco colores distintos con otros dos; las series son dos de dos colores y dos de tres, y su respuesta está entre las opciones; la casa se construye en orden y su pieza siempre está entre las tres; las emociones salen una vez cada una, la nana la última, y su carita está entre las tres; «Habla con Bruno» pide cuatro de las palabras que menos ha dicho, de menos palmadas a más, y cada palabra son sus sílabas, de una a cuatro; la isla de las palabras pide cinco parejas, las menos encontradas, con una sola carta que empieza como la palabra de Bruno, y cada palabra tiene su pareja | `RoundsTest` | Común |
 | Los minutos del día, el día nuevo y los minutos de más; la partida se guarda y se recupera, y una rota empieza de cero; lo que lleva Bruno y cuánto crece | `SessionTest` | Común |
-| Cuándo se va Bruno a dormir: enseguida en el cuarto y en el mapa, al terminar la isla dentro de una o «Habla con Bruno», dormido si se abre sin tiempo, y el huevo no cuenta; su foto se queda al volver a abrir, una nueva hace que Bruno la vuelva a ver y quitarla la borra | `GameStateTest` | Común |
+| Cuándo se va Bruno a dormir: enseguida en el cuarto y en el mapa, al terminar la isla dentro de una, «Habla con Bruno» o su nombre, dormido si se abre sin tiempo, y el huevo no cuenta; la pantalla de inicio lleva al huevo, al cuarto o a la cama y no cuenta minutos; su foto se queda al volver a abrir, una nueva hace que Bruno la vuelva a ver y quitarla la borra | `GameStateTest` | Común |
+| Escribir su nombre: se trazan sus letras en orden, sin espacios, hasta diez y sin las que el juego no sabe trazar; cada letra del abecedario y cada vocal con tilde tiene su trazo y su voz, distinta de las demás; una vocal con tilde cuenta como su vocal | `NameTest` | Común |
 | Leer los WAV | `WavTest` | Común |
 | Su foto se guarda en partes que caben en todas las plataformas y vuelve entera; otra la sustituye sin dejar restos, quitarla no deja nada y una rota no es foto | `PhotoStoreTest` | Común |
 | Cuándo es la palabra que pidió Bruno: la palabra, aunque vaya en una frase o con mayúsculas y puntos; la que dice una niña de 4 años con una letra de cada tres cambiada; nunca otra palabra, ni nada | `WordCheckTest` | Común |
 | Lo que se hace con su voz antes de que Bruno la repita: sin el silencio de los bordes (y nada si solo hay silencio o un murmullo), a la altura de las voces del juego, más aguda y más rápida, en un canal y de vuelta a WAV | `MicrophoneTest` | Común |
 | El sonido del escritorio: la mezcla suma sin desbordarse, respeta el volumen y pasa todo a un canal a 22 050 Hz; y cortar una voz tras otra, como al contar fresas, no atasca su hilo | `DesktopSoundTest` | JVM |
 | Cada frase del juego tiene su fichero y dura lo que una frase; el guion y el código tienen las mismas frases; cada efecto tiene su fichero | `AudioFilesTest` | JVM |
-| Las dieciséis pantallas y, cuando ya sabe las vocales y del 1 al 5, Comeletras, los trazos y las fresas con lo nuevo, Comeletras y los trazos con la T, la N y la D, el cuarto con su foto, y el mapa con todas las islas terminadas y sus banderas, se dibujan en móvil (2,17:1) y en tableta (4:3) | `ScreenshotsTest` | JVM |
+| Las dieciocho pantallas y, cuando ya sabe las vocales y del 1 al 5, Comeletras, los trazos y las fresas con lo nuevo, Comeletras y los trazos con la T, la N y la D, la pantalla de inicio con el huevo, el cuarto con su foto y cuando Bruno le pide que le enseñe su nombre, y el mapa con todas las islas terminadas y sus banderas, se dibujan en móvil (2,17:1) y en tableta (4:3) | `ScreenshotsTest` | JVM |
 | La salida de la zona de mayores: «Salir del juego» guarda la partida y cierra; sin salida en la plataforma, como en iOS, no hay botón | `GrownUpsExitTest` | JVM |
 | El icono de iOS es el de Android: lo dibuja del vector de `androidApp` en `shared/build/icono/` y lo compara con el del proyecto de Xcode; si cambia el de Android, se copia el nuevo | `AppIconTest` | JVM |
 | En el iPhone 15 Pro de ella y en el 17 Pro del simulador, girados a un lado y al otro, la casa, el altavoz y el candado se ven enteros: ni bajo la Dynamic Island ni cortados por las esquinas redondeadas, medidas en el simulador | `CornerButtonsTest` | Común |
@@ -75,8 +76,9 @@ comprueba ([ADR 0015](adr/0015-bruno-comprueba-la-palabra.md)).
 Para ver el juego en un iPhone 15 Pro simulado, girado a un lado y al otro, sin tocarlo a mano:
 [`tools/conductor-ios`](../tools/conductor-ios) es una prueba de interfaz que toca el escenario de 800 × 400 y, en cada
 punto de control, espera a que `vigilante.sh` saque una captura con lo que tapan la isla y las esquinas pintado de negro.
-Tiene cuatro recorridos: los dos de la entrega (`testWalkThroughHeldBothWays` y `testFinalVersionBothWays`, que empiezan
-en el huevo) y los de después (`testTalkAndPhoto` y `testWordsAndLetters`, que empiezan con Bruno ya nacido). Siempre en
+Tiene cinco recorridos: los dos de la entrega (`testWalkThroughHeldBothWays` y `testFinalVersionBothWays`, que empiezan
+en el huevo) y los de después (`testTalkAndPhoto`, `testWordsAndLetters` y `testStartAndName`, que empiezan con Bruno ya
+nacido y su nombre, Lucía, sin escribir todavía). Todos pasan antes por la pantalla de inicio, con un toque. Siempre en
 silencio (`-silencio`) y en un simulador propio que se borra al acabar, nunca en uno de otra sesión.
 
 1. Un simulador temporal con el juego (el de `build/xcode`, que deja la puerta) y, para su foto, una imagen en su galería:
@@ -228,6 +230,33 @@ mayores se desplaza arrastrando despacio, porque el deslizar rápido de las prue
   inicial en la tarjeta si está escrito) y, en la zona de mayores, las parejas encontradas por sílaba.
 - [x] Jugada entera en el emulador Tester_API36, con cartas buenas y malas, hasta el regalo y la bandera; en el simulador
   de iPhone 15 Pro, la pregunta y una carta mala, girado a los dos lados (2026-11-03).
+
+### M5 · Escribir su nombre
+
+- [ ] Con su nombre escrito en la zona de mayores, al entrar en el cuarto Bruno mira el banderín, que ondea, y dice «¿Me
+  enseñas a escribir tu nombre? Toca el banderín». Cada vez que se abre el juego, hasta que lo escriba.
+- [ ] Tocar el banderín lleva a escribirlo: arriba, su nombre en banderines, con la letra que toca en blanco; en la hoja,
+  la letra grande con el punto verde, y el narrador dice «¡Vamos a escribir tu nombre, letra a letra!» y la letra.
+- [ ] Al acabar cada letra, se queda verde y vuela a su banderín, que toma su color, y sale la siguiente. La tilde o la
+  virgulilla, al final de su letra. El altavoz repite la letra y la casa vuelve al cuarto.
+- [ ] Con todas, su nombre sale entero en la hoja, los banderines saltan, Bruno dice «¡Ya sé escribir tu nombre!» y
+  vuelve al cuarto, donde ya no se lo pide. En la zona de mayores, «Veces que ha escrito su nombre» suma una.
+- [ ] Sin nombre, el banderín de estrellas no hace nada.
+- [x] En el emulador Tester_API36, con «Lucía» escrito y sin escribir nunca: Bruno mira el banderín y lo pide; el banderín
+  lleva a escribirlo, y un dedo de `adb` (`input motionevent`, punto a punto por los trazos de cada letra) escribe las
+  cinco letras con la tilde de la Í. Cada una vuela a su banderín, sale «LUCÍA» en la hoja, Bruno lo celebra y vuelve al
+  cuarto, donde ya no lo pide; en la zona de mayores, «Veces que ha escrito su nombre: 1» y la A, la I, la U y la L
+  trazadas una vez. Atrás vuelve al cuarto. En el simulador de iPhone 15 Pro, girado a los dos lados
+  (`testStartAndName`): la invitación, la pantalla del nombre y la L trazada, que vuela a su banderín (2026-11-04).
+
+### M5 · La pantalla de inicio
+
+- [ ] Al abrir el juego, Bruno en su barca (o su huevo, antes de nacer), las islas pasando por el horizonte y las letras
+  de BRUNO cayendo; después, el sonido de inicio, «¡Mi amigo Bruno!» y «¡Toca para empezar!».
+- [ ] Un toque en cualquier sitio funde a blanco y abre el huevo, el cuarto o, sin minutos, la cama. El botón de atrás de
+  Android sale del juego, como en el cuarto.
+- [x] En el emulador Tester_API36 y en el simulador de iPhone 15 Pro, girado a los dos lados: «Mi amigo» y BRUNO, Bruno en
+  su barca y las islas pasando; un toque lleva al cuarto. En Android, atrás sale del juego (2026-11-04).
 
 ### M4 · Entrega
 

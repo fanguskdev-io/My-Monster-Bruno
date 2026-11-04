@@ -34,9 +34,11 @@ import com.fanguskdev.mymonsterbruno.ui.screens.HatchScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.HomeScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.HouseScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.MapScreen
+import com.fanguskdev.mymonsterbruno.ui.screens.NameScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.PresentScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.SeriesScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.SleepScreen
+import com.fanguskdev.mymonsterbruno.ui.screens.SplashScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.TalkScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.TraceScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.WordsScreen
@@ -44,7 +46,7 @@ import kotlinx.coroutines.delay
 import com.fanguskdev.mymonsterbruno.ui.Activity as Step
 
 /**
- * Mi monstruo Bruno (docs/diseno.md): the game, the same on Android, iOS and the desktop. What it remembers goes to
+ * Mi amigo Bruno (docs/diseno.md): the game, the same on Android, iOS and the desktop. What it remembers goes to
  * [store]; [sound] false keeps it silent and deaf (the tests, and trying it on the emulator without the Mac's speakers): no
  * sound and no microphone. [onExit]
  * closes the game from the grown-ups' corner where the platform allows it: Android and the desktop; not iOS, where Apple
@@ -54,7 +56,7 @@ import com.fanguskdev.mymonsterbruno.ui.Activity as Step
 fun App(store: KeyValueStore, sound: Boolean = true, onExit: (() -> Unit)? = null) {
     val scope = rememberCoroutineScope()
     val audio = remember { Audio(if (sound) soundPlayer() else SilentPlayer(), scope) }
-    val game = remember { GameState(store, audio) }
+    val game = remember { GameState(store, audio, splash = true) }
     AppContent(game, onExit, listen = sound)
 
     LaunchedEffect(Unit) { audio.load() }
@@ -82,12 +84,14 @@ fun App(store: KeyValueStore, sound: Boolean = true, onExit: (() -> Unit)? = nul
  */
 @Composable
 internal fun AppContent(game: GameState, onExit: (() -> Unit)? = null, listen: Boolean = false) {
-    PlatformBackHandler(enabled = game.scene !is Scene.Home && game.scene !is Scene.Hatch && game.scene !is Scene.Sleep) {
+    val leaves = game.scene is Scene.Home || game.scene is Scene.Hatch || game.scene is Scene.Sleep || game.scene is Scene.Splash
+    PlatformBackHandler(enabled = !leaves) {
         game.audio.hush()
         game.back()
     }
     Box(Modifier.fillMaxSize().background(Color(0xFF8E89E8))) {
         when (val scene = game.scene) {
+            Scene.Splash -> SplashScreen(game)
             Scene.Hatch -> HatchScreen(game)
             Scene.Home -> HomeScreen(game)
             Scene.Map -> MapScreen(game)
@@ -104,6 +108,7 @@ internal fun AppContent(game: GameState, onExit: (() -> Unit)? = null, listen: B
             is Scene.Present -> PresentScreen(game, scene.island) { game.presentGiven(scene.island) }
             Scene.Sleep -> SleepScreen(game)
             Scene.Calm -> CalmScreen(game)
+            Scene.Name -> NameScreen(game) { game.back() }
             Scene.Talk -> {
                 val microphone = if (listen) rememberMicrophone() else remember { DeafMicrophone() }
                 val check = if (listen) rememberWordCheck() else remember { NoWordCheck() }

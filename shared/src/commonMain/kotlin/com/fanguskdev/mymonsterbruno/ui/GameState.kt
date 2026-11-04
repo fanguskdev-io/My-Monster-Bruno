@@ -31,6 +31,9 @@ internal enum class Activity { FEED, TRACE, COUNT, BALLOONS, SERIES, HOUSE, FEEL
 
 /** Where the game is. */
 internal sealed interface Scene {
+    /** The start screen, each time the game opens (ADR 0018). */
+    data object Splash : Scene
+
     data object Hatch : Scene
 
     data object Home : Scene
@@ -48,6 +51,9 @@ internal sealed interface Scene {
     /** «Habla con Bruno», from the room (ADR 0011). */
     data object Talk : Scene
 
+    /** Writing her name, from the bunting of the room (ADR 0017). */
+    data object Name : Scene
+
     data object GrownUps : Scene
 }
 
@@ -59,12 +65,13 @@ internal class GameState(
     private val store: KeyValueStore,
     val audio: Audio,
     val random: Random = Random.Default,
+    splash: Boolean = false,
     private val day: () -> Int = ::today,
 ) {
     var data by mutableStateOf(Session.onDay(SaveStore.load(store), day()))
         private set
 
-    var scene: Scene by mutableStateOf(firstScene())
+    var scene: Scene by mutableStateOf(if (splash) Scene.Splash else firstScene())
         private set
 
     /** Her photo, a small square JPEG, if a grown-up chose one (ADR 0016). */
@@ -77,6 +84,9 @@ internal class GameState(
 
     /** Whether Bruno has said hello since the game opened. */
     var greeted = false
+
+    /** Whether Bruno has asked her, since the game opened, to teach him her name (ADR 0017). */
+    var askedForName = false
 
     /** Whether she arrived at bed by playing (Bruno yawns and says goodnight) or the game opened already asleep. */
     var wentToBed = false
@@ -107,7 +117,7 @@ internal class GameState(
      * things, so there Bruno goes to bed as soon as the time is over; anywhere else, when what she is doing ends.
      */
     fun tick() {
-        if (scene == Scene.Hatch || scene == Scene.Sleep || scene == Scene.GrownUps) return
+        if (scene == Scene.Splash || scene == Scene.Hatch || scene == Scene.Sleep || scene == Scene.GrownUps) return
         data = Session.tick(data, day(), 1)
         if (data.playedSeconds % SAVE_EVERY == 0) SaveStore.save(store, data)
         if (timeUp && (scene == Scene.Home || scene == Scene.Map)) go(Scene.Sleep)
@@ -129,9 +139,12 @@ internal class GameState(
     }
 
     fun go(next: Scene) {
-        if (next == Scene.Sleep) wentToBed = scene != Scene.Sleep && scene != Scene.GrownUps
+        if (next == Scene.Sleep) wentToBed = scene != Scene.Sleep && scene != Scene.GrownUps && scene != Scene.Splash
         scene = next
     }
+
+    /** From the start screen to where the game was: the egg, the room or, if the time of the day is over, the bed. */
+    fun leaveSplash() = go(firstScene())
 
     /** From the room to the map, or to bed if the time is over. */
     fun play() = go(if (timeUp) Scene.Sleep else Scene.Map)
@@ -154,7 +167,7 @@ internal class GameState(
     /** Back from wherever she is, one step towards the room. */
     fun back() {
         when (scene) {
-            Scene.Map, Scene.Calm, Scene.Talk, Scene.GrownUps -> go(if (data.hatched) Scene.Home else Scene.Hatch)
+            Scene.Map, Scene.Calm, Scene.Talk, Scene.Name, Scene.GrownUps -> go(if (data.hatched) Scene.Home else Scene.Hatch)
             is Scene.Play, is Scene.Present -> go(if (timeUp) Scene.Sleep else Scene.Map)
             else -> Unit
         }

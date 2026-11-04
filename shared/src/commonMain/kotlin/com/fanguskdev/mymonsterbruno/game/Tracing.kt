@@ -2,6 +2,7 @@ package com.fanguskdev.mymonsterbruno.game
 
 import androidx.compose.ui.geometry.Offset
 import kotlin.math.PI
+import kotlin.math.abs
 import kotlin.math.cos
 import kotlin.math.hypot
 import kotlin.math.max
@@ -15,11 +16,22 @@ import kotlin.math.sin
  * peak and the right stick without lifting the finger; the P, the stick and then its belly from the top; the L, down and
  * to the right; the S, from its top right, round to the left and back round to the right. And the next ones (ADR 0014):
  * the T, its bar from the left and then its stick from the middle; the N, its left stick and then the slope and the right
- * stick up without lifting the finger; the D, the stick and then its belly from the top.
+ * stick up without lifting the finger; the D, the stick and then its belly from the top. And the rest, for her name (ADR
+ * 0017): the B, the stick and then both bellies from the top; the C, from its top right round to the left and to its
+ * bottom right; the F, the stick and its two bars from the left; the G, the C going up to the middle and then a short bar
+ * inwards; the H, the two sticks and the bar from the left; the J, down from the top right and round to the left; the K,
+ * the stick and then the «<» from the top right; the Q, the O and its tail out; the R, the stick and then its belly from
+ * the top and its leg; the V, down and up; the W, down, up, down and up; the X, from the top left and then from the top
+ * right; the Y, its two arms down to the middle and its stick; the Z, its bars and its slope without lifting the finger.
+ * The marks go last, above the letter (at negative y, from −40 to −8): the tilde of the Ñ, a wave from the left; the
+ * accent of Á, É, Í, Ó and Ú, a short stroke down to the left.
  */
 internal class Glyph(val letter: Char, val width: Float, val strokes: List<List<Offset>>)
 
 internal object Glyphs {
+    /** Whether there is a glyph for [letter], lowercase: the 27 letters of the Spanish alphabet and the accented vowels. */
+    fun has(letter: Char): Boolean = letter in 'a'..'z' || letter in "ñáéíóú"
+
     fun of(letter: Char): Glyph = when (letter) {
         'a' -> Glyph(
             'a',
@@ -102,8 +114,130 @@ internal object Glyphs {
                     line(Offset(35f, GLYPH_HEIGHT), Offset(10f, GLYPH_HEIGHT)).drop(1),
             ),
         )
+        'b' -> Glyph(
+            'b',
+            90f,
+            listOf(
+                line(Offset(10f, 0f), Offset(10f, GLYPH_HEIGHT)),
+                line(Offset(10f, 0f), Offset(40f, 0f)) +
+                    arc(Offset(40f, 32f), 32f, -PI / 2, PI / 2).drop(1) +
+                    line(Offset(40f, 64f), Offset(10f, 64f)).drop(1) +
+                    line(Offset(10f, 64f), Offset(46f, 64f)).drop(1) +
+                    arc(Offset(46f, 102f), 38f, -PI / 2, PI / 2).drop(1) +
+                    line(Offset(46f, GLYPH_HEIGHT), Offset(10f, GLYPH_HEIGHT)).drop(1),
+            ),
+        )
+        'c' -> Glyph('c', 96f, listOf(ellipse(Offset(55f, 70f), 52f, 70f, -PI / 4, -7 * PI / 4)))
+        'f' -> Glyph(
+            'f',
+            84f,
+            listOf(
+                line(Offset(10f, 0f), Offset(10f, GLYPH_HEIGHT)),
+                line(Offset(10f, 0f), Offset(80f, 0f)),
+                line(Offset(10f, 70f), Offset(68f, 70f)),
+            ),
+        )
+        'g' -> {
+            val round = ellipse(Offset(55f, 70f), 52f, 70f, -PI / 4, -11 * PI / 6)
+            val spur = Offset(round.last().x, 76f)
+            Glyph('g', 106f, listOf(round + line(round.last(), spur).drop(1), line(spur, Offset(66f, 76f))))
+        }
+        'h' -> Glyph(
+            'h',
+            100f,
+            listOf(
+                line(Offset(10f, 0f), Offset(10f, GLYPH_HEIGHT)),
+                line(Offset(90f, 0f), Offset(90f, GLYPH_HEIGHT)),
+                line(Offset(10f, 70f), Offset(90f, 70f)),
+            ),
+        )
+        'j' -> Glyph(
+            'j',
+            76f,
+            listOf(line(Offset(64f, 0f), Offset(64f, 106f)) + ellipse(Offset(37f, 106f), 27f, 34f, 0.0, PI).drop(1)),
+        )
+        'k' -> Glyph(
+            'k',
+            90f,
+            listOf(
+                line(Offset(10f, 0f), Offset(10f, GLYPH_HEIGHT)),
+                line(Offset(80f, 0f), Offset(10f, 70f)) + line(Offset(10f, 70f), Offset(84f, GLYPH_HEIGHT)).drop(1),
+            ),
+        )
+        'q' -> Glyph('q', 110f, listOf(oval(Offset(55f, 70f), 52f, 70f), line(Offset(70f, 104f), Offset(104f, 138f))))
+        'r' -> Glyph(
+            'r',
+            90f,
+            listOf(
+                line(Offset(10f, 0f), Offset(10f, GLYPH_HEIGHT)),
+                line(Offset(10f, 0f), Offset(44f, 0f)) +
+                    arc(Offset(44f, 38f), 38f, -PI / 2, PI / 2).drop(1) +
+                    line(Offset(44f, 76f), Offset(10f, 76f)).drop(1) +
+                    line(Offset(10f, 76f), Offset(84f, GLYPH_HEIGHT)).drop(1),
+            ),
+        )
+        'v' -> Glyph(
+            'v',
+            100f,
+            listOf(line(Offset(6f, 0f), Offset(50f, GLYPH_HEIGHT)) + line(Offset(50f, GLYPH_HEIGHT), Offset(94f, 0f)).drop(1)),
+        )
+        'w' -> Glyph(
+            'w',
+            130f,
+            listOf(
+                line(Offset(5f, 0f), Offset(35f, GLYPH_HEIGHT)) +
+                    line(Offset(35f, GLYPH_HEIGHT), Offset(65f, 48f)).drop(1) +
+                    line(Offset(65f, 48f), Offset(95f, GLYPH_HEIGHT)).drop(1) +
+                    line(Offset(95f, GLYPH_HEIGHT), Offset(125f, 0f)).drop(1),
+            ),
+        )
+        'x' -> Glyph(
+            'x',
+            100f,
+            listOf(
+                line(Offset(8f, 0f), Offset(92f, GLYPH_HEIGHT)),
+                line(Offset(92f, 0f), Offset(8f, GLYPH_HEIGHT)),
+            ),
+        )
+        'y' -> Glyph(
+            'y',
+            100f,
+            listOf(
+                line(Offset(8f, 0f), Offset(50f, 70f)),
+                line(Offset(92f, 0f), Offset(50f, 70f)),
+                line(Offset(50f, 70f), Offset(50f, GLYPH_HEIGHT)),
+            ),
+        )
+        'z' -> Glyph(
+            'z',
+            90f,
+            listOf(
+                line(Offset(8f, 0f), Offset(82f, 0f)) +
+                    line(Offset(82f, 0f), Offset(8f, GLYPH_HEIGHT)).drop(1) +
+                    line(Offset(8f, GLYPH_HEIGHT), Offset(84f, GLYPH_HEIGHT)).drop(1),
+            ),
+        )
+        'ñ' -> marked('ñ', 'n') { tilde(it) }
+        'á' -> marked('á', 'a') { accent(it) }
+        'é' -> marked('é', 'e') { accent(it) }
+        'í' -> marked('í', 'i') { accent(it) }
+        'ó' -> marked('ó', 'o') { accent(it) }
+        'ú' -> marked('ú', 'u') { accent(it) }
         else -> error("No hay trazo para «$letter»")
     }
+
+    /** The [letter] with a mark: the strokes of [base] and then, above its middle, the [mark] (the tilde or an accent). */
+    private fun marked(letter: Char, base: Char, mark: (middle: Float) -> List<Offset>): Glyph {
+        val glyph = of(base)
+        return Glyph(letter, glyph.width, glyph.strokes + listOf(mark(glyph.width / 2)))
+    }
+
+    /** The tilde of the Ñ, above [middle]: a little wave from the left to the right, up and then down. */
+    private fun tilde(middle: Float): List<Offset> =
+        ellipse(Offset(middle - 14f, -24f), 14f, 8f, PI, 2 * PI) + ellipse(Offset(middle + 14f, -24f), 14f, 8f, PI, 0.0).drop(1)
+
+    /** The accent of a vowel, above [middle]: a short stroke from its upper right down to its lower left. */
+    private fun accent(middle: Float): List<Offset> = line(Offset(middle + 9f, -38f), Offset(middle - 9f, -14f))
 
     /** A round stroke around [center], [radius] units, from [from] to [to] radians (y grows down, as on the screen). */
     private fun arc(
@@ -111,11 +245,20 @@ internal object Glyphs {
         radius: Float,
         from: Double,
         to: Double,
+    ): List<Offset> = ellipse(center, radius, radius, from, to)
+
+    /** A round stroke around [center], [rx] units wide and [ry] high from it, from [from] to [to] radians, as [arc]. */
+    private fun ellipse(
+        center: Offset,
+        rx: Float,
+        ry: Float,
+        from: Double,
+        to: Double,
     ): List<Offset> {
-        val steps = max(1, (kotlin.math.abs(to - from) * radius / STEP).toInt())
+        val steps = max(1, (abs(to - from) * (rx + ry) / 2 / STEP).toInt())
         return (0..steps).map {
             val angle = from + (to - from) * it / steps
-            Offset(center.x + radius * cos(angle).toFloat(), center.y + radius * sin(angle).toFloat())
+            Offset(center.x + rx * cos(angle).toFloat(), center.y + ry * sin(angle).toFloat())
         }
     }
 

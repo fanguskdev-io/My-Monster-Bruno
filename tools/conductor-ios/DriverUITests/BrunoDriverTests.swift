@@ -50,10 +50,18 @@ final class BrunoDriverTests: XCTestCase {
     private var house: XCUICoordinate { at(44 * scale, 42 * scale) }
     private var lock: XCUICoordinate { at(screen.width - 38 * scale, 38 * scale) }
 
-    func testWalkThroughHeldBothWays() {
-        XCUIDevice.shared.orientation = .landscapeLeft
+    /// Opens the game and goes past its start screen (ADR 0018), which a touch anywhere leaves, after [name] if given.
+    private func launchPastStart(_ name: String? = nil) {
         app.launch()
         sleep(3)
+        if let name { checkpoint(name) }
+        stage(400, 200).tap()
+        sleep(2)
+    }
+
+    func testWalkThroughHeldBothWays() {
+        XCUIDevice.shared.orientation = .landscapeLeft
+        launchPastStart("0-inicio-izquierda")
         checkpoint("1-nacer-izquierda")
         for _ in 0..<5 {
             stage(400, 236).tap()
@@ -104,8 +112,7 @@ final class BrunoDriverTests: XCTestCase {
             ("08-casa", 340, 78), ("09-emociones", 112, 150),
         ]
         XCUIDevice.shared.orientation = .landscapeLeft
-        app.launch()
-        sleep(3)
+        launchPastStart("00-inicio-izq")
         checkpoint("01-nacer-izq")
         for _ in 0..<5 {
             stage(400, 236).tap()
@@ -178,8 +185,8 @@ final class BrunoDriverTests: XCTestCase {
     /// «Habla con Bruno» in silence (Bruno says the word himself) and her photo chosen with the system's picker.
     func testTalkAndPhoto() {
         XCUIDevice.shared.orientation = .landscapeLeft
-        app.launch()
-        sleep(4)
+        launchPastStart()
+        sleep(2)
         checkpoint("a1-cuarto-izq")
         stage(82, 200).tap()
         sleep(4)
@@ -218,8 +225,8 @@ final class BrunoDriverTests: XCTestCase {
     /// The island of words, and the T, the N and the D (the save knows the vowels and the M, the P, the L and the S).
     func testWordsAndLetters() {
         XCUIDevice.shared.orientation = .landscapeRight
-        app.launch()
-        sleep(4)
+        launchPastStart()
+        sleep(2)
         stage(680, 290).tap()
         sleep(3)
         checkpoint("b1-mapa-der")
@@ -241,5 +248,34 @@ final class BrunoDriverTests: XCTestCase {
         XCUIDevice.shared.orientation = .landscapeRight
         sleep(3)
         checkpoint("b7-comeletras-der")
+    }
+
+    /// The start screen and writing her name (the save has Bruno hatched and her name, Lucía, never written): Bruno asks for
+    /// it, the bunting leads to it, and the L, traced in two drags (down, and from the corner to the right), flies up to its
+    /// pennant and leaves the U.
+    func testStartAndName() {
+        XCUIDevice.shared.orientation = .landscapeLeft
+        app.launch()
+        checkpoint("c1-inicio-izq")
+        XCUIDevice.shared.orientation = .landscapeRight
+        checkpoint("c3-inicio-der")
+        stage(400, 200).tap()
+        sleep(1)
+        checkpoint("c4-cuarto-banderin-der")
+        stage(520, 70).tap()
+        sleep(3)
+        checkpoint("c5-nombre-der")
+        XCUIDevice.shared.orientation = .landscapeLeft
+        sleep(2)
+        checkpoint("c6-nombre-izq")
+        stage(389, 168).press(forDuration: 0.2, thenDragTo: stage(389, 354), withVelocity: 200, thenHoldForDuration: 0.1)
+        sleep(1)
+        checkpoint("c7-nombre-palo-izq")
+        stage(389, 356).press(forDuration: 0.2, thenDragTo: stage(478, 356), withVelocity: 200, thenHoldForDuration: 0.1)
+        sleep(1)
+        checkpoint("c9-nombre-u-izq")
+        house.tap()
+        sleep(2)
+        checkpoint("c10-cuarto-izq")
     }
 }

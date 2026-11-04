@@ -9,6 +9,9 @@ import kotlin.test.assertTrue
 class TracingTest {
     private val tolerance = 30f
 
+    /** Every char there is a glyph for, as [Glyphs.has] says: the letters of the island and any letter of her name. */
+    private val traceable = (Char.MIN_VALUE..Char.MAX_VALUE).filter { Glyphs.has(it) }
+
     /** A finger that follows each stroke of [glyph] point by point, like a careful child. */
     private fun traceAll(progress: TraceProgress, wobble: Float = 0f) {
         while (!progress.done) {
@@ -23,19 +26,36 @@ class TracingTest {
 
     @Test
     fun everyLetterCanBeTracedToTheEnd() {
-        for (vowel in LETTERS) {
-            val progress = TraceProgress(Glyphs.of(vowel))
+        for (letter in (LETTERS + traceable).distinct()) {
+            val progress = TraceProgress(Glyphs.of(letter))
             traceAll(progress)
-            assertTrue(progress.done, "la $vowel no se acaba")
+            assertTrue(progress.done, "la $letter no se acaba")
         }
     }
 
     @Test
     fun aShakyFingerStillTraces() {
-        for (vowel in LETTERS) {
-            val progress = TraceProgress(Glyphs.of(vowel))
+        for (letter in (LETTERS + traceable).distinct()) {
+            val progress = TraceProgress(Glyphs.of(letter))
             traceAll(progress, wobble = 18f)
-            assertTrue(progress.done, "la $vowel no se acaba con un dedo que tiembla")
+            assertTrue(progress.done, "la $letter no se acaba con un dedo que tiembla")
+        }
+    }
+
+    @Test
+    fun everyLetterOfTheAlphabetHasItsGlyphInItsBox() {
+        assertEquals((('a'..'z') + "ñáéíóú".toList()).toSet(), traceable.toSet())
+        assertFalse(Glyphs.has('ü'), "la ü no está entre las letras que se trazan")
+        for (letter in traceable) {
+            val glyph = Glyphs.of(letter)
+            assertEquals(letter, glyph.letter)
+            for (stroke in glyph.strokes) {
+                assertTrue(stroke.all { it.x in 0f..glyph.width }, "la $letter se sale por un lado")
+                // The letter in its box, and the tilde and the accents above it.
+                val inTheBox = stroke.all { it.y in 0f..Glyphs.GLYPH_HEIGHT }
+                val above = stroke.all { it.y in -40f..-8f }
+                assertTrue(inTheBox || above, "un trazo de la $letter se sale de su caja")
+            }
         }
     }
 
