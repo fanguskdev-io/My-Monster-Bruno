@@ -153,7 +153,8 @@ internal fun HatchScreen(game: GameState) {
                 if (colorChosen && topChosen && hits(point, OK_BUTTON, OK_RADIUS)) {
                     audio.sfx(Sfx.RIGHT)
                     audio.hush()
-                    game.update { it.copy(hatched = true, look = look) }
+                    // The day he hatches is the egg's: «¿Cómo te sientes hoy?» starts the next day (ADR 0019).
+                    game.update { it.copy(hatched = true, look = look, moodDay = game.currentDay()) }
                     game.go(Scene.Home)
                     return
                 }

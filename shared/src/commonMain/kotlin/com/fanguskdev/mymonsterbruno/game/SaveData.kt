@@ -37,6 +37,10 @@ data class SaveData(
     val namesWritten: Int = 0,
     /** Whether Bruno has seen her photo and said «¡Mira! ¡Eres tú!» (ADR 0016); a new photo makes it false again. */
     val photoSeen: Boolean = false,
+    /** The last day, as yyyymmdd, Bruno asked her «¿Cómo te sientes hoy?», whether or not she answered (ADR 0019). */
+    val moodDay: Int = 0,
+    /** How she felt each day she said it: the day, as yyyymmdd, to the feeling (Feeling.word); the last [MOOD_DAYS]. */
+    val moods: Map<String, String> = emptyMap(),
     /** Times she finished each island, by its name. */
     val islands: Map<String, Int> = emptyMap(),
     val dailyMinutes: Int = DEFAULT_MINUTES,

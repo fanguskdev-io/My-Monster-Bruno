@@ -278,4 +278,22 @@ final class BrunoDriverTests: XCTestCase {
         sleep(2)
         checkpoint("c10-cuarto-izq")
     }
+
+    /// The feeling of the day (the save has Bruno hatched and no feeling asked today): Bruno asks, a jar says its name,
+    /// her photo (or the face) goes to the jar of sadness, Bruno answers and puts his own in the jar of joy, and the room.
+    func testFeelingOfTheDay() {
+        XCUIDevice.shared.orientation = .landscapeLeft
+        launchPastStart()
+        checkpoint("f1-emocion-izq")
+        stage(424, 260).tap()
+        checkpoint("f2-emocion-bote-izq")
+        XCUIDevice.shared.orientation = .landscapeRight
+        sleep(2)
+        checkpoint("f3-emocion-der")
+        stage(530, 106).press(forDuration: 0.3, thenDragTo: stage(424, 262), withVelocity: 300, thenHoldForDuration: 0.2)
+        usleep(800_000)
+        checkpoint("f4-emocion-tristeza-der")
+        sleep(8)
+        checkpoint("f5-cuarto-der")
+    }
 }

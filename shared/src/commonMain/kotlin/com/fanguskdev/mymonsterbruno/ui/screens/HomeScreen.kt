@@ -97,6 +97,9 @@ internal fun HomeScreen(game: GameState) {
     LaunchedEffect(Unit) {
         val greeting = !game.greeted
         game.greeted = true
+        // After «¿Cómo te sientes hoy?», which says hello itself, the room only invites her to the islands.
+        val toIsland = !game.invitedToIsland
+        game.invitedToIsland = true
         val inviting = !game.askedForName && game.data.namesWritten == 0 && nameLetters(game.data.childName).isNotEmpty()
         if (inviting) game.askedForName = true
         if (greeting) {
@@ -111,7 +114,7 @@ internal fun HomeScreen(game: GameState) {
         if (inviting) {
             invitedAt = clock.value
             audio.say(Voice.TEACH_ME_YOUR_NAME)
-        } else if (greeting) {
+        } else if (toIsland) {
             audio.say(Voice.GO_TO_ISLAND)
         }
     }

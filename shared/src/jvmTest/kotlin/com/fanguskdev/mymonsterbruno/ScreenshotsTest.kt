@@ -68,6 +68,7 @@ class ScreenshotsTest {
             "18-habla" to Scene.Talk,
             "19-palabras" to Scene.Play(Island.WORDS, 0),
             "23-nombre" to Scene.Name,
+            "24-emocion-del-dia" to Scene.Mood,
         )
         // The same games once she knows the vowels and one to five: the consonants and the numbers up to ten.
         val knows = { save: SaveData ->
@@ -120,6 +121,9 @@ class ScreenshotsTest {
             val withPhoto = File(folder, "${screen.name}-2-casa-con-foto.png")
             withPhoto.writeBytes(render(Scene.Home, screen, photo = samplePhoto()))
             assertTrue(withPhoto.length() > MIN_BYTES, "$withPhoto está vacía")
+            val moodWithPhoto = File(folder, "${screen.name}-24-emocion-del-dia-con-foto.png")
+            moodWithPhoto.writeBytes(render(Scene.Mood, screen, photo = samplePhoto()))
+            assertTrue(moodWithPhoto.length() > MIN_BYTES, "$moodWithPhoto está vacía")
             // The room when Bruno asks her to teach him her name, and the bunting waves.
             val asking = File(folder, "${screen.name}-2-casa-banderin.png")
             asking.writeBytes(render(Scene.Home, screen, asksForName = true))

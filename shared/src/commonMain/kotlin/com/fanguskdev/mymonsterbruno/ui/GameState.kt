@@ -54,6 +54,9 @@ internal sealed interface Scene {
     /** Writing her name, from the bunting of the room (ADR 0017). */
     data object Name : Scene
 
+    /** «¿Cómo te sientes hoy?», the first time she comes to the room each day (ADR 0019). */
+    data object Mood : Scene
+
     data object GrownUps : Scene
 }
 
@@ -84,6 +87,9 @@ internal class GameState(
 
     /** Whether Bruno has said hello since the game opened. */
     var greeted = false
+
+    /** Whether Bruno has invited her to the islands since the game opened. */
+    var invitedToIsland = false
 
     /** Whether Bruno has asked her, since the game opened, to teach him her name (ADR 0017). */
     var askedForName = false
@@ -143,8 +149,19 @@ internal class GameState(
         scene = next
     }
 
-    /** From the start screen to where the game was: the egg, the room or, if the time of the day is over, the bed. */
-    fun leaveSplash() = go(firstScene())
+    /**
+     * From the start screen to where the game was: the egg, the room or, if the time of the day is over, the bed. The first
+     * time each day, before the room, Bruno asks her how she feels (ADR 0019): once, even if she does not answer.
+     */
+    fun leaveSplash() {
+        val first = firstScene()
+        if (first == Scene.Home && data.moodDay != day()) {
+            update { it.copy(moodDay = day()) }
+            go(Scene.Mood)
+        } else {
+            go(first)
+        }
+    }
 
     /** From the room to the map, or to bed if the time is over. */
     fun play() = go(if (timeUp) Scene.Sleep else Scene.Map)
@@ -167,7 +184,7 @@ internal class GameState(
     /** Back from wherever she is, one step towards the room. */
     fun back() {
         when (scene) {
-            Scene.Map, Scene.Calm, Scene.Talk, Scene.Name, Scene.GrownUps -> go(if (data.hatched) Scene.Home else Scene.Hatch)
+            Scene.Map, Scene.Calm, Scene.Talk, Scene.Name, Scene.Mood, Scene.GrownUps -> go(if (data.hatched) Scene.Home else Scene.Hatch)
             is Scene.Play, is Scene.Present -> go(if (timeUp) Scene.Sleep else Scene.Map)
             else -> Unit
         }

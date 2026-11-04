@@ -138,7 +138,7 @@ class GameStateTest {
         egg.leaveSplash()
         assertEquals(Scene.Hatch, egg.scene)
 
-        val room = opened(SaveData(hatched = true))
+        val room = opened(SaveData(hatched = true, moodDay = monday))
         repeat(5) { room.tick() }
         assertEquals(0, room.data.playedSeconds, "la pantalla de inicio no cuenta minutos")
         room.leaveSplash()
@@ -149,6 +149,27 @@ class GameStateTest {
         bed.leaveSplash()
         assertEquals(Scene.Sleep, bed.scene)
         assertFalse(bed.wentToBed)
+    }
+
+    @Test
+    fun brunoAsksHowSheFeelsOnceADayWhenTheGameOpens() {
+        val store = MemoryStore()
+        SaveStore.save(store, SaveData(hatched = true))
+        var today = monday
+
+        fun opened() = GameState(store, Audio(SilentPlayer(), CoroutineScope(EmptyCoroutineContext)), Random(1), splash = true) { today }
+        val first = opened()
+        first.leaveSplash()
+        assertEquals(Scene.Mood, first.scene)
+        first.back()
+        assertEquals(Scene.Home, first.scene, "la casa lo deja sin contestar")
+        val again = opened()
+        again.leaveSplash()
+        assertEquals(Scene.Home, again.scene, "una vez al día, aunque no conteste")
+        today = monday + 1
+        val tomorrow = opened()
+        tomorrow.leaveSplash()
+        assertEquals(Scene.Mood, tomorrow.scene)
     }
 
     @Test

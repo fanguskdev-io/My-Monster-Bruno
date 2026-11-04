@@ -76,6 +76,14 @@ internal object Voice {
     const val NAME_INTRO = "n_nombre_intro"
     const val TEACH_ME_YOUR_NAME = "b_ensename_nombre"
     const val KNOWS_YOUR_NAME = "b_ya_se_tu_nombre"
+
+    /** «¡Hola! ¿Cómo te sientes hoy?», the feeling of the day (ADR 0019), and what she does with her photo or the face. */
+    const val HOW_DO_YOU_FEEL = "b_como_te_sientes"
+    const val TAKE_YOUR_PHOTO = "n_lleva_tu_foto"
+    const val TAKE_THE_FACE = "n_lleva_la_carita"
+
+    /** «Y yo estoy contento, ¡porque has venido a jugar conmigo!», when Bruno puts his own in the jar of joy. */
+    const val ME_TOO = "b_yo_contento"
     const val WORDS_INTRO = "n_palabras"
     const val THANKS_STARTS = "b_gracias_sonidos"
     const val MISSION_NAME = "n_mision_nombre"
@@ -149,6 +157,12 @@ internal object Voice {
     /** «¡Gracias! Ya estoy mejor.» */
     fun helped(feeling: Feeling) = "b_gracias_${feeling.word}"
 
+    /** «Alegría.», when she touches the jar of [feeling] on the morning of the feeling of the day. */
+    fun jar(feeling: Feeling) = "n_bote_${feeling.word}"
+
+    /** «¡Qué bien! Me gusta verte contenta.», when she has put herself in the jar of [feeling]. */
+    fun today(feeling: Feeling) = "b_hoy_${feeling.word}"
+
     /** «¡Dime mariposa!» */
     fun tellMe(word: TalkWord) = "b_dime_${word.word}"
 
@@ -197,6 +211,7 @@ internal object Voice {
         THANKS_BALLOONS, LOOK_AT_THE_ROW, WHICH_NEXT, LOOK_AGAIN, THANKS_SERIES, TO_SHAPES, BUILD_HOUSE, THANKS_HOUSE,
         MISSION_SHAPE, TO_FEELINGS, HOW_FEELS, THANKS_FEELINGS, MISSION_FEELING, TALK, HOLD_MIC, CANT_HEAR, THANKS_WORDS,
         TO_WORDS, WORDS_INTRO, THANKS_STARTS, MISSION_NAME, ITS_YOU, NAME_INTRO, TEACH_ME_YOUR_NAME, KNOWS_YOUR_NAME,
+        HOW_DO_YOU_FEEL, TAKE_YOUR_PHOTO, TAKE_THE_FACE, ME_TOO,
     ) +
         LETTERS.flatMap { listOf(want(it), yum(it), thatIs(it), iWant(it), trace(it), traced(it)) } +
         (1..MAX_COUNT).flatMap { listOf(askCount(it), number(it), strawberries(it)) } +
@@ -204,7 +219,7 @@ internal object Voice {
         HousePart.entries.map { askPart(it) } +
         Shape.entries.flatMap { listOf(yes(it), thatShape(it), iWantShape(it)) } +
         Happening.entries.map { happened(it) } +
-        Feeling.entries.flatMap { listOf(feels(it), notThatFace(it), help(it), helped(it)) } +
+        Feeling.entries.flatMap { listOf(feels(it), notThatFace(it), help(it), helped(it), jar(it), today(it)) } +
         TalkWord.entries.flatMap { listOf(tellMe(it), word(it), notThat(it)) } +
         (TalkWord.entries.flatMap { it.syllables } + StartWord.entries.flatMap { it.syllables }).map { syllable(it) }.distinct() +
         (1..TalkWord.entries.maxOf { it.syllables.size }).map { claps(it) } +

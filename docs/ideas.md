@@ -11,13 +11,15 @@ investigación ([§6](investigacion/investigacion.md#6-reglas-que-salen-de-todo-
 
 El **tamaño** es el trabajo de un agente: **pequeña**, unas horas; **mediana**, un día; **grande**, varios días.
 
-**Hechas** desde entonces: la 1.1, escribir su nombre ([ADR 0017](adr/0017-escribir-su-nombre.md)). Y una que no estaba
-aquí, la pantalla de inicio ([ADR 0018](adr/0018-la-pantalla-de-inicio.md)).
+**Hechas** desde entonces: la 1.1, escribir su nombre ([ADR 0017](adr/0017-escribir-su-nombre.md)), y la 1.11, la
+emoción del día ([ADR 0019](adr/0019-la-emocion-del-dia.md)). Y una que no estaba aquí, la pantalla de inicio
+([ADR 0018](adr/0018-la-pantalla-de-inicio.md)).
 
 ## Las cinco con las que empezaría
 
 1. **Escribir su nombre** (1.1): es lo primero que escriben a los 4 años, y es suyo. Hecha.
 2. **La emoción del día, con su foto** (1.11): reutiliza la isla de las emociones y su foto, y es la rutina de su clase.
+   Hecha.
 3. **Que el juego se adapte a lo que sabe** (2.1): así le dura más mientras crece.
 4. **Rimas con Bruno** (1.2): completa lo de oír las palabras, junto a las palmadas y la sílaba del principio.
 5. **Antes de dárselo, probar en su iPhone** (5.1, 5.2 y 5.4): lo que solo se puede ver allí.
@@ -45,7 +47,8 @@ aquí, la pantalla de inicio ([ADR 0018](adr/0018-la-pantalla-de-inicio.md)).
 - **1.10 Hábitos.** Lavarle los dientes a Bruno, vestirle según el tiempo que hace, llevar la basura a su contenedor. Va
   bien como isla nueva, la de la casa. *Grande.*
 - **1.11 La emoción del día, con su foto.** Al llegar al cuarto, como en la asamblea: «¿Cómo te sientes hoy?», y ella pone su
-  foto en el bote del color de cómo se siente. Bruno pone la suya. Si no hay foto, una carita. *Pequeña.*
+  foto en el bote del color de cómo se siente. Bruno pone la suya. Si no hay foto, una carita. *Pequeña. Hecha
+  ([ADR 0019](adr/0019-la-emocion-del-dia.md)).*
 - **1.12 La asamblea de Bruno.** El día de la semana (con la fecha del aparato) y el tiempo que hace, que elige ella mirando
   por la ventana: sol, nubes, lluvia o nieve. *Mediana.*
 - **1.13 Más consonantes.** La F, la B y la R (la efe de foca, la be de barco, la erre de ratón), entrando por pasos detrás

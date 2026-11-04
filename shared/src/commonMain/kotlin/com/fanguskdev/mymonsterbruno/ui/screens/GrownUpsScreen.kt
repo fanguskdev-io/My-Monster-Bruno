@@ -52,6 +52,7 @@ import com.fanguskdev.mymonsterbruno.game.Session
 import com.fanguskdev.mymonsterbruno.game.Shape
 import com.fanguskdev.mymonsterbruno.game.StartWord
 import com.fanguskdev.mymonsterbruno.game.TalkWord
+import com.fanguskdev.mymonsterbruno.game.feltDays
 import com.fanguskdev.mymonsterbruno.storage.rememberPhotoPicker
 import com.fanguskdev.mymonsterbruno.ui.GameState
 import com.fanguskdev.mymonsterbruno.ui.andika
@@ -188,6 +189,17 @@ internal fun GrownUpsScreen(game: GameState, onExit: (() -> Unit)? = null) {
                 Text("Palabras que empiezan igual, por sílaba:   $starts", font, 16)
                 Text("Islas terminadas: ${data.islandsDone}. Regalos de Bruno: ${data.look.accessories.size} de 6.", font, 16)
             }
+            Section("Cómo se ha sentido", font) {
+                Text(
+                    "Lo dice ella el primer rato de cada día, en el bote de su emoción, como en la asamblea de clase.",
+                    font,
+                    15,
+                    color = Soft,
+                )
+                val days = data.feltDays().take(FELT_DAYS_SHOWN)
+                val felt = days.joinToString("   ") { (day, feeling) -> "${day % 100}/${day / 100 % 100}: ${feeling.spoken}" }
+                Text(if (days.isEmpty()) "Todavía no lo ha dicho." else felt, font, 16)
+            }
             Section("Bruno", font) {
                 Text("Volver a empezar: Bruno vuelve al huevo y se borra lo practicado. Los ajustes se quedan.", font, 15, color = Soft)
                 Chip(if (confirmReset) "Toca otra vez para confirmar" else "Volver a empezar", font, selected = confirmReset) {
@@ -297,3 +309,6 @@ private val Shape.spoken: String get() = when (this) {
 
 private const val NAME_LENGTH = 12
 private const val EXTRA_MINUTES = 10
+
+/** How many of the days she said how she felt the corner shows, the latest first. */
+private const val FELT_DAYS_SHOWN = 7

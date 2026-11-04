@@ -410,3 +410,17 @@ n_letra_e_tilde	narrador	La e, con tilde.
 n_letra_i_tilde	narrador	La i, con tilde.
 n_letra_o_tilde	narrador	La o, con tilde.
 n_letra_u_tilde	narrador	La u, con tilde.
+b_como_te_sientes	bruno	¡Hola! ¿Cómo te sientes hoy?
+n_lleva_tu_foto	narrador	Lleva tu foto al bote de cómo te sientes.
+n_lleva_la_carita	narrador	Lleva la carita al bote de cómo te sientes.
+b_yo_contento	bruno	Y yo estoy contento, ¡porque has venido a jugar conmigo!
+n_bote_alegria	narrador	Alegría.
+n_bote_tristeza	narrador	Tristeza.
+n_bote_enfado	narrador	Enfado.
+n_bote_miedo	narrador	Miedo.
+n_bote_calma	narrador	Calma.
+b_hoy_alegria	bruno	¡Qué bien! Me gusta verte contenta.
+b_hoy_tristeza	bruno	Vaya... Te doy un abrazo muy grande.
+b_hoy_enfado	bruno	A veces nos enfadamos. Si quieres, respiramos juntos con el globo.
+b_hoy_miedo	bruno	No pasa nada. Yo estoy contigo.
+b_hoy_calma	bruno	¡Qué tranquila estás! Me gusta.

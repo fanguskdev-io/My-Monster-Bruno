@@ -34,6 +34,7 @@ import com.fanguskdev.mymonsterbruno.ui.screens.HatchScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.HomeScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.HouseScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.MapScreen
+import com.fanguskdev.mymonsterbruno.ui.screens.MoodScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.NameScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.PresentScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.SeriesScreen
@@ -109,6 +110,7 @@ internal fun AppContent(game: GameState, onExit: (() -> Unit)? = null, listen: B
             Scene.Sleep -> SleepScreen(game)
             Scene.Calm -> CalmScreen(game)
             Scene.Name -> NameScreen(game) { game.back() }
+            Scene.Mood -> MoodScreen(game) { game.back() }
             Scene.Talk -> {
                 val microphone = if (listen) rememberMicrophone() else remember { DeafMicrophone() }
                 val check = if (listen) rememberWordCheck() else remember { NoWordCheck() }
