@@ -74,3 +74,7 @@ internal class Flight(
 
     fun over(time: Float) = time >= start + length
 }
+
+/** [count] places in a row, [step] apart and centred on [center]: where the things to choose from go (ADR 0020). */
+internal fun row(center: Offset, count: Int, step: Float): List<Offset> =
+    List(count) { center + Offset(step * (it - (count - 1) / 2f), 0f) }

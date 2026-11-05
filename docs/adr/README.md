@@ -30,3 +30,4 @@ y estas decisiones existen antes de G4 porque Fangusk pidió desarrollar ya. Las
 | [0017](0017-escribir-su-nombre.md) | Escribir su nombre, letra a letra, desde el banderín del cuarto | Aceptada; los trazos y cuándo la invita Bruno, propuesta |
 | [0018](0018-la-pantalla-de-inicio.md) | La pantalla de inicio, como la de CaroFarty, con el título y Bruno en su barca | Aceptada; lo que sale en ella, propuesta |
 | [0019](0019-la-emocion-del-dia.md) | La emoción del día: cada día, ella pone su foto en el bote de cómo se siente, como en la asamblea | Aceptada; lo que contesta Bruno y cuándo pregunta, propuesta |
+| [0020](0020-se-adapta-a-lo-que-sabe.md) | Los juegos se adaptan a lo que sabe: dos, tres o cuatro para elegir según sus últimas cinco rondas | Aceptada; cómo caben cuatro, propuesta |

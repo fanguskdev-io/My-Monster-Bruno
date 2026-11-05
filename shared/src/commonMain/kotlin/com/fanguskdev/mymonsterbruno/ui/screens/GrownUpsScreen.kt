@@ -43,6 +43,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.fanguskdev.mymonsterbruno.game.Choosing
 import com.fanguskdev.mymonsterbruno.game.Feeling
 import com.fanguskdev.mymonsterbruno.game.Hue
 import com.fanguskdev.mymonsterbruno.game.LETTERS
@@ -52,6 +53,7 @@ import com.fanguskdev.mymonsterbruno.game.Session
 import com.fanguskdev.mymonsterbruno.game.Shape
 import com.fanguskdev.mymonsterbruno.game.StartWord
 import com.fanguskdev.mymonsterbruno.game.TalkWord
+import com.fanguskdev.mymonsterbruno.game.choices
 import com.fanguskdev.mymonsterbruno.game.feltDays
 import com.fanguskdev.mymonsterbruno.storage.rememberPhotoPicker
 import com.fanguskdev.mymonsterbruno.ui.GameState
@@ -188,6 +190,16 @@ internal fun GrownUpsScreen(game: GameState, onExit: (() -> Unit)? = null) {
                 }.distinct().joinToString("   ") { "${it.uppercase()} ${data.starts[it] ?: 0}" }
                 Text("Palabras que empiezan igual, por sílaba:   $starts", font, 16)
                 Text("Islas terminadas: ${data.islandsDone}. Regalos de Bruno: ${data.look.accessories.size} de 6.", font, 16)
+            }
+            Section("Se adapta a lo que sabe", font) {
+                Text(
+                    "Con cinco rondas seguidas bien a la primera, elige entre una más; si falla más de la mitad de las últimas cinco, " +
+                        "entre una menos. Ella no lo sabe: no hay niveles ni puntos.",
+                    font,
+                    15,
+                    color = Soft,
+                )
+                Text("Ahora elige entre:   " + Choosing.entries.joinToString("   ") { "${it.word} ${data.choices(it)}" }, font, 16)
             }
             Section("Cómo se ha sentido", font) {
                 Text(

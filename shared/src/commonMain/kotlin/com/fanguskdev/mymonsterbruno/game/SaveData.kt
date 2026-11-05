@@ -41,6 +41,8 @@ data class SaveData(
     val moodDay: Int = 0,
     /** How she felt each day she said it: the day, as yyyymmdd, to the feeling (Feeling.word); the last [MOOD_DAYS]. */
     val moods: Map<String, String> = emptyMap(),
+    /** Whether she got each of the last rounds right at the first try, by game (Choosing.word), to adapt (ADR 0020). */
+    val firstTries: Map<String, List<Boolean>> = emptyMap(),
     /** Times she finished each island, by its name. */
     val islands: Map<String, Int> = emptyMap(),
     val dailyMinutes: Int = DEFAULT_MINUTES,

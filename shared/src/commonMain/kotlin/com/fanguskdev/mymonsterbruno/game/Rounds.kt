@@ -51,13 +51,16 @@ internal fun leastPractised(practised: Map<String, Int>, count: Int, random: Ran
         .take(count)
 }
 
-/** A round of Comeletras: Bruno wants [wanted] and the plate has three cookies, [cookies], one of them his. */
+/**
+ * A round of Comeletras: Bruno wants [wanted] and [cookies] are the ones that can go on the plate, his among them; the
+ * plate has as many as she chooses from now (ADR 0020).
+ */
 internal data class LetterRound(val wanted: Char, val cookies: List<Char>)
 
-/** The five rounds of Comeletras: the letters she has fed Bruno least ([fed]), each with two other letters on the plate. */
+/** The five rounds of Comeletras: the letters she has fed Bruno least ([fed]), each with up to three other letters. */
 internal fun letterRounds(random: Random, fed: Map<String, Int> = emptyMap()): List<LetterRound> =
     leastPractised(fed, LETTER_ROUNDS, random).map { wanted ->
-        val others = (LETTERS - wanted).shuffled(random).take(COOKIES - 1)
+        val others = (LETTERS - wanted).shuffled(random).take(MAX_CHOICES - 1)
         LetterRound(wanted, (others + wanted).shuffled(random))
     }
 
@@ -80,7 +83,6 @@ internal fun countRounds(random: Random, counted: Map<String, Int> = emptyMap())
 /** The two letters to trace: the ones she has traced least, the vowels first, ties at random. */
 internal fun tracePicks(traced: Map<String, Int>, random: Random): List<Char> = leastPractised(traced, TRACED_LETTERS, random)
 
-internal const val COOKIES = 3
 internal const val LETTER_ROUNDS = 5
 internal const val SMALL_COUNT = 5
 internal const val MAX_COUNT = 10
@@ -96,12 +98,12 @@ internal enum class Hue(val word: String) {
     PURPLE("morado"),
 }
 
-/** A round of the balloons: Bruno wants [wanted] and there are three balloons, [balloons], one of them his colour. */
+/** A round of the balloons: Bruno wants [wanted], and [balloons], his colour among them, are the ones that can be out. */
 internal data class BalloonRound(val wanted: Hue, val balloons: List<Hue>)
 
-/** The five rounds of the balloons: five different colours, each with two others to choose from. */
+/** The five rounds of the balloons: five different colours, each with up to three others to choose from. */
 internal fun balloonRounds(random: Random): List<BalloonRound> = Hue.entries.shuffled(random).take(BALLOON_ROUNDS).map { wanted ->
-    val others = (Hue.entries - wanted).shuffled(random).take(BALLOONS - 1)
+    val others = (Hue.entries - wanted).shuffled(random).take(MAX_CHOICES - 1)
     BalloonRound(wanted, (others + wanted).shuffled(random))
 }
 
@@ -126,7 +128,6 @@ internal fun seriesRounds(random: Random): List<SeriesRound> = SERIES_SIZES.map 
     SeriesRound(pattern, shown = size + 1 + random.nextInt(2), choices = (pattern + extra).shuffled(random))
 }
 
-internal const val BALLOONS = 3
 internal const val BALLOON_ROUNDS = 5
 internal val SERIES_SIZES = listOf(2, 2, 3, 3)
 internal const val SERIES_CHOICES = 3
@@ -178,17 +179,15 @@ internal enum class Happening(val feeling: Feeling, val word: String) {
     LULLABY(Feeling.CALM, "nana"),
 }
 
-/** A round of the feelings: what happens to Bruno, and three faces to say how he feels, one of them right. */
+/** A round of the feelings: what happens to Bruno, and the faces she can choose from to say how he feels, one right. */
 internal data class FeelingRound(val happening: Happening, val faces: List<Feeling>)
 
 /** The five things that happen to Bruno, in any order but the lullaby last, so the island ends calm. */
 internal fun feelingRounds(random: Random): List<FeelingRound> =
     ((Happening.entries - Happening.LULLABY).shuffled(random) + Happening.LULLABY).map { happening ->
-        val others = (Feeling.entries - happening.feeling).shuffled(random).take(FEELING_FACES - 1)
+        val others = (Feeling.entries - happening.feeling).shuffled(random).take(MAX_CHOICES - 1)
         FeelingRound(happening, (others + happening.feeling).shuffled(random))
     }
-
-internal const val FEELING_FACES = 3
 
 /**
  * The words of «Habla con Bruno» (ADR 0011), cut in syllables the way they clap them in the classroom: from one clap to
@@ -261,13 +260,13 @@ internal data class StartRound(val said: StartWord, val choices: List<StartWord>
 
 /**
  * The five rounds of the island of words: the pairs whose start she has found least ([found], by syllable), ties at
- * random. Bruno says one word of the pair, and the other is among three pictures, with two of other pairs.
+ * random. Bruno says one word of the pair, and the other is among the pictures, with up to three of other pairs.
  */
 internal fun startRounds(random: Random, found: Map<String, Int> = emptyMap()): List<StartRound> {
     val pairs = StartWord.entries.groupBy { it.start }.values.toList()
     return pairs.shuffled(random).sortedBy { found[plain(it.first().start)] ?: 0 }.take(START_ROUNDS).map { pair ->
         val (said, match) = pair.shuffled(random)
-        val others = (pairs - setOf(pair)).shuffled(random).take(START_CHOICES - 1).map { it.random(random) }
+        val others = (pairs - setOf(pair)).shuffled(random).take(MAX_CHOICES - 1).map { it.random(random) }
         StartRound(said, (others + match).shuffled(random))
     }
 }
@@ -285,4 +284,3 @@ internal fun plain(text: String): String = text.map {
 }.joinToString("")
 
 internal const val START_ROUNDS = 5
-internal const val START_CHOICES = 3

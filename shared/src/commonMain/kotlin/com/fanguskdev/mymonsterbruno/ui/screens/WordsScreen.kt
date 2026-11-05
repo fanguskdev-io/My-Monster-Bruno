@@ -18,8 +18,13 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.rememberTextMeasurer
 import com.fanguskdev.mymonsterbruno.audio.Sfx
 import com.fanguskdev.mymonsterbruno.audio.Voice
+import com.fanguskdev.mymonsterbruno.game.CHOICES
+import com.fanguskdev.mymonsterbruno.game.Choosing
 import com.fanguskdev.mymonsterbruno.game.StartWord
+import com.fanguskdev.mymonsterbruno.game.choices
+import com.fanguskdev.mymonsterbruno.game.narrowed
 import com.fanguskdev.mymonsterbruno.game.plain
+import com.fanguskdev.mymonsterbruno.game.played
 import com.fanguskdev.mymonsterbruno.game.plusOne
 import com.fanguskdev.mymonsterbruno.game.startRounds
 import com.fanguskdev.mymonsterbruno.ui.GameState
@@ -55,9 +60,14 @@ private const val SAID_HEIGHT = 44f
 private const val CHOSEN_Y = 250f
 private const val CHOSEN_HEIGHT = 38f
 private const val SYLLABLE_GAP = 10f
-private val CARDS = listOf(Offset(420f, 330f), Offset(570f, 330f), Offset(720f, 330f))
-private val CARD_SIZE = Size(124f, 104f)
-private const val PICTURE = 84f
+
+/** Where the cards are, as many as she chooses from (ADR 0020): four go closer, and a little smaller. */
+private fun spots(count: Int): List<Offset> =
+    if (count > CHOICES) row(Offset(534f, 330f), count, 132f) else row(Offset(570f, 330f), count, 150f)
+
+private fun cardSize(count: Int) = if (count > CHOICES) Size(116f, 100f) else Size(124f, 104f)
+
+private fun pictureSize(count: Int) = if (count > CHOICES) 78f else 84f
 
 /** The first syllable is gold when it is the one Bruno's word starts with, and purple when it is another. */
 private val SAME = Color(0xFFF4B623)
@@ -70,7 +80,8 @@ private enum class WordsPhase { SAYING, ASKING, CHECKING, RIGHT, WRONG, THANKS }
  * The island of words (ADR 0013): Bruno thinks of a picture and says its word clapping it, «¡PA! ¡TO!», and the voice
  * asks «¿Qué empieza como pato?». Of three pictures, she touches the one that starts the same. Bruno claps it too: if it
  * is, the two first syllables shine gold and he says «¡Sí! Pato y pajarita empiezan por pa»; if not, «Huum... Luna
- * empieza por lu», the voice asks for another one that starts with pa, and that card stays aside. Five rounds.
+ * empieza por lu», the voice asks for another one that starts with pa, and that card stays aside. Five rounds. There are
+ * four cards when it is easy for her, and two when it is hard (ADR 0020).
  */
 @Composable
 internal fun WordsScreen(game: GameState, onDone: () -> Unit) {
@@ -95,6 +106,11 @@ internal fun WordsScreen(game: GameState, onDone: () -> Unit) {
 
     fun current() = rounds[round.coerceAtMost(rounds.lastIndex)]
 
+    // The cards of this round, as many as she chooses from now, and whether she has chosen one that does not start the same.
+    fun dealt(n: Int) = rounds[n].choices.narrowed(rounds[n].answer, game.data.choices(Choosing.CARDS))
+    var cards by remember { mutableStateOf(dealt(0)) }
+    var missed by remember { mutableStateOf(false) }
+
     suspend fun clap(word: StartWord, clapped: (Int) -> Unit) {
         for ((i, syllable) in word.syllables.withIndex()) {
             clapped(i + 1)
@@ -113,6 +129,8 @@ internal fun WordsScreen(game: GameState, onDone: () -> Unit) {
     }
 
     LaunchedEffect(round) {
+        cards = dealt(round)
+        missed = false
         chosen = null
         shown = 0
         aside = emptySet()
@@ -122,7 +140,7 @@ internal fun WordsScreen(game: GameState, onDone: () -> Unit) {
 
     fun choose(card: Int) {
         val now = current()
-        val word = now.choices[card]
+        val word = cards[card]
         phase = WordsPhase.CHECKING
         chosen = card
         shown = 0
@@ -132,7 +150,7 @@ internal fun WordsScreen(game: GameState, onDone: () -> Unit) {
                 phase = WordsPhase.RIGHT
                 rightAt = clock.value
                 audio.sfx(Sfx.RIGHT)
-                game.update { it.copy(starts = it.starts.plusOne(plain(now.said.start))) }
+                game.update { it.copy(starts = it.starts.plusOne(plain(now.said.start))).played(Choosing.CARDS, firstTry = !missed) }
                 audio.say(Voice.bothStart(now.said, word))
                 delay(PAUSE_MILLIS)
                 if (round + 1 < rounds.size) {
@@ -144,6 +162,7 @@ internal fun WordsScreen(game: GameState, onDone: () -> Unit) {
                 }
             } else {
                 phase = WordsPhase.WRONG
+                missed = true
                 audio.sfx(Sfx.BOING)
                 audio.say(Voice.startsWith(word), Voice.findAnother(now.said.start))
                 aside = aside + card
@@ -167,7 +186,9 @@ internal fun WordsScreen(game: GameState, onDone: () -> Unit) {
                     return true
                 }
                 if (phase != WordsPhase.ASKING) return false
-                val card = CARDS.indices.firstOrNull { it !in aside && inCard(point, CARDS[it]) } ?: return false
+                val places = spots(cards.size)
+                val size = cardSize(cards.size)
+                val card = cards.indices.firstOrNull { it !in aside && inCard(point, places[it], size) } ?: return false
                 choose(card)
                 return true
             }
@@ -200,15 +221,17 @@ internal fun WordsScreen(game: GameState, onDone: () -> Unit) {
         val saying = sinceClap.takeIf { clapping && chosen == null }
         drawSyllables(stage, now.said, said, Offset(BUBBLE.x, SAID_Y), SAID_HEIGHT, SAME, saying, measurer, font)
 
-        for ((i, word) in now.choices.withIndex()) {
+        val places = spots(cards.size)
+        val size = cardSize(cards.size)
+        for ((i, word) in cards.withIndex()) {
             val asking = phase == WordsPhase.ASKING && i !in aside
-            val center = CARDS[i] + Offset(0f, if (asking) bob(t, 1.5f + 0.3f * i, 3f) else 0f)
-            drawCard(word, center, t, aside = i in aside, right = phase == WordsPhase.RIGHT && chosen == i)
+            val center = places[i] + Offset(0f, if (asking) bob(t, 1.5f + 0.3f * i, 3f) else 0f)
+            drawCard(word, center, size, pictureSize(cards.size), t, aside = i in aside, right = phase == WordsPhase.RIGHT && chosen == i)
         }
         chosen?.let { card ->
-            val word = now.choices[card]
+            val word = cards[card]
             val first = if (word.start == now.said.start) SAME else OTHER
-            val at = Offset(CARDS[card].x, CHOSEN_Y)
+            val at = Offset(places[card].x, CHOSEN_Y)
             drawSyllables(stage, word, shown, at, CHOSEN_HEIGHT, first, sinceClap.takeIf { clapping }, measurer, font)
         }
         val done = round + if (phase == WordsPhase.RIGHT) 1 else 0
@@ -225,20 +248,22 @@ private fun DrawScope.drawCorners(stage: Stage, rounds: Int, done: Int) {
     drawSpeakerButton(stage)
 }
 
-/** A white card with the picture of [word]: faded if she chose it and it was not; with a gold edge if it was. */
+/** A white card of [size] with the picture of [word]: faded if she chose it and it was not; with a gold edge if it was. */
 private fun DrawScope.drawCard(
     word: StartWord,
     center: Offset,
+    size: Size,
+    picture: Float,
     time: Float,
     aside: Boolean,
     right: Boolean,
 ) {
-    val topLeft = center - Offset(CARD_SIZE.width / 2, CARD_SIZE.height / 2)
-    drawRoundRect(Shadow, topLeft + Offset(0f, 6f), CARD_SIZE, CornerRadius(18f))
-    drawRoundRect(Color.White, topLeft, CARD_SIZE, CornerRadius(18f))
-    drawStartPicture(word, center, PICTURE, time)
-    if (aside) drawRoundRect(Color.White, topLeft, CARD_SIZE, CornerRadius(18f), alpha = 0.6f)
-    if (right) drawRoundRect(SAME, topLeft, CARD_SIZE, CornerRadius(18f), style = Stroke(6f))
+    val topLeft = center - Offset(size.width / 2, size.height / 2)
+    drawRoundRect(Shadow, topLeft + Offset(0f, 6f), size, CornerRadius(18f))
+    drawRoundRect(Color.White, topLeft, size, CornerRadius(18f))
+    drawStartPicture(word, center, picture, time)
+    if (aside) drawRoundRect(Color.White, topLeft, size, CornerRadius(18f), alpha = 0.6f)
+    if (right) drawRoundRect(SAME, topLeft, size, CornerRadius(18f), style = Stroke(6f))
 }
 
 /**
@@ -270,8 +295,8 @@ private fun DrawScope.drawSyllables(
     }
 }
 
-private fun inCard(point: Offset, center: Offset) =
-    abs(point.x - center.x) <= CARD_SIZE.width / 2 + TOUCH_SLACK && abs(point.y - center.y) <= CARD_SIZE.height / 2 + TOUCH_SLACK
+private fun inCard(point: Offset, center: Offset, size: Size) =
+    abs(point.x - center.x) <= size.width / 2 + TOUCH_SLACK && abs(point.y - center.y) <= size.height / 2 + TOUCH_SLACK
 
 private const val CLAP_SECONDS = 0.25f
 private const val PAUSE_MILLIS = 700L

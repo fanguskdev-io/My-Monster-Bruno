@@ -16,6 +16,7 @@ import com.fanguskdev.mymonsterbruno.game.Accessory
 import com.fanguskdev.mymonsterbruno.game.BrunoColor
 import com.fanguskdev.mymonsterbruno.game.BrunoLook
 import com.fanguskdev.mymonsterbruno.game.CONSONANTS
+import com.fanguskdev.mymonsterbruno.game.Choosing
 import com.fanguskdev.mymonsterbruno.game.SaveData
 import com.fanguskdev.mymonsterbruno.game.SaveStore
 import com.fanguskdev.mymonsterbruno.game.Topping
@@ -94,6 +95,15 @@ class ScreenshotsTest {
             "21-comeletras-t-n-d" to Scene.Play(Island.VOWELS, 0),
             "22-trazos-t-n-d" to Scene.Play(Island.VOWELS, 1),
         )
+        // Five rounds in a row right at the first try in each game that adapts: four to choose from.
+        val easy = { save: SaveData -> save.copy(firstTries = Choosing.entries.associate { it.word to List(5) { true } }) }
+        val struggling = { save: SaveData -> save.copy(firstTries = mapOf(Choosing.COOKIES.word to List(5) { false })) }
+        val adapting = listOf(
+            "4-comeletras-cuatro" to Scene.Play(Island.VOWELS, 0),
+            "11-globos-cuatro" to Scene.Play(Island.COLORS, 0),
+            "17-emociones-cuatro" to Scene.Play(Island.FEELINGS, 0),
+            "19-palabras-cuatro" to Scene.Play(Island.WORDS, 0),
+        )
         // And the map once she has finished every island, with all its flags.
         val finished = { save: SaveData -> save.copy(islands = Island.entries.associate { it.name to 1 }) }
         for (screen in SCREENS) {
@@ -121,6 +131,15 @@ class ScreenshotsTest {
             val withPhoto = File(folder, "${screen.name}-2-casa-con-foto.png")
             withPhoto.writeBytes(render(Scene.Home, screen, photo = samplePhoto()))
             assertTrue(withPhoto.length() > MIN_BYTES, "$withPhoto está vacía")
+            // The games that adapt (ADR 0020), with four to choose from when it is easy for her, and Comeletras with two.
+            for ((name, scene) in adapting) {
+                val file = File(folder, "${screen.name}-$name.png")
+                file.writeBytes(render(scene, screen, easy))
+                assertTrue(file.length() > MIN_BYTES, "$file está vacía")
+            }
+            val hard = File(folder, "${screen.name}-4-comeletras-dos.png")
+            hard.writeBytes(render(Scene.Play(Island.VOWELS, 0), screen, struggling))
+            assertTrue(hard.length() > MIN_BYTES, "$hard está vacía")
             val moodWithPhoto = File(folder, "${screen.name}-24-emocion-del-dia-con-foto.png")
             moodWithPhoto.writeBytes(render(Scene.Mood, screen, photo = samplePhoto()))
             assertTrue(moodWithPhoto.length() > MIN_BYTES, "$moodWithPhoto está vacía")

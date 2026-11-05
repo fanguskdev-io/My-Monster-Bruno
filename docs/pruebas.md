@@ -18,6 +18,7 @@ Qué se prueba en cada cambio y en cada hito, y cómo. Los criterios de salida d
 | Los minutos del día, el día nuevo y los minutos de más; la partida se guarda y se recupera, y una rota empieza de cero; lo que lleva Bruno y cuánto crece | `SessionTest` | Común |
 | Cuándo se va Bruno a dormir: enseguida en el cuarto y en el mapa, al terminar la isla dentro de una, «Habla con Bruno» o su nombre, dormido si se abre sin tiempo, y el huevo no cuenta; la pantalla de inicio lleva al huevo, al cuarto o a la cama y no cuenta minutos; la emoción del día se pregunta una vez al día al abrir, aunque no conteste; su foto se queda al volver a abrir, una nueva hace que Bruno la vuelva a ver y quitarla la borra | `GameStateTest` | Común |
 | La emoción del día: una por día, la última que eligió, y solo los últimos 14 días; un día roto no cuenta | `MoodTest` | Común |
+| Que se adapte: tres para empezar, cuatro tras cinco rondas seguidas bien a la primera, dos si se equivoca en más de la mitad, y solo cuentan las cinco últimas de cada juego; con dos, tres o cuatro, la respuesta siempre está, en el mismo orden, y en las cartas solo una empieza igual | `AdaptTest` | Común |
 | Escribir su nombre: se trazan sus letras en orden, sin espacios, hasta diez y sin las que el juego no sabe trazar; cada letra del abecedario y cada vocal con tilde tiene su trazo y su voz, distinta de las demás; una vocal con tilde cuenta como su vocal | `NameTest` | Común |
 | Leer los WAV | `WavTest` | Común |
 | Su foto se guarda en partes que caben en todas las plataformas y vuelve entera; otra la sustituye sin dejar restos, quitarla no deja nada y una rota no es foto | `PhotoStoreTest` | Común |
@@ -25,7 +26,7 @@ Qué se prueba en cada cambio y en cada hito, y cómo. Los criterios de salida d
 | Lo que se hace con su voz antes de que Bruno la repita: sin el silencio de los bordes (y nada si solo hay silencio o un murmullo), a la altura de las voces del juego, más aguda y más rápida, en un canal y de vuelta a WAV | `MicrophoneTest` | Común |
 | El sonido del escritorio: la mezcla suma sin desbordarse, respeta el volumen y pasa todo a un canal a 22 050 Hz; y cortar una voz tras otra, como al contar fresas, no atasca su hilo | `DesktopSoundTest` | JVM |
 | Cada frase del juego tiene su fichero y dura lo que una frase; el guion y el código tienen las mismas frases; cada efecto tiene su fichero | `AudioFilesTest` | JVM |
-| Las diecinueve pantallas y, cuando ya sabe las vocales y del 1 al 5, Comeletras, los trazos y las fresas con lo nuevo, Comeletras y los trazos con la T, la N y la D, la pantalla de inicio con el huevo, el cuarto con su foto y cuando Bruno le pide que le enseñe su nombre, la emoción del día con su foto, y el mapa con todas las islas terminadas y sus banderas, se dibujan en móvil (2,17:1) y en tableta (4:3) | `ScreenshotsTest` | JVM |
+| Las diecinueve pantallas y, cuando ya sabe las vocales y del 1 al 5, Comeletras, los trazos y las fresas con lo nuevo, Comeletras y los trazos con la T, la N y la D, la pantalla de inicio con el huevo, el cuarto con su foto y cuando Bruno le pide que le enseñe su nombre, la emoción del día con su foto, Comeletras, los globos, las emociones y las palabras con cuatro para elegir y Comeletras con dos, y el mapa con todas las islas terminadas y sus banderas, se dibujan en móvil (2,17:1) y en tableta (4:3) | `ScreenshotsTest` | JVM |
 | La salida de la zona de mayores: «Salir del juego» guarda la partida y cierra; sin salida en la plataforma, como en iOS, no hay botón | `GrownUpsExitTest` | JVM |
 | El icono de iOS es el de Android: lo dibuja del vector de `androidApp` en `shared/build/icono/` y lo compara con el del proyecto de Xcode; si cambia el de Android, se copia el nuevo | `AppIconTest` | JVM |
 | En el iPhone 15 Pro de ella y en el 17 Pro del simulador, girados a un lado y al otro, la casa, el altavoz y el candado se ven enteros: ni bajo la Dynamic Island ni cortados por las esquinas redondeadas, medidas en el simulador | `CornerButtonsTest` | Común |
@@ -253,6 +254,18 @@ mayores se desplaza arrastrando despacio, porque el deslizar rápido de las prue
   cuarto, donde ya no lo pide; en la zona de mayores, «Veces que ha escrito su nombre: 1» y la A, la I, la U y la L
   trazadas una vez. Atrás vuelve al cuarto. En el simulador de iPhone 15 Pro, girado a los dos lados
   (`testStartAndName`): la invitación, la pantalla del nombre y la L trazada, que vuela a su banderín (2026-11-04).
+
+### M5 · Que se adapte a lo que sabe
+
+- [ ] Con las cinco últimas rondas de Comeletras bien a la primera, el plato trae cuatro galletas; equivocándose en tres
+  de cinco, dos. Igual con los globos, las caritas de las emociones y las cartas de la isla de las palabras.
+- [ ] Las cuatro caben sin salirse de la pantalla ni tocar a Bruno, y se cogen bien con el dedo.
+- [ ] En la zona de mayores, «Se adapta a lo que sabe» dice entre cuántas elige ahora en cada juego.
+- [x] En el emulador Tester_API36, con partidas sembradas: con las cinco últimas bien en cada juego, cuatro galletas,
+  cuatro globos, cuatro caritas y cuatro cartas; con las cinco mal, dos caritas y dos cartas. Con cuatro bien en
+  Comeletras, la ronda 1 trae tres y, al acertar a la primera, la 2 ya trae cuatro; la zona de mayores dice «galletas 4
+  globos 3 caritas 3 cartas 3». En el simulador de iPhone 15 Pro, girado a los dos lados (`testWordsAndLetters`), cuatro
+  cartas y cuatro galletas (2026-11-05).
 
 ### M5 · La emoción del día
 

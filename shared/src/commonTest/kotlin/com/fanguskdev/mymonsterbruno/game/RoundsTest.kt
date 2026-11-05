@@ -13,7 +13,7 @@ class RoundsTest {
             val first = letterRounds(Random(seed))
             assertEquals(VOWELS.toSet(), first.map { it.wanted }.toSet(), "el primer día, las vocales")
             for (round in first) {
-                assertEquals(COOKIES, round.cookies.toSet().size, "galletas repetidas: $round")
+                assertEquals(MAX_CHOICES, round.cookies.toSet().size, "galletas repetidas: $round")
                 assertEquals(1, round.cookies.count { it == round.wanted })
                 assertTrue(round.cookies.all { it in LETTERS })
             }
@@ -71,7 +71,7 @@ class RoundsTest {
             assertEquals(BALLOON_ROUNDS, rounds.size)
             assertEquals(BALLOON_ROUNDS, rounds.map { it.wanted }.toSet().size, "un color pedido dos veces: $rounds")
             for (round in rounds) {
-                assertEquals(BALLOONS, round.balloons.toSet().size, "globos repetidos: $round")
+                assertEquals(MAX_CHOICES, round.balloons.toSet().size, "globos repetidos: $round")
                 assertEquals(1, round.balloons.count { it == round.wanted })
             }
         }
@@ -120,7 +120,7 @@ class RoundsTest {
             assertEquals(Happening.entries.toSet(), rounds.map { it.happening }.toSet())
             assertEquals(Happening.LULLABY, rounds.last().happening)
             for (round in rounds) {
-                assertEquals(FEELING_FACES, round.faces.toSet().size, "caritas repetidas: $round")
+                assertEquals(MAX_CHOICES, round.faces.toSet().size, "caritas repetidas: $round")
                 assertEquals(1, round.faces.count { it == round.happening.feeling })
             }
         }
@@ -157,7 +157,7 @@ class RoundsTest {
             val rounds = startRounds(Random(seed))
             assertEquals(START_ROUNDS, rounds.map { it.said.start }.toSet().size, "cada ronda, un par distinto")
             for (round in rounds) {
-                assertEquals(START_CHOICES, round.choices.map { it.start }.toSet().size, "dos cartas empiezan igual: $round")
+                assertEquals(MAX_CHOICES, round.choices.map { it.start }.toSet().size, "dos cartas empiezan igual: $round")
                 assertTrue(round.said !in round.choices, "la palabra de Bruno está entre las cartas: $round")
                 assertEquals(round.said.start, round.answer.start)
             }

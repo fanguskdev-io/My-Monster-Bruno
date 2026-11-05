@@ -12,9 +12,13 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import com.fanguskdev.mymonsterbruno.audio.Sfx
 import com.fanguskdev.mymonsterbruno.audio.Voice
-import com.fanguskdev.mymonsterbruno.game.FEELING_FACES
+import com.fanguskdev.mymonsterbruno.game.CHOICES
+import com.fanguskdev.mymonsterbruno.game.Choosing
 import com.fanguskdev.mymonsterbruno.game.Feeling
+import com.fanguskdev.mymonsterbruno.game.choices
 import com.fanguskdev.mymonsterbruno.game.feelingRounds
+import com.fanguskdev.mymonsterbruno.game.narrowed
+import com.fanguskdev.mymonsterbruno.game.played
 import com.fanguskdev.mymonsterbruno.game.plusOne
 import com.fanguskdev.mymonsterbruno.ui.GameState
 import com.fanguskdev.mymonsterbruno.ui.Stage
@@ -50,8 +54,12 @@ private val BRUNO_CENTER = Offset(300f, 236f)
 private const val BRUNO_HEIGHT = 230f
 private const val BRUNO_TOUCH = 110f
 private val BUBBLE = Offset(604f, 104f)
-private val FACES = listOf(Offset(512f, 326f), Offset(622f, 326f), Offset(732f, 326f))
-private const val FACE_RADIUS = 42f
+
+/** Where the little faces are, as many as she chooses from (ADR 0020): four go closer, and a little smaller. */
+private fun spots(count: Int): List<Offset> =
+    if (count > CHOICES) row(Offset(612f, 326f), count, 95f) else row(Offset(622f, 326f), count, 110f)
+
+private fun faceRadius(count: Int) = if (count > CHOICES) 40f else 42f
 private val LAMP = Offset(120f, 318f)
 private const val LAMP_TOUCH = 50f
 
@@ -62,6 +70,7 @@ private enum class FeelingPhase { HAPPENING, ASKING, NAMING, HELPING, HELPED, WR
  * the colour of how he feels, as in the corner of feelings of the classroom. «¿Cómo se siente Bruno?»: she chooses one of
  * three little faces, and the voice names the feeling. Then she helps him: a hug if he is sad, breathing together if he is
  * angry, the light on if he is scared, clapping if he is happy, a caress if he is calm. Five things, the lullaby last.
+ * There are four faces when it is easy for her, and two when it is hard (ADR 0020).
  */
 @Composable
 internal fun FeelingsScreen(game: GameState, onDone: () -> Unit) {
@@ -81,7 +90,14 @@ internal fun FeelingsScreen(game: GameState, onDone: () -> Unit) {
 
     fun feeling() = current().happening.feeling
 
+    // The faces of this round, as many as she chooses from now, and whether she has chosen a wrong one.
+    fun shown(n: Int) = rounds[n].faces.narrowed(rounds[n].happening.feeling, game.data.choices(Choosing.FACES))
+    var faces by remember { mutableStateOf(shown(0)) }
+    var missed by remember { mutableStateOf(false) }
+
     LaunchedEffect(round) {
+        faces = shown(round)
+        missed = false
         helpedAt = null
         lampOn = false
         holdingSince = null
@@ -118,6 +134,7 @@ internal fun FeelingsScreen(game: GameState, onDone: () -> Unit) {
         if (face == feeling()) {
             phase = FeelingPhase.NAMING
             audio.sfx(Sfx.RIGHT)
+            game.update { it.played(Choosing.FACES, firstTry = !missed) }
             scope.launch {
                 audio.say(Voice.feels(face))
                 phase = FeelingPhase.HELPING
@@ -125,6 +142,7 @@ internal fun FeelingsScreen(game: GameState, onDone: () -> Unit) {
             }
         } else {
             phase = FeelingPhase.WRONG
+            missed = true
             audio.sfx(Sfx.BOING)
             scope.launch {
                 audio.say(Voice.notThatFace(face))
@@ -151,9 +169,10 @@ internal fun FeelingsScreen(game: GameState, onDone: () -> Unit) {
                 }
                 when (phase) {
                     FeelingPhase.ASKING -> {
-                        val face = FACES.indices.firstOrNull { hits(point, FACES[it], FACE_RADIUS) } ?: return false
+                        val places = spots(faces.size)
+                        val face = faces.indices.firstOrNull { hits(point, places[it], faceRadius(faces.size)) } ?: return false
                         audio.sfx(Sfx.TAP)
-                        choose(current().faces[face])
+                        choose(faces[face])
                         return true
                     }
                     FeelingPhase.HELPING -> when (feeling()) {
@@ -250,10 +269,11 @@ internal fun FeelingsScreen(game: GameState, onDone: () -> Unit) {
             drawHappening(happening, BUBBLE, 116f, t)
         }
         if (phase == FeelingPhase.ASKING || phase == FeelingPhase.WRONG || phase == FeelingPhase.NAMING) {
-            for (i in 0 until FEELING_FACES) {
-                val face = current().faces[i]
+            val places = spots(faces.size)
+            val radius = faceRadius(faces.size)
+            for ((i, face) in faces.withIndex()) {
                 val chosen = phase == FeelingPhase.NAMING && face == feeling
-                drawFeelingFace(face, FACES[i] + Offset(0f, bob(t, 1.5f + 0.3f * i, 3f)), FACE_RADIUS * if (chosen) 1.15f else 1f)
+                drawFeelingFace(face, places[i] + Offset(0f, bob(t, 1.5f + 0.3f * i, 3f)), radius * if (chosen) 1.15f else 1f)
             }
         }
         if (phase == FeelingPhase.HELPING) {

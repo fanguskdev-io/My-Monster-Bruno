@@ -56,7 +56,9 @@ se la propuso el agente: «Así» ([ADR 0017](adr/0017-escribir-su-nombre.md)). 
 pantalla de Splash para cuando se inicia el juego, queda un poco soso iniciar el juego como tal, básate en como lo hace
 CaroFarty» ([ADR 0018](adr/0018-la-pantalla-de-inicio.md)). Y otro nombre para el juego: «Sustituye: Mi monstruo Bruno
 por: Mi amigo Bruno» ([ADR 0002](adr/0002-mi-monstruo-bruno.md)). Después, «Continua con el desarrollo» y, de las
-siguientes ideas, «La emoción del día», tal como se la propuso el agente ([ADR 0019](adr/0019-la-emocion-del-dia.md)).
+siguientes ideas, «La emoción del día», tal como se la propuso el agente ([ADR 0019](adr/0019-la-emocion-del-dia.md)). Y
+al día siguiente, «continua» y, de otras cuatro, «Que se adapte» a lo que sabe
+([ADR 0020](adr/0020-se-adapta-a-lo-que-sabe.md)).
 
 La propuesta 3, tal como la leyó (en la [maqueta](investigacion/propuestas.html#p3)):
 
@@ -133,6 +135,10 @@ ha venido a jugar. Se puede saltar con la casa. El día que nace Bruno no se pre
    por pa», y esa carta se aparta. Son cinco rondas de diez parejas (gafas y galleta, corona y corazón, mano y mariposa,
    casa y cama, pato y pajarita, luna y lupa, pelota y pera, gorro y gota, oso y ojo, regalo y reloj), las que menos ha
    encontrado.
+Comeletras, los globos, las caritas y las cartas **se adaptan a lo que sabe** ([ADR 0020](adr/0020-se-adapta-a-lo-que-sabe.md)):
+si acierta a la primera las últimas cinco rondas de ese juego, la siguiente trae cuatro para elegir en vez de tres; si se
+equivoca en más de la mitad, dos. Nunca se le dice, y no hay niveles ni puntos.
+
 10. **Bruno crece**. Al terminar una isla hay un regalo. Con un toque se abre la caja y un accesorio vuela hasta Bruno, que
    ya lo lleva siempre: gorro, gafas, pajarita, flores, bufanda y corona. Cada dos islas, además, crece un poco, hasta tres
    veces. Con los seis accesorios, la caja trae chispas y un gracias.
@@ -164,7 +170,8 @@ Fuera del camino:
   globo se deshincha despacio. Son tres respiraciones con Bruno.
 - **La zona de mayores**, detrás del candado de la esquina, que se abre manteniendo el dedo 2,5 segundos. En ella se puede
   escribir su nombre (para el banderín), elegir su foto en la galería (para el marco del cuarto) o quitarla, elegir los minutos al día (5, 10, 15 o 20), dar «10 minutos más, solo hoy»,
-  quitar la voz o los efectos, ver cómo se ha sentido los últimos días y lo que ha practicado (galletas por vocal,
+  quitar la voz o los efectos, ver cómo se ha sentido los últimos días, entre cuántas elige en cada juego y lo que ha
+  practicado (galletas por vocal,
   letras trazadas, veces que ha escrito su nombre, fresas por número, globos,
   series, piezas de la casa, emociones, palabras dichas a Bruno, parejas que empiezan igual, islas y regalos) y volver a
   empezar, que devuelve a Bruno al huevo y conserva los ajustes. En
@@ -182,7 +189,7 @@ Salen de la [investigación §6](investigacion/investigacion.md#6-reglas-que-sal
 |---|---|
 | Sin leer | Cada pantalla se explica con voz. Las letras y los números del juego son lo que se aprende, no instrucciones |
 | Para dedos de 4 años | Solo tocar, arrastrar y mantener: sin doble toque, pellizcos ni prisas. En un móvil de 6,8″ (el emulador Pixel 10 Pro XL), el botón de jugar mide 2,4 cm, las galletas 1,8 cm y los colores 1,7 cm. Cada uno acepta el dedo hasta 0,3 cm más allá de su borde. Los botones de las esquinas miden 1 cm a propósito. En una tableta, todo es más grande |
-| Equivocarse no castiga | Bruno nunca dice «¡mal!». Pone cara rara, devuelve la galleta y lo vuelve a pedir. No hay vidas, puntos ni tiempo |
+| Equivocarse no castiga | Bruno nunca dice «¡mal!». Pone cara rara, devuelve la galleta y lo vuelve a pedir. No hay vidas, puntos ni tiempo. Si le cuesta, elige entre dos, sin que se le diga ([ADR 0020](adr/0020-se-adapta-a-lo-que-sabe.md)) |
 | Unos 10 minutos con final | Límite por día, 10 minutos de serie. Bruno se duerme al terminar lo que ella esté haciendo. No hay rachas, cuentas atrás ni «¡no te vayas!» ([ADR 0006](adr/0006-diez-minutos-y-a-dormir.md)) |
 | Para jugar acompañada | La misión para casa de cada noche, y «Habla con Bruno», que la primera vez necesita a un mayor para el permiso del micrófono |
 | Lo del cole | Vocales en mayúscula, sus trazos en el orden del cole, escribir su nombre, la emoción del día como en la asamblea, y contar del 1 al 5 con los dedos y los puntos, en castellano de España |
@@ -198,8 +205,8 @@ trazos y el mapa con dos islas. De las piezas comunes, el rincón de la calma, l
 (sin foto ni voces). Y de M3: la isla de los colores, con sus globos y sus series; la de las formas, con la casa de
 Bruno; las letras M, P, L y S y los números hasta el 10 en las islas que ya había; y la isla de las emociones. Con
 eso está todo lo que la propuesta ponía en el mapa. De M2, «Habla con Bruno». Y de lo que faltaba, la isla de las
-palabras, con el sonido inicial por la sílaba. Y de las ideas, escribir su nombre, la pantalla de inicio y la emoción
-del día.
+palabras, con el sonido inicial por la sílaba. Y de las ideas, escribir su nombre, la pantalla de inicio, la emoción
+del día y que los juegos se adapten a lo que sabe.
 
 **Falta**, de la propuesta 3 que eligió Fangusk. El orden y el alcance de cada pieza los decide él.
 
