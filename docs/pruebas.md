@@ -18,15 +18,16 @@ Qué se prueba en cada cambio y en cada hito, y cómo. Los criterios de salida d
 | Los minutos del día, el día nuevo y los minutos de más; la partida se guarda y se recupera, y una rota empieza de cero; lo que lleva Bruno y cuánto crece | `SessionTest` | Común |
 | Cuándo se va Bruno a dormir: enseguida en el cuarto y en el mapa, al terminar la isla dentro de una, «Habla con Bruno» o su nombre, dormido si se abre sin tiempo, y el huevo no cuenta; la pantalla de inicio lleva al huevo, al cuarto o a la cama y no cuenta minutos; la emoción del día se pregunta una vez al día al abrir, aunque no conteste; su foto se queda al volver a abrir, una nueva hace que Bruno la vuelva a ver y quitarla la borra | `GameStateTest` | Común |
 | La emoción del día: una por día, la última que eligió, y solo los últimos 14 días; un día roto no cuenta | `MoodTest` | Común |
+| Las rimas: diez parejas que riman y ninguna termina como otra; cinco rondas de las parejas menos encontradas, sin repetir, y con dos, tres o cuatro cartas solo una rima | `RhymesTest` | Común |
 | Que se adapte: tres para empezar, cuatro tras cinco rondas seguidas bien a la primera, dos si se equivoca en más de la mitad, y solo cuentan las cinco últimas de cada juego; con dos, tres o cuatro, la respuesta siempre está, en el mismo orden, y en las cartas solo una empieza igual | `AdaptTest` | Común |
 | Escribir su nombre: se trazan sus letras en orden, sin espacios, hasta diez y sin las que el juego no sabe trazar; cada letra del abecedario y cada vocal con tilde tiene su trazo y su voz, distinta de las demás; una vocal con tilde cuenta como su vocal | `NameTest` | Común |
 | Leer los WAV | `WavTest` | Común |
 | Su foto se guarda en partes que caben en todas las plataformas y vuelve entera; otra la sustituye sin dejar restos, quitarla no deja nada y una rota no es foto | `PhotoStoreTest` | Común |
 | Cuándo es la palabra que pidió Bruno: la palabra, aunque vaya en una frase o con mayúsculas y puntos; la que dice una niña de 4 años con una letra de cada tres cambiada; nunca otra palabra, ni nada | `WordCheckTest` | Común |
 | Lo que se hace con su voz antes de que Bruno la repita: sin el silencio de los bordes (y nada si solo hay silencio o un murmullo), a la altura de las voces del juego, más aguda y más rápida, en un canal y de vuelta a WAV | `MicrophoneTest` | Común |
-| El sonido del escritorio: la mezcla suma sin desbordarse, respeta el volumen y pasa todo a un canal a 22 050 Hz; y cortar una voz tras otra, como al contar fresas, no atasca su hilo | `DesktopSoundTest` | JVM |
+| El sonido del escritorio: la mezcla suma sin desbordarse, respeta el volumen y pasa todo a un canal a 22 050 Hz; y cortar una voz tras otra, como al contar fresas, no atasca su hilo: un toque suele atenderse en un momento y ninguno se queda sin atender (el primero puede esperar a que se despierte la tarjeta de sonido, hasta segundo y medio) | `DesktopSoundTest` | JVM |
 | Cada frase del juego tiene su fichero y dura lo que una frase; el guion y el código tienen las mismas frases; cada efecto tiene su fichero | `AudioFilesTest` | JVM |
-| Las diecinueve pantallas y, cuando ya sabe las vocales y del 1 al 5, Comeletras, los trazos y las fresas con lo nuevo, Comeletras y los trazos con la T, la N y la D, la pantalla de inicio con el huevo, el cuarto con su foto y cuando Bruno le pide que le enseñe su nombre, la emoción del día con su foto, Comeletras, los globos, las emociones y las palabras con cuatro para elegir y Comeletras con dos, y el mapa con todas las islas terminadas y sus banderas, se dibujan en móvil (2,17:1) y en tableta (4:3) | `ScreenshotsTest` | JVM |
+| Las veinte pantallas y, cuando ya sabe las vocales y del 1 al 5, Comeletras, los trazos y las fresas con lo nuevo, Comeletras y los trazos con la T, la N y la D, la pantalla de inicio con el huevo, el cuarto con su foto y cuando Bruno le pide que le enseñe su nombre, la emoción del día con su foto, Comeletras, los globos, las emociones, las palabras y las rimas con cuatro para elegir y Comeletras con dos, y el mapa con todas las islas terminadas y sus banderas, se dibujan en móvil (2,17:1) y en tableta (4:3) | `ScreenshotsTest` | JVM |
 | La salida de la zona de mayores: «Salir del juego» guarda la partida y cierra; sin salida en la plataforma, como en iOS, no hay botón | `GrownUpsExitTest` | JVM |
 | El icono de iOS es el de Android: lo dibuja del vector de `androidApp` en `shared/build/icono/` y lo compara con el del proyecto de Xcode; si cambia el de Android, se copia el nuevo | `AppIconTest` | JVM |
 | En el iPhone 15 Pro de ella y en el 17 Pro del simulador, girados a un lado y al otro, la casa, el altavoz y el candado se ven enteros: ni bajo la Dynamic Island ni cortados por las esquinas redondeadas, medidas en el simulador | `CornerButtonsTest` | Común |
@@ -78,10 +79,11 @@ comprueba ([ADR 0015](adr/0015-bruno-comprueba-la-palabra.md)).
 Para ver el juego en un iPhone 15 Pro simulado, girado a un lado y al otro, sin tocarlo a mano:
 [`tools/conductor-ios`](../tools/conductor-ios) es una prueba de interfaz que toca el escenario de 800 × 400 y, en cada
 punto de control, espera a que `vigilante.sh` saque una captura con lo que tapan la isla y las esquinas pintado de negro.
-Tiene seis recorridos: los dos de la entrega (`testWalkThroughHeldBothWays` y `testFinalVersionBothWays`, que empiezan
-en el huevo) y los de después (`testTalkAndPhoto`, `testWordsAndLetters` y `testStartAndName`, que empiezan con Bruno ya
-nacido y su nombre, Lucía, sin escribir todavía, y la emoción de hoy ya preguntada; y `testFeelingOfTheDay`, que empieza
-igual pero sin ella). Todos pasan antes por la pantalla de inicio, con un toque. Siempre en
+Tiene siete recorridos: los dos de la entrega (`testWalkThroughHeldBothWays` y `testFinalVersionBothWays`, que empiezan
+en el huevo) y los de después (`testTalkAndPhoto`, `testWordsAndLetters`, `testStartAndName` y `testRhymes`, que empiezan
+con Bruno ya nacido y su nombre, Lucía, sin escribir todavía, y la emoción de hoy ya preguntada; y `testFeelingOfTheDay`,
+que empieza igual pero sin ella). `testRhymes` juega la isla de las palabras entera, rimas incluidas, tocando las tres
+cartas por turnos hasta el regalo. Todos pasan antes por la pantalla de inicio, con un toque. Siempre en
 silencio (`-silencio`) y en un simulador propio que se borra al acabar, nunca en uno de otra sesión.
 
 1. Un simulador temporal con el juego (el de `build/xcode`, que deja la puerta) y, para su foto, una imagen en su galería:
@@ -254,6 +256,24 @@ mayores se desplaza arrastrando despacio, porque el deslizar rápido de las prue
   cuarto, donde ya no lo pide; en la zona de mayores, «Veces que ha escrito su nombre: 1» y la A, la I, la U y la L
   trazadas una vez. Atrás vuelve al cuarto. En el simulador de iPhone 15 Pro, girado a los dos lados
   (`testStartAndName`): la invitación, la pantalla del nombre y la L trazada, que vuela a su banderín (2026-11-04).
+
+### M5 · Rimas con Bruno
+
+- [ ] Después de buscar qué empieza igual, la isla de las palabras sigue con las rimas: el narrador las explica la primera
+  vez, Bruno pregunta «¡Gato! ¿Qué rima con gato?» con su dibujo en el bocadillo y el narrador nombra cada carta mientras
+  salta.
+- [ ] Con la carta que rima, «¡Sí! Gato y pato riman», las dos en el bocadillo, la rima tonta y la risa de Bruno. Con otra,
+  «¿Rana? Huum... No termina igual», esa carta se aparta y vuelve a preguntar.
+- [ ] Son cinco rondas, y al terminar, el regalo de la isla. En la zona de mayores, las rimas por pareja y entre cuántas
+  elige.
+- [ ] Los dieciséis dibujos nuevos se reconocen: gato, cuna, ratón, botón, rana, lana, col, pez, nuez, mesa, foca, boca,
+  llave, nave, seta y maleta.
+- [x] En el emulador Tester_API36, tocando las cartas por turnos: la isla de las palabras entera, las cinco rondas de
+  rimas (llave y nave, seta y maleta con la col apartada, ratón y botón, pato y gato...) y el regalo; la partida guarda
+  las cinco parejas y la isla terminada (2026-11-05).
+- [x] En un simulador de iPhone 15 Pro (`testRhymes`), con el Mac muy cargado: la isla de las palabras entera, las cinco
+  rondas de rimas (gato y pato, fresa y mesa, nave y llave, lana y rana, maleta y seta), las cartas que no riman
+  apartadas, el regalo y la bandera en el mapa (2026-11-05).
 
 ### M5 · Que se adapte a lo que sabe
 

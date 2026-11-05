@@ -12,8 +12,8 @@ investigación ([§6](investigacion/investigacion.md#6-reglas-que-salen-de-todo-
 El **tamaño** es el trabajo de un agente: **pequeña**, unas horas; **mediana**, un día; **grande**, varios días.
 
 **Hechas** desde entonces: la 1.1, escribir su nombre ([ADR 0017](adr/0017-escribir-su-nombre.md)); la 1.11, la
-emoción del día ([ADR 0019](adr/0019-la-emocion-del-dia.md)); y la 2.1, que se adapte a lo que sabe
-([ADR 0020](adr/0020-se-adapta-a-lo-que-sabe.md)). Y una que no estaba aquí, la pantalla de inicio
+emoción del día ([ADR 0019](adr/0019-la-emocion-del-dia.md)); la 2.1, que se adapte a lo que sabe
+([ADR 0020](adr/0020-se-adapta-a-lo-que-sabe.md)); y la 1.2, rimas con Bruno ([ADR 0021](adr/0021-rimas-con-bruno.md)). Y una que no estaba aquí, la pantalla de inicio
 ([ADR 0018](adr/0018-la-pantalla-de-inicio.md)).
 
 ## Las cinco con las que empezaría
@@ -22,7 +22,7 @@ emoción del día ([ADR 0019](adr/0019-la-emocion-del-dia.md)); y la 2.1, que se
 2. **La emoción del día, con su foto** (1.11): reutiliza la isla de las emociones y su foto, y es la rutina de su clase.
    Hecha.
 3. **Que el juego se adapte a lo que sabe** (2.1): así le dura más mientras crece. Hecha.
-4. **Rimas con Bruno** (1.2): completa lo de oír las palabras, junto a las palmadas y la sílaba del principio.
+4. **Rimas con Bruno** (1.2): completa lo de oír las palabras, junto a las palmadas y la sílaba del principio. Hecha.
 5. **Antes de dárselo, probar en su iPhone** (5.1, 5.2 y 5.4): lo que solo se puede ver allí.
 
 ## 1. Lo que se aprende en el cole y aún no está
@@ -32,7 +32,8 @@ emoción del día ([ADR 0019](adr/0019-la-emocion-del-dia.md)); y la 2.1, que se
   Hace falta el trazo de las mayúsculas que tenga su nombre real (hoy solo hay doce). *Grande. Hecha
   ([ADR 0017](adr/0017-escribir-su-nombre.md)).*
 - **1.2 Rimas con Bruno.** «¡Gato! ¿Qué rima con gato?»: de tres dibujos, el que acaba igual (pato). Bruno se inventa rimas
-  tontas que dan risa. Como la isla de las palabras, con parejas nuevas. *Mediana.*
+  tontas que dan risa. Como la isla de las palabras, con parejas nuevas. *Mediana. Hecha, como segunda actividad de esa
+  isla ([ADR 0021](adr/0021-rimas-con-bruno.md)).*
 - **1.3 Trazos antes de las letras.** Llevar a Bruno a casa por un camino con el dedo: rectas, diagonales, ondas, bucles y
   espirales, en el orden de la grafomotricidad del cole. Ayuda a los trazos de las letras. *Mediana.*
 - **1.4 El anterior y el siguiente.** Bruno salta por una recta numérica del 0 al 10 y pregunta qué número va antes o
@@ -107,7 +108,9 @@ emoción del día ([ADR 0019](adr/0019-la-emocion-del-dia.md)); y la 2.1, que se
   palabras en el iPhone. *Pequeña, con el conductor de pruebas.*
 - **5.4 Detalles vistos en el iPhone.** Con el iPhone girado a la derecha, la bandera de la isla de los colores roza la
   Dynamic Island, y la isla roza el borde de una galleta en Comeletras. *Pequeña.*
-- **5.5 La prueba de sonido del Mac.** Falla a veces cuando el Mac está muy cargado; conviene que lo tolere. *Pequeña.*
+- **5.5 La prueba de sonido del Mac.** Falla a veces cuando el Mac está muy cargado; conviene que lo tolere. *Pequeña.
+  Hecha: fallaba por el primer toque, que espera a que se despierte la tarjeta de sonido; ahora mira lo que suele tardar
+  un toque y que ninguno se quede sin atender.*
 - **5.6 Fotos giradas en Android 8.** Allí una foto girada solo por su EXIF saldría torcida. *Pequeña.*
 - **5.7 Un mapa con más sitio.** Con seis islas, el mapa está lleno: antes de una isla nueva hace falta otra parte del mar, a
   la que se llega en la barca. *Mediana.*

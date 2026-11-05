@@ -1,9 +1,14 @@
 package com.fanguskdev.mymonsterbruno.ui.screens
 
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
+import androidx.compose.ui.graphics.drawscope.Stroke
+import com.fanguskdev.mymonsterbruno.game.CHOICES
 import com.fanguskdev.mymonsterbruno.ui.Stage
+import com.fanguskdev.mymonsterbruno.ui.art.Shadow
 import com.fanguskdev.mymonsterbruno.ui.art.drawLock
 import com.fanguskdev.mymonsterbruno.ui.art.drawRoundButton
 import com.fanguskdev.mymonsterbruno.ui.art.homeIcon
@@ -12,6 +17,7 @@ import com.fanguskdev.mymonsterbruno.ui.distance
 import com.fanguskdev.mymonsterbruno.ui.easeInOut
 import com.fanguskdev.mymonsterbruno.ui.lerp
 import com.fanguskdev.mymonsterbruno.ui.ring
+import kotlin.math.abs
 import kotlin.math.sin
 
 /**
@@ -78,3 +84,35 @@ internal class Flight(
 /** [count] places in a row, [step] apart and centred on [center]: where the things to choose from go (ADR 0020). */
 internal fun row(center: Offset, count: Int, step: Float): List<Offset> =
     List(count) { center + Offset(step * (it - (count - 1) / 2f), 0f) }
+
+/**
+ * Where the picture cards of the island of words go, its words and its rhymes, as many as she chooses from (ADR 0020):
+ * four go closer, and a little smaller.
+ */
+internal fun cardSpots(count: Int): List<Offset> =
+    if (count > CHOICES) row(Offset(534f, 330f), count, 132f) else row(Offset(570f, 330f), count, 150f)
+
+internal fun cardSize(count: Int) = if (count > CHOICES) Size(116f, 100f) else Size(124f, 104f)
+
+/** How big the picture is on a card of [count]. */
+internal fun cardPicture(count: Int) = if (count > CHOICES) 78f else 84f
+
+internal fun inCard(point: Offset, center: Offset, size: Size) =
+    abs(point.x - center.x) <= size.width / 2 + TOUCH_SLACK && abs(point.y - center.y) <= size.height / 2 + TOUCH_SLACK
+
+/** A white card of [size] with its [picture]: faded if she chose it and it was not; with an [edge] if it was ([right]). */
+internal fun DrawScope.drawPictureCard(
+    center: Offset,
+    size: Size,
+    aside: Boolean,
+    right: Boolean,
+    edge: Color,
+    picture: DrawScope.() -> Unit,
+) {
+    val topLeft = center - Offset(size.width / 2, size.height / 2)
+    drawRoundRect(Shadow, topLeft + Offset(0f, 6f), size, CornerRadius(18f))
+    drawRoundRect(Color.White, topLeft, size, CornerRadius(18f))
+    picture()
+    if (aside) drawRoundRect(Color.White, topLeft, size, CornerRadius(18f), alpha = 0.6f)
+    if (right) drawRoundRect(edge, topLeft, size, CornerRadius(18f), style = Stroke(6f))
+}

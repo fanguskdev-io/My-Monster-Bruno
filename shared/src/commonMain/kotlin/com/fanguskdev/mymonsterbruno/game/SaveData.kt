@@ -33,6 +33,8 @@ data class SaveData(
     val talked: Map<String, Int> = emptyMap(),
     /** Times she found the word that starts as Bruno's, by the syllable they start with: «pa». */
     val starts: Map<String, Int> = emptyMap(),
+    /** Times she found the word that rhymes with Bruno's, by pair (RhymeWord.pair): «gato» for gato and pato. */
+    val rhymes: Map<String, Int> = emptyMap(),
     /** Times she wrote her whole name (ADR 0017). */
     val namesWritten: Int = 0,
     /** Whether Bruno has seen her photo and said «¡Mira! ¡Eres tú!» (ADR 0016); a new photo makes it false again. */

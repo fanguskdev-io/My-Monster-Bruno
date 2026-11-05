@@ -64,12 +64,12 @@ internal fun DrawScope.drawStartPicture(
 }
 
 /** Draws [draw], made in a box of 100 units round the origin, centred on [center] and [size] units across. */
-private fun DrawScope.inBox(center: Offset, size: Float, draw: DrawScope.() -> Unit) = withTransform({
+internal fun DrawScope.inBox(center: Offset, size: Float, draw: DrawScope.() -> Unit) = withTransform({
     translate(center.x, center.y)
     scale(size / 100f, size / 100f, Offset.Zero)
 }) { draw() }
 
-private val PictureInk = Color(0xFF1D2B53)
+internal val PictureInk = Color(0xFF1D2B53)
 private val PictureWood = Color(0xFF8A5A3C)
 private val Glass = Color(0xFFDDF1FC)
 

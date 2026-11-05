@@ -7,6 +7,7 @@ import com.fanguskdev.mymonsterbruno.game.Hue
 import com.fanguskdev.mymonsterbruno.game.LETTERS
 import com.fanguskdev.mymonsterbruno.game.MAX_COUNT
 import com.fanguskdev.mymonsterbruno.game.NAME_ALPHABET
+import com.fanguskdev.mymonsterbruno.game.RhymeWord
 import com.fanguskdev.mymonsterbruno.game.Shape
 import com.fanguskdev.mymonsterbruno.game.StartWord
 import com.fanguskdev.mymonsterbruno.game.TalkWord
@@ -84,6 +85,10 @@ internal object Voice {
 
     /** «Y yo estoy contento, ¡porque has venido a jugar conmigo!», when Bruno puts his own in the jar of joy. */
     const val ME_TOO = "b_yo_contento"
+
+    /** The rhymes, on the island of words (ADR 0021): how they start and how Bruno thanks her. */
+    const val RHYMES_INTRO = "n_rimas_intro"
+    const val THANKS_RHYMES = "b_gracias_rimas"
     const val WORDS_INTRO = "n_palabras"
     const val THANKS_STARTS = "b_gracias_sonidos"
     const val MISSION_NAME = "n_mision_nombre"
@@ -163,6 +168,21 @@ internal object Voice {
     /** «¡Qué bien! Me gusta verte contenta.», when she has put herself in the jar of [feeling]. */
     fun today(feeling: Feeling) = "b_hoy_${feeling.word}"
 
+    /** «¡Gato! ¿Qué rima con gato?» */
+    fun whatRhymes(word: RhymeWord) = "b_rima_${word.key}"
+
+    /** «Gato.», the voice naming a card of the rhymes, so that she plays with the words she hears. */
+    fun card(word: RhymeWord) = "n_carta_${word.key}"
+
+    /** «¿Rana? Huum... No termina igual.», when she chooses [word] and it does not rhyme. */
+    fun noRhyme(word: RhymeWord) = "b_no_rima_${word.key}"
+
+    /** «¡Sí! Gato y pato riman.», for the pair of [word]. */
+    fun rhyme(word: RhymeWord) = "n_riman_${word.pair}"
+
+    /** «¡Un gato con zapato!», Bruno's silly rhyme with the pair of [word]. */
+    fun sillyRhyme(word: RhymeWord) = "b_tonta_${word.pair}"
+
     /** «¡Dime mariposa!» */
     fun tellMe(word: TalkWord) = "b_dime_${word.word}"
 
@@ -211,8 +231,10 @@ internal object Voice {
         THANKS_BALLOONS, LOOK_AT_THE_ROW, WHICH_NEXT, LOOK_AGAIN, THANKS_SERIES, TO_SHAPES, BUILD_HOUSE, THANKS_HOUSE,
         MISSION_SHAPE, TO_FEELINGS, HOW_FEELS, THANKS_FEELINGS, MISSION_FEELING, TALK, HOLD_MIC, CANT_HEAR, THANKS_WORDS,
         TO_WORDS, WORDS_INTRO, THANKS_STARTS, MISSION_NAME, ITS_YOU, NAME_INTRO, TEACH_ME_YOUR_NAME, KNOWS_YOUR_NAME,
-        HOW_DO_YOU_FEEL, TAKE_YOUR_PHOTO, TAKE_THE_FACE, ME_TOO,
+        HOW_DO_YOU_FEEL, TAKE_YOUR_PHOTO, TAKE_THE_FACE, ME_TOO, RHYMES_INTRO, THANKS_RHYMES,
     ) +
+        RhymeWord.entries.flatMap { listOf(whatRhymes(it), card(it), noRhyme(it)) } +
+        RhymeWord.entries.filter { it.key == it.pair }.flatMap { listOf(rhyme(it), sillyRhyme(it)) } +
         LETTERS.flatMap { listOf(want(it), yum(it), thatIs(it), iWant(it), trace(it), traced(it)) } +
         (1..MAX_COUNT).flatMap { listOf(askCount(it), number(it), strawberries(it)) } +
         Hue.entries.flatMap { listOf(wantBalloon(it), yes(it), thatColor(it), iWantBalloon(it), color(it)) } +

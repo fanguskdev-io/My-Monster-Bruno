@@ -37,6 +37,7 @@ import com.fanguskdev.mymonsterbruno.ui.screens.MapScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.MoodScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.NameScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.PresentScreen
+import com.fanguskdev.mymonsterbruno.ui.screens.RhymesScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.SeriesScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.SleepScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.SplashScreen
@@ -105,6 +106,7 @@ internal fun AppContent(game: GameState, onExit: (() -> Unit)? = null, listen: B
                 Step.HOUSE -> HouseScreen(game) { game.finished(scene) }
                 Step.FEELINGS -> FeelingsScreen(game) { game.finished(scene) }
                 Step.WORDS -> WordsScreen(game) { game.finished(scene) }
+                Step.RHYMES -> RhymesScreen(game) { game.finished(scene) }
             }
             is Scene.Present -> PresentScreen(game, scene.island) { game.presentGiven(scene.island) }
             Scene.Sleep -> SleepScreen(game)

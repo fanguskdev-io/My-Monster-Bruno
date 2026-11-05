@@ -2,13 +2,15 @@ package com.fanguskdev.mymonsterbruno.game
 
 /**
  * The games where she chooses among a few, which adapt to what she knows (ADR 0020): Comeletras, the balloons, the faces
- * of the feelings and the cards of the island of words. [word] names each in the save and in the grown-ups' corner.
+ * of the feelings, and the cards of the island of words and of its rhymes. [word] names each in the save and in the
+ * grown-ups' corner.
  */
 internal enum class Choosing(val word: String) {
     COOKIES("galletas"),
     BALLOONS("globos"),
     FACES("caritas"),
     CARDS("cartas"),
+    RHYMES("rimas"),
 }
 
 /** How many to choose from: two if it is hard for her, three to start with, four if it is easy. */

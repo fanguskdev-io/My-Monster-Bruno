@@ -296,4 +296,26 @@ final class BrunoDriverTests: XCTestCase {
         sleep(8)
         checkpoint("f5-cuarto-der")
     }
+
+    /// The island of words to its end, the rhymes included (ADR 0021): it touches the three cards in turn, as a child
+    /// trying them would, with a checkpoint after each turn, and turns the phone halfway. The save has three cards to
+    /// choose from and the feeling of today already asked.
+    func testRhymes() {
+        XCUIDevice.shared.orientation = .landscapeLeft
+        launchPastStart()
+        sleep(2)
+        stage(680, 290).tap()
+        sleep(3)
+        stage(712, 56).tap()
+        sleep(8)
+        // About four turns for the words that start the same, six for the rhymes and one to the present.
+        for turn in 1...11 {
+            for x: CGFloat in [420, 570, 720] {
+                stage(x, 330).tap()
+                sleep(4)
+            }
+            checkpoint(String(format: "r%02d", turn))
+            if turn == 7 { XCUIDevice.shared.orientation = .landscapeRight }
+        }
+    }
 }

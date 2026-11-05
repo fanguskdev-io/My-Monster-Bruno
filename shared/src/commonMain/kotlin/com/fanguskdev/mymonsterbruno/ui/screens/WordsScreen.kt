@@ -7,18 +7,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.TextMeasurer
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.rememberTextMeasurer
 import com.fanguskdev.mymonsterbruno.audio.Sfx
 import com.fanguskdev.mymonsterbruno.audio.Voice
-import com.fanguskdev.mymonsterbruno.game.CHOICES
 import com.fanguskdev.mymonsterbruno.game.Choosing
 import com.fanguskdev.mymonsterbruno.game.StartWord
 import com.fanguskdev.mymonsterbruno.game.choices
@@ -36,7 +32,6 @@ import com.fanguskdev.mymonsterbruno.ui.art.Arms
 import com.fanguskdev.mymonsterbruno.ui.art.Eyes
 import com.fanguskdev.mymonsterbruno.ui.art.Mouth
 import com.fanguskdev.mymonsterbruno.ui.art.Pose
-import com.fanguskdev.mymonsterbruno.ui.art.Shadow
 import com.fanguskdev.mymonsterbruno.ui.art.drawBruno
 import com.fanguskdev.mymonsterbruno.ui.art.drawLibrary
 import com.fanguskdev.mymonsterbruno.ui.art.drawSparkles
@@ -49,7 +44,6 @@ import com.fanguskdev.mymonsterbruno.ui.clamp01
 import com.fanguskdev.mymonsterbruno.ui.rememberClock
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlin.math.abs
 import kotlin.math.sin
 
 private val BRUNO_CENTER = Offset(150f, 240f)
@@ -60,14 +54,6 @@ private const val SAID_HEIGHT = 44f
 private const val CHOSEN_Y = 250f
 private const val CHOSEN_HEIGHT = 38f
 private const val SYLLABLE_GAP = 10f
-
-/** Where the cards are, as many as she chooses from (ADR 0020): four go closer, and a little smaller. */
-private fun spots(count: Int): List<Offset> =
-    if (count > CHOICES) row(Offset(534f, 330f), count, 132f) else row(Offset(570f, 330f), count, 150f)
-
-private fun cardSize(count: Int) = if (count > CHOICES) Size(116f, 100f) else Size(124f, 104f)
-
-private fun pictureSize(count: Int) = if (count > CHOICES) 78f else 84f
 
 /** The first syllable is gold when it is the one Bruno's word starts with, and purple when it is another. */
 private val SAME = Color(0xFFF4B623)
@@ -186,7 +172,7 @@ internal fun WordsScreen(game: GameState, onDone: () -> Unit) {
                     return true
                 }
                 if (phase != WordsPhase.ASKING) return false
-                val places = spots(cards.size)
+                val places = cardSpots(cards.size)
                 val size = cardSize(cards.size)
                 val card = cards.indices.firstOrNull { it !in aside && inCard(point, places[it], size) } ?: return false
                 choose(card)
@@ -221,12 +207,14 @@ internal fun WordsScreen(game: GameState, onDone: () -> Unit) {
         val saying = sinceClap.takeIf { clapping && chosen == null }
         drawSyllables(stage, now.said, said, Offset(BUBBLE.x, SAID_Y), SAID_HEIGHT, SAME, saying, measurer, font)
 
-        val places = spots(cards.size)
+        val places = cardSpots(cards.size)
         val size = cardSize(cards.size)
         for ((i, word) in cards.withIndex()) {
             val asking = phase == WordsPhase.ASKING && i !in aside
             val center = places[i] + Offset(0f, if (asking) bob(t, 1.5f + 0.3f * i, 3f) else 0f)
-            drawCard(word, center, size, pictureSize(cards.size), t, aside = i in aside, right = phase == WordsPhase.RIGHT && chosen == i)
+            drawPictureCard(center, size, aside = i in aside, right = phase == WordsPhase.RIGHT && chosen == i, edge = SAME) {
+                drawStartPicture(word, center, cardPicture(cards.size), t)
+            }
         }
         chosen?.let { card ->
             val word = cards[card]
@@ -246,24 +234,6 @@ private fun DrawScope.drawCorners(stage: Stage, rounds: Int, done: Int) {
     }
     drawHomeButton(stage)
     drawSpeakerButton(stage)
-}
-
-/** A white card of [size] with the picture of [word]: faded if she chose it and it was not; with a gold edge if it was. */
-private fun DrawScope.drawCard(
-    word: StartWord,
-    center: Offset,
-    size: Size,
-    picture: Float,
-    time: Float,
-    aside: Boolean,
-    right: Boolean,
-) {
-    val topLeft = center - Offset(size.width / 2, size.height / 2)
-    drawRoundRect(Shadow, topLeft + Offset(0f, 6f), size, CornerRadius(18f))
-    drawRoundRect(Color.White, topLeft, size, CornerRadius(18f))
-    drawStartPicture(word, center, picture, time)
-    if (aside) drawRoundRect(Color.White, topLeft, size, CornerRadius(18f), alpha = 0.6f)
-    if (right) drawRoundRect(SAME, topLeft, size, CornerRadius(18f), style = Stroke(6f))
 }
 
 /**
@@ -294,9 +264,6 @@ private fun DrawScope.drawSyllables(
         drawSyllable(syllable, center, height, color, pop, measurer, font)
     }
 }
-
-private fun inCard(point: Offset, center: Offset, size: Size) =
-    abs(point.x - center.x) <= size.width / 2 + TOUCH_SLACK && abs(point.y - center.y) <= size.height / 2 + TOUCH_SLACK
 
 private const val CLAP_SECONDS = 0.25f
 private const val PAUSE_MILLIS = 700L

@@ -48,6 +48,7 @@ import com.fanguskdev.mymonsterbruno.game.Feeling
 import com.fanguskdev.mymonsterbruno.game.Hue
 import com.fanguskdev.mymonsterbruno.game.LETTERS
 import com.fanguskdev.mymonsterbruno.game.MAX_COUNT
+import com.fanguskdev.mymonsterbruno.game.RhymeWord
 import com.fanguskdev.mymonsterbruno.game.SaveData
 import com.fanguskdev.mymonsterbruno.game.Session
 import com.fanguskdev.mymonsterbruno.game.Shape
@@ -189,6 +190,11 @@ internal fun GrownUpsScreen(game: GameState, onExit: (() -> Unit)? = null) {
                     it.start
                 }.distinct().joinToString("   ") { "${it.uppercase()} ${data.starts[it] ?: 0}" }
                 Text("Palabras que empiezan igual, por sílaba:   $starts", font, 16)
+                val rhymes = RhymeWord.entries.filter { it.key == it.pair }.joinToString("   ") { first ->
+                    val second = RhymeWord.entries.first { it.ending == first.ending && it != first }
+                    "${first.word} y ${second.word} ${data.rhymes[first.pair] ?: 0}"
+                }
+                Text("Rimas encontradas, por pareja:   $rhymes", font, 16)
                 Text("Islas terminadas: ${data.islandsDone}. Regalos de Bruno: ${data.look.accessories.size} de 6.", font, 16)
             }
             Section("Se adapta a lo que sabe", font) {

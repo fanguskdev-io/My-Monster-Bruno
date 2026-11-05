@@ -424,3 +424,85 @@ b_hoy_tristeza	bruno	Vaya... Te doy un abrazo muy grande.
 b_hoy_enfado	bruno	A veces nos enfadamos. Si quieres, respiramos juntos con el globo.
 b_hoy_miedo	bruno	No pasa nada. Yo estoy contigo.
 b_hoy_calma	bruno	¡Qué tranquila estás! Me gusta.
+n_rimas_intro	narrador	¡Ahora, rimas! Riman las palabras que terminan igual.
+b_gracias_rimas	bruno	¡Qué divertido! ¡Me encantan las rimas!
+b_rima_gato	bruno	¡Gato! ¿Qué rima con gato?
+b_rima_pato	bruno	¡Pato! ¿Qué rima con pato?
+b_rima_luna	bruno	¡Luna! ¿Qué rima con luna?
+b_rima_cuna	bruno	¡Cuna! ¿Qué rima con cuna?
+b_rima_raton	bruno	¡Ratón! ¿Qué rima con ratón?
+b_rima_boton	bruno	¡Botón! ¿Qué rima con botón?
+b_rima_rana	bruno	¡Rana! ¿Qué rima con rana?
+b_rima_lana	bruno	¡Lana! ¿Qué rima con lana?
+b_rima_sol	bruno	¡Sol! ¿Qué rima con sol?
+b_rima_col	bruno	¡Col! ¿Qué rima con col?
+b_rima_pez	bruno	¡Pez! ¿Qué rima con pez?
+b_rima_nuez	bruno	¡Nuez! ¿Qué rima con nuez?
+b_rima_mesa	bruno	¡Mesa! ¿Qué rima con mesa?
+b_rima_fresa	bruno	¡Fresa! ¿Qué rima con fresa?
+b_rima_foca	bruno	¡Foca! ¿Qué rima con foca?
+b_rima_boca	bruno	¡Boca! ¿Qué rima con boca?
+b_rima_llave	bruno	¡Llave! ¿Qué rima con llave?
+b_rima_nave	bruno	¡Nave! ¿Qué rima con nave?
+b_rima_seta	bruno	¡Seta! ¿Qué rima con seta?
+b_rima_maleta	bruno	¡Maleta! ¿Qué rima con maleta?
+b_no_rima_gato	bruno	¿Gato? Huum... No termina igual.
+b_no_rima_pato	bruno	¿Pato? Huum... No termina igual.
+b_no_rima_luna	bruno	¿Luna? Huum... No termina igual.
+b_no_rima_cuna	bruno	¿Cuna? Huum... No termina igual.
+b_no_rima_raton	bruno	¿Ratón? Huum... No termina igual.
+b_no_rima_boton	bruno	¿Botón? Huum... No termina igual.
+b_no_rima_rana	bruno	¿Rana? Huum... No termina igual.
+b_no_rima_lana	bruno	¿Lana? Huum... No termina igual.
+b_no_rima_sol	bruno	¿Sol? Huum... No termina igual.
+b_no_rima_col	bruno	¿Col? Huum... No termina igual.
+b_no_rima_pez	bruno	¿Pez? Huum... No termina igual.
+b_no_rima_nuez	bruno	¿Nuez? Huum... No termina igual.
+b_no_rima_mesa	bruno	¿Mesa? Huum... No termina igual.
+b_no_rima_fresa	bruno	¿Fresa? Huum... No termina igual.
+b_no_rima_foca	bruno	¿Foca? Huum... No termina igual.
+b_no_rima_boca	bruno	¿Boca? Huum... No termina igual.
+b_no_rima_llave	bruno	¿Llave? Huum... No termina igual.
+b_no_rima_nave	bruno	¿Nave? Huum... No termina igual.
+b_no_rima_seta	bruno	¿Seta? Huum... No termina igual.
+b_no_rima_maleta	bruno	¿Maleta? Huum... No termina igual.
+n_riman_gato	narrador	¡Sí! Gato y pato riman.
+n_riman_luna	narrador	¡Sí! Luna y cuna riman.
+n_riman_raton	narrador	¡Sí! Ratón y botón riman.
+n_riman_rana	narrador	¡Sí! Rana y lana riman.
+n_riman_sol	narrador	¡Sí! Sol y col riman.
+n_riman_pez	narrador	¡Sí! Pez y nuez riman.
+n_riman_mesa	narrador	¡Sí! Mesa y fresa riman.
+n_riman_foca	narrador	¡Sí! Foca y boca riman.
+n_riman_llave	narrador	¡Sí! Llave y nave riman.
+n_riman_seta	narrador	¡Sí! Seta y maleta riman.
+b_tonta_gato	bruno	¡Un gato con zapato!
+b_tonta_luna	bruno	¡La luna duerme en su cuna!
+b_tonta_raton	bruno	¡Un ratón cosiendo un botón!
+b_tonta_rana	bruno	¡Una rana con bufanda de lana!
+b_tonta_sol	bruno	¡Una col tomando el sol!
+b_tonta_pez	bruno	¡Un pez que se come una nuez!
+b_tonta_mesa	bruno	¡Una fresa bailando en la mesa!
+b_tonta_foca	bruno	¡Una foca que abre la boca!
+b_tonta_llave	bruno	¡Con esta llave arranco la nave!
+b_tonta_seta	bruno	¡Una seta dentro de la maleta!
+n_carta_gato	narrador	Gato.
+n_carta_pato	narrador	Pato.
+n_carta_luna	narrador	Luna.
+n_carta_cuna	narrador	Cuna.
+n_carta_raton	narrador	Ratón.
+n_carta_boton	narrador	Botón.
+n_carta_rana	narrador	Rana.
+n_carta_lana	narrador	Lana.
+n_carta_sol	narrador	Sol.
+n_carta_col	narrador	Col.
+n_carta_pez	narrador	Pez.
+n_carta_nuez	narrador	Nuez.
+n_carta_mesa	narrador	Mesa.
+n_carta_fresa	narrador	Fresa.
+n_carta_foca	narrador	Foca.
+n_carta_boca	narrador	Boca.
+n_carta_llave	narrador	Llave.
+n_carta_nave	narrador	Nave.
+n_carta_seta	narrador	Seta.
+n_carta_maleta	narrador	Maleta.

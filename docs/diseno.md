@@ -58,7 +58,8 @@ CaroFarty» ([ADR 0018](adr/0018-la-pantalla-de-inicio.md)). Y otro nombre para 
 por: Mi amigo Bruno» ([ADR 0002](adr/0002-mi-monstruo-bruno.md)). Después, «Continua con el desarrollo» y, de las
 siguientes ideas, «La emoción del día», tal como se la propuso el agente ([ADR 0019](adr/0019-la-emocion-del-dia.md)). Y
 al día siguiente, «continua» y, de otras cuatro, «Que se adapte» a lo que sabe
-([ADR 0020](adr/0020-se-adapta-a-lo-que-sabe.md)).
+([ADR 0020](adr/0020-se-adapta-a-lo-que-sabe.md)); y después, «Rimas con Bruno», en la isla de las palabras
+([ADR 0021](adr/0021-rimas-con-bruno.md)).
 
 La propuesta 3, tal como la leyó (en la [maqueta](investigacion/propuestas.html#p3)):
 
@@ -134,8 +135,12 @@ ha venido a jugar. Se puede saltar con la casa. El día que nace Bruno no se pre
    salen en dorado: «¡Sí! Pato y pajarita empiezan por pa». Si no, «Huum... Luna empieza por lu. Busca otra que empiece
    por pa», y esa carta se aparta. Son cinco rondas de diez parejas (gafas y galleta, corona y corazón, mano y mariposa,
    casa y cama, pato y pajarita, luna y lupa, pelota y pera, gorro y gota, oso y ojo, regalo y reloj), las que menos ha
-   encontrado.
-Comeletras, los globos, las caritas y las cartas **se adaptan a lo que sabe** ([ADR 0020](adr/0020-se-adapta-a-lo-que-sabe.md)):
+   encontrado. Después, **las rimas** ([ADR 0021](adr/0021-rimas-con-bruno.md)): «¡Gato! ¿Qué rima con gato?», el
+   narrador nombra cada carta mientras salta, y ella toca la que termina igual. Si rima, «¡Sí! Gato y pato riman» y Bruno dice una rima tonta, «¡Un gato con
+   zapato!», y se ríe; si no, «¿Rana? Huum... No termina igual», y esa carta se aparta. Son cinco rondas de diez parejas
+   (gato y pato, luna y cuna, ratón y botón, rana y lana, sol y col, pez y nuez, mesa y fresa, foca y boca, llave y nave,
+   seta y maleta), las que menos ha encontrado.
+Comeletras, los globos, las caritas, las cartas y las rimas **se adaptan a lo que sabe** ([ADR 0020](adr/0020-se-adapta-a-lo-que-sabe.md)):
 si acierta a la primera las últimas cinco rondas de ese juego, la siguiente trae cuatro para elegir en vez de tres; si se
 equivoca en más de la mitad, dos. Nunca se le dice, y no hay niveles ni puntos.
 
@@ -206,7 +211,7 @@ trazos y el mapa con dos islas. De las piezas comunes, el rincón de la calma, l
 Bruno; las letras M, P, L y S y los números hasta el 10 en las islas que ya había; y la isla de las emociones. Con
 eso está todo lo que la propuesta ponía en el mapa. De M2, «Habla con Bruno». Y de lo que faltaba, la isla de las
 palabras, con el sonido inicial por la sílaba. Y de las ideas, escribir su nombre, la pantalla de inicio, la emoción
-del día y que los juegos se adapten a lo que sabe.
+del día, que los juegos se adapten a lo que sabe y las rimas con Bruno.
 
 **Falta**, de la propuesta 3 que eligió Fangusk. El orden y el alcance de cada pieza los decide él.
 
@@ -224,7 +229,7 @@ Las **voces de la familia** no se harán: «para M2 no vamos a utilizar las voce
 - **Bruno y todo lo demás se dibujan con vectores**, sin imágenes: Bruno respira, parpadea, mira y cambia de cara (ocho
   bocas, cuatro ojos, tres posturas de brazos).
 - **Las voces** son las de un narrador y la de Bruno, algo más aguda y más despacio, a unas 4 sílabas por segundo. Hay
-  425 frases pregrabadas con la voz del sistema del Mac y **los efectos** (15) se sintetizan desde cero
+  507 frases pregrabadas con la voz del sistema del Mac y **los efectos** (15) se sintetizan desde cero
   ([ADR 0004](adr/0004-voces-provisionales.md)). Las frases están en [`voces/guion.tsv`](../voces/guion.tsv).
 - **La letra** de la zona de mayores, de los números, del banderín y del título es Andika, una tipografía pensada para quien aprende a
   leer (licencia OFL, en [`licencias/`](../licencias/Andika-OFL.txt)).

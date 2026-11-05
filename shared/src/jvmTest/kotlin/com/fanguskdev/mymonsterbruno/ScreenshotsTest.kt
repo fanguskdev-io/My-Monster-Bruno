@@ -70,6 +70,7 @@ class ScreenshotsTest {
             "19-palabras" to Scene.Play(Island.WORDS, 0),
             "23-nombre" to Scene.Name,
             "24-emocion-del-dia" to Scene.Mood,
+            "25-rimas" to Scene.Play(Island.WORDS, 1),
         )
         // The same games once she knows the vowels and one to five: the consonants and the numbers up to ten.
         val knows = { save: SaveData ->
@@ -103,6 +104,7 @@ class ScreenshotsTest {
             "11-globos-cuatro" to Scene.Play(Island.COLORS, 0),
             "17-emociones-cuatro" to Scene.Play(Island.FEELINGS, 0),
             "19-palabras-cuatro" to Scene.Play(Island.WORDS, 0),
+            "25-rimas-cuatro" to Scene.Play(Island.WORDS, 1),
         )
         // And the map once she has finished every island, with all its flags.
         val finished = { save: SaveData -> save.copy(islands = Island.entries.associate { it.name to 1 }) }

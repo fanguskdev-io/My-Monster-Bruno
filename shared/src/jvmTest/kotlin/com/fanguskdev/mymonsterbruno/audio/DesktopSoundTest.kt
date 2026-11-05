@@ -38,15 +38,17 @@ class DesktopSoundTest {
     /**
      * The strawberries: a count that cuts the one before, again and again. With a Clip for each sound, the thread of the
      * sound waited up to two seconds for Java Sound at each cut and fell further and further behind, silent; now it takes
-     * every order within a moment (a busy computer can hold the sound card a few hundred milliseconds, never seconds). The
-     * sounds are silence, so nothing is heard if the computer plays them.
+     * the orders within a moment, as it writes a chunk. The first touch waits while the sound card wakes up, a second and
+     * a half if it was asleep, and a busy computer can hold the card now and then; so what counts is how long a touch
+     * usually waits, and that none is left waiting for good. The sounds are silence, so nothing is heard if the computer
+     * plays them.
      */
     @Test
     fun cuttingASoundNeverHoldsTheOthersUp() {
         val player = DesktopSoundPlayer()
         val wav = wav(Pcm(ShortArray(LINE_RATE / 2), channels = 1, rate = LINE_RATE))
         for (name in listOf("fresa", "n_num_1", "n_num_2", "b_fresas_2")) player.load(name, wav)
-        var slowest = 0L
+        val waits = mutableListOf<Long>()
         try {
             repeat(TAPS) { n ->
                 player.stop("n_num_${n % 2 + 1}")
@@ -55,13 +57,15 @@ class DesktopSoundTest {
                 if (n % 5 == 0) player.play("b_fresas_2")
                 val start = System.nanoTime()
                 while (player.backlog > 0 && System.nanoTime() - start < GIVE_UP_NANOS) Thread.sleep(1)
-                slowest = maxOf(slowest, System.nanoTime() - start)
+                waits += System.nanoTime() - start
                 Thread.sleep(PAUSE_MILLIS)
             }
         } finally {
             player.release()
         }
-        assertTrue(slowest < MAX_WAIT_NANOS, "el sonido tardó ${slowest / 1_000_000} ms en atender un toque")
+        val usual = waits.sorted()[waits.size / 2]
+        assertTrue(usual < USUAL_WAIT_NANOS, "el sonido suele tardar ${usual / 1_000_000} ms en atender un toque")
+        assertTrue(waits.max() < GIVE_UP_NANOS, "un toque se quedó ${waits.max() / 1_000_000} ms sin atender")
     }
 
     /** A mono 16-bit WAV of [pcm], as tools/voces.py writes them. */
@@ -97,7 +101,9 @@ class DesktopSoundTest {
     private companion object {
         const val TAPS = 30
         const val PAUSE_MILLIS = 60L
-        const val MAX_WAIT_NANOS = 1_000_000_000L
+
+        /** The line takes the orders as it writes a chunk, some 23 ms; with a Clip for each sound, a cut took up to 2 s. */
+        const val USUAL_WAIT_NANOS = 250_000_000L
         const val GIVE_UP_NANOS = 3_000_000_000L
     }
 }
