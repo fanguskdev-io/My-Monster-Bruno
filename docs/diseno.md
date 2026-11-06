@@ -60,7 +60,7 @@ siguientes ideas, «La emoción del día», tal como se la propuso el agente ([A
 al día siguiente, «continua» y, de otras cuatro, «Que se adapte» a lo que sabe
 ([ADR 0020](adr/0020-se-adapta-a-lo-que-sabe.md)); y después, «Rimas con Bruno», en la isla de las palabras
 ([ADR 0021](adr/0021-rimas-con-bruno.md)). Al día siguiente, «Continua» y «La F, la B y la R»
-([ADR 0022](adr/0022-la-f-la-b-y-la-r.md)).
+([ADR 0022](adr/0022-la-f-la-b-y-la-r.md)), y después «La cuenta atrás» ([ADR 0023](adr/0023-la-cuenta-atras.md)).
 
 La propuesta 3, tal como la leyó (en la [maqueta](investigacion/propuestas.html#p3)):
 
@@ -114,7 +114,10 @@ ha venido a jugar. Se puede saltar con la casa. El día que nace Bruno no se pre
 5. **La isla de los números**: **las fresas**. «Bruno quiere tres fresas. ¿Se las das?». Ella toca fresas del arbusto y
    cada una se cuenta en voz alta. Al llegar al número, Bruno se las come. La tarjeta enseña el número, los dedos (desde
    el 6, una mano entera y la otra) y sus puntos. Son cinco rondas: del 1 al 5 hasta que los ha contado todos, y luego
-   dos del 1 al 5 y tres del 6 al 10.
+   dos del 1 al 5 y tres del 6 al 10. Después, **la cuenta atrás** ([ADR 0023](adr/0023-la-cuenta-atras.md)): Bruno está en
+   su cohete y ella cuenta del 10 al 0 tocando los números de un panel, desordenados, mientras el narrador los dice y se
+   encienden las luces de la torre; el cero es un botón rojo grande: «¡Cero! ¡Despegue!», y el cohete sube entre el humo,
+   sale por arriba y vuelve a bajar.
 6. **La isla de los colores** ([ADR 0007](adr/0007-la-isla-de-los-colores.md)):
    - **Los globos**. «¡Quiero el globo rojo!». Hay tres globos, y ella le da uno a Bruno arrastrándolo hasta él o
      tocándolo. El que acierta se queda atado en su mano, así que al final tiene un ramo. Si no es el suyo, Bruno dice de
@@ -231,7 +234,7 @@ Las **voces de la familia** no se harán: «para M2 no vamos a utilizar las voce
 - **Bruno y todo lo demás se dibujan con vectores**, sin imágenes: Bruno respira, parpadea, mira y cambia de cara (ocho
   bocas, cuatro ojos, tres posturas de brazos).
 - **Las voces** son las de un narrador y la de Bruno, algo más aguda y más despacio, a unas 4 sílabas por segundo. Hay
-  525 frases pregrabadas con la voz del sistema del Mac y **los efectos** (15) se sintetizan desde cero
+  550 frases pregrabadas con la voz del sistema del Mac y **los efectos** (16) se sintetizan desde cero
   ([ADR 0004](adr/0004-voces-provisionales.md)). Las frases están en [`voces/guion.tsv`](../voces/guion.tsv).
 - **La letra** de la zona de mayores, de los números, del banderín y del título es Andika, una tipografía pensada para quien aprende a
   leer (licencia OFL, en [`licencias/`](../licencias/Andika-OFL.txt)).

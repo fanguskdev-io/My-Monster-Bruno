@@ -15,7 +15,7 @@ import kotlin.random.Random
 /** The islands of the map that have something to do, each with its activities in order (docs/diseno.md). */
 internal enum class Island(val activities: List<Activity>) {
     VOWELS(listOf(Activity.FEED, Activity.TRACE)),
-    NUMBERS(listOf(Activity.COUNT)),
+    NUMBERS(listOf(Activity.COUNT, Activity.COUNTDOWN)),
     COLORS(listOf(Activity.BALLOONS, Activity.SERIES)),
     SHAPES(listOf(Activity.HOUSE)),
     FEELINGS(listOf(Activity.FEELINGS)),
@@ -25,9 +25,9 @@ internal enum class Island(val activities: List<Activity>) {
 /**
  * The things she does on an island: give Bruno the letter he wants, trace a letter, give him strawberries, give him the
  * balloon of the colour he wants, finish a series of balloons, build his house with shapes, know how he feels and find
- * the word that starts as his, and the one that rhymes with his (ADR 0021).
+ * the word that starts as his, and the one that rhymes with his (ADR 0021); and count down for his rocket (ADR 0023).
  */
-internal enum class Activity { FEED, TRACE, COUNT, BALLOONS, SERIES, HOUSE, FEELINGS, WORDS, RHYMES }
+internal enum class Activity { FEED, TRACE, COUNT, COUNTDOWN, BALLOONS, SERIES, HOUSE, FEELINGS, WORDS, RHYMES }
 
 /** Where the game is. */
 internal sealed interface Scene {

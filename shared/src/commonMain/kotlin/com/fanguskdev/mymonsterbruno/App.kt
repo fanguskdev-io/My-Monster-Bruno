@@ -27,6 +27,7 @@ import com.fanguskdev.mymonsterbruno.ui.Scene
 import com.fanguskdev.mymonsterbruno.ui.screens.BalloonScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.CalmScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.CountScreen
+import com.fanguskdev.mymonsterbruno.ui.screens.CountdownScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.FeedScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.FeelingsScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.GrownUpsScreen
@@ -101,6 +102,7 @@ internal fun AppContent(game: GameState, onExit: (() -> Unit)? = null, listen: B
                 Step.FEED -> FeedScreen(game) { game.finished(scene) }
                 Step.TRACE -> TraceScreen(game) { game.finished(scene) }
                 Step.COUNT -> CountScreen(game) { game.finished(scene) }
+                Step.COUNTDOWN -> CountdownScreen(game) { game.finished(scene) }
                 Step.BALLOONS -> BalloonScreen(game) { game.finished(scene) }
                 Step.SERIES -> SeriesScreen(game) { game.finished(scene) }
                 Step.HOUSE -> HouseScreen(game) { game.finished(scene) }

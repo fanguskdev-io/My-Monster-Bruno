@@ -1,5 +1,6 @@
 package com.fanguskdev.mymonsterbruno.audio
 
+import com.fanguskdev.mymonsterbruno.game.COUNTDOWN_FROM
 import com.fanguskdev.mymonsterbruno.game.Feeling
 import com.fanguskdev.mymonsterbruno.game.Happening
 import com.fanguskdev.mymonsterbruno.game.HousePart
@@ -86,6 +87,13 @@ internal object Voice {
     /** «Y yo estoy contento, ¡porque has venido a jugar conmigo!», when Bruno puts his own in the jar of joy. */
     const val ME_TOO = "b_yo_contento"
 
+    /** The countdown of Bruno's rocket, on the island of numbers (ADR 0023). */
+    const val ROCKET_INTRO = "n_cohete_intro"
+    const val PRESS_ZERO = "n_boton_cero"
+    const val LIFT_OFF = "n_despegue"
+    const val OFF_I_GO = "b_alla_voy"
+    const val THANKS_ROCKET = "b_gracias_cohete"
+
     /** The rhymes, on the island of words (ADR 0021): how they start and how Bruno thanks her. */
     const val RHYMES_INTRO = "n_rimas_intro"
     const val THANKS_RHYMES = "b_gracias_rimas"
@@ -168,6 +176,12 @@ internal object Voice {
     /** «¡Qué bien! Me gusta verte contenta.», when she has put herself in the jar of [feeling]. */
     fun today(feeling: Feeling) = "b_hoy_${feeling.word}"
 
+    /** «¿Dónde está el nueve?», the number of the countdown that goes now. */
+    fun whereIs(number: Int) = "n_donde_$number"
+
+    /** «¡Nueve!», counting down: not «Una» as the strawberries, «¡Uno!». */
+    fun down(number: Int) = "n_atras_$number"
+
     /** «¡Gato! ¿Qué rima con gato?» */
     fun whatRhymes(word: RhymeWord) = "b_rima_${word.key}"
 
@@ -231,8 +245,10 @@ internal object Voice {
         THANKS_BALLOONS, LOOK_AT_THE_ROW, WHICH_NEXT, LOOK_AGAIN, THANKS_SERIES, TO_SHAPES, BUILD_HOUSE, THANKS_HOUSE,
         MISSION_SHAPE, TO_FEELINGS, HOW_FEELS, THANKS_FEELINGS, MISSION_FEELING, TALK, HOLD_MIC, CANT_HEAR, THANKS_WORDS,
         TO_WORDS, WORDS_INTRO, THANKS_STARTS, MISSION_NAME, ITS_YOU, NAME_INTRO, TEACH_ME_YOUR_NAME, KNOWS_YOUR_NAME,
-        HOW_DO_YOU_FEEL, TAKE_YOUR_PHOTO, TAKE_THE_FACE, ME_TOO, RHYMES_INTRO, THANKS_RHYMES,
+        HOW_DO_YOU_FEEL, TAKE_YOUR_PHOTO, TAKE_THE_FACE, ME_TOO, RHYMES_INTRO, THANKS_RHYMES, ROCKET_INTRO, PRESS_ZERO,
+        LIFT_OFF, OFF_I_GO, THANKS_ROCKET,
     ) +
+        (1..COUNTDOWN_FROM).flatMap { listOf(whereIs(it), down(it)) } +
         RhymeWord.entries.flatMap { listOf(whatRhymes(it), card(it), noRhyme(it)) } +
         RhymeWord.entries.filter { it.key == it.pair }.flatMap { listOf(rhyme(it), sillyRhyme(it)) } +
         LETTERS.flatMap { listOf(want(it), yum(it), thatIs(it), iWant(it), trace(it), traced(it)) } +
@@ -269,5 +285,6 @@ internal enum class Sfx(val file: String) {
     PICK("fresa"),
     POP("pop"),
     START("inicio"),
+    ROCKET("cohete"),
     CLAP("palmada"),
 }

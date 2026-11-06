@@ -318,4 +318,46 @@ final class BrunoDriverTests: XCTestCase {
             if turn == 7 { XCUIDevice.shared.orientation = .landscapeRight }
         }
     }
+
+    /// The countdown of the island of numbers (ADR 0023): the strawberries first, touched in turn until they are over, and
+    /// then the panel, its ten buttons in turn until every light is on, and the red zero. The save has the feeling of
+    /// today already asked.
+    func testCountdown() {
+        XCUIDevice.shared.orientation = .landscapeLeft
+        launchPastStart()
+        sleep(2)
+        stage(680, 290).tap()
+        sleep(3)
+        stage(588, 150).tap()
+        sleep(8)
+        let berries: [(CGFloat, CGFloat)] = [
+            (528, 200), (588, 180), (648, 180), (706, 200), (512, 254), (572, 238),
+            (632, 238), (692, 254), (538, 304), (598, 292), (658, 292), (716, 306),
+        ]
+        for _ in 1...6 {
+            for (x, y) in berries {
+                stage(x, y).tap()
+                usleep(1_200_000)
+            }
+        }
+        checkpoint("n1-cohete-izq")
+        let buttons: [(CGFloat, CGFloat)] = [CGFloat(175), 255].flatMap { y in [CGFloat(455), 530, 605, 680, 755].map { x in (x, y) } }
+        for turn in 1...10 {
+            for (x, y) in buttons {
+                stage(x, y).tap()
+                usleep(900_000)
+            }
+            if turn == 3 {
+                checkpoint("n2-contando-izq")
+                XCUIDevice.shared.orientation = .landscapeRight
+                sleep(2)
+            }
+        }
+        checkpoint("n3-cero-der")
+        stage(605, 345).tap()
+        usleep(1_500_000)
+        checkpoint("n4-despegue-der")
+        sleep(8)
+        checkpoint("n5-regalo-der")
+    }
 }

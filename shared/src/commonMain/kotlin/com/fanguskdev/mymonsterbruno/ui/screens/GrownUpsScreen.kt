@@ -176,6 +176,7 @@ internal fun GrownUpsScreen(game: GameState, onExit: (() -> Unit)? = null) {
                 Text("Letras trazadas enteras:   $traced", font, 16)
                 Text("Veces que ha escrito su nombre: ${data.namesWritten}.", font, 16)
                 Text("Fresas contadas, por número:   $counted", font, 16)
+                Text("Cohetes despegados, contando hacia atrás: ${data.launches}.", font, 16)
                 val balloons = Hue.entries.joinToString("   ") { "${it.word} ${data.balloons[it.word] ?: 0}" }
                 Text("Globos bien dados, por color:   $balloons", font, 16)
                 Text("Series de globos terminadas: ${data.series}.", font, 16)

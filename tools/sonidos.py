@@ -162,6 +162,14 @@ def palmada():
     return mezclar(s, tono(1100, 0.05, caida=60), 0.0, 0.15)
 
 
+def cohete():
+    """El despegue del cohete de Bruno: un rugido suave y grave que crece y se va, con un tono que sube debajo."""
+    base = ruido(1.4, 31, caida=0.0, suavizado=0.92)
+    n = len(base)
+    rugido = [m * math.sin(math.pi * i / n) ** 1.5 for i, m in enumerate(base)]
+    return mezclar(rugido, tono(110, 1.4, ataque=0.3, caida=1.2, final=420), 0.0, 0.3)
+
+
 RECETAS = {
     "toque": toque,
     "crac": crac,
@@ -178,6 +186,7 @@ RECETAS = {
     "pop": pop,
     "palmada": palmada,
     "inicio": inicio,
+    "cohete": cohete,
 }
 
 

@@ -524,3 +524,28 @@ b_esa_es_r	bruno	Huum... Esa es la erre.
 b_yo_quiero_r	bruno	¡Yo quiero la erre!
 n_trazar_r	narrador	Esta es la erre. Sigue el camino con el dedo.
 b_letra_r	bruno	¡La erre! ¡Ya sé hacer la erre!
+n_cohete_intro	narrador	¡El cohete de Bruno va a despegar! Cuenta hacia atrás, del diez al cero, tocando los números.
+n_donde_10	narrador	¿Dónde está el diez?
+n_donde_9	narrador	¿Dónde está el nueve?
+n_donde_8	narrador	¿Dónde está el ocho?
+n_donde_7	narrador	¿Dónde está el siete?
+n_donde_6	narrador	¿Dónde está el seis?
+n_donde_5	narrador	¿Dónde está el cinco?
+n_donde_4	narrador	¿Dónde está el cuatro?
+n_donde_3	narrador	¿Dónde está el tres?
+n_donde_2	narrador	¿Dónde está el dos?
+n_donde_1	narrador	¿Dónde está el uno?
+n_atras_10	narrador	¡Diez!
+n_atras_9	narrador	¡Nueve!
+n_atras_8	narrador	¡Ocho!
+n_atras_7	narrador	¡Siete!
+n_atras_6	narrador	¡Seis!
+n_atras_5	narrador	¡Cinco!
+n_atras_4	narrador	¡Cuatro!
+n_atras_3	narrador	¡Tres!
+n_atras_2	narrador	¡Dos!
+n_atras_1	narrador	¡Uno!
+n_boton_cero	narrador	Y ahora... ¡el cero! Pulsa el botón rojo.
+n_despegue	narrador	¡Cero! ¡Despegue!
+b_alla_voy	bruno	¡Allá voy!
+b_gracias_cohete	bruno	¡Qué viaje! ¡Gracias por contar conmigo!

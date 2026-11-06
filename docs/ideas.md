@@ -14,7 +14,8 @@ El **tamaño** es el trabajo de un agente: **pequeña**, unas horas; **mediana**
 **Hechas** desde entonces: la 1.1, escribir su nombre ([ADR 0017](adr/0017-escribir-su-nombre.md)); la 1.11, la
 emoción del día ([ADR 0019](adr/0019-la-emocion-del-dia.md)); la 2.1, que se adapte a lo que sabe
 ([ADR 0020](adr/0020-se-adapta-a-lo-que-sabe.md)); la 1.2, rimas con Bruno ([ADR 0021](adr/0021-rimas-con-bruno.md)); la 1.13, la F, la B y la R
-([ADR 0022](adr/0022-la-f-la-b-y-la-r.md)); y la 5.5, la prueba de sonido del Mac. Y una que no estaba aquí, la pantalla de inicio
+([ADR 0022](adr/0022-la-f-la-b-y-la-r.md)); la 1.5, la cuenta atrás ([ADR 0023](adr/0023-la-cuenta-atras.md)); y la 5.5, la
+prueba de sonido del Mac. Y una que no estaba aquí, la pantalla de inicio
 ([ADR 0018](adr/0018-la-pantalla-de-inicio.md)).
 
 ## Las cinco con las que empezaría
@@ -40,7 +41,8 @@ emoción del día ([ADR 0019](adr/0019-la-emocion-del-dia.md)); la 2.1, que se a
 - **1.4 El anterior y el siguiente.** Bruno salta por una recta numérica del 0 al 10 y pregunta qué número va antes o
   después. En el aula de 4 años se usa la recta, y el juego solo cuenta. *Mediana.*
 - **1.5 La cuenta atrás.** El cohete de Bruno despega cuando ella cuenta del 10 al 0, tocando las luces. Corta y muy
-  divertida. *Pequeña.*
+  divertida. *Pequeña. Hecha, como segunda actividad de la isla de los números
+  ([ADR 0023](adr/0023-la-cuenta-atras.md)).*
 - **1.6 Sumas con dibujos hasta 3.** «Bruno tiene una fresa y le das dos más. ¿Cuántas tiene?». *Mediana.*
 - **1.7 Primero, segundo y tercero.** Una carrera de animales: ¿quién llega primero? *Pequeña.*
 - **1.8 Grande y pequeño, dentro y fuera, arriba y abajo.** «Esconde a Bruno dentro de la caja», «pon la pelota encima de la

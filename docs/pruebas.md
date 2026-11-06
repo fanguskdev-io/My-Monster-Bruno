@@ -17,6 +17,7 @@ Qué se prueba en cada cambio y en cada hito, y cómo. Los criterios de salida d
 | Las rondas: Comeletras pide el primer día las vocales y después las letras menos dadas, con las consonantes; la T, la N y la D no salen hasta que conoce la M, la P, la L y la S, ni la F, la B y la R hasta que conoce la T, la N y la D, ni en Comeletras ni en los trazos; las fresas van del 1 al 5 y, cuando los ha contado, mezclan hasta el 10, nunca empezando por el más grande; se trazan las menos trazadas, las vocales primero; cada letra tiene su palabra; los globos piden cinco colores distintos con otros dos; las series son dos de dos colores y dos de tres, y su respuesta está entre las opciones; la casa se construye en orden y su pieza siempre está entre las tres; las emociones salen una vez cada una, la nana la última, y su carita está entre las tres; «Habla con Bruno» pide cuatro de las palabras que menos ha dicho, de menos palmadas a más, y cada palabra son sus sílabas, de una a cuatro; la isla de las palabras pide cinco parejas, las menos encontradas, con una sola carta que empieza como la palabra de Bruno, y cada palabra tiene su pareja | `RoundsTest` | Común |
 | Los minutos del día, el día nuevo y los minutos de más; la partida se guarda y se recupera, y una rota empieza de cero; lo que lleva Bruno y cuánto crece | `SessionTest` | Común |
 | Cuándo se va Bruno a dormir: enseguida en el cuarto y en el mapa, al terminar la isla dentro de una, «Habla con Bruno» o su nombre, dormido si se abre sin tiempo, y el huevo no cuenta; la pantalla de inicio lleva al huevo, al cuarto o a la cama y no cuenta minutos; la emoción del día se pregunta una vez al día al abrir, aunque no conteste; su foto se queda al volver a abrir, una nueva hace que Bruno la vuelva a ver y quitarla la borra | `GameStateTest` | Común |
+| La cuenta atrás: el panel tiene del 1 al 10, una vez cada uno y desordenados; se cuenta del 10 al 0 y solo vale el número que va | `CountdownTest` | Común |
 | La emoción del día: una por día, la última que eligió, y solo los últimos 14 días; un día roto no cuenta | `MoodTest` | Común |
 | Las rimas: diez parejas que riman y ninguna termina como otra; cinco rondas de las parejas menos encontradas, sin repetir, y con dos, tres o cuatro cartas solo una rima | `RhymesTest` | Común |
 | Que se adapte: tres para empezar, cuatro tras cinco rondas seguidas bien a la primera, dos si se equivoca en más de la mitad, y solo cuentan las cinco últimas de cada juego; con dos, tres o cuatro, la respuesta siempre está, en el mismo orden, y en las cartas solo una empieza igual | `AdaptTest` | Común |
@@ -27,7 +28,7 @@ Qué se prueba en cada cambio y en cada hito, y cómo. Los criterios de salida d
 | Lo que se hace con su voz antes de que Bruno la repita: sin el silencio de los bordes (y nada si solo hay silencio o un murmullo), a la altura de las voces del juego, más aguda y más rápida, en un canal y de vuelta a WAV | `MicrophoneTest` | Común |
 | El sonido del escritorio: la mezcla suma sin desbordarse, respeta el volumen y pasa todo a un canal a 22 050 Hz; y cortar una voz tras otra, como al contar fresas, no atasca su hilo: un toque suele atenderse en un momento y ninguno se queda sin atender (el primero puede esperar a que se despierte la tarjeta de sonido, hasta segundo y medio) | `DesktopSoundTest` | JVM |
 | Cada frase del juego tiene su fichero y dura lo que una frase; el guion y el código tienen las mismas frases; cada efecto tiene su fichero | `AudioFilesTest` | JVM |
-| Las veinte pantallas y, cuando ya sabe las vocales y del 1 al 5, Comeletras, los trazos y las fresas con lo nuevo, Comeletras y los trazos con la T, la N y la D y con la F, la B y la R, el mapa con su cuarta fila de rocas, la pantalla de inicio con el huevo, el cuarto con su foto y cuando Bruno le pide que le enseñe su nombre, la emoción del día con su foto, Comeletras, los globos, las emociones, las palabras y las rimas con cuatro para elegir y Comeletras con dos, y el mapa con todas las islas terminadas y sus banderas, se dibujan en móvil (2,17:1) y en tableta (4:3) | `ScreenshotsTest` | JVM |
+| Las veintiuna pantallas y, cuando ya sabe las vocales y del 1 al 5, Comeletras, los trazos y las fresas con lo nuevo, Comeletras y los trazos con la T, la N y la D y con la F, la B y la R, el mapa con su cuarta fila de rocas, la pantalla de inicio con el huevo, el cuarto con su foto y cuando Bruno le pide que le enseñe su nombre, la emoción del día con su foto, Comeletras, los globos, las emociones, las palabras y las rimas con cuatro para elegir y Comeletras con dos, y el mapa con todas las islas terminadas y sus banderas, se dibujan en móvil (2,17:1) y en tableta (4:3) | `ScreenshotsTest` | JVM |
 | La salida de la zona de mayores: «Salir del juego» guarda la partida y cierra; sin salida en la plataforma, como en iOS, no hay botón | `GrownUpsExitTest` | JVM |
 | El icono de iOS es el de Android: lo dibuja del vector de `androidApp` en `shared/build/icono/` y lo compara con el del proyecto de Xcode; si cambia el de Android, se copia el nuevo | `AppIconTest` | JVM |
 | En el iPhone 15 Pro de ella y en el 17 Pro del simulador, girados a un lado y al otro, la casa, el altavoz y el candado se ven enteros: ni bajo la Dynamic Island ni cortados por las esquinas redondeadas, medidas en el simulador | `CornerButtonsTest` | Común |
@@ -79,11 +80,12 @@ comprueba ([ADR 0015](adr/0015-bruno-comprueba-la-palabra.md)).
 Para ver el juego en un iPhone 15 Pro simulado, girado a un lado y al otro, sin tocarlo a mano:
 [`tools/conductor-ios`](../tools/conductor-ios) es una prueba de interfaz que toca el escenario de 800 × 400 y, en cada
 punto de control, espera a que `vigilante.sh` saque una captura con lo que tapan la isla y las esquinas pintado de negro.
-Tiene siete recorridos: los dos de la entrega (`testWalkThroughHeldBothWays` y `testFinalVersionBothWays`, que empiezan
-en el huevo) y los de después (`testTalkAndPhoto`, `testWordsAndLetters`, `testStartAndName` y `testRhymes`, que empiezan
+Tiene ocho recorridos: los dos de la entrega (`testWalkThroughHeldBothWays` y `testFinalVersionBothWays`, que empiezan
+en el huevo) y los de después (`testTalkAndPhoto`, `testWordsAndLetters`, `testStartAndName`, `testRhymes` y
+`testCountdown`, que empiezan
 con Bruno ya nacido y su nombre, Lucía, sin escribir todavía, y la emoción de hoy ya preguntada; y `testFeelingOfTheDay`,
 que empieza igual pero sin ella). `testRhymes` juega la isla de las palabras entera, rimas incluidas, tocando las tres
-cartas por turnos hasta el regalo. Todos pasan antes por la pantalla de inicio, con un toque. Siempre en
+cartas por turnos hasta el regalo, y `testCountdown`, la de los números: las fresas y la cuenta atrás hasta el despegue. Todos pasan antes por la pantalla de inicio, con un toque. Siempre en
 silencio (`-silencio`) y en un simulador propio que se borra al acabar, nunca en uno de otra sesión.
 
 1. Un simulador temporal con el juego (el de `build/xcode`, que deja la puerta) y, para su foto, una imagen en su galería:
@@ -214,6 +216,20 @@ mayores se desplaza arrastrando despacio, porque el deslizar rápido de las prue
   15 Pro con el de Fotos («Acceso privado a las fotos»), sin ningún permiso: la foto sale en la zona de mayores y en el
   marco del cuarto, con el iPhone girado a los dos lados. En Android, además, sigue al cerrar y abrir, Bruno no la vuelve
   a saludar, y «Quitar su foto» la quita (2026-11-03). Falta tocar la foto, «Cambiar su foto» y «Volver a empezar».
+
+### M5 · La cuenta atrás
+
+- [ ] Después de las fresas, la isla de los números sigue con la cuenta atrás: Bruno en la ventana del cohete, la torre de
+  diez luces y el panel con los números del 1 al 10 desordenados. El narrador lo explica y pregunta por el diez.
+- [ ] Al tocar el que va, se pone amarillo, el narrador lo dice y se enciende una luz de la torre. Otro número se mueve, suena
+  el «boing» y el narrador pregunta por el que va; si espera, también.
+- [ ] Tras el uno, el botón rojo del cero late: «¡Cero! ¡Despegue!», el cohete tiembla, sube entre el humo, sale por
+  arriba y vuelve a bajar; Bruno da las gracias y llega el regalo de la isla. En la zona de mayores, los cohetes
+  despegados.
+- [x] En el emulador Tester_API36, después de las fresas: un número equivocado no se enciende; del 10 al 1, cada uno en
+  amarillo y su luz en la torre; el cero rojo que late, el despegue con su llama y su humo, el vuelo, la vuelta a la
+  plataforma y el regalo. En el simulador de iPhone 15 Pro (`testCountdown`), girado a los dos lados, lo mismo; girado a
+  la derecha, el 1 y el 10 del panel quedan justo al lado de la Dynamic Island, sin tocarla (2026-11-06).
 
 ### M5 · La F, la B y la R
 
