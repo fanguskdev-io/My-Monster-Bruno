@@ -444,4 +444,27 @@ final class BrunoDriverTests: XCTestCase {
         sleep(4)
         checkpoint("p7-cuarto-con-la-foto-der")
     }
+
+    /// The stickers of the room (ADR 0024): the save has every island finished and none stuck yet. She takes the first one
+    /// from the rug to the wall, lets the next one go on the floor, where it does not stay, sticks it on the wall after
+    /// all, and moves the first one somewhere else.
+    func testStickers() {
+        XCUIDevice.shared.orientation = .landscapeRight
+        launchPastStart()
+        sleep(3)
+        checkpoint("s1-pegatina-der")
+        stage(536, 354).press(forDuration: 0.3, thenDragTo: stage(150, 110), withVelocity: 400, thenHoldForDuration: 0.2)
+        sleep(3)
+        checkpoint("s2-pegada-der")
+        stage(536, 354).press(forDuration: 0.3, thenDragTo: stage(200, 340), withVelocity: 400, thenHoldForDuration: 0.2)
+        sleep(2)
+        checkpoint("s3-vuelve-der")
+        stage(536, 354).press(forDuration: 0.3, thenDragTo: stage(590, 180), withVelocity: 400, thenHoldForDuration: 0.2)
+        sleep(3)
+        stage(150, 110).press(forDuration: 0.3, thenDragTo: stage(60, 60), withVelocity: 400, thenHoldForDuration: 0.2)
+        sleep(2)
+        XCUIDevice.shared.orientation = .landscapeLeft
+        sleep(2)
+        checkpoint("s4-movida-izq")
+    }
 }

@@ -14,7 +14,8 @@ El **tamaño** es el trabajo de un agente: **pequeña**, unas horas; **mediana**
 **Hechas** desde entonces: la 1.1, escribir su nombre ([ADR 0017](adr/0017-escribir-su-nombre.md)); la 1.11, la
 emoción del día ([ADR 0019](adr/0019-la-emocion-del-dia.md)); la 2.1, que se adapte a lo que sabe
 ([ADR 0020](adr/0020-se-adapta-a-lo-que-sabe.md)); la 1.2, rimas con Bruno ([ADR 0021](adr/0021-rimas-con-bruno.md)); la 1.13, la F, la B y la R
-([ADR 0022](adr/0022-la-f-la-b-y-la-r.md)); la 1.5, la cuenta atrás ([ADR 0023](adr/0023-la-cuenta-atras.md)); y las 5.3, 5.4, 5.5 y 5.8,
+([ADR 0022](adr/0022-la-f-la-b-y-la-r.md)); la 1.5, la cuenta atrás ([ADR 0023](adr/0023-la-cuenta-atras.md)); la 2.4, las
+pegatinas para el cuarto ([ADR 0024](adr/0024-pegatinas-para-el-cuarto.md)); y las 5.3, 5.4, 5.5 y 5.8,
 de calidad: lo que faltaba por probar en el iPhone, lo que rozaba la Dynamic Island, la prueba de sonido del Mac y los
 recorridos del iPhone de un tirón. Y una que no estaba aquí, la pantalla de inicio
 ([ADR 0018](adr/0018-la-pantalla-de-inicio.md)).
@@ -71,7 +72,8 @@ recorridos del iPhone de un tirón. Y una que no estaba aquí, la pantalla de in
 - **2.3 El armario de Bruno.** En el cuarto, elegir qué regalos lleva puestos y cambiarle el color o la cabeza más adelante.
   *Pequeña.*
 - **2.4 Pegatinas para el cuarto.** Cada isla terminada da una pegatina que ella pega donde quiera en el cuarto de Bruno.
-  Son premios con sentido, que dice la regla 9; sin coleccionar por coleccionar. *Mediana.*
+  Son premios con sentido, que dice la regla 9; sin coleccionar por coleccionar. *Mediana. Hecha, una por isla
+  ([ADR 0024](adr/0024-pegatinas-para-el-cuarto.md)).*
 - **2.5 Un cuento para dormir.** Al acabarse los minutos, el narrador cuenta un cuento de un minuto en el que Bruno es el
   protagonista, como en la propuesta 4. *Grande, por los dibujos.*
 - **2.6 Música suave que se puede quitar.** La regla 8 la contempla y el juego no tiene música: un fondo tranquilo, distinto

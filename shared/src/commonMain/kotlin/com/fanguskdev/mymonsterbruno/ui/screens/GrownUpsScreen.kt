@@ -58,6 +58,7 @@ import com.fanguskdev.mymonsterbruno.game.choices
 import com.fanguskdev.mymonsterbruno.game.feltDays
 import com.fanguskdev.mymonsterbruno.storage.rememberPhotoPicker
 import com.fanguskdev.mymonsterbruno.ui.GameState
+import com.fanguskdev.mymonsterbruno.ui.Island
 import com.fanguskdev.mymonsterbruno.ui.andika
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.decodeToImageBitmap
@@ -197,6 +198,7 @@ internal fun GrownUpsScreen(game: GameState, onExit: (() -> Unit)? = null) {
                 }
                 Text("Rimas encontradas, por pareja:   $rhymes", font, 16)
                 Text("Islas terminadas: ${data.islandsDone}. Regalos de Bruno: ${data.look.accessories.size} de 6.", font, 16)
+                Text("Pegatinas en la pared del cuarto: ${data.stickers.size} de ${Island.entries.size}.", font, 16)
             }
             Section("Se adapta a lo que sabe", font) {
                 Text(

@@ -98,6 +98,18 @@ class ScreenshotsTest {
             "21-comeletras-t-n-d" to Scene.Play(Island.VOWELS, 0),
             "22-trazos-t-n-d" to Scene.Play(Island.VOWELS, 1),
         )
+        // Every island finished, and four of their stickers on the wall.
+        val withStickers = { save: SaveData ->
+            save.copy(
+                islands = Island.entries.associate { it.name to 1 },
+                stickers = mapOf(
+                    Island.VOWELS.name to listOf(150f, 110f),
+                    Island.NUMBERS.name to listOf(590f, 180f),
+                    Island.COLORS.name to listOf(60f, 60f),
+                    Island.SHAPES.name to listOf(230f, 210f),
+                ),
+            )
+        }
         // Five rounds in a row right at the first try in each game that adapts: four to choose from.
         val easy = { save: SaveData -> save.copy(firstTries = Choosing.entries.associate { it.word to List(5) { true } }) }
         val struggling = { save: SaveData -> save.copy(firstTries = mapOf(Choosing.COOKIES.word to List(5) { false })) }
@@ -152,6 +164,10 @@ class ScreenshotsTest {
             val withPhoto = File(folder, "${screen.name}-2-casa-con-foto.png")
             withPhoto.writeBytes(render(Scene.Home, screen, photo = samplePhoto()))
             assertTrue(withPhoto.length() > MIN_BYTES, "$withPhoto está vacía")
+            // The room with four stickers on the wall and two waiting on the rug (ADR 0024).
+            val stickers = File(folder, "${screen.name}-2-casa-pegatinas.png")
+            stickers.writeBytes(render(Scene.Home, screen, withStickers))
+            assertTrue(stickers.length() > MIN_BYTES, "$stickers está vacía")
             // The games that adapt (ADR 0020), with four to choose from when it is easy for her, and Comeletras with two.
             for ((name, scene) in adapting) {
                 val file = File(folder, "${screen.name}-$name.png")

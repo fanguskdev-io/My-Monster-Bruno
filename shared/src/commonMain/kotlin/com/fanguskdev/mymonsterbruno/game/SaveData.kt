@@ -49,6 +49,8 @@ data class SaveData(
     val firstTries: Map<String, List<Boolean>> = emptyMap(),
     /** Times she finished each island, by its name. */
     val islands: Map<String, Int> = emptyMap(),
+    /** Where she stuck the sticker of each island on the wall of the room, by its name: x and y on the stage (ADR 0024). */
+    val stickers: Map<String, List<Float>> = emptyMap(),
     val dailyMinutes: Int = DEFAULT_MINUTES,
     /** The day [playedSeconds] and [extraSeconds] are for, as yyyymmdd. */
     val playedDay: Int = 0,

@@ -87,6 +87,16 @@ internal object Voice {
     /** «Y yo estoy contento, ¡porque has venido a jugar conmigo!», when Bruno puts his own in the jar of joy. */
     const val ME_TOO = "b_yo_contento"
 
+    /** The stickers of the room (ADR 0024): Bruno gives her the one of each island she finishes, and she sticks it. */
+    const val STICKER_LETTERS = "b_pegatina_letras"
+    const val STICKER_NUMBERS = "b_pegatina_numeros"
+    const val STICKER_COLORS = "b_pegatina_colores"
+    const val STICKER_SHAPES = "b_pegatina_formas"
+    const val STICKER_FEELINGS = "b_pegatina_emociones"
+    const val STICKER_WORDS = "b_pegatina_palabras"
+    const val STICK_IT = "n_pega_pegatina"
+    const val SO_PRETTY = "b_que_bonita"
+
     /** The countdown of Bruno's rocket, on the island of numbers (ADR 0023). */
     const val ROCKET_INTRO = "n_cohete_intro"
     const val PRESS_ZERO = "n_boton_cero"
@@ -246,7 +256,8 @@ internal object Voice {
         MISSION_SHAPE, TO_FEELINGS, HOW_FEELS, THANKS_FEELINGS, MISSION_FEELING, TALK, HOLD_MIC, CANT_HEAR, THANKS_WORDS,
         TO_WORDS, WORDS_INTRO, THANKS_STARTS, MISSION_NAME, ITS_YOU, NAME_INTRO, TEACH_ME_YOUR_NAME, KNOWS_YOUR_NAME,
         HOW_DO_YOU_FEEL, TAKE_YOUR_PHOTO, TAKE_THE_FACE, ME_TOO, RHYMES_INTRO, THANKS_RHYMES, ROCKET_INTRO, PRESS_ZERO,
-        LIFT_OFF, OFF_I_GO, THANKS_ROCKET,
+        LIFT_OFF, OFF_I_GO, THANKS_ROCKET, STICKER_LETTERS, STICKER_NUMBERS, STICKER_COLORS, STICKER_SHAPES, STICKER_FEELINGS,
+        STICKER_WORDS, STICK_IT, SO_PRETTY,
     ) +
         (1..COUNTDOWN_FROM).flatMap { listOf(whereIs(it), down(it)) } +
         RhymeWord.entries.flatMap { listOf(whatRhymes(it), card(it), noRhyme(it)) } +

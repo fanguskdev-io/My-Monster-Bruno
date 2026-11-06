@@ -549,3 +549,11 @@ n_boton_cero	narrador	Y ahora... ¡el cero! Pulsa el botón rojo.
 n_despegue	narrador	¡Cero! ¡Despegue!
 b_alla_voy	bruno	¡Allá voy!
 b_gracias_cohete	bruno	¡Qué viaje! ¡Gracias por contar conmigo!
+b_pegatina_letras	bruno	¡Te he guardado una pegatina de la isla de las letras!
+b_pegatina_numeros	bruno	¡Te he guardado una pegatina de la isla de los números!
+b_pegatina_colores	bruno	¡Te he guardado una pegatina de la isla de los colores!
+b_pegatina_formas	bruno	¡Te he guardado una pegatina de la isla de las formas!
+b_pegatina_emociones	bruno	¡Te he guardado una pegatina de la isla de las emociones!
+b_pegatina_palabras	bruno	¡Te he guardado una pegatina de la isla de las palabras!
+n_pega_pegatina	narrador	Llévala a la pared y pégala donde tú quieras.
+b_que_bonita	bruno	¡Qué bonita queda en mi cuarto!

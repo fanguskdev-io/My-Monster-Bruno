@@ -60,7 +60,9 @@ siguientes ideas, «La emoción del día», tal como se la propuso el agente ([A
 al día siguiente, «continua» y, de otras cuatro, «Que se adapte» a lo que sabe
 ([ADR 0020](adr/0020-se-adapta-a-lo-que-sabe.md)); y después, «Rimas con Bruno», en la isla de las palabras
 ([ADR 0021](adr/0021-rimas-con-bruno.md)). Al día siguiente, «Continua» y «La F, la B y la R»
-([ADR 0022](adr/0022-la-f-la-b-y-la-r.md)), y después «La cuenta atrás» ([ADR 0023](adr/0023-la-cuenta-atras.md)).
+([ADR 0022](adr/0022-la-f-la-b-y-la-r.md)), y después «La cuenta atrás» ([ADR 0023](adr/0023-la-cuenta-atras.md)). Y
+cuatro seguidas: un repaso en su iPhone, «Pegatinas para el cuarto» ([ADR 0024](adr/0024-pegatinas-para-el-cuarto.md)),
+«Ordena la historia» y «El anterior y el siguiente».
 
 La propuesta 3, tal como la leyó (en la [maqueta](investigacion/propuestas.html#p3)):
 
@@ -94,7 +96,9 @@ ha venido a jugar. Se puede saltar con la casa. El día que nace Bruno no se pre
    su nombre, si los mayores lo han escrito, o con estrellas, y en la pared, su foto en un marco, si la han elegido: la
    primera vez, Bruno la mira y dice «¡Mira! ¡Eres tú!» ([ADR 0016](adr/0016-su-foto.md)). El banderín con su nombre
    lleva a escribirlo; mientras no lo haya escrito, Bruno se lo pide cada día que abre el juego: «¿Me enseñas a escribir
-   tu nombre? Toca el banderín».
+   tu nombre? Toca el banderín». Y la primera vez que termina cada isla, Bruno le guarda **una pegatina** de esa isla en la
+   alfombra ([ADR 0024](adr/0024-pegatinas-para-el-cuarto.md)): ella la arrastra a la pared y la pega donde quiera, menos
+   encima de lo que se toca; y la mueve cuando quiera.
 3. **El mapa**. Bruno va en su barca. Hay seis islas: la de las letras, la de los números, la de los colores, la de las
    formas, la de las emociones y, la más pequeña, arriba a la derecha, la de las palabras. Una isla terminada lleva su
    bandera.
@@ -205,7 +209,7 @@ Salen de la [investigación §6](investigacion/investigacion.md#6-reglas-que-sal
 | Lo del cole | Vocales en mayúscula, sus trazos en el orden del cole, escribir su nombre, la emoción del día como en la asamblea, y contar del 1 al 5 con los dedos y los puntos, en castellano de España |
 | Hecho para ella | Su nombre en el banderín, que aprende a escribir, y su Bruno, con el color y la cabeza que ella elige. La voz no dice su nombre: son frases grabadas de antemano ([ADR 0004](adr/0004-voces-provisionales.md)) |
 | Tranquilo | Colores suaves, sonidos cortos que solo suenan al tocar y animaciones lentas. La voz y los efectos se pueden quitar |
-| Premios con sentido | Los accesorios de Bruno se ganan terminando islas. No hay cofres sorpresa ni nada que comprar |
+| Premios con sentido | Los accesorios de Bruno se ganan terminando islas, y la pegatina de cada isla, que ella pega donde quiere en el cuarto, una por isla ([ADR 0024](adr/0024-pegatinas-para-el-cuarto.md)). No hay cofres sorpresa ni nada que comprar |
 | Limpio | Sin anuncios, compras, cuentas ni internet. En Android no pide el permiso de internet. Todo lo guarda el dispositivo ([ADR 0005](adr/0005-un-regalo-sin-conexion.md)). El micrófono solo escucha mientras ella mantiene el botón, y su voz no se guarda ([ADR 0011](adr/0011-habla-con-bruno.md)) |
 
 ## Lo que trae y lo que falta
@@ -234,7 +238,7 @@ Las **voces de la familia** no se harán: «para M2 no vamos a utilizar las voce
 - **Bruno y todo lo demás se dibujan con vectores**, sin imágenes: Bruno respira, parpadea, mira y cambia de cara (ocho
   bocas, cuatro ojos, tres posturas de brazos).
 - **Las voces** son las de un narrador y la de Bruno, algo más aguda y más despacio, a unas 4 sílabas por segundo. Hay
-  550 frases pregrabadas con la voz del sistema del Mac y **los efectos** (16) se sintetizan desde cero
+  558 frases pregrabadas con la voz del sistema del Mac y **los efectos** (16) se sintetizan desde cero
   ([ADR 0004](adr/0004-voces-provisionales.md)). Las frases están en [`voces/guion.tsv`](../voces/guion.tsv).
 - **La letra** de la zona de mayores, de los números, del banderín y del título es Andika, una tipografía pensada para quien aprende a
   leer (licencia OFL, en [`licencias/`](../licencias/Andika-OFL.txt)).
