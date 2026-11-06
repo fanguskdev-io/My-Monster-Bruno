@@ -14,8 +14,9 @@ El **tamaño** es el trabajo de un agente: **pequeña**, unas horas; **mediana**
 **Hechas** desde entonces: la 1.1, escribir su nombre ([ADR 0017](adr/0017-escribir-su-nombre.md)); la 1.11, la
 emoción del día ([ADR 0019](adr/0019-la-emocion-del-dia.md)); la 2.1, que se adapte a lo que sabe
 ([ADR 0020](adr/0020-se-adapta-a-lo-que-sabe.md)); la 1.2, rimas con Bruno ([ADR 0021](adr/0021-rimas-con-bruno.md)); la 1.13, la F, la B y la R
-([ADR 0022](adr/0022-la-f-la-b-y-la-r.md)); la 1.5, la cuenta atrás ([ADR 0023](adr/0023-la-cuenta-atras.md)); y la 5.5, la
-prueba de sonido del Mac. Y una que no estaba aquí, la pantalla de inicio
+([ADR 0022](adr/0022-la-f-la-b-y-la-r.md)); la 1.5, la cuenta atrás ([ADR 0023](adr/0023-la-cuenta-atras.md)); y las 5.3, 5.4, 5.5 y 5.8,
+de calidad: lo que faltaba por probar en el iPhone, lo que rozaba la Dynamic Island, la prueba de sonido del Mac y los
+recorridos del iPhone de un tirón. Y una que no estaba aquí, la pantalla de inicio
 ([ADR 0018](adr/0018-la-pantalla-de-inicio.md)).
 
 ## Las cinco con las que empezaría
@@ -108,9 +109,11 @@ prueba de sonido del Mac. Y una que no estaba aquí, la pantalla de inicio
 - **5.2 Probar con sonido en un aparato de verdad.** Su voz en «Habla con Bruno», la comprobación de la palabra, los
   permisos y que todo suene por el altavoz. *Pequeña el día de la entrega.*
 - **5.3 Lo que falta por probar.** Tocar la foto, «Cambiar su foto», «Volver a empezar» con foto y el final de la isla de las
-  palabras en el iPhone. *Pequeña, con el conductor de pruebas.*
+  palabras en el iPhone. *Pequeña, con el conductor de pruebas. Hecha: los recorridos `testPhotoAndRestart` y
+  `testRhymes`.*
 - **5.4 Detalles vistos en el iPhone.** Con el iPhone girado a la derecha, la bandera de la isla de los colores roza la
-  Dynamic Island, y la isla roza el borde de una galleta en Comeletras. *Pequeña.*
+  Dynamic Island, y la isla roza el borde de una galleta en Comeletras. *Pequeña. Hecha, con el globo de la derecha, el
+  último bote de la emoción del día y el panel de la cuenta atrás, que también la rozaban.*
 - **5.5 La prueba de sonido del Mac.** Falla a veces cuando el Mac está muy cargado; conviene que lo tolere. *Pequeña.
   Hecha: fallaba por el primer toque, que espera a que se despierte la tarjeta de sonido; ahora mira lo que suele tardar
   un toque y que ninguno se quede sin atender.*
@@ -118,7 +121,7 @@ prueba de sonido del Mac. Y una que no estaba aquí, la pantalla de inicio
 - **5.7 Un mapa con más sitio.** Con seis islas, el mapa está lleno: antes de una isla nueva hace falta otra parte del mar, a
   la que se llega en la barca. *Mediana.*
 - **5.8 Los recorridos del iPhone, de un tirón.** Un solo comando que cree el simulador, siembre la partida, pase los cuatro
-  recorridos y lo borre. *Pequeña.*
+  recorridos y lo borre. *Pequeña. Hecha: `tools/conductor-ios/recorridos.sh`, con los nueve.*
 
 ## Lo que no está aquí, y por qué
 

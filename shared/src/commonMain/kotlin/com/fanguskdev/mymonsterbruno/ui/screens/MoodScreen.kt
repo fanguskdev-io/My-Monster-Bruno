@@ -49,9 +49,12 @@ private const val CARD_SIZE = 96f
 private const val CARD_TOUCH = 60f
 private const val TOKEN = 36f
 
-/** The five jars stand on a bench, joy first and calm last, as in the corner of feelings of the classroom. */
+/**
+ * The five jars stand on a bench, joy first and calm last, as in the corner of feelings of the classroom; the last one
+ * clear of the Dynamic Island of her iPhone, held with the island on the right.
+ */
 private const val BENCH_TOP = 316f
-private val JARS = Feeling.entries.indices.map { Offset(318f + 106f * it, BENCH_TOP) }
+private val JARS = Feeling.entries.indices.map { Offset(300f + 104f * it, BENCH_TOP) }
 private const val JAR_WIDTH = 84f
 private const val JAR_HEIGHT = 104f
 

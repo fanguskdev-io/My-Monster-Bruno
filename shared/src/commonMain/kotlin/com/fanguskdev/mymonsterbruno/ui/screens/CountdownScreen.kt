@@ -50,10 +50,14 @@ private const val TOWER_X = 318f
 private const val TOWER_TOP = 72f
 private const val TOWER_BOTTOM = 296f
 
-/** The panel: the ten numbers in two rows, in any order, and the big red button of the zero under them. */
-private val SPOTS = listOf(175f, 255f).flatMap { y -> listOf(455f, 530f, 605f, 680f, 755f).map { x -> Offset(x, y) } }
+/**
+ * The panel: the ten numbers in two rows, in any order, and the big red button of the zero under them; its right side
+ * clear of the Dynamic Island of her iPhone, held with the island on the right.
+ */
+private const val PANEL_LEFT = 389f
+private val SPOTS = listOf(175f, 255f).flatMap { y -> (0 until 5).map { i -> Offset(PANEL_LEFT + 42f + 75f * i, y) } }
 private const val BUTTON_RADIUS = 31f
-private val ZERO = Offset(605f, 345f)
+private val ZERO = Offset(PANEL_LEFT + 192f, 345f)
 private const val ZERO_RADIUS = 40f
 
 private enum class CountdownPhase { COUNTING, LAUNCHING, AWAY, LANDING, LANDED }
@@ -198,9 +202,9 @@ internal fun CountdownScreen(game: GameState, onDone: () -> Unit) {
         if (phase == CountdownPhase.LANDED) drawSparkles(ROCKET_BASE + Offset(0f, -140f), 120f, t)
 
         // The panel.
-        drawRoundRect(Shadow, Offset(413f, 134f), Size(384f, 166f), CornerRadius(22f))
-        drawRoundRect(Color(0xFFDDE5F2), Offset(413f, 128f), Size(384f, 166f), CornerRadius(22f))
-        drawRoundRect(Color(0xFFB9C4D8), Offset(413f, 128f), Size(384f, 166f), CornerRadius(22f), style = Stroke(3f))
+        drawRoundRect(Shadow, Offset(PANEL_LEFT, 134f), Size(384f, 166f), CornerRadius(22f))
+        drawRoundRect(Color(0xFFDDE5F2), Offset(PANEL_LEFT, 128f), Size(384f, 166f), CornerRadius(22f))
+        drawRoundRect(Color(0xFFB9C4D8), Offset(PANEL_LEFT, 128f), Size(384f, 166f), CornerRadius(22f), style = Stroke(3f))
         val colors = listOf(Color(0xFFE4483C), Color(0xFF2C74D8), Color(0xFF2E9E5B), Color(0xFF9B6BD3))
         for ((i, number) in panel.withIndex()) {
             val counted = number > next

@@ -52,9 +52,12 @@ private val BRUNO_CENTER = Offset(215f, 238f)
 private const val BRUNO_HEIGHT = 250f
 private val BUBBLE = Offset(478f, 96f)
 
-/** Where the cookies are on the plate, as many as she chooses from (ADR 0020): four go closer, and a little smaller. */
+/**
+ * Where the cookies are on the plate, as many as she chooses from (ADR 0020): four go closer, and a little smaller. The
+ * one on the right keeps clear of the Dynamic Island of her iPhone, held with the island on the right.
+ */
 private fun slots(count: Int): List<Offset> =
-    if (count > CHOICES) row(Offset(600f, 252f), count, 92f) else row(Offset(620f, 252f), count, 115f)
+    if (count > CHOICES) row(Offset(582f, 252f), count, 92f) else row(Offset(600f, 252f), count, 115f)
 
 private fun cookieRadius(count: Int) = if (count > CHOICES) 46f else 52f
 
@@ -228,7 +231,7 @@ internal fun FeedScreen(game: GameState, onDone: () -> Unit) {
         drawBruno(game.data.look, BRUNO_CENTER, BRUNO_HEIGHT, pose, t)
         if (phase == FeedPhase.EATING && since > FLY_SECONDS || phase == FeedPhase.THANKS) drawSparkles(MOUTH, 80f, t)
         val radius = cookieRadius(cookies.size)
-        if (cookies.size > CHOICES) drawPlate(Offset(600f, 300f), 380f) else drawPlate(Offset(620f, 300f), 330f)
+        if (cookies.size > CHOICES) drawPlate(Offset(582f, 300f), 380f) else drawPlate(Offset(600f, 300f), 330f)
         for (i in cookies.indices) {
             if (eaten[i] || i == dragging) continue
             val flight = flights[i]

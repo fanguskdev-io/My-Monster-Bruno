@@ -80,15 +80,37 @@ comprueba ([ADR 0015](adr/0015-bruno-comprueba-la-palabra.md)).
 Para ver el juego en un iPhone 15 Pro simulado, girado a un lado y al otro, sin tocarlo a mano:
 [`tools/conductor-ios`](../tools/conductor-ios) es una prueba de interfaz que toca el escenario de 800 × 400 y, en cada
 punto de control, espera a que `vigilante.sh` saque una captura con lo que tapan la isla y las esquinas pintado de negro.
-Tiene ocho recorridos: los dos de la entrega (`testWalkThroughHeldBothWays` y `testFinalVersionBothWays`, que empiezan
-en el huevo) y los de después (`testTalkAndPhoto`, `testWordsAndLetters`, `testStartAndName`, `testRhymes` y
-`testCountdown`, que empiezan
-con Bruno ya nacido y su nombre, Lucía, sin escribir todavía, y la emoción de hoy ya preguntada; y `testFeelingOfTheDay`,
-que empieza igual pero sin ella). `testRhymes` juega la isla de las palabras entera, rimas incluidas, tocando las tres
-cartas por turnos hasta el regalo, y `testCountdown`, la de los números: las fresas y la cuenta atrás hasta el despegue. Todos pasan antes por la pantalla de inicio, con un toque. Siempre en
-silencio (`-silencio`) y en un simulador propio que se borra al acabar, nunca en uno de otra sesión.
+Tiene nueve recorridos:
 
-1. Un simulador temporal con el juego (el de `build/xcode`, que deja la puerta) y, para su foto, una imagen en su galería:
+- los dos de la entrega, que empiezan en el huevo: `testWalkThroughHeldBothWays` y `testFinalVersionBothWays`;
+- `testTalkAndPhoto`, «Habla con Bruno» y elegir su foto;
+- `testWordsAndLetters`, la isla de las palabras y la T, la N y la D;
+- `testStartAndName`, la pantalla de inicio y escribir su nombre;
+- `testFeelingOfTheDay`, la emoción del día;
+- `testRhymes`, la isla de las palabras entera, rimas incluidas, tocando las cartas por turnos hasta el regalo;
+- `testCountdown`, la de los números: las fresas y la cuenta atrás hasta el despegue;
+- `testPhotoAndRestart`, su foto de principio a fin: elegirla, tocarla, cambiarla y «Volver a empezar», que la conserva.
+
+Todos pasan antes por la pantalla de inicio, con un toque. Siempre en silencio (`-silencio`) y en un simulador propio que
+se borra al acabar, nunca en uno de otra sesión.
+
+**De un tirón**, con la app de iOS que deja la puerta (`build/xcode`): crea el simulador, le pone dos fotos en la galería,
+pasa los recorridos, cada uno con el juego recién instalado y su partida, y lo borra al acabar, también si algo falla. Las
+capturas quedan en `build/recorridos-ios/`. Tarda una media hora:
+
+```bash
+bash tools/conductor-ios/recorridos.sh
+```
+
+O solo algunos:
+
+```bash
+bash tools/conductor-ios/recorridos.sh testRhymes testCountdown
+```
+
+**Por dentro**, lo que hace para cada recorrido:
+
+1. Un simulador temporal con el juego y, para su foto, imágenes en su galería:
 
 ```bash
 U=$(xcrun simctl create "Bruno iPhone 15 Pro temporal" com.apple.CoreSimulator.SimDeviceType.iPhone-15-Pro com.apple.CoreSimulator.SimRuntime.iOS-26-5)
@@ -111,7 +133,7 @@ xcrun simctl spawn "$U" defaults write "$C/Library/Preferences/com.fanguskdev.my
 ```
 
    Con `"moodDay"`, la emoción del día ya está preguntada hoy y se va derecho al cuarto; sin él, como en
-   `testFeelingOfTheDay`, antes del cuarto se pregunta.
+   `testFeelingOfTheDay`, antes del cuarto se pregunta. Cada recorrido tiene la suya en `recorridos.sh`.
 
 3. El vigilante en segundo plano y un recorrido:
 
@@ -129,8 +151,14 @@ TEST_RUNNER_CONDUCTOR_DIR=/tmp/bruno-conductor/sync xcodebuild test -project too
 touch /tmp/bruno-conductor/sync/stop && xcrun simctl delete "$U"
 ```
 
-El selector de fotos es un proceso de Apple: el recorrido toca la primera foto por su sitio, no por su nombre. Y la zona de
+El selector de fotos es un proceso de Apple: los recorridos tocan las fotos por su sitio, no por su nombre. Y la zona de
 mayores se desplaza arrastrando despacio, porque el deslizar rápido de las pruebas de interfaz no la mueve.
+
+**Lo que tapa la Dynamic Island**: con el iPhone girado con la isla a la derecha, lo que queda a la derecha del escenario
+entre las alturas 136 y 264 queda bajo ella (más allá de la x 784); con la isla a la izquierda, lo que queda antes de la
+x 16. Por eso la galleta de la derecha de Comeletras, el globo de la derecha, el último bote de la emoción del día, el
+panel de la cuenta atrás y la bandera de la isla de los colores están un poco más a la izquierda o más abajo de lo que
+pedirían el móvil o la tableta (2026-11-06).
 
 ## En cada hito
 
@@ -216,6 +244,9 @@ mayores se desplaza arrastrando despacio, porque el deslizar rápido de las prue
   15 Pro con el de Fotos («Acceso privado a las fotos»), sin ningún permiso: la foto sale en la zona de mayores y en el
   marco del cuarto, con el iPhone girado a los dos lados. En Android, además, sigue al cerrar y abrir, Bruno no la vuelve
   a saludar, y «Quitar su foto» la quita (2026-11-03). Falta tocar la foto, «Cambiar su foto» y «Volver a empezar».
+- [x] En un simulador de iPhone 15 Pro (`testPhotoAndRestart` y `testTalkAndPhoto`, girado a los dos lados): elegirla,
+  verla en el cuarto, tocarla, cambiarla por otra y «Volver a empezar», que lleva al huevo; al nacer Bruno otra vez, la
+  foto sigue en su marco (2026-11-06).
 
 ### M5 · La cuenta atrás
 

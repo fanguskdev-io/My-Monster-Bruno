@@ -126,7 +126,8 @@ internal fun MapScreen(game: GameState) {
         drawOpenBook(WORDS_ISLAND + Offset(0f, -14f), 58f)
         if ((game.data.islands[Island.VOWELS.name] ?: 0) > 0) drawFlag(VOWELS_ISLAND + Offset(92f, -34f))
         if ((game.data.islands[Island.NUMBERS.name] ?: 0) > 0) drawFlag(NUMBERS_ISLAND + Offset(92f, -34f))
-        if ((game.data.islands[Island.COLORS.name] ?: 0) > 0) drawFlag(COLORS_ISLAND + Offset(92f, -34f))
+        // Lower than the others: higher, on an iPhone held with its island on the right, the Dynamic Island hides it.
+        if ((game.data.islands[Island.COLORS.name] ?: 0) > 0) drawFlag(COLORS_ISLAND + Offset(84f, 24f))
         if ((game.data.islands[Island.SHAPES.name] ?: 0) > 0) drawFlag(SHAPES_ISLAND + Offset(102f, -4f))
         if ((game.data.islands[Island.FEELINGS.name] ?: 0) > 0) drawFlag(FEELINGS_ISLAND + Offset(84f, -30f))
         // Low, beside the book: the island is so high that a flag at its back would go out of the screen.

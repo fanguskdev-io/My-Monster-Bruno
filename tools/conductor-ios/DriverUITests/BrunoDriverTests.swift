@@ -173,6 +173,39 @@ final class BrunoDriverTests: XCTestCase {
         checkpoint("11-mayores-izq")
     }
 
+    /// Drags the grown-ups' corner slowly, down or up, until [text] can be touched: a quick swipe does not move it.
+    private func scrollTo(_ text: String, down: Bool = true) {
+        let element = app.staticTexts[text]
+        for _ in 0..<10 {
+            if element.exists && element.isHittable { return }
+            if down {
+                at(400, 330).press(forDuration: 0.2, thenDragTo: at(400, 60), withVelocity: 300, thenHoldForDuration: 0.3)
+            } else {
+                at(400, 60).press(forDuration: 0.2, thenDragTo: at(400, 360), withVelocity: 300, thenHoldForDuration: 0.3)
+            }
+            sleep(1)
+        }
+        log.append("no llego a «\(text)»")
+    }
+
+    /// Chooses a photo in Apple's picker, by where it is, [x] and [y] in points. The picker is another process, and slow
+    /// to close with a big photo when the computer is busy: it waits until the grown-ups' corner can be touched again,
+    /// with «Quitar su foto», and touches the photo again only if the picker is still there after a long while. When the
+    /// photo is being changed, «Quitar su foto» is already there under the picker and says nothing: it waits [atLeast].
+    private func pickPhoto(_ x: CGFloat, _ y: CGFloat, atLeast: UInt32 = 6) {
+        let remove = app.staticTexts["Quitar su foto"]
+        for _ in 0..<3 {
+            at(x, y).tap()
+            sleep(atLeast)
+            let deadline = Date().addingTimeInterval(24)
+            while Date() < deadline {
+                if remove.exists && remove.isHittable { return }
+                sleep(1)
+            }
+        }
+        log.append("no encuentro que el selector eligiera la foto")
+    }
+
     private func tapText(_ text: String) {
         let element = app.staticTexts[text]
         if element.waitForExistence(timeout: 4) {
@@ -209,11 +242,9 @@ final class BrunoDriverTests: XCTestCase {
         sleep(5)
         checkpoint("a6-galeria-der")
         // The picker is Apple's own process: its first photo, by where it is.
-        at(132, 298).tap()
-        sleep(5)
+        pickPhoto(132, 280)
         checkpoint("a7-mayores-con-foto-der")
-        at(400, 60).press(forDuration: 0.2, thenDragTo: at(400, 360), withVelocity: 300, thenHoldForDuration: 0.3)
-        sleep(1)
+        scrollTo("Volver al juego", down: false)
         tapText("Volver al juego")
         sleep(3)
         checkpoint("a8-cuarto-con-foto-der")
@@ -359,5 +390,58 @@ final class BrunoDriverTests: XCTestCase {
         checkpoint("n4-despegue-der")
         sleep(8)
         checkpoint("n5-regalo-der")
+    }
+
+    /// Her photo from beginning to end (ADR 0016): chosen in the grown-ups' corner, Bruno sees it in the room, she touches
+    /// it, a grown-up changes it for another, and «Volver a empezar» takes Bruno back to the egg and keeps the photo, in its
+    /// frame once he hatches again. The save has Bruno hatched, her name written and the feeling of today.
+    func testPhotoAndRestart() {
+        XCUIDevice.shared.orientation = .landscapeRight
+        launchPastStart()
+        sleep(2)
+        lock.press(forDuration: 3.5)
+        sleep(2)
+        scrollTo("Elegir su foto")
+        tapText("Elegir su foto")
+        sleep(5)
+        checkpoint("p1-galeria-der")
+        // The picker is Apple's own process: its first photo, by where it is, high in its row: lower down it can have its
+        // «Ubicación incluida» over the photos, which opens its options instead.
+        pickPhoto(132, 280)
+        scrollTo("Volver al juego", down: false)
+        tapText("Volver al juego")
+        sleep(4)
+        checkpoint("p2-cuarto-eres-tu-der")
+        stage(712, 152).tap()
+        usleep(800_000)
+        checkpoint("p3-toca-la-foto-der")
+        lock.press(forDuration: 3.5)
+        sleep(2)
+        scrollTo("Cambiar su foto")
+        tapText("Cambiar su foto")
+        sleep(5)
+        checkpoint("p4-galeria-otra-der")
+        // Another photo, the second one of the row.
+        pickPhoto(279, 280, atLeast: 12)
+        checkpoint("p5-mayores-otra-foto-der")
+        scrollTo("Volver a empezar")
+        tapText("Volver a empezar")
+        sleep(1)
+        tapText("Toca otra vez para confirmar")
+        sleep(3)
+        // Back to the egg; and once Bruno hatches again, her photo is still in its frame.
+        checkpoint("p6-huevo-der")
+        for _ in 0..<5 {
+            stage(400, 236).tap()
+            usleep(500_000)
+        }
+        sleep(3)
+        stage(88, 132).tap()
+        sleep(2)
+        stage(712, 96).tap()
+        sleep(2)
+        stage(566, 330).tap()
+        sleep(4)
+        checkpoint("p7-cuarto-con-la-foto-der")
     }
 }

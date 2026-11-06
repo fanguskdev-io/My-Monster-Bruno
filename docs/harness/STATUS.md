@@ -119,3 +119,4 @@ día quiere revisar G0, se abre la primera ronda de la cola de
 | 2026-11-05 | agente (Claude Code, Opus 5.5) | M5: rimas con Bruno (ADR 0021), segunda actividad de la isla de las palabras, que Fangusk eligió al pedir que siguiera |
 | 2026-11-06 | agente (Claude Code, Opus 5.5) | M5: la F, la B y la R (ADR 0022), que Fangusk eligió al pedir que siguiera |
 | 2026-11-06 | agente (Claude Code, Opus 5.5) | M5: la cuenta atrás del cohete de Bruno (ADR 0023), segunda actividad de la isla de los números, que Fangusk eligió |
+| 2026-11-06 | agente (Claude Code, Opus 5.5) | Repaso en su iPhone, que Fangusk eligió con otras tres piezas: los recorridos del iPhone de un tirón (`tools/conductor-ios/recorridos.sh`, nueve, uno nuevo para su foto y «Volver a empezar»), y lo que rozaba la Dynamic Island, apartado |

@@ -52,9 +52,12 @@ private val BRUNO_CENTER = Offset(215f, 238f)
 private const val BRUNO_HEIGHT = 250f
 private const val HELD_SIZE = 72f
 
-/** The stakes the balloons are tied to, as many as she chooses from (ADR 0020): four go closer. */
+/**
+ * The stakes the balloons are tied to, as many as she chooses from (ADR 0020): four go closer. The balloon on the right
+ * keeps clear of the Dynamic Island of her iPhone, held with the island on the right.
+ */
 private fun stakes(count: Int): List<Offset> =
-    if (count > CHOICES) row(Offset(603f, 306f), count, 98f) else row(Offset(630f, 306f), count, 110f)
+    if (count > CHOICES) row(Offset(583f, 306f), count, 96f) else row(Offset(610f, 306f), count, 110f)
 
 /** Where the balloons float over their stakes, one higher and one lower. */
 private fun slots(count: Int): List<Offset> = stakes(count).mapIndexed { i, stake -> Offset(stake.x, if (i % 2 == 1) 144f else 170f) }
