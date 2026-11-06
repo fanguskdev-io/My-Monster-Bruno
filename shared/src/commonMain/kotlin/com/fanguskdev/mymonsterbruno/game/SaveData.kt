@@ -31,6 +31,8 @@ data class SaveData(
     val launches: Int = 0,
     /** Times she knew how Bruno felt, by feeling (Feeling.word). */
     val feelings: Map<String, Int> = emptyMap(),
+    /** Times she put each story in order, by story (Story.key) (ADR 0025). */
+    val stories: Map<String, Int> = emptyMap(),
     /** Words she said to Bruno and clapped with him, by word (TalkWord.word). Her voice itself is never kept. */
     val talked: Map<String, Int> = emptyMap(),
     /** Times she found the word that starts as Bruno's, by the syllable they start with: «pa». */

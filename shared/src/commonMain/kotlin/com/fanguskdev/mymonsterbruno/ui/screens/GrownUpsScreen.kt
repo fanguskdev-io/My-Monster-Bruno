@@ -53,6 +53,7 @@ import com.fanguskdev.mymonsterbruno.game.SaveData
 import com.fanguskdev.mymonsterbruno.game.Session
 import com.fanguskdev.mymonsterbruno.game.Shape
 import com.fanguskdev.mymonsterbruno.game.StartWord
+import com.fanguskdev.mymonsterbruno.game.Story
 import com.fanguskdev.mymonsterbruno.game.TalkWord
 import com.fanguskdev.mymonsterbruno.game.choices
 import com.fanguskdev.mymonsterbruno.game.feltDays
@@ -186,6 +187,8 @@ internal fun GrownUpsScreen(game: GameState, onExit: (() -> Unit)? = null) {
                 Text("Casas construidas: ${data.houses}.", font, 16)
                 val feelings = Feeling.entries.joinToString("   ") { "${it.spoken} ${data.feelings[it.word] ?: 0}" }
                 Text("Emociones que ha reconocido:   $feelings", font, 16)
+                val stories = Story.entries.joinToString("   ") { "${it.spoken} ${data.stories[it.key] ?: 0}" }
+                Text("Historias que ha ordenado:   $stories", font, 16)
                 val talked = TalkWord.entries.joinToString("   ") { "${it.word} ${data.talked[it.word] ?: 0}" }
                 Text("Palabras dichas a Bruno, con sus palmadas:   $talked", font, 16)
                 val starts = StartWord.entries.map {
@@ -333,3 +336,11 @@ private const val EXTRA_MINUTES = 10
 
 /** How many of the days she said how she felt the corner shows, the latest first. */
 private const val FELT_DAYS_SHOWN = 7
+
+/** How the grown-ups' corner names each story. */
+private val Story.spoken: String get() = when (this) {
+    Story.FLOWER -> "la flor"
+    Story.TEETH -> "los dientes"
+    Story.CAKE -> "el bizcocho"
+    Story.SNOWMAN -> "el muñeco de nieve"
+}

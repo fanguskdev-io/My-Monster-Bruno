@@ -35,3 +35,4 @@ y estas decisiones existen antes de G4 porque Fangusk pidió desarrollar ya. Las
 | [0022](0022-la-f-la-b-y-la-r.md) | La F, la B y la R en la isla de las letras, cuando ya conoce la T, la N y la D | Aceptada; el barco y las rocas del mapa, propuesta |
 | [0023](0023-la-cuenta-atras.md) | La cuenta atrás del cohete de Bruno, la segunda actividad de la isla de los números | Aceptada; el panel, la torre y el vuelo, propuesta |
 | [0024](0024-pegatinas-para-el-cuarto.md) | Pegatinas para el cuarto: una por isla terminada, que ella pega donde quiere en la pared | Aceptada; una por isla y dónde se pega, propuesta |
+| [0025](0025-ordena-la-historia.md) | Ordena la historia, la segunda actividad de la isla de las emociones: primero, después y al final | Aceptada; las cuatro historias y que se toque, propuesta |

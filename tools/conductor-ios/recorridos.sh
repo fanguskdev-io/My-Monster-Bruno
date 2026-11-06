@@ -17,7 +17,7 @@ OUT=build/recorridos-ios
 DD=build/conductor-ios
 HOY=$(date +%Y%m%d)
 TODOS=(testWalkThroughHeldBothWays testFinalVersionBothWays testTalkAndPhoto testWordsAndLetters testStartAndName
-    testFeelingOfTheDay testRhymes testCountdown testPhotoAndRestart testStickers)
+    testFeelingOfTheDay testRhymes testCountdown testPhotoAndRestart testStickers testStory)
 if (($# > 0)); then RECORRIDOS=("$@"); else RECORRIDOS=("${TODOS[@]}"); fi
 
 # La partida de la que parte cada recorrido: los de la entrega, en el huevo; los demás, con Bruno nacido, su nombre

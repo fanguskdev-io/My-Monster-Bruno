@@ -557,3 +557,21 @@ b_pegatina_emociones	bruno	¡Te he guardado una pegatina de la isla de las emoci
 b_pegatina_palabras	bruno	¡Te he guardado una pegatina de la isla de las palabras!
 n_pega_pegatina	narrador	Llévala a la pared y pégala donde tú quieras.
 b_que_bonita	bruno	¡Qué bonita queda en mi cuarto!
+n_historia_intro	narrador	¡Estas viñetas cuentan una historia, pero están desordenadas! Vamos a ordenarlas.
+n_que_primero	narrador	¿Qué pasa primero?
+n_y_despues	narrador	¿Y después?
+n_y_al_final	narrador	¿Y al final?
+n_mas_tarde	narrador	Huum... Eso pasa más tarde.
+n_flor_1	narrador	Primero, la semilla cae en la tierra.
+n_flor_2	narrador	Después, la regamos y sale un brote.
+n_flor_3	narrador	¡Y al final, crece una flor!
+n_dientes_1	narrador	Primero, ponemos pasta en el cepillo.
+n_dientes_2	narrador	Después, nos cepillamos los dientes.
+n_dientes_3	narrador	¡Y al final, los dientes brillan!
+n_bizcocho_1	narrador	Primero, mezclamos la harina y el huevo.
+n_bizcocho_2	narrador	Después, lo metemos en el horno.
+n_bizcocho_3	narrador	¡Y al final, el bizcocho está listo!
+n_nieve_1	narrador	Primero, hacemos una bola de nieve.
+n_nieve_2	narrador	Después, ponemos otra bola encima.
+n_nieve_3	narrador	¡Y al final, el muñeco de nieve está terminado!
+b_gracias_historias	bruno	¡Qué historias tan bonitas! ¡Gracias!

@@ -62,7 +62,7 @@ al día siguiente, «continua» y, de otras cuatro, «Que se adapte» a lo que s
 ([ADR 0021](adr/0021-rimas-con-bruno.md)). Al día siguiente, «Continua» y «La F, la B y la R»
 ([ADR 0022](adr/0022-la-f-la-b-y-la-r.md)), y después «La cuenta atrás» ([ADR 0023](adr/0023-la-cuenta-atras.md)). Y
 cuatro seguidas: un repaso en su iPhone, «Pegatinas para el cuarto» ([ADR 0024](adr/0024-pegatinas-para-el-cuarto.md)),
-«Ordena la historia» y «El anterior y el siguiente».
+«Ordena la historia» ([ADR 0025](adr/0025-ordena-la-historia.md)) y «El anterior y el siguiente».
 
 La propuesta 3, tal como la leyó (en la [maqueta](investigacion/propuestas.html#p3)):
 
@@ -137,7 +137,11 @@ ha venido a jugar. Se puede saltar con la casa. El día que nace Bruno no se pre
    Bruno se le ha caído el helado») y se pone del color de cómo se siente: alegría amarillo, tristeza azul, enfado rojo,
    miedo morado y calma verde. «¿Cómo se siente Bruno?»: ella elige entre tres caritas, y el narrador dice la emoción.
    Después le ayuda: aplaudir, un abrazo, respirar juntos manteniendo el dedo, encender la lámpara o acariciarle. Son
-   cinco cosas, y la nana va la última.
+   cinco cosas, y la nana va la última. Después, **ordena la historia** ([ADR 0025](adr/0025-ordena-la-historia.md)): tres
+   viñetas de algo de cada día, desordenadas, y tres huecos con su número; «¿Qué pasa primero?», y ella toca la viñeta, que
+   vuela a su hueco, «¿Y después?», «¿Y al final?». Si pasa más tarde, «Huum... Eso pasa más tarde». Con las tres en orden,
+   el narrador cuenta la historia mientras se iluminan. Dos de cuatro historias: la flor, los dientes, el bizcocho y el
+   muñeco de nieve.
 9. **La isla de las palabras** ([ADR 0013](adr/0013-la-isla-de-las-palabras.md)), en el rincón de los cuentos. Bruno
    piensa en un dibujo y lo dice a trozos, con una palmada por sílaba: «¡PA! ¡TO!». «¿Qué empieza como pato?». De tres
    cartas, ella toca la que empieza igual, y Bruno la dice a trozos también. Si empieza igual, las dos primeras sílabas
@@ -238,7 +242,7 @@ Las **voces de la familia** no se harán: «para M2 no vamos a utilizar las voce
 - **Bruno y todo lo demás se dibujan con vectores**, sin imágenes: Bruno respira, parpadea, mira y cambia de cara (ocho
   bocas, cuatro ojos, tres posturas de brazos).
 - **Las voces** son las de un narrador y la de Bruno, algo más aguda y más despacio, a unas 4 sílabas por segundo. Hay
-  558 frases pregrabadas con la voz del sistema del Mac y **los efectos** (16) se sintetizan desde cero
+  576 frases pregrabadas con la voz del sistema del Mac y **los efectos** (16) se sintetizan desde cero
   ([ADR 0004](adr/0004-voces-provisionales.md)). Las frases están en [`voces/guion.tsv`](../voces/guion.tsv).
 - **La letra** de la zona de mayores, de los números, del banderín y del título es Andika, una tipografía pensada para quien aprende a
   leer (licencia OFL, en [`licencias/`](../licencias/Andika-OFL.txt)).

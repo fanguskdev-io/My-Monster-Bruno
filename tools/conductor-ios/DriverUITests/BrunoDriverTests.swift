@@ -467,4 +467,41 @@ final class BrunoDriverTests: XCTestCase {
         sleep(2)
         checkpoint("s4-movida-izq")
     }
+
+    /// «Ordena la historia» (ADR 0025): the island of feelings, its five rounds got through by touching each face in turn
+    /// and then helping Bruno every way at once (a touch held, for the breathing, and the lamp, for the fear); then the two
+    /// stories, touching the pictures in turn until each one is in order, and the present. The pictures are touched low,
+    /// under where the present will be, so that the touches left over once the stories are done do not open it.
+    func testStory() {
+        XCUIDevice.shared.orientation = .landscapeLeft
+        launchPastStart()
+        sleep(2)
+        stage(680, 290).tap()
+        sleep(3)
+        stage(112, 150).tap()
+        sleep(8)
+        for _ in 1...5 {
+            for x: CGFloat in [512, 622, 732] {
+                stage(x, 326).tap()
+                sleep(3)
+            }
+            stage(300, 236).press(forDuration: 3.0)
+            sleep(2)
+            stage(120, 218).tap()
+            sleep(4)
+        }
+        checkpoint("h1-historia-izq")
+        for turn in 1...8 {
+            for x: CGFloat in [347, 507, 667] {
+                stage(x, 360).tap()
+                sleep(3)
+            }
+            if turn == 2 {
+                checkpoint("h2-ordenando-izq")
+                XCUIDevice.shared.orientation = .landscapeRight
+                sleep(2)
+            }
+        }
+        checkpoint("h3-regalo-der")
+    }
 }

@@ -15,7 +15,8 @@ El **tamaño** es el trabajo de un agente: **pequeña**, unas horas; **mediana**
 emoción del día ([ADR 0019](adr/0019-la-emocion-del-dia.md)); la 2.1, que se adapte a lo que sabe
 ([ADR 0020](adr/0020-se-adapta-a-lo-que-sabe.md)); la 1.2, rimas con Bruno ([ADR 0021](adr/0021-rimas-con-bruno.md)); la 1.13, la F, la B y la R
 ([ADR 0022](adr/0022-la-f-la-b-y-la-r.md)); la 1.5, la cuenta atrás ([ADR 0023](adr/0023-la-cuenta-atras.md)); la 2.4, las
-pegatinas para el cuarto ([ADR 0024](adr/0024-pegatinas-para-el-cuarto.md)); y las 5.3, 5.4, 5.5 y 5.8,
+pegatinas para el cuarto ([ADR 0024](adr/0024-pegatinas-para-el-cuarto.md)); la 1.9, ordena la historia
+([ADR 0025](adr/0025-ordena-la-historia.md)); y las 5.3, 5.4, 5.5 y 5.8,
 de calidad: lo que faltaba por probar en el iPhone, lo que rozaba la Dynamic Island, la prueba de sonido del Mac y los
 recorridos del iPhone de un tirón. Y una que no estaba aquí, la pantalla de inicio
 ([ADR 0018](adr/0018-la-pantalla-de-inicio.md)).
@@ -50,7 +51,7 @@ recorridos del iPhone de un tirón. Y una que no estaba aquí, la pantalla de in
 - **1.8 Grande y pequeño, dentro y fuera, arriba y abajo.** «Esconde a Bruno dentro de la caja», «pon la pelota encima de la
   mesa». *Mediana.*
 - **1.9 Ordena la historia.** Tres viñetas de algo de cada día (lavarse los dientes, plantar una semilla) para ordenar:
-  primero, después, al final. *Mediana.*
+  primero, después, al final. *Mediana. Hecha, en la isla de las emociones ([ADR 0025](adr/0025-ordena-la-historia.md)).*
 - **1.10 Hábitos.** Lavarle los dientes a Bruno, vestirle según el tiempo que hace, llevar la basura a su contenedor. Va
   bien como isla nueva, la de la casa. *Grande.*
 - **1.11 La emoción del día, con su foto.** Al llegar al cuarto, como en la asamblea: «¿Cómo te sientes hoy?», y ella pone su

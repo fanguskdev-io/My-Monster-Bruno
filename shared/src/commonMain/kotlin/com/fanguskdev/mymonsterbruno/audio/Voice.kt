@@ -9,8 +9,10 @@ import com.fanguskdev.mymonsterbruno.game.LETTERS
 import com.fanguskdev.mymonsterbruno.game.MAX_COUNT
 import com.fanguskdev.mymonsterbruno.game.NAME_ALPHABET
 import com.fanguskdev.mymonsterbruno.game.RhymeWord
+import com.fanguskdev.mymonsterbruno.game.STORY_STEPS
 import com.fanguskdev.mymonsterbruno.game.Shape
 import com.fanguskdev.mymonsterbruno.game.StartWord
+import com.fanguskdev.mymonsterbruno.game.Story
 import com.fanguskdev.mymonsterbruno.game.TalkWord
 import com.fanguskdev.mymonsterbruno.game.plain
 
@@ -86,6 +88,14 @@ internal object Voice {
 
     /** «Y yo estoy contento, ¡porque has venido a jugar conmigo!», when Bruno puts his own in the jar of joy. */
     const val ME_TOO = "b_yo_contento"
+
+    /** «Ordena la historia», on the island of feelings (ADR 0025): what the voice asks, and Bruno's thanks. */
+    const val STORY_INTRO = "n_historia_intro"
+    const val WHAT_FIRST = "n_que_primero"
+    const val AND_NEXT = "n_y_despues"
+    const val AND_AT_THE_END = "n_y_al_final"
+    const val LATER = "n_mas_tarde"
+    const val THANKS_STORIES = "b_gracias_historias"
 
     /** The stickers of the room (ADR 0024): Bruno gives her the one of each island she finishes, and she sticks it. */
     const val STICKER_LETTERS = "b_pegatina_letras"
@@ -186,6 +196,16 @@ internal object Voice {
     /** «¡Qué bien! Me gusta verte contenta.», when she has put herself in the jar of [feeling]. */
     fun today(feeling: Feeling) = "b_hoy_${feeling.word}"
 
+    /** «Primero, la semilla cae en la tierra.», the picture [step] (from 0) of [story], as the voice tells it. */
+    fun storyStep(story: Story, step: Int) = "n_${story.key}_${step + 1}"
+
+    /** What the voice asks for the picture [step] (from 0): what happens first, next, or at the end. */
+    fun askStep(step: Int) = when (step) {
+        0 -> WHAT_FIRST
+        STORY_STEPS - 1 -> AND_AT_THE_END
+        else -> AND_NEXT
+    }
+
     /** «¿Dónde está el nueve?», the number of the countdown that goes now. */
     fun whereIs(number: Int) = "n_donde_$number"
 
@@ -257,8 +277,9 @@ internal object Voice {
         TO_WORDS, WORDS_INTRO, THANKS_STARTS, MISSION_NAME, ITS_YOU, NAME_INTRO, TEACH_ME_YOUR_NAME, KNOWS_YOUR_NAME,
         HOW_DO_YOU_FEEL, TAKE_YOUR_PHOTO, TAKE_THE_FACE, ME_TOO, RHYMES_INTRO, THANKS_RHYMES, ROCKET_INTRO, PRESS_ZERO,
         LIFT_OFF, OFF_I_GO, THANKS_ROCKET, STICKER_LETTERS, STICKER_NUMBERS, STICKER_COLORS, STICKER_SHAPES, STICKER_FEELINGS,
-        STICKER_WORDS, STICK_IT, SO_PRETTY,
+        STICKER_WORDS, STICK_IT, SO_PRETTY, STORY_INTRO, WHAT_FIRST, AND_NEXT, AND_AT_THE_END, LATER, THANKS_STORIES,
     ) +
+        Story.entries.flatMap { story -> (0 until STORY_STEPS).map { storyStep(story, it) } } +
         (1..COUNTDOWN_FROM).flatMap { listOf(whereIs(it), down(it)) } +
         RhymeWord.entries.flatMap { listOf(whatRhymes(it), card(it), noRhyme(it)) } +
         RhymeWord.entries.filter { it.key == it.pair }.flatMap { listOf(rhyme(it), sillyRhyme(it)) } +

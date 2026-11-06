@@ -42,6 +42,7 @@ import com.fanguskdev.mymonsterbruno.ui.screens.RhymesScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.SeriesScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.SleepScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.SplashScreen
+import com.fanguskdev.mymonsterbruno.ui.screens.StoryScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.TalkScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.TraceScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.WordsScreen
@@ -107,6 +108,7 @@ internal fun AppContent(game: GameState, onExit: (() -> Unit)? = null, listen: B
                 Step.SERIES -> SeriesScreen(game) { game.finished(scene) }
                 Step.HOUSE -> HouseScreen(game) { game.finished(scene) }
                 Step.FEELINGS -> FeelingsScreen(game) { game.finished(scene) }
+                Step.STORY -> StoryScreen(game) { game.finished(scene) }
                 Step.WORDS -> WordsScreen(game) { game.finished(scene) }
                 Step.RHYMES -> RhymesScreen(game) { game.finished(scene) }
             }
