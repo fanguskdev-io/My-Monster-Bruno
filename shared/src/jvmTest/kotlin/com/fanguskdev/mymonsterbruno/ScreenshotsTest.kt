@@ -17,6 +17,7 @@ import com.fanguskdev.mymonsterbruno.game.BrunoColor
 import com.fanguskdev.mymonsterbruno.game.BrunoLook
 import com.fanguskdev.mymonsterbruno.game.CONSONANTS
 import com.fanguskdev.mymonsterbruno.game.Choosing
+import com.fanguskdev.mymonsterbruno.game.NEXT_CONSONANTS
 import com.fanguskdev.mymonsterbruno.game.SaveData
 import com.fanguskdev.mymonsterbruno.game.SaveStore
 import com.fanguskdev.mymonsterbruno.game.Topping
@@ -106,6 +107,18 @@ class ScreenshotsTest {
             "19-palabras-cuatro" to Scene.Play(Island.WORDS, 0),
             "25-rimas-cuatro" to Scene.Play(Island.WORDS, 1),
         )
+        // And once she knows the T, the N and the D: the F, the B and the R, and their row of rocks on the map.
+        val knowsAll = { save: SaveData ->
+            knowsMore(save).copy(
+                fed = (VOWELS + CONSONANTS + NEXT_CONSONANTS).associate { it.toString() to 1 },
+                traced = (VOWELS + CONSONANTS + NEXT_CONSONANTS).associate { it.toString() to 1 },
+            )
+        }
+        val last = listOf(
+            "26-comeletras-f-b-r" to Scene.Play(Island.VOWELS, 0),
+            "27-trazos-f-b-r" to Scene.Play(Island.VOWELS, 1),
+            "28-mapa" to Scene.Map,
+        )
         // And the map once she has finished every island, with all its flags.
         val finished = { save: SaveData -> save.copy(islands = Island.entries.associate { it.name to 1 }) }
         for (screen in SCREENS) {
@@ -125,6 +138,11 @@ class ScreenshotsTest {
             for ((name, scene) in more) {
                 val file = File(folder, "${screen.name}-$name.png")
                 file.writeBytes(render(scene, screen, knowsMore))
+                assertTrue(file.length() > MIN_BYTES, "$file está vacía")
+            }
+            for ((name, scene) in last) {
+                val file = File(folder, "${screen.name}-$name.png")
+                file.writeBytes(render(scene, screen, knowsAll))
                 assertTrue(file.length() > MIN_BYTES, "$file está vacía")
             }
             val egg = File(folder, "${screen.name}-0-inicio-huevo.png")

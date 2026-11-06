@@ -506,3 +506,21 @@ n_carta_llave	narrador	Llave.
 n_carta_nave	narrador	Nave.
 n_carta_seta	narrador	Seta.
 n_carta_maleta	narrador	Maleta.
+b_quiero_f	bruno	¡Quiero la efe! La efe de foca.
+b_nam_f	bruno	¡Ñam! ¡La efe de foca!
+b_esa_es_f	bruno	Huum... Esa es la efe.
+b_yo_quiero_f	bruno	¡Yo quiero la efe!
+n_trazar_f	narrador	Esta es la efe. Sigue el camino con el dedo.
+b_letra_f	bruno	¡La efe! ¡Ya sé hacer la efe!
+b_quiero_b	bruno	¡Quiero la be! La be de barco.
+b_nam_b	bruno	¡Ñam! ¡La be de barco!
+b_esa_es_b	bruno	Huum... Esa es la be.
+b_yo_quiero_b	bruno	¡Yo quiero la be!
+n_trazar_b	narrador	Esta es la be. Sigue el camino con el dedo.
+b_letra_b	bruno	¡La be! ¡Ya sé hacer la be!
+b_quiero_r	bruno	¡Quiero la erre! La erre de ratón.
+b_nam_r	bruno	¡Ñam! ¡La erre de ratón!
+b_esa_es_r	bruno	Huum... Esa es la erre.
+b_yo_quiero_r	bruno	¡Yo quiero la erre!
+n_trazar_r	narrador	Esta es la erre. Sigue el camino con el dedo.
+b_letra_r	bruno	¡La erre! ¡Ya sé hacer la erre!

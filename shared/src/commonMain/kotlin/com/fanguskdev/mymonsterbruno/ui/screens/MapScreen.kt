@@ -19,6 +19,7 @@ import com.fanguskdev.mymonsterbruno.game.BrunoLook
 import com.fanguskdev.mymonsterbruno.game.CONSONANTS
 import com.fanguskdev.mymonsterbruno.game.Feeling
 import com.fanguskdev.mymonsterbruno.game.Hue
+import com.fanguskdev.mymonsterbruno.game.LAST_CONSONANTS
 import com.fanguskdev.mymonsterbruno.game.NEXT_CONSONANTS
 import com.fanguskdev.mymonsterbruno.game.Shape
 import com.fanguskdev.mymonsterbruno.game.VOWELS
@@ -158,14 +159,16 @@ private fun DrawScope.drawIsland(
 }
 
 /** The rocks of the island of letters: the vowels in a row, and the consonants in front, as they come in. */
-private fun DrawScope.drawVowelRocks(center: Offset, measurer: TextMeasurer, font: FontFamily) =
-    drawRocks(center, listOf(VOWELS, CONSONANTS, NEXT_CONSONANTS).map { row -> row.map { it.uppercase() } }, measurer, font)
+private fun DrawScope.drawVowelRocks(center: Offset, measurer: TextMeasurer, font: FontFamily) {
+    val steps = listOf(VOWELS, CONSONANTS, NEXT_CONSONANTS, LAST_CONSONANTS)
+    drawRocks(center, steps.map { row -> row.map { it.uppercase() } }, measurer, font)
+}
 
 /** The rocks of the island of numbers: one to five in a row and six to ten in front. */
 private fun DrawScope.drawNumberRocks(center: Offset, measurer: TextMeasurer, font: FontFamily) =
     drawRocks(center, listOf((1..5).map { it.toString() }, (6..10).map { it.toString() }), measurer, font)
 
-/** Rows of white rocks on an island, each with its sign in a colour, the first row at the back. */
+/** Rows of white rocks on an island, each with its sign in a colour, the first row at the back; four rows go closer. */
 private fun DrawScope.drawRocks(
     center: Offset,
     rows: List<List<String>>,
@@ -173,12 +176,17 @@ private fun DrawScope.drawRocks(
     font: FontFamily,
 ) {
     val colors = listOf(Color(0xFFE4483C), Color(0xFF2C74D8), Color(0xFF2E9E5B), Color(0xFFF4B623), Color(0xFF9B6BD3))
-    val top = -22f - 8f * (rows.size - 2)
+    val packed = rows.size > 3
+    val step = if (packed) 22f else 26f
+    val across = if (packed) 28f else 31f
+    val radius = if (packed) 12f else 14f
+    val top = if (packed) -37f else -22f - 8f * (rows.size - 2)
     for ((row, signs) in rows.withIndex()) {
         signs.forEachIndexed { i, sign ->
-            val p = center + Offset(-15.5f * (signs.size - 1) + 31f * i, top + 26f * row)
-            circle(Color.White, p, 14f)
-            label(measurer, sign, p + Offset(0f, 1f), if (sign.length > 1) 16f else 20f, colors[(i + row * 2) % colors.size], font)
+            val p = center + Offset(-across / 2 * (signs.size - 1) + across * i, top + step * row)
+            circle(Color.White, p, radius)
+            val size = (if (sign.length > 1) 16f else 20f) * radius / 14f
+            label(measurer, sign, p + Offset(0f, 1f), size, colors[(i + row * 2) % colors.size], font)
         }
     }
 }

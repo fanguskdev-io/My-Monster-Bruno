@@ -13,7 +13,8 @@ El **tamaño** es el trabajo de un agente: **pequeña**, unas horas; **mediana**
 
 **Hechas** desde entonces: la 1.1, escribir su nombre ([ADR 0017](adr/0017-escribir-su-nombre.md)); la 1.11, la
 emoción del día ([ADR 0019](adr/0019-la-emocion-del-dia.md)); la 2.1, que se adapte a lo que sabe
-([ADR 0020](adr/0020-se-adapta-a-lo-que-sabe.md)); y la 1.2, rimas con Bruno ([ADR 0021](adr/0021-rimas-con-bruno.md)). Y una que no estaba aquí, la pantalla de inicio
+([ADR 0020](adr/0020-se-adapta-a-lo-que-sabe.md)); la 1.2, rimas con Bruno ([ADR 0021](adr/0021-rimas-con-bruno.md)); la 1.13, la F, la B y la R
+([ADR 0022](adr/0022-la-f-la-b-y-la-r.md)); y la 5.5, la prueba de sonido del Mac. Y una que no estaba aquí, la pantalla de inicio
 ([ADR 0018](adr/0018-la-pantalla-de-inicio.md)).
 
 ## Las cinco con las que empezaría
@@ -54,7 +55,7 @@ emoción del día ([ADR 0019](adr/0019-la-emocion-del-dia.md)); la 2.1, que se a
 - **1.12 La asamblea de Bruno.** El día de la semana (con la fecha del aparato) y el tiempo que hace, que elige ella mirando
   por la ventana: sol, nubes, lluvia o nieve. *Mediana.*
 - **1.13 Más consonantes.** La F, la B y la R (la efe de foca, la be de barco, la erre de ratón), entrando por pasos detrás
-  de la T, la N y la D. *Mediana.*
+  de la T, la N y la D. *Mediana. Hecha ([ADR 0022](adr/0022-la-f-la-b-y-la-r.md)).*
 - **1.14 Colores y números en inglés.** La ley pide un primer contacto con una lengua extranjera a esta edad. Con la voz en
   inglés, aparte de lo demás. *Mediana. Decide Fangusk si se quiere.*
 

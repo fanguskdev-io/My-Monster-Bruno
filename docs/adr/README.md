@@ -32,3 +32,4 @@ y estas decisiones existen antes de G4 porque Fangusk pidió desarrollar ya. Las
 | [0019](0019-la-emocion-del-dia.md) | La emoción del día: cada día, ella pone su foto en el bote de cómo se siente, como en la asamblea | Aceptada; lo que contesta Bruno y cuándo pregunta, propuesta |
 | [0020](0020-se-adapta-a-lo-que-sabe.md) | Los juegos se adaptan a lo que sabe: dos, tres o cuatro para elegir según sus últimas cinco rondas | Aceptada; cómo caben cuatro, propuesta |
 | [0021](0021-rimas-con-bruno.md) | Rimas con Bruno, la segunda actividad de la isla de las palabras: «¡Gato! ¿Qué rima con gato?» | Aceptada; las parejas, las rimas tontas y los dibujos, propuesta |
+| [0022](0022-la-f-la-b-y-la-r.md) | La F, la B y la R en la isla de las letras, cuando ya conoce la T, la N y la D | Aceptada; el barco y las rocas del mapa, propuesta |

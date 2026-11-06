@@ -11,11 +11,14 @@ internal val CONSONANTS = listOf('m', 'p', 'l', 's')
 /** The next consonants of the classroom (ADR 0014): they come in once she knows the first ones. */
 internal val NEXT_CONSONANTS = listOf('t', 'n', 'd')
 
+/** And the last ones of the island (ADR 0022): they come in once she knows the T, the N and the D. */
+internal val LAST_CONSONANTS = listOf('f', 'b', 'r')
+
 /** Every letter of the island of letters: the vowels first, then the consonants. */
-internal val LETTERS = VOWELS + CONSONANTS + NEXT_CONSONANTS
+internal val LETTERS = VOWELS + CONSONANTS + NEXT_CONSONANTS + LAST_CONSONANTS
 
 /** The letters in steps, as they come in: each step once she has practised every letter of the one before. */
-private val LETTER_STEPS = listOf(VOWELS, CONSONANTS, NEXT_CONSONANTS)
+private val LETTER_STEPS = listOf(VOWELS, CONSONANTS, NEXT_CONSONANTS, LAST_CONSONANTS)
 
 /** The word of each letter, the one Bruno says and the bubble draws: «la a de avión», «la eme de manzana». */
 internal enum class Word(val letter: Char) {
@@ -31,6 +34,9 @@ internal enum class Word(val letter: Char) {
     TOMATE('t'),
     NUBE('n'),
     DADO('d'),
+    FOCA('f'),
+    BARCO('b'),
+    RATON('r'),
     ;
 
     companion object {
@@ -41,7 +47,7 @@ internal enum class Word(val letter: Char) {
 /**
  * The letters she has practised least in [practised] (by letter), [count] of them, ties at random. They come in steps:
  * the first day, the vowels; the M, the P, the L and the S once she has practised every vowel; the T, the N and the D
- * once she has practised those four too.
+ * once she has practised those four too; and the F, the B and the R after them.
  */
 internal fun leastPractised(practised: Map<String, Int>, count: Int, random: Random): List<Char> {
     fun knows(step: List<Char>) = step.all { (practised[it.toString()] ?: 0) > 0 }

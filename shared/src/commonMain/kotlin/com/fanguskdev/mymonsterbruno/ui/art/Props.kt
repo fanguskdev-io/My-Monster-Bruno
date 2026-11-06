@@ -15,6 +15,7 @@ import androidx.compose.ui.text.TextMeasurer
 import androidx.compose.ui.text.font.FontFamily
 import com.fanguskdev.mymonsterbruno.game.Accessory
 import com.fanguskdev.mymonsterbruno.game.Hue
+import com.fanguskdev.mymonsterbruno.game.RhymeWord
 import com.fanguskdev.mymonsterbruno.game.Shape
 import com.fanguskdev.mymonsterbruno.game.Slot
 import com.fanguskdev.mymonsterbruno.game.Word
@@ -226,6 +227,10 @@ internal fun DrawScope.drawWord(word: Word, center: Offset, size: Float) {
             Word.TOMATE -> tomato()
             Word.NUBE -> cloud()
             Word.DADO -> dice()
+            // The seal and the mouse of the rhymes (ADR 0021), in the same box.
+            Word.FOCA -> drawRhymePicture(RhymeWord.FOCA, Offset.Zero, 100f, 0f)
+            Word.BARCO -> sailboat()
+            Word.RATON -> drawRhymePicture(RhymeWord.RATON, Offset.Zero, 100f, 0f)
         }
     }
 }
@@ -465,6 +470,61 @@ private fun DrawScope.dice() {
     drawRoundRect(Shadow, Offset(-30f, -25f), Size(60f, 60f), CornerRadius(12f))
     drawRoundRect(Color(0xFFE4483C), Offset(-30f, -30f), Size(60f, 60f), CornerRadius(12f))
     for ((x, y) in listOf(-15f to -15f, 15f to -15f, 0f to 0f, -15f to 15f, 15f to 15f)) circle(Color.White, Offset(x, y), 6f)
+}
+
+/** A sailing boat on the water: a red hull with a white stripe, the mast with its flag, and two sails, white and blue. */
+private fun DrawScope.sailboat() {
+    ellipse(Color(0xFFBFE6F5), Offset(0f, 36f), 46f, 7f)
+    line(Color(0xFF8A5A3C), Offset(0f, 16f), Offset(0f, -42f), 4f)
+    fill(
+        path {
+            moveTo(0f, -38f)
+            lineTo(16f, -34f)
+            lineTo(0f, -30f)
+            close()
+        },
+        Color(0xFFF4B623),
+    )
+    fill(
+        path {
+            moveTo(4f, -36f)
+            quadraticTo(30f, -10f, 34f, 10f)
+            lineTo(4f, 10f)
+            close()
+        },
+        Color.White,
+    )
+    stroke(
+        path {
+            moveTo(4f, -36f)
+            quadraticTo(30f, -10f, 34f, 10f)
+            lineTo(4f, 10f)
+            close()
+        },
+        Color(0xFFBFCADB),
+        2f,
+    )
+    fill(
+        path {
+            moveTo(-4f, -26f)
+            lineTo(-4f, 10f)
+            lineTo(-26f, 10f)
+            close()
+        },
+        Color(0xFF2C74D8),
+    )
+    fill(
+        path {
+            moveTo(-42f, 14f)
+            lineTo(42f, 14f)
+            lineTo(30f, 34f)
+            lineTo(-30f, 34f)
+            close()
+        },
+        Color(0xFFE4483C),
+    )
+    line(Color.White, Offset(-37f, 21f), Offset(37f, 21f), 4f)
+    for (x in listOf(-14f, 0f, 14f)) circle(Color(0xFFFFE3DD), Offset(x, 27f), 2.6f)
 }
 
 /** A present box, [size] units: [open] from 0 to 1 lifts its lid away. */

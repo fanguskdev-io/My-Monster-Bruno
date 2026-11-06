@@ -59,7 +59,8 @@ por: Mi amigo Bruno» ([ADR 0002](adr/0002-mi-monstruo-bruno.md)). Después, «C
 siguientes ideas, «La emoción del día», tal como se la propuso el agente ([ADR 0019](adr/0019-la-emocion-del-dia.md)). Y
 al día siguiente, «continua» y, de otras cuatro, «Que se adapte» a lo que sabe
 ([ADR 0020](adr/0020-se-adapta-a-lo-que-sabe.md)); y después, «Rimas con Bruno», en la isla de las palabras
-([ADR 0021](adr/0021-rimas-con-bruno.md)).
+([ADR 0021](adr/0021-rimas-con-bruno.md)). Al día siguiente, «Continua» y «La F, la B y la R»
+([ADR 0022](adr/0022-la-f-la-b-y-la-r.md)).
 
 La propuesta 3, tal como la leyó (en la [maqueta](investigacion/propuestas.html#p3)):
 
@@ -97,14 +98,15 @@ ha venido a jugar. Se puede saltar con la casa. El día que nace Bruno no se pre
 3. **El mapa**. Bruno va en su barca. Hay seis islas: la de las letras, la de los números, la de los colores, la de las
    formas, la de las emociones y, la más pequeña, arriba a la derecha, la de las palabras. Una isla terminada lleva su
    bandera.
-4. **La isla de las letras**, las vocales, la M, la P, la L y la S, y la T, la N y la D
-   ([ADR 0009](adr/0009-mas-letras-y-numeros-hasta-el-diez.md), [ADR 0014](adr/0014-la-t-la-n-y-la-d.md)):
+4. **La isla de las letras**, las vocales, la M, la P, la L y la S, la T, la N y la D, y la F, la B y la R
+   ([ADR 0009](adr/0009-mas-letras-y-numeros-hasta-el-diez.md), [ADR 0014](adr/0014-la-t-la-n-y-la-d.md),
+   [ADR 0022](adr/0022-la-f-la-b-y-la-r.md)):
    - **Comeletras**. «¡Tengo hambre de letras!». Bruno pide una vocal con su palabra («¡Quiero la a! La a de avión») y en
      el plato hay tres galletas con vocales. Ella le da una, arrastrándola a la boca o tocándola. Si es la que quería:
      «¡Ñam!». Si no, Bruno pone cara rara, la galleta vuelve al plato y él dice cuál era y cuál quiere («Huum... Esa es la
      e. ¡Yo quiero la a!»). Son cinco rondas, con las letras que menos le ha dado: el primer día, las vocales; luego
-     entran la M, la P, la L y la S («¡Quiero la eme! La eme de manzana»), y cuando las conoce, la T, la N y la D («¡Quiero
-     la te! La te de tomate»).
+     entran la M, la P, la L y la S («¡Quiero la eme! La eme de manzana»); cuando las conoce, la T, la N y la D («¡Quiero
+     la te! La te de tomate»), y después, la F, la B y la R («¡Quiero la be! La be de barco»).
    - **Trazar**. Dos letras en mayúscula, las que menos ha trazado (entran por los mismos pasos), con los trazos en el orden del
      cole. Un punto verde
      dice dónde empezar y una flecha, hacia dónde. El dedo no tiene que ir exacto: el camino perdona. Al acabar la letra,
@@ -229,7 +231,7 @@ Las **voces de la familia** no se harán: «para M2 no vamos a utilizar las voce
 - **Bruno y todo lo demás se dibujan con vectores**, sin imágenes: Bruno respira, parpadea, mira y cambia de cara (ocho
   bocas, cuatro ojos, tres posturas de brazos).
 - **Las voces** son las de un narrador y la de Bruno, algo más aguda y más despacio, a unas 4 sílabas por segundo. Hay
-  507 frases pregrabadas con la voz del sistema del Mac y **los efectos** (15) se sintetizan desde cero
+  525 frases pregrabadas con la voz del sistema del Mac y **los efectos** (15) se sintetizan desde cero
   ([ADR 0004](adr/0004-voces-provisionales.md)). Las frases están en [`voces/guion.tsv`](../voces/guion.tsv).
 - **La letra** de la zona de mayores, de los números, del banderín y del título es Andika, una tipografía pensada para quien aprende a
   leer (licencia OFL, en [`licencias/`](../licencias/Andika-OFL.txt)).
