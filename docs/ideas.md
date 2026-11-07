@@ -16,7 +16,8 @@ emoción del día ([ADR 0019](adr/0019-la-emocion-del-dia.md)); la 2.1, que se a
 ([ADR 0020](adr/0020-se-adapta-a-lo-que-sabe.md)); la 1.2, rimas con Bruno ([ADR 0021](adr/0021-rimas-con-bruno.md)); la 1.13, la F, la B y la R
 ([ADR 0022](adr/0022-la-f-la-b-y-la-r.md)); la 1.5, la cuenta atrás ([ADR 0023](adr/0023-la-cuenta-atras.md)); la 2.4, las
 pegatinas para el cuarto ([ADR 0024](adr/0024-pegatinas-para-el-cuarto.md)); la 1.9, ordena la historia
-([ADR 0025](adr/0025-ordena-la-historia.md)); y las 5.3, 5.4, 5.5 y 5.8,
+([ADR 0025](adr/0025-ordena-la-historia.md)); la 1.4, el anterior y el siguiente
+([ADR 0026](adr/0026-el-anterior-y-el-siguiente.md)); y las 5.3, 5.4, 5.5 y 5.8,
 de calidad: lo que faltaba por probar en el iPhone, lo que rozaba la Dynamic Island, la prueba de sonido del Mac y los
 recorridos del iPhone de un tirón. Y una que no estaba aquí, la pantalla de inicio
 ([ADR 0018](adr/0018-la-pantalla-de-inicio.md)).
@@ -42,7 +43,8 @@ recorridos del iPhone de un tirón. Y una que no estaba aquí, la pantalla de in
 - **1.3 Trazos antes de las letras.** Llevar a Bruno a casa por un camino con el dedo: rectas, diagonales, ondas, bucles y
   espirales, en el orden de la grafomotricidad del cole. Ayuda a los trazos de las letras. *Mediana.*
 - **1.4 El anterior y el siguiente.** Bruno salta por una recta numérica del 0 al 10 y pregunta qué número va antes o
-  después. En el aula de 4 años se usa la recta, y el juego solo cuenta. *Mediana.*
+  después. En el aula de 4 años se usa la recta, y el juego solo cuenta. *Mediana. Hecha, en la isla de los números,
+  por turnos con la cuenta atrás ([ADR 0026](adr/0026-el-anterior-y-el-siguiente.md)).*
 - **1.5 La cuenta atrás.** El cohete de Bruno despega cuando ella cuenta del 10 al 0, tocando las luces. Corta y muy
   divertida. *Pequeña. Hecha, como segunda actividad de la isla de los números
   ([ADR 0023](adr/0023-la-cuenta-atras.md)).*

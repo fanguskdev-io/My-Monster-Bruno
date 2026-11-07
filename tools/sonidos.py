@@ -170,6 +170,11 @@ def cohete():
     return mezclar(rugido, tono(110, 1.4, ataque=0.3, caida=1.2, final=420), 0.0, 0.3)
 
 
+def salto():
+    """Un salto de Bruno por la recta de los números: un tono que sube deprisa, como un muelle."""
+    return tono(300, 0.22, caida=7, final=720, armonicos=(1.0, 0.3))
+
+
 RECETAS = {
     "toque": toque,
     "crac": crac,
@@ -187,6 +192,7 @@ RECETAS = {
     "palmada": palmada,
     "inicio": inicio,
     "cohete": cohete,
+    "salto": salto,
 }
 
 

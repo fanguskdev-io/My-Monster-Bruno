@@ -173,6 +173,27 @@ class GameStateTest {
     }
 
     @Test
+    fun onTheIslandOfNumbersTheCountdownAndTheLineTakeTurnsByTheDaysSheGoes() {
+        val store = MemoryStore()
+        SaveStore.save(store, SaveData(hatched = true))
+        var today = monday
+
+        fun secondGame(): Activity {
+            val game = GameState(store, Audio(SilentPlayer(), CoroutineScope(EmptyCoroutineContext)), Random(1)) { today }
+            game.goTo(Island.NUMBERS)
+            game.finished(Scene.Play(Island.NUMBERS, 0))
+            assertEquals(Scene.Play(Island.NUMBERS, 1), game.scene)
+            return game.activities(Island.NUMBERS)[1]
+        }
+        assertEquals(Activity.COUNTDOWN, secondGame(), "el primer día, la cuenta atrás")
+        assertEquals(Activity.COUNTDOWN, secondGame(), "el mismo día, la misma")
+        today = monday + 3
+        assertEquals(Activity.NUMBER_LINE, secondGame(), "el siguiente día que va, aunque no sea el siguiente, la recta")
+        today = monday + 4
+        assertEquals(Activity.COUNTDOWN, secondGame())
+    }
+
+    @Test
     fun theEggComesFirst() {
         val game = GameState(MemoryStore(), Audio(SilentPlayer(), CoroutineScope(EmptyCoroutineContext)), Random(1)) { monday }
         assertEquals(Scene.Hatch, game.scene)

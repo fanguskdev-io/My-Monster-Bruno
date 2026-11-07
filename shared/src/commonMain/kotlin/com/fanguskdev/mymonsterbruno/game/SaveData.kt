@@ -29,6 +29,11 @@ data class SaveData(
     val houses: Int = 0,
     /** Times Bruno's rocket took off when she counted down to zero (ADR 0023). */
     val launches: Int = 0,
+    /** The last day, as yyyymmdd, she went to the island of the numbers, and how many days she has gone (ADR 0026). */
+    val numbersDay: Int = 0,
+    val numbersDays: Int = 0,
+    /** Times she found the number before or after the one Bruno was on, on the number line, by side (Side.word) (ADR 0026). */
+    val neighbours: Map<String, Int> = emptyMap(),
     /** Times she knew how Bruno felt, by feeling (Feeling.word). */
     val feelings: Map<String, Int> = emptyMap(),
     /** Times she put each story in order, by story (Story.key) (ADR 0025). */

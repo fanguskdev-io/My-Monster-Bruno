@@ -468,6 +468,45 @@ final class BrunoDriverTests: XCTestCase {
         checkpoint("s4-movida-izq")
     }
 
+    /// «El anterior y el siguiente» (ADR 0026), the second day she goes to the island of numbers: the strawberries first, as
+    /// in the countdown, and then the number line, its squares touched in turn until each question is answered, and the
+    /// present. The squares are touched low, under where the present will be, so that the touches left over do not open it.
+    /// Touches while Bruno answers and jumps count for nothing, so a question can take two rounds of the line: twelve rounds
+    /// are enough for the five.
+    func testNumberLine() {
+        XCUIDevice.shared.orientation = .landscapeLeft
+        launchPastStart()
+        sleep(2)
+        stage(680, 290).tap()
+        sleep(3)
+        stage(588, 150).tap()
+        sleep(8)
+        let berries: [(CGFloat, CGFloat)] = [
+            (528, 200), (588, 180), (648, 180), (706, 200), (512, 254), (572, 238),
+            (632, 238), (692, 254), (538, 304), (598, 292), (658, 292), (716, 306),
+        ]
+        for _ in 1...6 {
+            for (x, y) in berries {
+                stage(x, y).tap()
+                usleep(1_200_000)
+            }
+        }
+        sleep(4)
+        checkpoint("r1-recta-izq")
+        for turn in 1...12 {
+            for square in 0...10 {
+                stage(60 + 68 * CGFloat(square), 372).tap()
+                usleep(1_200_000)
+            }
+            if turn == 2 {
+                checkpoint("r2-saltando-izq")
+                XCUIDevice.shared.orientation = .landscapeRight
+                sleep(2)
+            }
+        }
+        checkpoint("r3-regalo-der")
+    }
+
     /// «Ordena la historia» (ADR 0025): the island of feelings, its five rounds got through by touching each face in turn
     /// and then helping Bruno every way at once (a touch held, for the breathing, and the lamp, for the fear); then the two
     /// stories, touching the pictures in turn until each one is in order, and the present. The pictures are touched low,

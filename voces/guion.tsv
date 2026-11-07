@@ -575,3 +575,57 @@ n_nieve_1	narrador	Primero, hacemos una bola de nieve.
 n_nieve_2	narrador	Después, ponemos otra bola encima.
 n_nieve_3	narrador	¡Y al final, el muñeco de nieve está terminado!
 b_gracias_historias	bruno	¡Qué historias tan bonitas! ¡Gracias!
+n_recta_intro	narrador	¡Mira, la recta de los números, como la de tu clase! Bruno va a saltar por ella.
+b_antes_del_1	bruno	¿Qué número va antes del uno?
+b_antes_del_2	bruno	¿Qué número va antes del dos?
+b_antes_del_3	bruno	¿Qué número va antes del tres?
+b_antes_del_4	bruno	¿Qué número va antes del cuatro?
+b_antes_del_5	bruno	¿Qué número va antes del cinco?
+b_antes_del_6	bruno	¿Qué número va antes del seis?
+b_antes_del_7	bruno	¿Qué número va antes del siete?
+b_antes_del_8	bruno	¿Qué número va antes del ocho?
+b_antes_del_9	bruno	¿Qué número va antes del nueve?
+b_antes_del_10	bruno	¿Qué número va antes del diez?
+b_despues_del_0	bruno	¿Qué número va después del cero?
+b_despues_del_1	bruno	¿Qué número va después del uno?
+b_despues_del_2	bruno	¿Qué número va después del dos?
+b_despues_del_3	bruno	¿Qué número va después del tres?
+b_despues_del_4	bruno	¿Qué número va después del cuatro?
+b_despues_del_5	bruno	¿Qué número va después del cinco?
+b_despues_del_6	bruno	¿Qué número va después del seis?
+b_despues_del_7	bruno	¿Qué número va después del siete?
+b_despues_del_8	bruno	¿Qué número va después del ocho?
+b_despues_del_9	bruno	¿Qué número va después del nueve?
+n_antes_del_1	narrador	¡Sí! Antes del uno va el cero.
+n_antes_del_2	narrador	¡Sí! Antes del dos va el uno.
+n_antes_del_3	narrador	¡Sí! Antes del tres va el dos.
+n_antes_del_4	narrador	¡Sí! Antes del cuatro va el tres.
+n_antes_del_5	narrador	¡Sí! Antes del cinco va el cuatro.
+n_antes_del_6	narrador	¡Sí! Antes del seis va el cinco.
+n_antes_del_7	narrador	¡Sí! Antes del siete va el seis.
+n_antes_del_8	narrador	¡Sí! Antes del ocho va el siete.
+n_antes_del_9	narrador	¡Sí! Antes del nueve va el ocho.
+n_antes_del_10	narrador	¡Sí! Antes del diez va el nueve.
+n_despues_del_0	narrador	¡Sí! Después del cero va el uno.
+n_despues_del_1	narrador	¡Sí! Después del uno va el dos.
+n_despues_del_2	narrador	¡Sí! Después del dos va el tres.
+n_despues_del_3	narrador	¡Sí! Después del tres va el cuatro.
+n_despues_del_4	narrador	¡Sí! Después del cuatro va el cinco.
+n_despues_del_5	narrador	¡Sí! Después del cinco va el seis.
+n_despues_del_6	narrador	¡Sí! Después del seis va el siete.
+n_despues_del_7	narrador	¡Sí! Después del siete va el ocho.
+n_despues_del_8	narrador	¡Sí! Después del ocho va el nueve.
+n_despues_del_9	narrador	¡Sí! Después del nueve va el diez.
+n_ese_es_0	narrador	Ese es el cero.
+n_ese_es_1	narrador	Ese es el uno.
+n_ese_es_2	narrador	Ese es el dos.
+n_ese_es_3	narrador	Ese es el tres.
+n_ese_es_4	narrador	Ese es el cuatro.
+n_ese_es_5	narrador	Ese es el cinco.
+n_ese_es_6	narrador	Ese es el seis.
+n_ese_es_7	narrador	Ese es el siete.
+n_ese_es_8	narrador	Ese es el ocho.
+n_ese_es_9	narrador	Ese es el nueve.
+n_ese_es_10	narrador	Ese es el diez.
+n_al_lado	narrador	Mira bien: está justo al lado de Bruno.
+b_gracias_recta	bruno	¡Qué bien saltamos juntos! ¡Gracias!

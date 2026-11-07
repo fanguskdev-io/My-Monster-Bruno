@@ -18,6 +18,7 @@ Qué se prueba en cada cambio y en cada hito, y cómo. Los criterios de salida d
 | Los minutos del día, el día nuevo y los minutos de más; la partida se guarda y se recupera, y una rota empieza de cero; lo que lleva Bruno y cuánto crece | `SessionTest` | Común |
 | Cuándo se va Bruno a dormir: enseguida en el cuarto y en el mapa, al terminar la isla dentro de una, «Habla con Bruno» o su nombre, dormido si se abre sin tiempo, y el huevo no cuenta; la pantalla de inicio lleva al huevo, al cuarto o a la cama y no cuenta minutos; la emoción del día se pregunta una vez al día al abrir, aunque no conteste; su foto se queda al volver a abrir, una nueva hace que Bruno la vuelva a ver y quitarla la borra | `GameStateTest` | Común |
 | Ordena la historia: dos historias por visita, las menos ordenadas; las viñetas nunca salen ya en orden, y salen de las cinco formas de desordenarlas; cada viñeta tiene su frase y cada paso su pregunta | `StoriesTest` | Común |
+| El anterior y el siguiente: cinco preguntas por visita, con antes y después mezclados, al menos dos de cada, sin repetir y nunca dos seguidas desde la misma casilla; la respuesta, siempre al lado de Bruno y en la recta; cada pregunta tiene sus frases; la cuenta atrás y la recta se turnan por los días que va a la isla, no por el calendario | `NumberLineTest`, `GameStateTest` | Común |
 | Las pegatinas: una por isla terminada, en el orden del mapa, hasta que la pega; moverla no la duplica; solo se pega en la pared y nunca encima de los botones, el banderín, el marco de su foto, Bruno o donde un iPhone tiene la isla | `StickersTest` | Común |
 | La cuenta atrás: el panel tiene del 1 al 10, una vez cada uno y desordenados; se cuenta del 10 al 0 y solo vale el número que va | `CountdownTest` | Común |
 | La emoción del día: una por día, la última que eligió, y solo los últimos 14 días; un día roto no cuenta | `MoodTest` | Común |
@@ -30,7 +31,7 @@ Qué se prueba en cada cambio y en cada hito, y cómo. Los criterios de salida d
 | Lo que se hace con su voz antes de que Bruno la repita: sin el silencio de los bordes (y nada si solo hay silencio o un murmullo), a la altura de las voces del juego, más aguda y más rápida, en un canal y de vuelta a WAV | `MicrophoneTest` | Común |
 | El sonido del escritorio: la mezcla suma sin desbordarse, respeta el volumen y pasa todo a un canal a 22 050 Hz; y cortar una voz tras otra, como al contar fresas, no atasca su hilo: un toque suele atenderse en un momento y ninguno se queda sin atender (el primero puede esperar a que se despierte la tarjeta de sonido, hasta segundo y medio) | `DesktopSoundTest` | JVM |
 | Cada frase del juego tiene su fichero y dura lo que una frase; el guion y el código tienen las mismas frases; cada efecto tiene su fichero | `AudioFilesTest` | JVM |
-| Las veintidós pantallas y, el cuarto con sus pegatinas, cuando ya sabe las vocales y del 1 al 5, Comeletras, los trazos y las fresas con lo nuevo, Comeletras y los trazos con la T, la N y la D y con la F, la B y la R, el mapa con su cuarta fila de rocas, la pantalla de inicio con el huevo, el cuarto con su foto y cuando Bruno le pide que le enseñe su nombre, la emoción del día con su foto, Comeletras, los globos, las emociones, las palabras y las rimas con cuatro para elegir y Comeletras con dos, y el mapa con todas las islas terminadas y sus banderas, se dibujan en móvil (2,17:1) y en tableta (4:3) | `ScreenshotsTest` | JVM |
+| Las veintitrés pantallas y, el cuarto con sus pegatinas, cuando ya sabe las vocales y del 1 al 5, Comeletras, los trazos y las fresas con lo nuevo, Comeletras y los trazos con la T, la N y la D y con la F, la B y la R, el mapa con su cuarta fila de rocas, la pantalla de inicio con el huevo, el cuarto con su foto y cuando Bruno le pide que le enseñe su nombre, la emoción del día con su foto, Comeletras, los globos, las emociones, las palabras y las rimas con cuatro para elegir y Comeletras con dos, y el mapa con todas las islas terminadas y sus banderas, se dibujan en móvil (2,17:1) y en tableta (4:3) | `ScreenshotsTest` | JVM |
 | La salida de la zona de mayores: «Salir del juego» guarda la partida y cierra; sin salida en la plataforma, como en iOS, no hay botón | `GrownUpsExitTest` | JVM |
 | El icono de iOS es el de Android: lo dibuja del vector de `androidApp` en `shared/build/icono/` y lo compara con el del proyecto de Xcode; si cambia el de Android, se copia el nuevo | `AppIconTest` | JVM |
 | En el iPhone 15 Pro de ella y en el 17 Pro del simulador, girados a un lado y al otro, la casa, el altavoz y el candado se ven enteros: ni bajo la Dynamic Island ni cortados por las esquinas redondeadas, medidas en el simulador | `CornerButtonsTest` | Común |
@@ -82,7 +83,7 @@ comprueba ([ADR 0015](adr/0015-bruno-comprueba-la-palabra.md)).
 Para ver el juego en un iPhone 15 Pro simulado, girado a un lado y al otro, sin tocarlo a mano:
 [`tools/conductor-ios`](../tools/conductor-ios) es una prueba de interfaz que toca el escenario de 800 × 400 y, en cada
 punto de control, espera a que `vigilante.sh` saque una captura con lo que tapan la isla y las esquinas pintado de negro.
-Tiene once recorridos:
+Tiene doce recorridos:
 
 - los dos de la entrega, que empiezan en el huevo: `testWalkThroughHeldBothWays` y `testFinalVersionBothWays`;
 - `testTalkAndPhoto`, «Habla con Bruno» y elegir su foto;
@@ -93,7 +94,9 @@ Tiene once recorridos:
 - `testCountdown`, la de los números: las fresas y la cuenta atrás hasta el despegue;
 - `testPhotoAndRestart`, su foto de principio a fin: elegirla, tocarla, cambiarla y «Volver a empezar», que la conserva;
 - `testStickers`, las pegatinas del cuarto: pegar una, soltar otra en el suelo, donde no se queda, y mover la primera;
-- `testStory`, la isla de las emociones entera, tocando las caritas por turnos, y sus dos historias hasta el regalo.
+- `testStory`, la isla de las emociones entera, tocando las caritas por turnos, y sus dos historias hasta el regalo;
+- `testNumberLine`, la de los números el día de la recta: las fresas y sus cinco preguntas, tocando las casillas por
+  turnos, hasta el regalo.
 
 Todos pasan antes por la pantalla de inicio, con un toque. Siempre en silencio (`-silencio`) y en un simulador propio que
 se borra al acabar, nunca en uno de otra sesión.
@@ -292,6 +295,23 @@ pedirían el móvil o la tableta (2026-11-06).
   amarillo y su luz en la torre; el cero rojo que late, el despegue con su llama y su humo, el vuelo, la vuelta a la
   plataforma y el regalo. En el simulador de iPhone 15 Pro (`testCountdown`), girado a los dos lados, lo mismo; girado a
   la derecha, el 1 y el 10 del panel quedan justo al lado de la Dynamic Island, sin tocarla (2026-11-06).
+
+### M5 · El anterior y el siguiente
+
+- [ ] La isla de los números se turna por días: el primer día que va, después de las fresas, la cuenta atrás; el siguiente
+  día que va, la recta; y así. El mismo día, siempre la misma.
+- [ ] En la recta, del 0 al 10, el narrador la presenta la primera vez; Bruno salta a una casilla y pregunta qué número va
+  antes o después, con su bocadillo: su número y la interrogación en el lado que va.
+- [ ] La casilla que va se enciende y el narrador lo dice entero («¡Sí! Antes del cinco va el cuatro»); otra se mueve, el
+  narrador dice cuál es y que está justo al lado de Bruno, brillan las dos de su lado y Bruno lo vuelve a preguntar; se
+  puede volver a tocar sin esperar a que acabe.
+- [ ] Con las cinco, Bruno da las gracias y llega el regalo de la isla. En la zona de mayores, los números de antes y de
+  después que ha encontrado.
+- [x] En el emulador Tester_API36, con un día ya ido a la isla: después de las fresas, la recta; un toque equivocado
+  (Bruno duda y brillan las dos casillas de su lado) y las cinco preguntas, tres de antes y dos de después, sin repetir
+  casilla dos veces seguidas, hasta el regalo; la partida guarda el segundo día y la zona de mayores dice «el de antes:
+  3; el de después: 2». En el simulador de iPhone 15 Pro, `testNumberLine` (el segundo día, la recta, girado a los dos
+  lados, hasta el regalo) y `testCountdown` (el primer día, la cuenta atrás) (2026-11-07).
 
 ### M5 · La F, la B y la R
 

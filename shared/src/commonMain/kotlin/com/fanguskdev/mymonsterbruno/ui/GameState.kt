@@ -7,6 +7,8 @@ import com.fanguskdev.mymonsterbruno.audio.Audio
 import com.fanguskdev.mymonsterbruno.game.SaveData
 import com.fanguskdev.mymonsterbruno.game.SaveStore
 import com.fanguskdev.mymonsterbruno.game.Session
+import com.fanguskdev.mymonsterbruno.game.numberLineToday
+import com.fanguskdev.mymonsterbruno.game.numbersOn
 import com.fanguskdev.mymonsterbruno.storage.KeyValueStore
 import com.fanguskdev.mymonsterbruno.storage.PhotoStore
 import com.fanguskdev.mymonsterbruno.storage.today
@@ -25,10 +27,10 @@ internal enum class Island(val activities: List<Activity>) {
 /**
  * The things she does on an island: give Bruno the letter he wants, trace a letter, give him strawberries, give him the
  * balloon of the colour he wants, finish a series of balloons, build his house with shapes, know how he feels and find
- * the word that starts as his, and the one that rhymes with his (ADR 0021); count down for his rocket (ADR 0023); and put
- * a story in order (ADR 0025).
+ * the word that starts as his, and the one that rhymes with his (ADR 0021); count down for his rocket (ADR 0023), or
+ * find the number before or after on the number line, a day each (ADR 0026); and put a story in order (ADR 0025).
  */
-internal enum class Activity { FEED, TRACE, COUNT, COUNTDOWN, BALLOONS, SERIES, HOUSE, FEELINGS, STORY, WORDS, RHYMES }
+internal enum class Activity { FEED, TRACE, COUNT, COUNTDOWN, NUMBER_LINE, BALLOONS, SERIES, HOUSE, FEELINGS, STORY, WORDS, RHYMES }
 
 /** Where the game is. */
 internal sealed interface Scene {
@@ -168,12 +170,23 @@ internal class GameState(
     fun play() = go(if (timeUp) Scene.Sleep else Scene.Map)
 
     /** To [island], or to bed if the time is over: no new island once it is. */
-    fun goTo(island: Island) = go(if (timeUp) Scene.Sleep else Scene.Play(island, 0))
+    fun goTo(island: Island) {
+        if (timeUp) return go(Scene.Sleep)
+        if (island == Island.NUMBERS) update { it.numbersOn(day()) }
+        go(Scene.Play(island, 0))
+    }
+
+    /**
+     * What she does on [island] today: on the island of the numbers, after the strawberries, the countdown one day she
+     * goes and the number line the next (ADR 0026).
+     */
+    fun activities(island: Island): List<Activity> =
+        if (island == Island.NUMBERS && data.numberLineToday) listOf(Activity.COUNT, Activity.NUMBER_LINE) else island.activities
 
     /** The activity of [scene] is over: the next one of its island, or the present. */
     fun finished(scene: Scene.Play) {
         val next = scene.step + 1
-        go(if (next < scene.island.activities.size) Scene.Play(scene.island, next) else Scene.Present(scene.island))
+        go(if (next < activities(scene.island).size) Scene.Play(scene.island, next) else Scene.Present(scene.island))
     }
 
     /** The present is given: the island counts as done and she goes back to the map, or to bed. */

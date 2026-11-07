@@ -52,6 +52,7 @@ import com.fanguskdev.mymonsterbruno.game.RhymeWord
 import com.fanguskdev.mymonsterbruno.game.SaveData
 import com.fanguskdev.mymonsterbruno.game.Session
 import com.fanguskdev.mymonsterbruno.game.Shape
+import com.fanguskdev.mymonsterbruno.game.Side
 import com.fanguskdev.mymonsterbruno.game.StartWord
 import com.fanguskdev.mymonsterbruno.game.Story
 import com.fanguskdev.mymonsterbruno.game.TalkWord
@@ -179,6 +180,9 @@ internal fun GrownUpsScreen(game: GameState, onExit: (() -> Unit)? = null) {
                 Text("Veces que ha escrito su nombre: ${data.namesWritten}.", font, 16)
                 Text("Fresas contadas, por número:   $counted", font, 16)
                 Text("Cohetes despegados, contando hacia atrás: ${data.launches}.", font, 16)
+                val before = data.neighbours[Side.BEFORE.word] ?: 0
+                val after = data.neighbours[Side.AFTER.word] ?: 0
+                Text("En la recta de los números, el de antes: $before; el de después: $after.", font, 16)
                 val balloons = Hue.entries.joinToString("   ") { "${it.word} ${data.balloons[it.word] ?: 0}" }
                 Text("Globos bien dados, por color:   $balloons", font, 16)
                 Text("Series de globos terminadas: ${data.series}.", font, 16)

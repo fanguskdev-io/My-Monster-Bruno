@@ -62,7 +62,8 @@ al día siguiente, «continua» y, de otras cuatro, «Que se adapte» a lo que s
 ([ADR 0021](adr/0021-rimas-con-bruno.md)). Al día siguiente, «Continua» y «La F, la B y la R»
 ([ADR 0022](adr/0022-la-f-la-b-y-la-r.md)), y después «La cuenta atrás» ([ADR 0023](adr/0023-la-cuenta-atras.md)). Y
 cuatro seguidas: un repaso en su iPhone, «Pegatinas para el cuarto» ([ADR 0024](adr/0024-pegatinas-para-el-cuarto.md)),
-«Ordena la historia» ([ADR 0025](adr/0025-ordena-la-historia.md)) y «El anterior y el siguiente».
+«Ordena la historia» ([ADR 0025](adr/0025-ordena-la-historia.md)) y «El anterior y el siguiente»
+([ADR 0026](adr/0026-el-anterior-y-el-siguiente.md)).
 
 La propuesta 3, tal como la leyó (en la [maqueta](investigacion/propuestas.html#p3)):
 
@@ -121,7 +122,11 @@ ha venido a jugar. Se puede saltar con la casa. El día que nace Bruno no se pre
    dos del 1 al 5 y tres del 6 al 10. Después, **la cuenta atrás** ([ADR 0023](adr/0023-la-cuenta-atras.md)): Bruno está en
    su cohete y ella cuenta del 10 al 0 tocando los números de un panel, desordenados, mientras el narrador los dice y se
    encienden las luces de la torre; el cero es un botón rojo grande: «¡Cero! ¡Despegue!», y el cohete sube entre el humo,
-   sale por arriba y vuelve a bajar.
+   sale por arriba y vuelve a bajar. Eso, un día que va a la isla; el siguiente día que va, **el anterior y el siguiente**
+   ([ADR 0026](adr/0026-el-anterior-y-el-siguiente.md)): la recta de los números de su clase, del 0 al 10, y Bruno salta
+   a una casilla y pregunta «¿Qué número va antes del cinco?» o «¿Qué número va después del cinco?», con un bocadillo que
+   lo enseña como en la recta. Ella toca la casilla; si no es, el narrador le dice cuál ha tocado y que está justo al lado
+   de Bruno. Son cinco preguntas.
 6. **La isla de los colores** ([ADR 0007](adr/0007-la-isla-de-los-colores.md)):
    - **Los globos**. «¡Quiero el globo rojo!». Hay tres globos, y ella le da uno a Bruno arrastrándolo hasta él o
      tocándolo. El que acierta se queda atado en su mano, así que al final tiene un ramo. Si no es el suyo, Bruno dice de
@@ -242,7 +247,7 @@ Las **voces de la familia** no se harán: «para M2 no vamos a utilizar las voce
 - **Bruno y todo lo demás se dibujan con vectores**, sin imágenes: Bruno respira, parpadea, mira y cambia de cara (ocho
   bocas, cuatro ojos, tres posturas de brazos).
 - **Las voces** son las de un narrador y la de Bruno, algo más aguda y más despacio, a unas 4 sílabas por segundo. Hay
-  576 frases pregrabadas con la voz del sistema del Mac y **los efectos** (16) se sintetizan desde cero
+  630 frases pregrabadas con la voz del sistema del Mac y **los efectos** (17) se sintetizan desde cero
   ([ADR 0004](adr/0004-voces-provisionales.md)). Las frases están en [`voces/guion.tsv`](../voces/guion.tsv).
 - **La letra** de la zona de mayores, de los números, del banderín y del título es Andika, una tipografía pensada para quien aprende a
   leer (licencia OFL, en [`licencias/`](../licencias/Andika-OFL.txt)).

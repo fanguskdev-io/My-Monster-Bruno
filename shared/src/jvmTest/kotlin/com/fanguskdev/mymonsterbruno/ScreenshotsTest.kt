@@ -188,6 +188,10 @@ class ScreenshotsTest {
             val file = File(folder, "${screen.name}-20-mapa-terminado.png")
             file.writeBytes(render(Scene.Map, screen, finished))
             assertTrue(file.length() > MIN_BYTES, "$file está vacía")
+            // The number line, on the second day she goes to the island of the numbers (ADR 0026).
+            val line = File(folder, "${screen.name}-31-recta.png")
+            line.writeBytes(render(Scene.Play(Island.NUMBERS, 1), screen, { it.copy(numbersDay = DAY, numbersDays = 2) }))
+            assertTrue(line.length() > MIN_BYTES, "$line está vacía")
         }
     }
 

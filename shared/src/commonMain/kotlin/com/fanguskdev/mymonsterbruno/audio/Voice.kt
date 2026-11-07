@@ -3,14 +3,17 @@ package com.fanguskdev.mymonsterbruno.audio
 import com.fanguskdev.mymonsterbruno.game.COUNTDOWN_FROM
 import com.fanguskdev.mymonsterbruno.game.Feeling
 import com.fanguskdev.mymonsterbruno.game.Happening
+import com.fanguskdev.mymonsterbruno.game.Hop
 import com.fanguskdev.mymonsterbruno.game.HousePart
 import com.fanguskdev.mymonsterbruno.game.Hue
 import com.fanguskdev.mymonsterbruno.game.LETTERS
+import com.fanguskdev.mymonsterbruno.game.LINE_LAST
 import com.fanguskdev.mymonsterbruno.game.MAX_COUNT
 import com.fanguskdev.mymonsterbruno.game.NAME_ALPHABET
 import com.fanguskdev.mymonsterbruno.game.RhymeWord
 import com.fanguskdev.mymonsterbruno.game.STORY_STEPS
 import com.fanguskdev.mymonsterbruno.game.Shape
+import com.fanguskdev.mymonsterbruno.game.Side
 import com.fanguskdev.mymonsterbruno.game.StartWord
 import com.fanguskdev.mymonsterbruno.game.Story
 import com.fanguskdev.mymonsterbruno.game.TalkWord
@@ -114,6 +117,11 @@ internal object Voice {
     const val OFF_I_GO = "b_alla_voy"
     const val THANKS_ROCKET = "b_gracias_cohete"
 
+    /** «El anterior y el siguiente», on the number line of the island of numbers (ADR 0026). */
+    const val NUMBER_LINE_INTRO = "n_recta_intro"
+    const val BESIDE_BRUNO = "n_al_lado"
+    const val THANKS_NUMBER_LINE = "b_gracias_recta"
+
     /** The rhymes, on the island of words (ADR 0021): how they start and how Bruno thanks her. */
     const val RHYMES_INTRO = "n_rimas_intro"
     const val THANKS_RHYMES = "b_gracias_rimas"
@@ -212,6 +220,15 @@ internal object Voice {
     /** «¡Nueve!», counting down: not «Una» as the strawberries, «¡Uno!». */
     fun down(number: Int) = "n_atras_$number"
 
+    /** «¿Qué número va antes del cinco?», Bruno on the number line. */
+    fun askSide(hop: Hop) = "b_${hop.side.word}_del_${hop.square}"
+
+    /** «¡Sí! Antes del cinco va el cuatro.» */
+    fun answerSide(hop: Hop) = "n_${hop.side.word}_del_${hop.square}"
+
+    /** «Ese es el siete.», the square of the number line she touched, when it is not the one. */
+    fun thatSquare(number: Int) = "n_ese_es_$number"
+
     /** «¡Gato! ¿Qué rima con gato?» */
     fun whatRhymes(word: RhymeWord) = "b_rima_${word.key}"
 
@@ -278,7 +295,10 @@ internal object Voice {
         HOW_DO_YOU_FEEL, TAKE_YOUR_PHOTO, TAKE_THE_FACE, ME_TOO, RHYMES_INTRO, THANKS_RHYMES, ROCKET_INTRO, PRESS_ZERO,
         LIFT_OFF, OFF_I_GO, THANKS_ROCKET, STICKER_LETTERS, STICKER_NUMBERS, STICKER_COLORS, STICKER_SHAPES, STICKER_FEELINGS,
         STICKER_WORDS, STICK_IT, SO_PRETTY, STORY_INTRO, WHAT_FIRST, AND_NEXT, AND_AT_THE_END, LATER, THANKS_STORIES,
+        NUMBER_LINE_INTRO, BESIDE_BRUNO, THANKS_NUMBER_LINE,
     ) +
+        Side.entries.flatMap { side -> side.squares.flatMap { listOf(askSide(Hop(it, side)), answerSide(Hop(it, side))) } } +
+        (0..LINE_LAST).map { thatSquare(it) } +
         Story.entries.flatMap { story -> (0 until STORY_STEPS).map { storyStep(story, it) } } +
         (1..COUNTDOWN_FROM).flatMap { listOf(whereIs(it), down(it)) } +
         RhymeWord.entries.flatMap { listOf(whatRhymes(it), card(it), noRhyme(it)) } +
@@ -319,4 +339,5 @@ internal enum class Sfx(val file: String) {
     START("inicio"),
     ROCKET("cohete"),
     CLAP("palmada"),
+    HOP("salto"),
 }
