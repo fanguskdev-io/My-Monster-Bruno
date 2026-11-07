@@ -182,8 +182,9 @@ Fuera del camino:
   si no hay micrófono, la dice Bruno y da las palmadas igual. Si el aparato entiende que ha dicho otra palabra, Bruno se
   lo dice con cariño: «Huum... Eso no es manzana. ¿Me dices manzana?», y a la segunda la dice él
   ([ADR 0015](adr/0015-bruno-comprueba-la-palabra.md)). Su voz suena una vez y se olvida: no se guarda ni sale del
-  aparato, y lo que dice lo reconoce el propio aparato, sin conexión. El permiso del micrófono (y en el iPhone, el del
-  reconocimiento de voz) se pide la primera vez que se entra.
+  aparato, y lo que dice lo reconoce el propio aparato, sin conexión; en la versión del Mac, también
+  ([ADR 0027](adr/0027-el-mac-tambien-comprueba-la-palabra.md)). El permiso del micrófono (y en el iPhone y en el Mac,
+  el del reconocimiento de voz) se pide la primera vez que se entra.
 - **Escribir su nombre** ([ADR 0017](adr/0017-escribir-su-nombre.md)), desde el banderín del cuarto. Arriba cuelga su
   nombre en un banderín, y abajo, en una hoja, ella traza sus letras una tras otra, con los trazos del cole, mientras el
   narrador dice cada una («La ele»). La tilde y la virgulilla de la ñ son el último trazo de su letra. Cada letra que

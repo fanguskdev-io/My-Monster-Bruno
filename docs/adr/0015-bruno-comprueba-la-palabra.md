@@ -17,7 +17,7 @@ grabarla y reproducirla»): Bruno repetía lo que ella dijera y daba las palmada
 
 - **Comprueba la palabra el propio aparato, sin conexión**: en el iPhone, el reconocimiento de voz de Apple en el
   dispositivo, y en Android, el reconocedor del teléfono si tiene el español instalado para usarlo sin conexión. Nada
-  sale del aparato. Donde no se puede (un Android sin ese reconocedor, el emulador o el Mac), no comprueba y todo sigue
+  sale del aparato. Donde no se puede (un Android sin ese reconocedor, el emulador o, hasta el [ADR 0027](0027-el-mac-tambien-comprueba-la-palabra.md), el Mac), no comprueba y todo sigue
   como antes.
 - **Bruno repite lo que ella ha dicho**, con su voz más aguda, mientras el aparato lo reconoce. Si era otra palabra:
   «Huum... Eso no es manzana. ¿Me dices manzana?». A la segunda, Bruno la dice él y da las palmadas igual, para que no
@@ -40,7 +40,7 @@ grabarla y reproducirla»): Bruno repetía lo que ella dijera y daba las palmada
 
 - **Puede no entenderla aunque lo diga bien**: los reconocedores están hechos para voces adultas. Por eso es indulgente y
   a la segunda Bruno la dice él. Hay que verla jugar en su iPhone ([R-08](../harness/riesgos.md)).
-- **Solo se puede probar en un aparato de verdad**: el emulador no tiene reconocedor sin conexión y el Mac no comprueba.
+- **Solo se puede probar en un aparato de verdad**: el emulador no tiene reconocedor sin conexión y el Mac no comprobaba hasta el [ADR 0027](0027-el-mac-tambien-comprueba-la-palabra.md).
   En muchos Android que no son Pixel tampoco hay reconocedor en el propio teléfono, y entonces no comprueba.
 - **El diálogo del permiso en el iPhone lleva una frase fija de Apple** que no se puede quitar: que los datos de voz se
   enviarán a Apple para procesarlos. El juego pide que se reconozca en el propio iPhone (`requiresOnDeviceRecognition`) y

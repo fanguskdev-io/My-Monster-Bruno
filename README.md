@@ -47,7 +47,8 @@ el plugin de Android 9.5.0 y Gradle 9.8.2.
   `:androidApp:installRelease`, optimizada con R8 y firmada con la clave de depuración).
 - iOS: abrir `iosApp/iosApp.xcodeproj` en Xcode y ejecutar el esquema `iosApp`, o por consola
   `xcodebuild -project iosApp/iosApp.xcodeproj -scheme iosApp -destination 'platform=iOS Simulator,name=iPad (A16)' build`.
-- Escritorio: `./gradlew :desktopApp:run`.
+- Escritorio: `./gradlew :desktopApp:run`; en el Mac compila también el reconocedor de voz, `tools/reconocer`
+  ([ADR 0027](docs/adr/0027-el-mac-tambien-comprueba-la-palabra.md)).
 - Para dárselo, en su iPhone o en un Android, sin publicarlo en las tiendas: [entrega](docs/entrega.md).
 
 La versión de depuración puede arrancar en silencio; cómo, en [pruebas](docs/pruebas.md). La zona de mayores se abre

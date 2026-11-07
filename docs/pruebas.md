@@ -28,6 +28,7 @@ Qué se prueba en cada cambio y en cada hito, y cómo. Los criterios de salida d
 | Leer los WAV | `WavTest` | Común |
 | Su foto se guarda en partes que caben en todas las plataformas y vuelve entera; otra la sustituye sin dejar restos, quitarla no deja nada y una rota no es foto | `PhotoStoreTest` | Común |
 | Cuándo es la palabra que pidió Bruno: la palabra, aunque vaya en una frase o con mayúsculas y puntos; la que dice una niña de 4 años con una letra de cada tres cambiada; nunca otra palabra, ni nada | `WordCheckTest` | Común |
+| La comprobación del Mac, con un reconocedor de mentira: le pasa su voz en un WAV y lo borra después; toma sus apuestas, la mejor primero; sin permiso, sin respuesta o si tarda demasiado, no puede decirlo; y lo para al salir de la pantalla | `MacWordCheckTest` | JVM |
 | Lo que se hace con su voz antes de que Bruno la repita: sin el silencio de los bordes (y nada si solo hay silencio o un murmullo), a la altura de las voces del juego, más aguda y más rápida, en un canal y de vuelta a WAV | `MicrophoneTest` | Común |
 | El sonido del escritorio: la mezcla suma sin desbordarse, respeta el volumen y pasa todo a un canal a 22 050 Hz; y cortar una voz tras otra, como al contar fresas, no atasca su hilo: un toque suele atenderse en un momento y ninguno se queda sin atender (el primero puede esperar a que se despierte la tarjeta de sonido, hasta segundo y medio) | `DesktopSoundTest` | JVM |
 | Cada frase del juego tiene su fichero y dura lo que una frase; el guion y el código tienen las mismas frases; cada efecto tiene su fichero | `AudioFilesTest` | JVM |
@@ -75,8 +76,9 @@ Ella jugará en un iPhone 15 Pro (Fangusk, 2026-11-03).
 juego tampoco escucha: Bruno dice cada palabra él y da las palmadas, que es lo que se prueba en el emulador (que con
 `-no-audio` no tiene micrófono) y en el simulador. Con sonido, el simulador de iOS y el escritorio escuchan con el
 micrófono del Mac y lo repiten por sus altavoces, así que esa prueba la hace Fangusk, igual que la del iPhone de verdad.
-Comprobar la palabra solo se puede en un aparato de verdad: el emulador no tiene reconocedor sin conexión y el Mac no
-comprueba ([ADR 0015](adr/0015-bruno-comprueba-la-palabra.md)).
+Comprobar la palabra se puede en un aparato de verdad y en la versión del Mac, que usa el reconocedor de Apple del
+propio Mac ([ADR 0027](adr/0027-el-mac-tambien-comprueba-la-palabra.md)); el emulador no tiene reconocedor sin conexión
+([ADR 0015](adr/0015-bruno-comprueba-la-palabra.md)).
 
 ## Recorridos en el iPhone
 
@@ -200,6 +202,11 @@ pedirían el móvil o la tableta (2026-11-06).
 - [ ] En su iPhone: la primera vez pide también el permiso de reconocimiento de voz. Si dice otra palabra («pera» por
   «manzana»), Bruno la repite y dice «Huum... Eso no es manzana. ¿Me dices manzana?»; a la segunda la dice él. Si la dice
   bien, aunque sea a su manera («mapoza»), la da por buena.
+- [ ] En el Mac, con `./gradlew :desktopApp:run`, lo mismo que en su iPhone: la primera vez, el Mac pide el permiso de
+  reconocimiento de voz para «Mi amigo Bruno»; otra palabra no vale y Bruno pide la suya; a la segunda la dice él.
+- [x] El reconocedor del Mac (`tools/reconocer`), con la voz del Mac y Bruno pidiendo «globo»: «globo» se entiende como
+  «Globo» y «Un globo», que valen, y «pera», como «Mira», que no vale, en un segundo; el permiso se pidió en su nombre y
+  se dio (2026-11-07).
 - [ ] Son cuatro palabras, de menos palmadas a más; al acabar, Bruno da las gracias y vuelve al cuarto. La zona de
   mayores cuenta las palabras dichas.
 - [ ] En el iPhone 15 Pro, su voz se oye por el altavoz grande y, al salir, el resto del juego suena como antes.
