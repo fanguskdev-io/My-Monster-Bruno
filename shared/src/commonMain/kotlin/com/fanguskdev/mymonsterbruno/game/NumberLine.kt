@@ -39,10 +39,7 @@ internal fun hops(random: Random): List<Hop> {
 
 /**
  * [this] on a [day] she goes to the island of the numbers: one more day there if it is another day than the last. The
- * second game of the island takes turns by those days (ADR 0026): the countdown the first day, the number line the next,
- * and so on; by the days she goes and not by the calendar, so that they take turns even if she does not play every day.
+ * second game of the island takes turns by those days (ADR 0026 and 0029, [numbersGameToday]): by the days she goes and
+ * not by the calendar, so that they take turns even if she does not play every day.
  */
 internal fun SaveData.numbersOn(day: Int): SaveData = if (numbersDay == day) this else copy(numbersDay = day, numbersDays = numbersDays + 1)
-
-/** Whether today the second game of the island of the numbers is the number line, rather than the countdown. */
-internal val SaveData.numberLineToday: Boolean get() = numbersDays > 0 && numbersDays % 2 == 0

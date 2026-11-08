@@ -468,6 +468,44 @@ final class BrunoDriverTests: XCTestCase {
         checkpoint("s4-movida-izq")
     }
 
+    /// «Sumas hasta 3» (ADR 0029), the third day she goes to the island of numbers: the strawberries first, three times
+    /// round the bush, and then each sum, touching what is far from where the present will be, so that the route ends
+    /// with it closed: two strawberries of the bush, which give her the ones she has to give or, once the numbers are
+    /// out, are on the two and on the three; and then the two, from the top of its card, and the three.
+    func testSums() {
+        XCUIDevice.shared.orientation = .landscapeLeft
+        launchPastStart()
+        sleep(2)
+        stage(680, 290).tap()
+        sleep(3)
+        stage(588, 150).tap()
+        sleep(8)
+        let berries: [(CGFloat, CGFloat)] = [
+            (528, 200), (588, 180), (648, 180), (706, 200), (512, 254), (572, 238),
+            (632, 238), (692, 254), (538, 304), (598, 292), (658, 292), (716, 306),
+        ]
+        for _ in 1...3 {
+            for (x, y) in berries {
+                stage(x, y).tap()
+                usleep(1_200_000)
+            }
+        }
+        sleep(6)
+        checkpoint("m1-sumas-izq")
+        for turn in 1...5 {
+            for (x, y, wait) in [(CGFloat(648), CGFloat(180), UInt32(3)), (706, 200, 5), (626, 190, 6), (726, 236, 6)] {
+                stage(x, y).tap()
+                sleep(wait)
+            }
+            if turn == 1 {
+                checkpoint("m2-sumando-izq")
+                XCUIDevice.shared.orientation = .landscapeRight
+                sleep(2)
+            }
+        }
+        checkpoint("m3-regalo-der")
+    }
+
     /// «Dentro y fuera» (ADR 0028): the island of shapes, its house built by touching the pieces of the tray in turn, and
     /// then the five places, without knowing which is asked: from where Bruno, the ball or the big box are, each dragged to
     /// every place in turn, waiting after each for the voice of a mistake; and the present.

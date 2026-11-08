@@ -4,10 +4,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.fanguskdev.mymonsterbruno.audio.Audio
+import com.fanguskdev.mymonsterbruno.game.NumbersGame
 import com.fanguskdev.mymonsterbruno.game.SaveData
 import com.fanguskdev.mymonsterbruno.game.SaveStore
 import com.fanguskdev.mymonsterbruno.game.Session
-import com.fanguskdev.mymonsterbruno.game.numberLineToday
+import com.fanguskdev.mymonsterbruno.game.numbersGameToday
 import com.fanguskdev.mymonsterbruno.game.numbersOn
 import com.fanguskdev.mymonsterbruno.storage.KeyValueStore
 import com.fanguskdev.mymonsterbruno.storage.PhotoStore
@@ -28,8 +29,8 @@ internal enum class Island(val activities: List<Activity>) {
  * The things she does on an island: give Bruno the letter he wants, trace a letter, give him strawberries, give him the
  * balloon of the colour he wants, finish a series of balloons, build his house with shapes, know how he feels and find
  * the word that starts as his, and the one that rhymes with his (ADR 0021); count down for his rocket (ADR 0023), or
- * find the number before or after on the number line, a day each (ADR 0026); put a story in order (ADR 0025); and put
- * Bruno and his ball inside, out of, on and under things (ADR 0028).
+ * find the number before or after on the number line, or add strawberries, a day each (ADR 0026 and 0029); put a story
+ * in order (ADR 0025); and put Bruno and his ball inside, out of, on and under things (ADR 0028).
  */
 internal enum class Activity {
     FEED,
@@ -37,6 +38,7 @@ internal enum class Activity {
     COUNT,
     COUNTDOWN,
     NUMBER_LINE,
+    SUMS,
     BALLOONS,
     SERIES,
     HOUSE,
@@ -193,10 +195,17 @@ internal class GameState(
 
     /**
      * What she does on [island] today: on the island of the numbers, after the strawberries, the countdown one day she
-     * goes and the number line the next (ADR 0026).
+     * goes, the number line the next and the sums the next (ADR 0026 and 0029).
      */
-    fun activities(island: Island): List<Activity> =
-        if (island == Island.NUMBERS && data.numberLineToday) listOf(Activity.COUNT, Activity.NUMBER_LINE) else island.activities
+    fun activities(island: Island): List<Activity> {
+        if (island != Island.NUMBERS) return island.activities
+        val second = when (data.numbersGameToday) {
+            NumbersGame.COUNTDOWN -> Activity.COUNTDOWN
+            NumbersGame.NUMBER_LINE -> Activity.NUMBER_LINE
+            NumbersGame.SUMS -> Activity.SUMS
+        }
+        return listOf(Activity.COUNT, second)
+    }
 
     /** The activity of [scene] is over: the next one of its island, or the present. */
     fun finished(scene: Scene.Play) {

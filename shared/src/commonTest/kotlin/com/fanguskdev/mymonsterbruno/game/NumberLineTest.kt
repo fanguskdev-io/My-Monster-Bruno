@@ -4,7 +4,6 @@ import com.fanguskdev.mymonsterbruno.audio.Voice
 import kotlin.random.Random
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertFalse
 import kotlin.test.assertNotEquals
 import kotlin.test.assertTrue
 
@@ -49,17 +48,19 @@ class NumberLineTest {
     }
 
     @Test
-    fun theCountdownAndTheLineTakeTurnsByTheDaysSheGoes() {
+    fun theCountdownTheLineAndTheSumsTakeTurnsByTheDaysSheGoes() {
         var data = SaveData()
-        assertFalse(data.numberLineToday, "sin haber ido, la cuenta atrás")
+        assertEquals(NumbersGame.COUNTDOWN, data.numbersGameToday, "sin haber ido, la cuenta atrás")
         data = data.numbersOn(20261106)
-        assertFalse(data.numberLineToday, "el primer día, la cuenta atrás")
+        assertEquals(NumbersGame.COUNTDOWN, data.numbersGameToday, "el primer día, la cuenta atrás")
         data = data.numbersOn(20261106)
-        assertFalse(data.numberLineToday, "el mismo día, la misma")
+        assertEquals(NumbersGame.COUNTDOWN, data.numbersGameToday, "el mismo día, la misma")
         data = data.numbersOn(20261108)
-        assertTrue(data.numberLineToday, "el siguiente día que va, aunque sea dos días después, la recta")
+        assertEquals(NumbersGame.NUMBER_LINE, data.numbersGameToday, "el siguiente día que va, aunque sea dos días después, la recta")
         data = data.numbersOn(20261115)
-        assertFalse(data.numberLineToday, "y otra vez la cuenta atrás")
-        assertEquals(3, data.numbersDays)
+        assertEquals(NumbersGame.SUMS, data.numbersGameToday, "el siguiente, las sumas")
+        data = data.numbersOn(20261116)
+        assertEquals(NumbersGame.COUNTDOWN, data.numbersGameToday, "y otra vez la cuenta atrás")
+        assertEquals(4, data.numbersDays)
     }
 }

@@ -17,7 +17,8 @@ emoción del día ([ADR 0019](adr/0019-la-emocion-del-dia.md)); la 2.1, que se a
 ([ADR 0022](adr/0022-la-f-la-b-y-la-r.md)); la 1.5, la cuenta atrás ([ADR 0023](adr/0023-la-cuenta-atras.md)); la 2.4, las
 pegatinas para el cuarto ([ADR 0024](adr/0024-pegatinas-para-el-cuarto.md)); la 1.9, ordena la historia
 ([ADR 0025](adr/0025-ordena-la-historia.md)); la 1.4, el anterior y el siguiente
-([ADR 0026](adr/0026-el-anterior-y-el-siguiente.md)); la 1.8, dentro y fuera ([ADR 0028](adr/0028-dentro-y-fuera.md)); y las 5.3, 5.4, 5.5 y 5.8,
+([ADR 0026](adr/0026-el-anterior-y-el-siguiente.md)); la 1.8, dentro y fuera ([ADR 0028](adr/0028-dentro-y-fuera.md)); la 1.6, sumas hasta 3
+([ADR 0029](adr/0029-sumas-hasta-3.md)); y las 5.3, 5.4, 5.5 y 5.8,
 de calidad: lo que faltaba por probar en el iPhone, lo que rozaba la Dynamic Island, la prueba de sonido del Mac y los
 recorridos del iPhone de un tirón. Y una que no estaba aquí, la pantalla de inicio
 ([ADR 0018](adr/0018-la-pantalla-de-inicio.md)).
@@ -48,7 +49,8 @@ recorridos del iPhone de un tirón. Y una que no estaba aquí, la pantalla de in
 - **1.5 La cuenta atrás.** El cohete de Bruno despega cuando ella cuenta del 10 al 0, tocando las luces. Corta y muy
   divertida. *Pequeña. Hecha, como segunda actividad de la isla de los números
   ([ADR 0023](adr/0023-la-cuenta-atras.md)).*
-- **1.6 Sumas con dibujos hasta 3.** «Bruno tiene una fresa y le das dos más. ¿Cuántas tiene?». *Mediana.*
+- **1.6 Sumas con dibujos hasta 3.** «Bruno tiene una fresa y le das dos más. ¿Cuántas tiene?». *Mediana. Hecha, en la isla
+  de los números, por turnos con la cuenta atrás y la recta ([ADR 0029](adr/0029-sumas-hasta-3.md)).*
 - **1.7 Primero, segundo y tercero.** Una carrera de animales: ¿quién llega primero? *Pequeña.*
 - **1.8 Grande y pequeño, dentro y fuera, arriba y abajo.** «Esconde a Bruno dentro de la caja», «pon la pelota encima de la
   mesa». *Mediana. Hecha, como segunda actividad de la isla de las formas, con dos cajas y una mesa

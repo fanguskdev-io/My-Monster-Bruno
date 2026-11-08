@@ -45,6 +45,7 @@ import com.fanguskdev.mymonsterbruno.ui.screens.SeriesScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.SleepScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.SplashScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.StoryScreen
+import com.fanguskdev.mymonsterbruno.ui.screens.SumsScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.TalkScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.TraceScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.WordsScreen
@@ -107,6 +108,7 @@ internal fun AppContent(game: GameState, onExit: (() -> Unit)? = null, listen: B
                 Step.COUNT -> CountScreen(game) { game.finished(scene) }
                 Step.COUNTDOWN -> CountdownScreen(game) { game.finished(scene) }
                 Step.NUMBER_LINE -> NumberLineScreen(game) { game.finished(scene) }
+                Step.SUMS -> SumsScreen(game) { game.finished(scene) }
                 Step.BALLOONS -> BalloonScreen(game) { game.finished(scene) }
                 Step.SERIES -> SeriesScreen(game) { game.finished(scene) }
                 Step.HOUSE -> HouseScreen(game) { game.finished(scene) }

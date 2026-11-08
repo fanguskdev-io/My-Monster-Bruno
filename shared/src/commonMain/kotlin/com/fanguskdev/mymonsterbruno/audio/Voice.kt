@@ -14,10 +14,12 @@ import com.fanguskdev.mymonsterbruno.game.Place
 import com.fanguskdev.mymonsterbruno.game.Placing
 import com.fanguskdev.mymonsterbruno.game.RhymeWord
 import com.fanguskdev.mymonsterbruno.game.STORY_STEPS
+import com.fanguskdev.mymonsterbruno.game.SUMS
 import com.fanguskdev.mymonsterbruno.game.Shape
 import com.fanguskdev.mymonsterbruno.game.Side
 import com.fanguskdev.mymonsterbruno.game.StartWord
 import com.fanguskdev.mymonsterbruno.game.Story
+import com.fanguskdev.mymonsterbruno.game.Sum
 import com.fanguskdev.mymonsterbruno.game.TalkWord
 import com.fanguskdev.mymonsterbruno.game.Thing
 import com.fanguskdev.mymonsterbruno.game.plain
@@ -119,6 +121,12 @@ internal object Voice {
     const val LIFT_OFF = "n_despegue"
     const val OFF_I_GO = "b_alla_voy"
     const val THANKS_ROCKET = "b_gracias_cohete"
+
+    /** The sums of strawberries, on the island of numbers (ADR 0029): how they start, the question, and Bruno's thanks. */
+    const val SUMS_INTRO = "n_sumas_intro"
+    const val HOW_MANY_NOW = "n_cuantas_ahora"
+    const val COUNT_THEM_ALL = "n_contamos"
+    const val THANKS_SUMS = "b_gracias_sumas"
 
     /** «Dentro y fuera», on the island of shapes (ADR 0028): how it starts, Bruno hidden, and his thanks. */
     const val PLACES_INTRO = "n_sitios_intro"
@@ -228,6 +236,15 @@ internal object Voice {
     /** «¡Nueve!», counting down: not «Una» as the strawberries, «¡Uno!». */
     fun down(number: Int) = "n_atras_$number"
 
+    /** «Bruno tiene una fresa.», the strawberries he has before she gives him more. */
+    fun brunoHas(count: Int) = "n_tiene_$count"
+
+    /** «Dale dos más.» */
+    fun giveMore(count: Int) = "n_dale_$count"
+
+    /** «¡Sí! Una y dos, tres.» */
+    fun sumIs(sum: Sum) = "n_suma_${sum.key}"
+
     /** «Esconde a Bruno dentro de la caja grande.», where the voice asks her to put Bruno or his ball. */
     fun putIt(placing: Placing) = "n_pon_${placing.thing.word}_${placing.place.word}"
 
@@ -312,8 +329,10 @@ internal object Voice {
         HOW_DO_YOU_FEEL, TAKE_YOUR_PHOTO, TAKE_THE_FACE, ME_TOO, RHYMES_INTRO, THANKS_RHYMES, ROCKET_INTRO, PRESS_ZERO,
         LIFT_OFF, OFF_I_GO, THANKS_ROCKET, STICKER_LETTERS, STICKER_NUMBERS, STICKER_COLORS, STICKER_SHAPES, STICKER_FEELINGS,
         STICKER_WORDS, STICK_IT, SO_PRETTY, STORY_INTRO, WHAT_FIRST, AND_NEXT, AND_AT_THE_END, LATER, THANKS_STORIES,
-        NUMBER_LINE_INTRO, BESIDE_BRUNO, THANKS_NUMBER_LINE, PLACES_INTRO, HIDDEN, THANKS_PLACES,
+        NUMBER_LINE_INTRO, BESIDE_BRUNO, THANKS_NUMBER_LINE, PLACES_INTRO, HIDDEN, THANKS_PLACES, SUMS_INTRO, HOW_MANY_NOW,
+        COUNT_THEM_ALL, THANKS_SUMS,
     ) +
+        SUMS.flatMap { listOf(brunoHas(it.has), giveMore(it.more), sumIs(it)) }.distinct() +
         Thing.entries.flatMap { thing -> Place.entries.flatMap { listOf(putIt(Placing(thing, it)), itIs(Placing(thing, it))) } } +
         (Place.entries - Place.OUT_OF_BOX).map { leftAt(it) } + leftAt(null) +
         Side.entries.flatMap { side -> side.squares.flatMap { listOf(askSide(Hop(it, side)), answerSide(Hop(it, side))) } } +

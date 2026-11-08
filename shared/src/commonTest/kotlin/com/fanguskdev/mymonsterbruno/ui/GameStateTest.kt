@@ -173,7 +173,7 @@ class GameStateTest {
     }
 
     @Test
-    fun onTheIslandOfNumbersTheCountdownAndTheLineTakeTurnsByTheDaysSheGoes() {
+    fun onTheIslandOfNumbersTheCountdownTheLineAndTheSumsTakeTurnsByTheDaysSheGoes() {
         val store = MemoryStore()
         SaveStore.save(store, SaveData(hatched = true))
         var today = monday
@@ -190,6 +190,8 @@ class GameStateTest {
         today = monday + 3
         assertEquals(Activity.NUMBER_LINE, secondGame(), "el siguiente día que va, aunque no sea el siguiente, la recta")
         today = monday + 4
+        assertEquals(Activity.SUMS, secondGame(), "el siguiente, las sumas")
+        today = monday + 5
         assertEquals(Activity.COUNTDOWN, secondGame())
     }
 

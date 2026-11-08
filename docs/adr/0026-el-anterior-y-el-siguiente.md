@@ -5,7 +5,7 @@
 | **Estado** | aceptada: a la propuesta del agente («Con la recta numérica de su clase, en la isla de los números, alternándose cada día con la cuenta atrás: Bruno salta a una casilla del 0 al 10 y pregunta qué número va antes o después; ella toca la casilla. Cinco rondas»), «El anterior y el siguiente» (Fangusk, 2026-11-06, elegida entre opciones). Propuesta en los detalles: cómo se alternan, el bocadillo de la pregunta, la ayuda al equivocarse y lo que cuenta |
 | **Fecha** | 2026-11-06 · **Fase:** P0 · Borrador anticipado, sin ninguna puerta confirmada · **Hito:** M5 |
 | **Propone · decide** | agente (Claude Code, Opus 5.5) · Fangusk |
-| **Reversibilidad** | alta: sin ella, la isla de los números vuelve a tener la cuenta atrás todos los días |
+| **Reversibilidad** | alta: sin ella, la isla de los números vuelve a tener la cuenta atrás todos los días. Desde el [ADR 0029](0029-sumas-hasta-3.md), la cuenta atrás, la recta y las sumas se turnan las tres |
 
 ## Contexto
 

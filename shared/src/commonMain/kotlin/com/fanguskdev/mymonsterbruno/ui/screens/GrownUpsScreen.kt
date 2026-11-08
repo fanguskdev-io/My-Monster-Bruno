@@ -50,6 +50,7 @@ import com.fanguskdev.mymonsterbruno.game.LETTERS
 import com.fanguskdev.mymonsterbruno.game.MAX_COUNT
 import com.fanguskdev.mymonsterbruno.game.Place
 import com.fanguskdev.mymonsterbruno.game.RhymeWord
+import com.fanguskdev.mymonsterbruno.game.SUMS
 import com.fanguskdev.mymonsterbruno.game.SaveData
 import com.fanguskdev.mymonsterbruno.game.Session
 import com.fanguskdev.mymonsterbruno.game.Shape
@@ -181,6 +182,8 @@ internal fun GrownUpsScreen(game: GameState, onExit: (() -> Unit)? = null) {
                 Text("Veces que ha escrito su nombre: ${data.namesWritten}.", font, 16)
                 Text("Fresas contadas, por número:   $counted", font, 16)
                 Text("Cohetes despegados, contando hacia atrás: ${data.launches}.", font, 16)
+                val sums = SUMS.joinToString("   ") { "${it.has} y ${it.more}: ${data.sums[it.key] ?: 0}" }
+                Text("Sumas de fresas resueltas:   $sums", font, 16)
                 val before = data.neighbours[Side.BEFORE.word] ?: 0
                 val after = data.neighbours[Side.AFTER.word] ?: 0
                 Text("En la recta de los números, el de antes: $before; el de después: $after.", font, 16)
