@@ -668,3 +668,31 @@ n_suma_1_2	narrador	¡Sí! Una y dos, tres.
 n_suma_2_1	narrador	¡Sí! Dos y una, tres.
 n_contamos	narrador	Vamos a contarlas todas.
 b_gracias_sumas	bruno	¡Qué bien sumas! ¡Gracias por las fresas!
+n_asamblea_intro	narrador	¡Es la hora de la asamblea! ¿Qué día es hoy?
+b_hoy_es_lunes	bruno	¡Hoy es lunes!
+b_hoy_es_martes	bruno	¡Hoy es martes!
+b_hoy_es_miercoles	bruno	¡Hoy es miércoles!
+b_hoy_es_jueves	bruno	¡Hoy es jueves!
+b_hoy_es_viernes	bruno	¡Hoy es viernes!
+b_hoy_es_sabado	bruno	¡Hoy es sábado!
+b_hoy_es_domingo	bruno	¡Hoy es domingo!
+n_ayer_lunes	narrador	Ayer fue domingo y mañana será martes.
+n_ayer_martes	narrador	Ayer fue lunes y mañana será miércoles.
+n_ayer_miercoles	narrador	Ayer fue martes y mañana será jueves.
+n_ayer_jueves	narrador	Ayer fue miércoles y mañana será viernes.
+n_ayer_viernes	narrador	Ayer fue jueves y mañana será sábado.
+n_ayer_sabado	narrador	Ayer fue viernes y mañana será domingo.
+n_ayer_domingo	narrador	Ayer fue sábado y mañana será lunes.
+n_ese_dia_lunes	narrador	Ese es el lunes.
+n_ese_dia_martes	narrador	Ese es el martes.
+n_ese_dia_miercoles	narrador	Ese es el miércoles.
+n_ese_dia_jueves	narrador	Ese es el jueves.
+n_ese_dia_viernes	narrador	Ese es el viernes.
+n_ese_dia_sabado	narrador	Ese es el sábado.
+n_ese_dia_domingo	narrador	Ese es el domingo.
+n_que_tiempo	narrador	¿Qué tiempo hace hoy? Mira por la ventana y dímelo.
+b_tiempo_sol	bruno	¡Hace sol! ¡Qué bien!
+b_tiempo_nubes	bruno	Está nublado. ¡Las nubes tapan el sol!
+b_tiempo_lluvia	bruno	¡Llueve! ¡A por el paraguas y las botas!
+b_tiempo_nieve	bruno	¡Nieva! ¡Qué frío! ¡Abrígate bien!
+b_empieza_el_dia	bruno	¡Ya podemos empezar el día!

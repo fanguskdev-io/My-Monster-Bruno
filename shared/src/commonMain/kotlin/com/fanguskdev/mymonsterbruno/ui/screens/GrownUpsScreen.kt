@@ -58,6 +58,7 @@ import com.fanguskdev.mymonsterbruno.game.Side
 import com.fanguskdev.mymonsterbruno.game.StartWord
 import com.fanguskdev.mymonsterbruno.game.Story
 import com.fanguskdev.mymonsterbruno.game.TalkWord
+import com.fanguskdev.mymonsterbruno.game.Weather
 import com.fanguskdev.mymonsterbruno.game.choices
 import com.fanguskdev.mymonsterbruno.game.feltDays
 import com.fanguskdev.mymonsterbruno.storage.rememberPhotoPicker
@@ -197,6 +198,8 @@ internal fun GrownUpsScreen(game: GameState, onExit: (() -> Unit)? = null) {
                 Text("Dentro y fuera, encima y debajo:   $places", font, 16)
                 val feelings = Feeling.entries.joinToString("   ") { "${it.spoken} ${data.feelings[it.word] ?: 0}" }
                 Text("Emociones que ha reconocido:   $feelings", font, 16)
+                val weathers = Weather.entries.joinToString("   ") { "${it.spoken} ${data.weathers[it.word] ?: 0}" }
+                Text("El tiempo que ha visto por la ventana, en la asamblea:   $weathers", font, 16)
                 val stories = Story.entries.joinToString("   ") { "${it.spoken} ${data.stories[it.key] ?: 0}" }
                 Text("Historias que ha ordenado:   $stories", font, 16)
                 val talked = TalkWord.entries.joinToString("   ") { "${it.word} ${data.talked[it.word] ?: 0}" }
@@ -361,4 +364,11 @@ private val Place.spoken: String get() = when (this) {
     Place.ON_TABLE -> "encima de la mesa"
     Place.UNDER_TABLE -> "debajo de la mesa"
     Place.OUT_OF_BOX -> "fuera de la caja"
+}
+
+private val Weather.spoken: String get() = when (this) {
+    Weather.SUN -> "sol"
+    Weather.CLOUDS -> "nubes"
+    Weather.RAIN -> "lluvia"
+    Weather.SNOW -> "nieve"
 }

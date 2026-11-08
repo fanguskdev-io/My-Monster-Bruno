@@ -8,8 +8,12 @@ import com.fanguskdev.mymonsterbruno.game.NumbersGame
 import com.fanguskdev.mymonsterbruno.game.SaveData
 import com.fanguskdev.mymonsterbruno.game.SaveStore
 import com.fanguskdev.mymonsterbruno.game.Session
+import com.fanguskdev.mymonsterbruno.game.Weather
+import com.fanguskdev.mymonsterbruno.game.Weekday
 import com.fanguskdev.mymonsterbruno.game.numbersGameToday
 import com.fanguskdev.mymonsterbruno.game.numbersOn
+import com.fanguskdev.mymonsterbruno.game.plusOne
+import com.fanguskdev.mymonsterbruno.game.weekdayOf
 import com.fanguskdev.mymonsterbruno.storage.KeyValueStore
 import com.fanguskdev.mymonsterbruno.storage.PhotoStore
 import com.fanguskdev.mymonsterbruno.storage.today
@@ -76,6 +80,9 @@ internal sealed interface Scene {
 
     /** «¿Cómo te sientes hoy?», the first time she comes to the room each day (ADR 0019). */
     data object Mood : Scene
+
+    /** The assembly, after the feeling of the day: what day it is and what weather (ADR 0030). */
+    data object Assembly : Scene
 
     data object GrownUps : Scene
 }
@@ -183,6 +190,19 @@ internal class GameState(
         }
     }
 
+    /** The feeling of the day is said: the assembly follows, once a day (ADR 0030). */
+    fun moodDone() = go(if (data.weatherDay == day()) Scene.Home else Scene.Assembly)
+
+    /** The day of the week today, for the calendar of the assembly. */
+    val weekday: Weekday get() = weekdayOf(day())
+
+    /** What she saw out of her window today, said in the assembly; null if she has not said it today. */
+    val weather: Weather? get() = if (data.weatherDay == day()) Weather.entries.firstOrNull { it.word == data.weather } else null
+
+    /** She said in the assembly what weather it is: the window of the room shows it until tomorrow. */
+    fun sawWeather(weather: Weather) =
+        update { it.copy(weatherDay = day(), weather = weather.word, weathers = it.weathers.plusOne(weather.word)) }
+
     /** From the room to the map, or to bed if the time is over. */
     fun play() = go(if (timeUp) Scene.Sleep else Scene.Map)
 
@@ -222,7 +242,8 @@ internal class GameState(
     /** Back from wherever she is, one step towards the room. */
     fun back() {
         when (scene) {
-            Scene.Map, Scene.Calm, Scene.Talk, Scene.Name, Scene.Mood, Scene.GrownUps -> go(if (data.hatched) Scene.Home else Scene.Hatch)
+            Scene.Map, Scene.Calm, Scene.Talk, Scene.Name, Scene.Mood, Scene.Assembly, Scene.GrownUps ->
+                go(if (data.hatched) Scene.Home else Scene.Hatch)
             is Scene.Play, is Scene.Present -> go(if (timeUp) Scene.Sleep else Scene.Map)
             else -> Unit
         }

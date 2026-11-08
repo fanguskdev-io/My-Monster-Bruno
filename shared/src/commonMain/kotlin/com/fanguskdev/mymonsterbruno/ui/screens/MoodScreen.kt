@@ -178,7 +178,7 @@ internal fun MoodScreen(game: GameState, onDone: () -> Unit) {
     StageCanvas(touch) { stage ->
         val t = clock.value
         val since = t - phaseAt
-        drawRoom(stage, t)
+        drawRoom(stage, t, game.weather)
         drawBench(JARS.first().x - JAR_WIDTH, JARS.last().x + JAR_WIDTH * 0.75f, BENCH_TOP)
         val over = if (dragging) jarAt(card) else null
         for (i in JARS.indices) {

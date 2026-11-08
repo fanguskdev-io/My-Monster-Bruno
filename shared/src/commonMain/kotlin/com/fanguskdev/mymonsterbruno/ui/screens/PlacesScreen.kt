@@ -254,7 +254,7 @@ internal fun PlacesScreen(game: GameState, onDone: () -> Unit) {
         val t = clock.value
         val since = t - phaseAt
         val placing = current()
-        drawRoom(stage, t)
+        drawRoom(stage, t, game.weather)
         if (hinted && phase == PlacesPhase.ASKING) drawHint(placing.place.area(), t)
         drawTable(TABLE, FLOOR)
 

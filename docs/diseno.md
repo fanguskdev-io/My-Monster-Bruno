@@ -65,7 +65,7 @@ cuatro seguidas: un repaso en su iPhone, «Pegatinas para el cuarto» ([ADR 0024
 «Ordena la historia» ([ADR 0025](adr/0025-ordena-la-historia.md)) y «El anterior y el siguiente»
 ([ADR 0026](adr/0026-el-anterior-y-el-siguiente.md)). Al probarlo en el Mac, que también comprobara la palabra
 ([ADR 0027](adr/0027-el-mac-tambien-comprueba-la-palabra.md)); y otras cuatro seguidas: «Dentro y fuera» ([ADR 0028](adr/0028-dentro-y-fuera.md)),
-«Sumas hasta 3» ([ADR 0029](adr/0029-sumas-hasta-3.md)), «La asamblea de Bruno» y «Trazos antes de las letras».
+«Sumas hasta 3» ([ADR 0029](adr/0029-sumas-hasta-3.md)), «La asamblea de Bruno» ([ADR 0030](adr/0030-la-asamblea-de-bruno.md)) y «Trazos antes de las letras».
 
 La propuesta 3, tal como la leyó (en la [maqueta](investigacion/propuestas.html#p3)):
 
@@ -90,6 +90,12 @@ en la asamblea de su clase: Bruno saluda y pregunta «¿Cómo te sientes hoy?»,
 hay foto) a uno de los cinco botes de colores: alegría, tristeza, enfado, miedo y calma. Tocar un bote dice su nombre.
 Bruno le contesta con cariño («Vaya... Te doy un abrazo muy grande») y pone la suya en el bote de la alegría, porque ella
 ha venido a jugar. Se puede saltar con la casa. El día que nace Bruno no se pregunta.
+
+Después, **la asamblea de Bruno** ([ADR 0030](adr/0030-la-asamblea-de-bruno.md)): en la pared del cuarto, el calendario de la semana con la letra y el
+color de cada día, como en clase. «¡Es la hora de la asamblea! ¿Qué día es hoy?»; Bruno lo dice, «¡Hoy es martes!», su
+tarjeta llama y ella la toca; el narrador dice los de al lado: «Ayer fue lunes y mañana será miércoles». Luego, «¿Qué
+tiempo hace hoy? Mira por la ventana y dímelo»: ella mira por la suya y toca sol, nubes, lluvia o nieve, Bruno dice algo
+de él y la ventana del cuarto lo enseña el resto del día. El día sale de la fecha del aparato; el tiempo, de ella.
 
 1. **Nace tu monstruo** (solo la primera vez). Es de noche y hay un huevo. Cada toque lo hace temblar y lo agrieta; al
    quinto se rompe y sale Bruno: «¡Hola! ¡Soy Bruno! No sé nada de nada... ¿Me enseñas?». Ella elige su color (menta,
@@ -257,7 +263,7 @@ Las **voces de la familia** no se harán: «para M2 no vamos a utilizar las voce
 - **Bruno y todo lo demás se dibujan con vectores**, sin imágenes: Bruno respira, parpadea, mira y cambia de cara (ocho
   bocas, cuatro ojos, tres posturas de brazos).
 - **Las voces** son las de un narrador y la de Bruno, algo más aguda y más despacio, a unas 4 sílabas por segundo. Hay
-  669 frases pregrabadas con la voz del sistema del Mac y **los efectos** (17) se sintetizan desde cero
+  697 frases pregrabadas con la voz del sistema del Mac y **los efectos** (17) se sintetizan desde cero
   ([ADR 0004](adr/0004-voces-provisionales.md)). Las frases están en [`voces/guion.tsv`](../voces/guion.tsv).
 - **La letra** de la zona de mayores, de los números, del banderín y del título es Andika, una tipografía pensada para quien aprende a
   leer (licencia OFL, en [`licencias/`](../licencias/Andika-OFL.txt)).

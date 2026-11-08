@@ -11,7 +11,8 @@ decisiones, y la [investigación](docs/investigacion/investigacion.md), de dónd
 > M2 también: «Habla con Bruno», en el que ella le dice palabras con el micrófono y él las repite con su voz y las da en
 > palmadas. Y la isla de las palabras, en la que busca qué empieza como la palabra de Bruno. Lo último: escribir su
 > nombre, letra a letra, desde el banderín del cuarto, una pantalla de inicio con Bruno en su barca, y la emoción del
-> día, en la que cada día pone su foto en el bote de cómo se siente; los juegos de elegir se adaptan a lo que sabe; en
+> día, en la que cada día pone su foto en el bote de cómo se siente, con su asamblea: qué día es y qué tiempo hace
+> por su ventana; los juegos de elegir se adaptan a lo que sabe; en
 > la isla de las palabras busca rimas con Bruno; en la de los números cuenta hacia atrás para su cohete o, otros días,
 > busca en la recta el número de antes y el de después o suma fresas; en la de las formas esconde a Bruno dentro y fuera, encima y
 > debajo; en la de las emociones ordena historias, y cada isla que termina le da una pegatina para la pared del

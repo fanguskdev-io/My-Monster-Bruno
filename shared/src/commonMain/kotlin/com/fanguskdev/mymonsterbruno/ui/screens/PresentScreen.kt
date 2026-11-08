@@ -89,7 +89,7 @@ internal fun PresentScreen(game: GameState, island: Island, onDone: () -> Unit) 
 
     StageCanvas(touch) { stage ->
         val t = clock.value
-        drawRoom(stage, t)
+        drawRoom(stage, t, game.weather)
         val opened = openedAt
         val since = if (opened == null) 0f else t - opened
         val pose = if (worn) {

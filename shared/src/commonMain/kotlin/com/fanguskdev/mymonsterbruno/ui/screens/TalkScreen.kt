@@ -210,7 +210,7 @@ internal fun TalkScreen(
         val t = clock.value
         val word = current()
         val sinceClap = t - clapAt
-        drawRoom(stage, t)
+        drawRoom(stage, t, game.weather)
         val pose = when (phase) {
             TalkPhase.LISTENING -> Pose(Mouth.SMILE, Eyes.WIDE, Arms.DOWN, lookX = 0.8f, lookY = 0.5f)
             TalkPhase.ECHO -> {

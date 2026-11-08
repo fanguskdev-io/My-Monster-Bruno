@@ -221,7 +221,7 @@ internal fun FeelingsScreen(game: GameState, onDone: () -> Unit) {
         val t = clock.value
         val happening = current().happening
         val feeling = happening.feeling
-        drawRoom(stage, t)
+        drawRoom(stage, t, game.weather)
         val scared = feeling == Feeling.FEAR && !lampOn && phase != FeelingPhase.THANKS
         if (scared) {
             drawRect(

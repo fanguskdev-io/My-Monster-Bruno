@@ -5,6 +5,8 @@ import com.fanguskdev.mymonsterbruno.audio.SilentPlayer
 import com.fanguskdev.mymonsterbruno.game.SaveData
 import com.fanguskdev.mymonsterbruno.game.SaveStore
 import com.fanguskdev.mymonsterbruno.game.Session
+import com.fanguskdev.mymonsterbruno.game.Weather
+import com.fanguskdev.mymonsterbruno.game.Weekday
 import com.fanguskdev.mymonsterbruno.storage.MemoryStore
 import kotlinx.coroutines.CoroutineScope
 import kotlin.coroutines.EmptyCoroutineContext
@@ -193,6 +195,38 @@ class GameStateTest {
         assertEquals(Activity.SUMS, secondGame(), "el siguiente, las sumas")
         today = monday + 5
         assertEquals(Activity.COUNTDOWN, secondGame())
+    }
+
+    @Test
+    fun afterTheFeelingOfTheDayTheAssemblyOnceADay() {
+        val store = MemoryStore()
+        SaveStore.save(store, SaveData(hatched = true))
+        var today = monday
+
+        fun opened() = GameState(store, Audio(SilentPlayer(), CoroutineScope(EmptyCoroutineContext)), Random(1), splash = true) { today }
+        val first = opened()
+        first.leaveSplash()
+        assertEquals(Scene.Mood, first.scene)
+        first.moodDone()
+        assertEquals(Scene.Assembly, first.scene, "después de su emoción, la asamblea")
+        assertEquals(Weekday.MONDAY, first.weekday)
+        assertEquals(null, first.weather, "aún no ha dicho qué tiempo hace")
+        first.sawWeather(Weather.RAIN)
+        assertEquals(Weather.RAIN, first.weather, "la ventana del cuarto enseña la lluvia")
+        first.go(Scene.Home)
+        first.go(Scene.Mood)
+        first.moodDone()
+        assertEquals(Scene.Home, first.scene, "una vez al día")
+        today = monday + 1
+        val tomorrow = opened()
+        assertEquals(null, tomorrow.weather, "otro día, la ventana vuelve a ser la de siempre")
+        assertEquals(Weekday.TUESDAY, tomorrow.weekday)
+        tomorrow.leaveSplash()
+        tomorrow.moodDone()
+        assertEquals(Scene.Assembly, tomorrow.scene)
+        tomorrow.back()
+        assertEquals(Scene.Home, tomorrow.scene, "la casa la deja sin acabar")
+        assertEquals(1, tomorrow.data.weathers[Weather.RAIN.word])
     }
 
     @Test

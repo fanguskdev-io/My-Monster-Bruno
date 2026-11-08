@@ -174,7 +174,7 @@ internal fun StoryScreen(game: GameState, onDone: () -> Unit) {
     StageCanvas(touch) { stage ->
         val t = clock.value
         val since = t - phaseAt
-        drawRoom(stage, t)
+        drawRoom(stage, t, game.weather)
         for (i in 0 until STORY_STEPS) drawPlace(SLOTS[i], waiting = phase == StoryPhase.ASKING && i == next, t)
         val story = current()
         for ((card, step) in dealt.withIndex()) {

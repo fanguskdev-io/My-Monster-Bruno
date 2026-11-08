@@ -325,7 +325,15 @@ final class BrunoDriverTests: XCTestCase {
         usleep(800_000)
         checkpoint("f4-emocion-tristeza-der")
         sleep(8)
-        checkpoint("f5-cuarto-der")
+        // The assembly (ADR 0030): today's card on the calendar, Monday first, and then the rain out of the window.
+        checkpoint("f5-asamblea-der")
+        let weekday = Calendar(identifier: .gregorian).component(.weekday, from: Date())
+        stage(331 + 69 * CGFloat((weekday + 5) % 7), 112).tap()
+        sleep(8)
+        checkpoint("f6-tiempo-der")
+        stage(576, 302).tap()
+        sleep(8)
+        checkpoint("f7-cuarto-lluvia-der")
     }
 
     /// The island of words to its end, the rhymes included (ADR 0021): it touches the three cards in turn, as a child

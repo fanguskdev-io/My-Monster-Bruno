@@ -272,7 +272,7 @@ internal fun HomeScreen(game: GameState) {
 
     StageCanvas(touch) { stage ->
         val t = clock.value
-        drawRoom(stage, t)
+        drawRoom(stage, t, game.weather)
         val inviting = t - invitedAt < INVITE_SECONDS
         drawBunting(game.data.childName, measurer, font, t, waving = inviting)
         if (inviting) drawSparkles(Offset(BUNTING_CENTER_X, 70f), 110f, t)

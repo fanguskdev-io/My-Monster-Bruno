@@ -2,10 +2,12 @@ package com.fanguskdev.mymonsterbruno.ui.art
 
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
+import com.fanguskdev.mymonsterbruno.game.Weather
 import com.fanguskdev.mymonsterbruno.ui.Stage
 import com.fanguskdev.mymonsterbruno.ui.circle
 import com.fanguskdev.mymonsterbruno.ui.ellipse
@@ -52,17 +54,21 @@ internal fun DrawScope.drawNightSky(stage: Stage, time: Float) {
 }
 
 /** Bruno's room by day: a warm wall, a window with the sky, the wooden floor and a rug. */
-internal fun DrawScope.drawRoom(stage: Stage, time: Float) {
+internal fun DrawScope.drawRoom(stage: Stage, time: Float, weather: Weather? = null) {
     band(stage, Color(0xFFFFE9D6), stage.top, 296f)
     band(stage, Color(0xFFF9D5B4), 262f, 296f)
     band(stage, Color(0xFFE6B47C), 296f, stage.bottom)
     for (y in listOf(330f, 366f)) drawLine(Color(0xFFD49B5E), Offset(stage.left, y), Offset(stage.right, y), 2f)
-    // The window.
+    // The window: the weather she said in the assembly today (ADR 0030) or, if she has not, the sun and a cloud.
     drawRoundRect(Color.White, Offset(96f, 40f), Size(170f, 130f), CornerRadius(10f))
-    drawRoundRect(Color(0xFFA6DCF6), Offset(106f, 50f), Size(150f, 110f), CornerRadius(6f))
-    circle(Color(0xFFFFD54A), Offset(214f, 84f), 18f)
-    val cloud = 140f + 10f * sin(time * 0.3f)
-    for ((dx, r) in listOf(0f to 14f, 16f to 18f, 34f to 12f)) circle(Color.White, Offset(cloud + dx, 112f), r)
+    if (weather != null) {
+        drawWindowWeather(weather, Rect(106f, 50f, 256f, 160f), time)
+    } else {
+        drawRoundRect(Color(0xFFA6DCF6), Offset(106f, 50f), Size(150f, 110f), CornerRadius(6f))
+        circle(Color(0xFFFFD54A), Offset(214f, 84f), 18f)
+        val cloud = 140f + 10f * sin(time * 0.3f)
+        for ((dx, r) in listOf(0f to 14f, 16f to 18f, 34f to 12f)) circle(Color.White, Offset(cloud + dx, 112f), r)
+    }
     drawRect(Color.White, Offset(179f, 50f), Size(5f, 110f))
     drawRect(Color.White, Offset(106f, 103f), Size(150f, 5f))
     ellipse(Color(0xFF4FA89A), Offset(400f, 352f), 250f, 34f)

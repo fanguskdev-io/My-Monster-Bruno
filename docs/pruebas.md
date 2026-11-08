@@ -20,6 +20,7 @@ Qué se prueba en cada cambio y en cada hito, y cómo. Los criterios de salida d
 | Ordena la historia: dos historias por visita, las menos ordenadas; las viñetas nunca salen ya en orden, y salen de las cinco formas de desordenarlas; cada viñeta tiene su frase y cada paso su pregunta | `StoriesTest` | Común |
 | El anterior y el siguiente: cinco preguntas por visita, con antes y después mezclados, al menos dos de cada, sin repetir y nunca dos seguidas desde la misma casilla; la respuesta, siempre al lado de Bruno y en la recta; cada pregunta tiene sus frases; la cuenta atrás, la recta y las sumas se turnan por los días que va a la isla, no por el calendario | `NumberLineTest`, `GameStateTest` | Común |
 | Sumas hasta 3: en cada visita, una y una, una y dos, y dos y una, una vez cada una y en cualquier orden; cada suma tiene sus frases, y sus números y su «¡Ñam!» están | `SumsTest` | Común |
+| La asamblea: el día de la semana de cada fecha, también un 29 de febrero y al cambiar de año; el día de antes y el de después; cada día y cada tiempo tienen sus frases; después de la emoción del día, la asamblea, una vez al día, y la ventana del cuarto enseña el tiempo que dijo hasta el día siguiente | `AssemblyTest`, `GameStateTest` | Común |
 | Dentro y fuera: en cada visita, cada sitio una vez y Bruno y la pelota por turnos, empezando por cualquiera; fuera de la caja es cualquier sitio que no sea una caja, y los demás, solo el suyo; cada ronda tiene sus frases | `PlacesTest` | Común |
 | Las pegatinas: una por isla terminada, en el orden del mapa, hasta que la pega; moverla no la duplica; solo se pega en la pared y nunca encima de los botones, el banderín, el marco de su foto, Bruno o donde un iPhone tiene la isla | `StickersTest` | Común |
 | La cuenta atrás: el panel tiene del 1 al 10, una vez cada uno y desordenados; se cuenta del 10 al 0 y solo vale el número que va | `CountdownTest` | Común |
@@ -34,7 +35,7 @@ Qué se prueba en cada cambio y en cada hito, y cómo. Los criterios de salida d
 | Lo que se hace con su voz antes de que Bruno la repita: sin el silencio de los bordes (y nada si solo hay silencio o un murmullo), a la altura de las voces del juego, más aguda y más rápida, en un canal y de vuelta a WAV | `MicrophoneTest` | Común |
 | El sonido del escritorio: la mezcla suma sin desbordarse, respeta el volumen y pasa todo a un canal a 22 050 Hz; y cortar una voz tras otra, como al contar fresas, no atasca su hilo: un toque suele atenderse en un momento y ninguno se queda sin atender (el primero puede esperar a que se despierte la tarjeta de sonido, hasta segundo y medio) | `DesktopSoundTest` | JVM |
 | Cada frase del juego tiene su fichero y dura lo que una frase; el guion y el código tienen las mismas frases; cada efecto tiene su fichero | `AudioFilesTest` | JVM |
-| Las veinticinco pantallas y, el cuarto con sus pegatinas, cuando ya sabe las vocales y del 1 al 5, Comeletras, los trazos y las fresas con lo nuevo, Comeletras y los trazos con la T, la N y la D y con la F, la B y la R, el mapa con su cuarta fila de rocas, la pantalla de inicio con el huevo, el cuarto con su foto y cuando Bruno le pide que le enseñe su nombre, la emoción del día con su foto, Comeletras, los globos, las emociones, las palabras y las rimas con cuatro para elegir y Comeletras con dos, y el mapa con todas las islas terminadas y sus banderas, se dibujan en móvil (2,17:1) y en tableta (4:3) | `ScreenshotsTest` | JVM |
+| Las veintiséis pantallas y, el cuarto con lluvia y con nieve en la ventana, el cuarto con sus pegatinas, cuando ya sabe las vocales y del 1 al 5, Comeletras, los trazos y las fresas con lo nuevo, Comeletras y los trazos con la T, la N y la D y con la F, la B y la R, el mapa con su cuarta fila de rocas, la pantalla de inicio con el huevo, el cuarto con su foto y cuando Bruno le pide que le enseñe su nombre, la emoción del día con su foto, Comeletras, los globos, las emociones, las palabras y las rimas con cuatro para elegir y Comeletras con dos, y el mapa con todas las islas terminadas y sus banderas, se dibujan en móvil (2,17:1) y en tableta (4:3) | `ScreenshotsTest` | JVM |
 | La salida de la zona de mayores: «Salir del juego» guarda la partida y cierra; sin salida en la plataforma, como en iOS, no hay botón | `GrownUpsExitTest` | JVM |
 | El icono de iOS es el de Android: lo dibuja del vector de `androidApp` en `shared/build/icono/` y lo compara con el del proyecto de Xcode; si cambia el de Android, se copia el nuevo | `AppIconTest` | JVM |
 | En el iPhone 15 Pro de ella y en el 17 Pro del simulador, girados a un lado y al otro, la casa, el altavoz y el candado se ven enteros: ni bajo la Dynamic Island ni cortados por las esquinas redondeadas, medidas en el simulador | `CornerButtonsTest` | Común |
@@ -93,7 +94,8 @@ Tiene catorce recorridos:
 - `testTalkAndPhoto`, «Habla con Bruno» y elegir su foto;
 - `testWordsAndLetters`, la isla de las palabras y la T, la N y la D;
 - `testStartAndName`, la pantalla de inicio y escribir su nombre;
-- `testFeelingOfTheDay`, la emoción del día;
+- `testFeelingOfTheDay`, la emoción del día y la asamblea: el día de hoy en el calendario y la lluvia, que sale en la
+  ventana del cuarto;
 - `testRhymes`, la isla de las palabras entera, rimas incluidas, tocando las cartas por turnos hasta el regalo;
 - `testCountdown`, la de los números: las fresas y la cuenta atrás hasta el despegue;
 - `testPhotoAndRestart`, su foto de principio a fin: elegirla, tocarla, cambiarla y «Volver a empezar», que la conserva;
@@ -354,6 +356,22 @@ pedirían el móvil o la tableta (2026-11-06).
   dos tocado por error (el narrador las cuenta y llama el tres) y luego el tres; una y una, con el dos que se enciende
   y el «2» en la tarjeta; y una y dos, hasta el regalo. La partida guarda las tres sumas y el tercer día en la isla.
   En el simulador de iPhone 15 Pro (`testSums`), girado a los dos lados, de las fresas al regalo (2026-11-08).
+
+### M5 · La asamblea de Bruno
+
+- [ ] Después de la emoción del día, la asamblea: el calendario de la semana en la pared, de lunes a domingo, con sus
+  letras y colores. «¡Es la hora de la asamblea! ¿Qué día es hoy?», Bruno dice el de hoy y su tarjeta llama.
+- [ ] Tocada, se enciende con una estrella y el narrador dice el de antes y el de después mientras se levantan. Otra
+  tarjeta se mueve: «Ese es el jueves», y Bruno lo vuelve a decir.
+- [ ] «¿Qué tiempo hace hoy?»: sol, nubes, lluvia y nieve en el suelo. El que toca sale en la ventana del cuarto, Bruno
+  dice algo de él y «¡Ya podemos empezar el día!». La ventana lo enseña el resto del día, también en las islas del
+  cuarto; al día siguiente, otra vez la asamblea.
+- [ ] Saliendo con la casa, vuelve al cuarto sin asamblea hasta el día siguiente. En la zona de mayores, cada tiempo.
+- [x] En el emulador Tester_API36, un domingo: después de la emoción del día, la asamblea con la D llamando; el lunes
+  tocado por error y luego el domingo, que se enciende con su estrella; los cuatro tiempos; la lluvia, que sale en la
+  ventana con Bruno contento, y el cuarto con la lluvia en la ventana. La partida guarda el tiempo de hoy. En el
+  simulador de iPhone 15 Pro (`testFeelingOfTheDay`), girado a la derecha, lo mismo: la tarjeta del domingo queda al
+  lado de la Dynamic Island, entera (2026-11-08).
 
 ### M5 · La F, la B y la R
 

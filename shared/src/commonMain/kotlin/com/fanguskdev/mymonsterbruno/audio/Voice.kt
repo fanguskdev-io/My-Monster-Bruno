@@ -22,6 +22,8 @@ import com.fanguskdev.mymonsterbruno.game.Story
 import com.fanguskdev.mymonsterbruno.game.Sum
 import com.fanguskdev.mymonsterbruno.game.TalkWord
 import com.fanguskdev.mymonsterbruno.game.Thing
+import com.fanguskdev.mymonsterbruno.game.Weather
+import com.fanguskdev.mymonsterbruno.game.Weekday
 import com.fanguskdev.mymonsterbruno.game.plain
 
 /**
@@ -121,6 +123,11 @@ internal object Voice {
     const val LIFT_OFF = "n_despegue"
     const val OFF_I_GO = "b_alla_voy"
     const val THANKS_ROCKET = "b_gracias_cohete"
+
+    /** The assembly, after the feeling of the day (ADR 0030): how it starts, the weather, and how the day starts. */
+    const val ASSEMBLY_INTRO = "n_asamblea_intro"
+    const val WHAT_WEATHER = "n_que_tiempo"
+    const val DAY_STARTS = "b_empieza_el_dia"
 
     /** The sums of strawberries, on the island of numbers (ADR 0029): how they start, the question, and Bruno's thanks. */
     const val SUMS_INTRO = "n_sumas_intro"
@@ -236,6 +243,18 @@ internal object Voice {
     /** «¡Nueve!», counting down: not «Una» as the strawberries, «¡Uno!». */
     fun down(number: Int) = "n_atras_$number"
 
+    /** «¡Hoy es martes!», Bruno in the assembly. */
+    fun todayIs(day: Weekday) = "b_hoy_es_${day.word}"
+
+    /** «Ayer fue lunes y mañana será miércoles.», when today is [day]. */
+    fun aroundToday(day: Weekday) = "n_ayer_${day.word}"
+
+    /** «Ese es el jueves.», the card she touched when it is not today. */
+    fun thatDay(day: Weekday) = "n_ese_dia_${day.word}"
+
+    /** «¡Llueve! ¡A por el paraguas y las botas!», Bruno about the weather she says. */
+    fun weatherIs(weather: Weather) = "b_tiempo_${weather.word}"
+
     /** «Bruno tiene una fresa.», the strawberries he has before she gives him more. */
     fun brunoHas(count: Int) = "n_tiene_$count"
 
@@ -330,8 +349,10 @@ internal object Voice {
         LIFT_OFF, OFF_I_GO, THANKS_ROCKET, STICKER_LETTERS, STICKER_NUMBERS, STICKER_COLORS, STICKER_SHAPES, STICKER_FEELINGS,
         STICKER_WORDS, STICK_IT, SO_PRETTY, STORY_INTRO, WHAT_FIRST, AND_NEXT, AND_AT_THE_END, LATER, THANKS_STORIES,
         NUMBER_LINE_INTRO, BESIDE_BRUNO, THANKS_NUMBER_LINE, PLACES_INTRO, HIDDEN, THANKS_PLACES, SUMS_INTRO, HOW_MANY_NOW,
-        COUNT_THEM_ALL, THANKS_SUMS,
+        COUNT_THEM_ALL, THANKS_SUMS, ASSEMBLY_INTRO, WHAT_WEATHER, DAY_STARTS,
     ) +
+        Weekday.entries.flatMap { listOf(todayIs(it), aroundToday(it), thatDay(it)) } +
+        Weather.entries.map { weatherIs(it) } +
         SUMS.flatMap { listOf(brunoHas(it.has), giveMore(it.more), sumIs(it)) }.distinct() +
         Thing.entries.flatMap { thing -> Place.entries.flatMap { listOf(putIt(Placing(thing, it)), itIs(Placing(thing, it))) } } +
         (Place.entries - Place.OUT_OF_BOX).map { leftAt(it) } + leftAt(null) +

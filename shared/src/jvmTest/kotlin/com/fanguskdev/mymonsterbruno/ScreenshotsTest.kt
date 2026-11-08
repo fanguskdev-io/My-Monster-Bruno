@@ -22,6 +22,7 @@ import com.fanguskdev.mymonsterbruno.game.SaveData
 import com.fanguskdev.mymonsterbruno.game.SaveStore
 import com.fanguskdev.mymonsterbruno.game.Topping
 import com.fanguskdev.mymonsterbruno.game.VOWELS
+import com.fanguskdev.mymonsterbruno.game.Weather
 import com.fanguskdev.mymonsterbruno.storage.MemoryStore
 import com.fanguskdev.mymonsterbruno.storage.PHOTO_SIZE
 import com.fanguskdev.mymonsterbruno.storage.PhotoStore
@@ -75,6 +76,7 @@ class ScreenshotsTest {
             "29-cuenta-atras" to Scene.Play(Island.NUMBERS, 1),
             "30-historia" to Scene.Play(Island.FEELINGS, 1),
             "32-dentro-fuera" to Scene.Play(Island.SHAPES, 1),
+            "34-asamblea" to Scene.Assembly,
         )
         // The same games once she knows the vowels and one to five: the consonants and the numbers up to ten.
         val knows = { save: SaveData ->
@@ -189,6 +191,12 @@ class ScreenshotsTest {
             val file = File(folder, "${screen.name}-20-mapa-terminado.png")
             file.writeBytes(render(Scene.Map, screen, finished))
             assertTrue(file.length() > MIN_BYTES, "$file está vacía")
+            // The room with the rain and the snow she said in the assembly today (ADR 0030).
+            for (weather in Weather.entries.filter { it == Weather.RAIN || it == Weather.SNOW }) {
+                val room = File(folder, "${screen.name}-2-casa-${weather.word}.png")
+                room.writeBytes(render(Scene.Home, screen, { it.copy(weatherDay = DAY, weather = weather.word) }))
+                assertTrue(room.length() > MIN_BYTES, "$room está vacía")
+            }
             // The sums, on the third day she goes to the island of the numbers (ADR 0029).
             val sums = File(folder, "${screen.name}-33-sumas.png")
             sums.writeBytes(render(Scene.Play(Island.NUMBERS, 1), screen, { it.copy(numbersDay = DAY, numbersDays = 3) }))

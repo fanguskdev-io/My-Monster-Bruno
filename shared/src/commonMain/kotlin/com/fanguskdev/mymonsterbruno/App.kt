@@ -24,6 +24,7 @@ import com.fanguskdev.mymonsterbruno.storage.KeyValueStore
 import com.fanguskdev.mymonsterbruno.ui.GameState
 import com.fanguskdev.mymonsterbruno.ui.PlatformBackHandler
 import com.fanguskdev.mymonsterbruno.ui.Scene
+import com.fanguskdev.mymonsterbruno.ui.screens.AssemblyScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.BalloonScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.CalmScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.CountScreen
@@ -122,7 +123,8 @@ internal fun AppContent(game: GameState, onExit: (() -> Unit)? = null, listen: B
             Scene.Sleep -> SleepScreen(game)
             Scene.Calm -> CalmScreen(game)
             Scene.Name -> NameScreen(game) { game.back() }
-            Scene.Mood -> MoodScreen(game) { game.back() }
+            Scene.Mood -> MoodScreen(game) { game.moodDone() }
+            Scene.Assembly -> AssemblyScreen(game) { game.go(Scene.Home) }
             Scene.Talk -> {
                 val microphone = if (listen) rememberMicrophone() else remember { DeafMicrophone() }
                 val check = if (listen) rememberWordCheck() else remember { NoWordCheck() }

@@ -54,6 +54,11 @@ data class SaveData(
     val photoSeen: Boolean = false,
     /** The last day, as yyyymmdd, Bruno asked her «¿Cómo te sientes hoy?», whether or not she answered (ADR 0019). */
     val moodDay: Int = 0,
+    /** The last day, as yyyymmdd, she said in the assembly what weather it was, and which (Weather.word) (ADR 0030). */
+    val weatherDay: Int = 0,
+    val weather: String = "",
+    /** Times she saw each weather out of her window, by weather (Weather.word). */
+    val weathers: Map<String, Int> = emptyMap(),
     /** How she felt each day she said it: the day, as yyyymmdd, to the feeling (Feeling.word); the last [MOOD_DAYS]. */
     val moods: Map<String, String> = emptyMap(),
     /** Whether she got each of the last rounds right at the first try, by game (Choosing.word), to adapt (ADR 0020). */
