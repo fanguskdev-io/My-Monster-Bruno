@@ -10,6 +10,8 @@ import com.fanguskdev.mymonsterbruno.game.LETTERS
 import com.fanguskdev.mymonsterbruno.game.LINE_LAST
 import com.fanguskdev.mymonsterbruno.game.MAX_COUNT
 import com.fanguskdev.mymonsterbruno.game.NAME_ALPHABET
+import com.fanguskdev.mymonsterbruno.game.Place
+import com.fanguskdev.mymonsterbruno.game.Placing
 import com.fanguskdev.mymonsterbruno.game.RhymeWord
 import com.fanguskdev.mymonsterbruno.game.STORY_STEPS
 import com.fanguskdev.mymonsterbruno.game.Shape
@@ -17,6 +19,7 @@ import com.fanguskdev.mymonsterbruno.game.Side
 import com.fanguskdev.mymonsterbruno.game.StartWord
 import com.fanguskdev.mymonsterbruno.game.Story
 import com.fanguskdev.mymonsterbruno.game.TalkWord
+import com.fanguskdev.mymonsterbruno.game.Thing
 import com.fanguskdev.mymonsterbruno.game.plain
 
 /**
@@ -116,6 +119,11 @@ internal object Voice {
     const val LIFT_OFF = "n_despegue"
     const val OFF_I_GO = "b_alla_voy"
     const val THANKS_ROCKET = "b_gracias_cohete"
+
+    /** «Dentro y fuera», on the island of shapes (ADR 0028): how it starts, Bruno hidden, and his thanks. */
+    const val PLACES_INTRO = "n_sitios_intro"
+    const val HIDDEN = "b_escondido"
+    const val THANKS_PLACES = "b_gracias_sitios"
 
     /** «El anterior y el siguiente», on the number line of the island of numbers (ADR 0026). */
     const val NUMBER_LINE_INTRO = "n_recta_intro"
@@ -220,6 +228,15 @@ internal object Voice {
     /** «¡Nueve!», counting down: not «Una» as the strawberries, «¡Uno!». */
     fun down(number: Int) = "n_atras_$number"
 
+    /** «Esconde a Bruno dentro de la caja grande.», where the voice asks her to put Bruno or his ball. */
+    fun putIt(placing: Placing) = "n_pon_${placing.thing.word}_${placing.place.word}"
+
+    /** «¡Sí! Bruno está dentro de la caja grande.» */
+    fun itIs(placing: Placing) = "n_ya_${placing.thing.word}_${placing.place.word}"
+
+    /** «Huum... Así está encima de la mesa.», where she left it ([place]; null, the floor) when it was not there. */
+    fun leftAt(place: Place?) = "n_asi_${place?.word ?: "suelo"}"
+
     /** «¿Qué número va antes del cinco?», Bruno on the number line. */
     fun askSide(hop: Hop) = "b_${hop.side.word}_del_${hop.square}"
 
@@ -295,8 +312,10 @@ internal object Voice {
         HOW_DO_YOU_FEEL, TAKE_YOUR_PHOTO, TAKE_THE_FACE, ME_TOO, RHYMES_INTRO, THANKS_RHYMES, ROCKET_INTRO, PRESS_ZERO,
         LIFT_OFF, OFF_I_GO, THANKS_ROCKET, STICKER_LETTERS, STICKER_NUMBERS, STICKER_COLORS, STICKER_SHAPES, STICKER_FEELINGS,
         STICKER_WORDS, STICK_IT, SO_PRETTY, STORY_INTRO, WHAT_FIRST, AND_NEXT, AND_AT_THE_END, LATER, THANKS_STORIES,
-        NUMBER_LINE_INTRO, BESIDE_BRUNO, THANKS_NUMBER_LINE,
+        NUMBER_LINE_INTRO, BESIDE_BRUNO, THANKS_NUMBER_LINE, PLACES_INTRO, HIDDEN, THANKS_PLACES,
     ) +
+        Thing.entries.flatMap { thing -> Place.entries.flatMap { listOf(putIt(Placing(thing, it)), itIs(Placing(thing, it))) } } +
+        (Place.entries - Place.OUT_OF_BOX).map { leftAt(it) } + leftAt(null) +
         Side.entries.flatMap { side -> side.squares.flatMap { listOf(askSide(Hop(it, side)), answerSide(Hop(it, side))) } } +
         (0..LINE_LAST).map { thatSquare(it) } +
         Story.entries.flatMap { story -> (0 until STORY_STEPS).map { storyStep(story, it) } } +

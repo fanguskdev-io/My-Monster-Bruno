@@ -74,6 +74,7 @@ class ScreenshotsTest {
             "25-rimas" to Scene.Play(Island.WORDS, 1),
             "29-cuenta-atras" to Scene.Play(Island.NUMBERS, 1),
             "30-historia" to Scene.Play(Island.FEELINGS, 1),
+            "32-dentro-fuera" to Scene.Play(Island.SHAPES, 1),
         )
         // The same games once she knows the vowels and one to five: the consonants and the numbers up to ten.
         val knows = { save: SaveData ->

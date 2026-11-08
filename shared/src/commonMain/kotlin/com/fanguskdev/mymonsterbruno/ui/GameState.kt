@@ -19,7 +19,7 @@ internal enum class Island(val activities: List<Activity>) {
     VOWELS(listOf(Activity.FEED, Activity.TRACE)),
     NUMBERS(listOf(Activity.COUNT, Activity.COUNTDOWN)),
     COLORS(listOf(Activity.BALLOONS, Activity.SERIES)),
-    SHAPES(listOf(Activity.HOUSE)),
+    SHAPES(listOf(Activity.HOUSE, Activity.PLACES)),
     FEELINGS(listOf(Activity.FEELINGS, Activity.STORY)),
     WORDS(listOf(Activity.WORDS, Activity.RHYMES)),
 }
@@ -28,9 +28,24 @@ internal enum class Island(val activities: List<Activity>) {
  * The things she does on an island: give Bruno the letter he wants, trace a letter, give him strawberries, give him the
  * balloon of the colour he wants, finish a series of balloons, build his house with shapes, know how he feels and find
  * the word that starts as his, and the one that rhymes with his (ADR 0021); count down for his rocket (ADR 0023), or
- * find the number before or after on the number line, a day each (ADR 0026); and put a story in order (ADR 0025).
+ * find the number before or after on the number line, a day each (ADR 0026); put a story in order (ADR 0025); and put
+ * Bruno and his ball inside, out of, on and under things (ADR 0028).
  */
-internal enum class Activity { FEED, TRACE, COUNT, COUNTDOWN, NUMBER_LINE, BALLOONS, SERIES, HOUSE, FEELINGS, STORY, WORDS, RHYMES }
+internal enum class Activity {
+    FEED,
+    TRACE,
+    COUNT,
+    COUNTDOWN,
+    NUMBER_LINE,
+    BALLOONS,
+    SERIES,
+    HOUSE,
+    PLACES,
+    FEELINGS,
+    STORY,
+    WORDS,
+    RHYMES,
+}
 
 /** Where the game is. */
 internal sealed interface Scene {

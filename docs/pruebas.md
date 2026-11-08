@@ -19,6 +19,7 @@ Qué se prueba en cada cambio y en cada hito, y cómo. Los criterios de salida d
 | Cuándo se va Bruno a dormir: enseguida en el cuarto y en el mapa, al terminar la isla dentro de una, «Habla con Bruno» o su nombre, dormido si se abre sin tiempo, y el huevo no cuenta; la pantalla de inicio lleva al huevo, al cuarto o a la cama y no cuenta minutos; la emoción del día se pregunta una vez al día al abrir, aunque no conteste; su foto se queda al volver a abrir, una nueva hace que Bruno la vuelva a ver y quitarla la borra | `GameStateTest` | Común |
 | Ordena la historia: dos historias por visita, las menos ordenadas; las viñetas nunca salen ya en orden, y salen de las cinco formas de desordenarlas; cada viñeta tiene su frase y cada paso su pregunta | `StoriesTest` | Común |
 | El anterior y el siguiente: cinco preguntas por visita, con antes y después mezclados, al menos dos de cada, sin repetir y nunca dos seguidas desde la misma casilla; la respuesta, siempre al lado de Bruno y en la recta; cada pregunta tiene sus frases; la cuenta atrás y la recta se turnan por los días que va a la isla, no por el calendario | `NumberLineTest`, `GameStateTest` | Común |
+| Dentro y fuera: en cada visita, cada sitio una vez y Bruno y la pelota por turnos, empezando por cualquiera; fuera de la caja es cualquier sitio que no sea una caja, y los demás, solo el suyo; cada ronda tiene sus frases | `PlacesTest` | Común |
 | Las pegatinas: una por isla terminada, en el orden del mapa, hasta que la pega; moverla no la duplica; solo se pega en la pared y nunca encima de los botones, el banderín, el marco de su foto, Bruno o donde un iPhone tiene la isla | `StickersTest` | Común |
 | La cuenta atrás: el panel tiene del 1 al 10, una vez cada uno y desordenados; se cuenta del 10 al 0 y solo vale el número que va | `CountdownTest` | Común |
 | La emoción del día: una por día, la última que eligió, y solo los últimos 14 días; un día roto no cuenta | `MoodTest` | Común |
@@ -32,7 +33,7 @@ Qué se prueba en cada cambio y en cada hito, y cómo. Los criterios de salida d
 | Lo que se hace con su voz antes de que Bruno la repita: sin el silencio de los bordes (y nada si solo hay silencio o un murmullo), a la altura de las voces del juego, más aguda y más rápida, en un canal y de vuelta a WAV | `MicrophoneTest` | Común |
 | El sonido del escritorio: la mezcla suma sin desbordarse, respeta el volumen y pasa todo a un canal a 22 050 Hz; y cortar una voz tras otra, como al contar fresas, no atasca su hilo: un toque suele atenderse en un momento y ninguno se queda sin atender (el primero puede esperar a que se despierte la tarjeta de sonido, hasta segundo y medio) | `DesktopSoundTest` | JVM |
 | Cada frase del juego tiene su fichero y dura lo que una frase; el guion y el código tienen las mismas frases; cada efecto tiene su fichero | `AudioFilesTest` | JVM |
-| Las veintitrés pantallas y, el cuarto con sus pegatinas, cuando ya sabe las vocales y del 1 al 5, Comeletras, los trazos y las fresas con lo nuevo, Comeletras y los trazos con la T, la N y la D y con la F, la B y la R, el mapa con su cuarta fila de rocas, la pantalla de inicio con el huevo, el cuarto con su foto y cuando Bruno le pide que le enseñe su nombre, la emoción del día con su foto, Comeletras, los globos, las emociones, las palabras y las rimas con cuatro para elegir y Comeletras con dos, y el mapa con todas las islas terminadas y sus banderas, se dibujan en móvil (2,17:1) y en tableta (4:3) | `ScreenshotsTest` | JVM |
+| Las veinticuatro pantallas y, el cuarto con sus pegatinas, cuando ya sabe las vocales y del 1 al 5, Comeletras, los trazos y las fresas con lo nuevo, Comeletras y los trazos con la T, la N y la D y con la F, la B y la R, el mapa con su cuarta fila de rocas, la pantalla de inicio con el huevo, el cuarto con su foto y cuando Bruno le pide que le enseñe su nombre, la emoción del día con su foto, Comeletras, los globos, las emociones, las palabras y las rimas con cuatro para elegir y Comeletras con dos, y el mapa con todas las islas terminadas y sus banderas, se dibujan en móvil (2,17:1) y en tableta (4:3) | `ScreenshotsTest` | JVM |
 | La salida de la zona de mayores: «Salir del juego» guarda la partida y cierra; sin salida en la plataforma, como en iOS, no hay botón | `GrownUpsExitTest` | JVM |
 | El icono de iOS es el de Android: lo dibuja del vector de `androidApp` en `shared/build/icono/` y lo compara con el del proyecto de Xcode; si cambia el de Android, se copia el nuevo | `AppIconTest` | JVM |
 | En el iPhone 15 Pro de ella y en el 17 Pro del simulador, girados a un lado y al otro, la casa, el altavoz y el candado se ven enteros: ni bajo la Dynamic Island ni cortados por las esquinas redondeadas, medidas en el simulador | `CornerButtonsTest` | Común |
@@ -85,7 +86,7 @@ propio Mac ([ADR 0027](adr/0027-el-mac-tambien-comprueba-la-palabra.md)); el emu
 Para ver el juego en un iPhone 15 Pro simulado, girado a un lado y al otro, sin tocarlo a mano:
 [`tools/conductor-ios`](../tools/conductor-ios) es una prueba de interfaz que toca el escenario de 800 × 400 y, en cada
 punto de control, espera a que `vigilante.sh` saque una captura con lo que tapan la isla y las esquinas pintado de negro.
-Tiene doce recorridos:
+Tiene trece recorridos:
 
 - los dos de la entrega, que empiezan en el huevo: `testWalkThroughHeldBothWays` y `testFinalVersionBothWays`;
 - `testTalkAndPhoto`, «Habla con Bruno» y elegir su foto;
@@ -98,7 +99,9 @@ Tiene doce recorridos:
 - `testStickers`, las pegatinas del cuarto: pegar una, soltar otra en el suelo, donde no se queda, y mover la primera;
 - `testStory`, la isla de las emociones entera, tocando las caritas por turnos, y sus dos historias hasta el regalo;
 - `testNumberLine`, la de los números el día de la recta: las fresas y sus cinco preguntas, tocando las casillas por
-  turnos, hasta el regalo.
+  turnos, hasta el regalo;
+- `testPlaces`, la de las formas entera: la casa, tocando las piezas por turnos, y dentro y fuera, arrastrando a Bruno,
+  la pelota y lo que haya en la caja grande a cada sitio, hasta el regalo.
 
 Todos pasan antes por la pantalla de inicio, con un toque. Siempre en silencio (`-silencio`) y en un simulador propio que
 se borra al acabar, nunca en uno de otra sesión.
@@ -319,6 +322,21 @@ pedirían el móvil o la tableta (2026-11-06).
   casilla dos veces seguidas, hasta el regalo; la partida guarda el segundo día y la zona de mayores dice «el de antes:
   3; el de después: 2». En el simulador de iPhone 15 Pro, `testNumberLine` (el segundo día, la recta, girado a los dos
   lados, hasta el regalo) y `testCountdown` (el primer día, la cuenta atrás) (2026-11-07).
+
+### M5 · Dentro y fuera
+
+- [ ] Después de construir la casa, la isla de las formas sigue en el cuarto de Bruno: una caja grande, una pequeña y una
+  mesa; Bruno, pequeñito, y su pelota en el suelo. El narrador lo presenta y pide el primer sitio.
+- [ ] Arrastrado al sitio pedido, se queda: dentro de una caja asoma por arriba, encima de la mesa o debajo de ella. El
+  narrador lo dice y, si Bruno está escondido, se ríe.
+- [ ] En otro sitio, se queda un momento, el narrador dice dónde está («Así está encima de la mesa»), vuelve y el sitio
+  pedido brilla. Tocarlo sin arrastrar repite lo que se pide. «Fuera de la caja» empieza dentro de la caja grande.
+- [ ] Con las cinco, Bruno da las gracias y llega el regalo de la isla. En la zona de mayores, cada sitio.
+- [x] En el emulador Tester_API36: la casa, tocando las piezas; Bruno en la caja pequeña, asomando con los ojos de
+  risa; la pelota, que empezaba en la caja grande, metida en la pequeña por error (se queda un momento, vuelve y brilla
+  el suelo de fuera) y sacada al suelo; Bruno encima de la mesa, la pelota debajo y Bruno en la caja grande; y el
+  regalo. La partida guarda los cinco sitios. En el simulador de iPhone 15 Pro (`testPlaces`), girado a los dos lados,
+  de la casa al regalo, sin nada tapado por la Dynamic Island (2026-11-07).
 
 ### M5 · La F, la B y la R
 

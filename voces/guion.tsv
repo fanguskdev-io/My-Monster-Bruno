@@ -629,3 +629,31 @@ n_ese_es_9	narrador	Ese es el nueve.
 n_ese_es_10	narrador	Ese es el diez.
 n_al_lado	narrador	Mira bien: está justo al lado de Bruno.
 b_gracias_recta	bruno	¡Qué bien saltamos juntos! ¡Gracias!
+n_sitios_intro	narrador	¡A jugar en el cuarto de Bruno! Escucha bien dónde hay que poner cada cosa.
+n_pon_bruno_caja_grande	narrador	Esconde a Bruno dentro de la caja grande.
+n_pon_bruno_caja_pequena	narrador	Esconde a Bruno dentro de la caja pequeña.
+n_pon_bruno_encima	narrador	Sube a Bruno encima de la mesa.
+n_pon_bruno_debajo	narrador	Esconde a Bruno debajo de la mesa.
+n_pon_bruno_fuera	narrador	Saca a Bruno fuera de la caja.
+n_pon_pelota_caja_grande	narrador	Mete la pelota dentro de la caja grande.
+n_pon_pelota_caja_pequena	narrador	Mete la pelota dentro de la caja pequeña.
+n_pon_pelota_encima	narrador	Pon la pelota encima de la mesa.
+n_pon_pelota_debajo	narrador	Pon la pelota debajo de la mesa.
+n_pon_pelota_fuera	narrador	Saca la pelota fuera de la caja.
+n_ya_bruno_caja_grande	narrador	¡Sí! Bruno está dentro de la caja grande.
+n_ya_bruno_caja_pequena	narrador	¡Sí! Bruno está dentro de la caja pequeña.
+n_ya_bruno_encima	narrador	¡Sí! Bruno está encima de la mesa.
+n_ya_bruno_debajo	narrador	¡Sí! Bruno está debajo de la mesa.
+n_ya_bruno_fuera	narrador	¡Sí! Bruno está fuera de la caja.
+n_ya_pelota_caja_grande	narrador	¡Sí! La pelota está dentro de la caja grande.
+n_ya_pelota_caja_pequena	narrador	¡Sí! La pelota está dentro de la caja pequeña.
+n_ya_pelota_encima	narrador	¡Sí! La pelota está encima de la mesa.
+n_ya_pelota_debajo	narrador	¡Sí! La pelota está debajo de la mesa.
+n_ya_pelota_fuera	narrador	¡Sí! La pelota está fuera de la caja.
+n_asi_caja_grande	narrador	Huum... Así está dentro de la caja grande.
+n_asi_caja_pequena	narrador	Huum... Así está dentro de la caja pequeña.
+n_asi_encima	narrador	Huum... Así está encima de la mesa.
+n_asi_debajo	narrador	Huum... Así está debajo de la mesa.
+n_asi_suelo	narrador	Huum... Así está en el suelo.
+b_escondido	bruno	¡Jiji! ¡Aquí no me encuentra nadie!
+b_gracias_sitios	bruno	¡Qué divertido! ¡Gracias por jugar conmigo!

@@ -27,6 +27,8 @@ data class SaveData(
     val shapes: Map<String, Int> = emptyMap(),
     /** Houses she has built for Bruno. */
     val houses: Int = 0,
+    /** Times she put Bruno or his ball where she was asked, by place (Place.word) (ADR 0028). */
+    val places: Map<String, Int> = emptyMap(),
     /** Times Bruno's rocket took off when she counted down to zero (ADR 0023). */
     val launches: Int = 0,
     /** The last day, as yyyymmdd, she went to the island of the numbers, and how many days she has gone (ADR 0026). */

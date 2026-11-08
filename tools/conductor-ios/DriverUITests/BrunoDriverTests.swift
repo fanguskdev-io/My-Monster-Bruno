@@ -468,6 +468,43 @@ final class BrunoDriverTests: XCTestCase {
         checkpoint("s4-movida-izq")
     }
 
+    /// «Dentro y fuera» (ADR 0028): the island of shapes, its house built by touching the pieces of the tray in turn, and
+    /// then the five places, without knowing which is asked: from where Bruno, the ball or the big box are, each dragged to
+    /// every place in turn, waiting after each for the voice of a mistake; and the present.
+    func testPlaces() {
+        XCUIDevice.shared.orientation = .landscapeLeft
+        launchPastStart()
+        sleep(2)
+        stage(680, 290).tap()
+        sleep(3)
+        stage(340, 78).tap()
+        sleep(8)
+        for _ in 1...8 {
+            for x: CGFloat in [568, 658, 748] {
+                stage(x, 344).tap()
+                sleep(3)
+            }
+        }
+        sleep(4)
+        checkpoint("f1-sitios-izq")
+        let from: [(CGFloat, CGFloat)] = [(86, 316), (172, 326), (301, 272)]
+        let to: [(CGFloat, CGFloat)] = [(301, 240), (481, 280), (666, 180), (666, 320), (130, 330)]
+        for turn in 1...7 {
+            for (x, y) in from {
+                for (toX, toY) in to {
+                    stage(x, y).press(forDuration: 0.3, thenDragTo: stage(toX, toY), withVelocity: 600, thenHoldForDuration: 0.2)
+                    sleep(3)
+                }
+            }
+            if turn == 1 {
+                checkpoint("f2-sitios-izq")
+                XCUIDevice.shared.orientation = .landscapeRight
+                sleep(2)
+            }
+        }
+        checkpoint("f3-regalo-der")
+    }
+
     /// «El anterior y el siguiente» (ADR 0026), the second day she goes to the island of numbers: the strawberries first, as
     /// in the countdown, and then the number line, its squares touched in turn until each question is answered, and the
     /// present. The squares are touched low, under where the present will be, so that the touches left over do not open it.

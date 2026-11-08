@@ -48,6 +48,7 @@ import com.fanguskdev.mymonsterbruno.game.Feeling
 import com.fanguskdev.mymonsterbruno.game.Hue
 import com.fanguskdev.mymonsterbruno.game.LETTERS
 import com.fanguskdev.mymonsterbruno.game.MAX_COUNT
+import com.fanguskdev.mymonsterbruno.game.Place
 import com.fanguskdev.mymonsterbruno.game.RhymeWord
 import com.fanguskdev.mymonsterbruno.game.SaveData
 import com.fanguskdev.mymonsterbruno.game.Session
@@ -189,6 +190,8 @@ internal fun GrownUpsScreen(game: GameState, onExit: (() -> Unit)? = null) {
                 val shapes = Shape.entries.joinToString("   ") { "${it.spoken} ${data.shapes[it.word] ?: 0}" }
                 Text("Piezas de la casa bien puestas, por forma:   $shapes", font, 16)
                 Text("Casas construidas: ${data.houses}.", font, 16)
+                val places = Place.entries.joinToString("   ") { "${it.spoken} ${data.places[it.word] ?: 0}" }
+                Text("Dentro y fuera, encima y debajo:   $places", font, 16)
                 val feelings = Feeling.entries.joinToString("   ") { "${it.spoken} ${data.feelings[it.word] ?: 0}" }
                 Text("Emociones que ha reconocido:   $feelings", font, 16)
                 val stories = Story.entries.joinToString("   ") { "${it.spoken} ${data.stories[it.key] ?: 0}" }
@@ -347,4 +350,12 @@ private val Story.spoken: String get() = when (this) {
     Story.TEETH -> "los dientes"
     Story.CAKE -> "el bizcocho"
     Story.SNOWMAN -> "el muñeco de nieve"
+}
+
+private val Place.spoken: String get() = when (this) {
+    Place.BIG_BOX -> "dentro de la caja grande"
+    Place.SMALL_BOX -> "dentro de la caja pequeña"
+    Place.ON_TABLE -> "encima de la mesa"
+    Place.UNDER_TABLE -> "debajo de la mesa"
+    Place.OUT_OF_BOX -> "fuera de la caja"
 }

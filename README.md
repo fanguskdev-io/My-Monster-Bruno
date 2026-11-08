@@ -13,8 +13,9 @@ decisiones, y la [investigación](docs/investigacion/investigacion.md), de dónd
 > nombre, letra a letra, desde el banderín del cuarto, una pantalla de inicio con Bruno en su barca, y la emoción del
 > día, en la que cada día pone su foto en el bote de cómo se siente; los juegos de elegir se adaptan a lo que sabe; en
 > la isla de las palabras busca rimas con Bruno; en la de los números cuenta hacia atrás para su cohete o, otro día,
-> busca en la recta el número de antes y el de después; en la de las emociones ordena historias, y cada isla que
-> termina le da una pegatina para la pared del cuarto. La
+> busca en la recta el número de antes y el de después; en la de las formas esconde a Bruno dentro y fuera, encima y
+> debajo; en la de las emociones ordena historias, y cada isla que termina le da una pegatina para la pared del
+> cuarto. La
 > entrega en su iPhone está preparada: será ad hoc, instalado el día que se lo dé ([entrega](docs/entrega.md)).
 
 ## Estructura

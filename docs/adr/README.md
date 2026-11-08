@@ -38,3 +38,4 @@ y estas decisiones existen antes de G4 porque Fangusk pidió desarrollar ya. Las
 | [0025](0025-ordena-la-historia.md) | Ordena la historia, la segunda actividad de la isla de las emociones: primero, después y al final | Aceptada; las cuatro historias y que se toque, propuesta |
 | [0026](0026-el-anterior-y-el-siguiente.md) | El anterior y el siguiente, en la recta de la isla de los números, por turnos con la cuenta atrás | Aceptada; cómo se turnan, el bocadillo y la ayuda, propuesta |
 | [0027](0027-el-mac-tambien-comprueba-la-palabra.md) | El Mac también comprueba la palabra de «Habla con Bruno», con el reconocedor de Apple del propio Mac | Aceptada; cómo lo usa el juego y el programa que lo hace, propuesta |
+| [0028](0028-dentro-y-fuera.md) | Dentro y fuera, la segunda actividad de la isla de las formas: dentro y fuera, encima y debajo, grande y pequeño | Aceptada; las cajas y la mesa, los sitios y que se arrastre, propuesta |

@@ -63,7 +63,9 @@ al día siguiente, «continua» y, de otras cuatro, «Que se adapte» a lo que s
 ([ADR 0022](adr/0022-la-f-la-b-y-la-r.md)), y después «La cuenta atrás» ([ADR 0023](adr/0023-la-cuenta-atras.md)). Y
 cuatro seguidas: un repaso en su iPhone, «Pegatinas para el cuarto» ([ADR 0024](adr/0024-pegatinas-para-el-cuarto.md)),
 «Ordena la historia» ([ADR 0025](adr/0025-ordena-la-historia.md)) y «El anterior y el siguiente»
-([ADR 0026](adr/0026-el-anterior-y-el-siguiente.md)).
+([ADR 0026](adr/0026-el-anterior-y-el-siguiente.md)). Al probarlo en el Mac, que también comprobara la palabra
+([ADR 0027](adr/0027-el-mac-tambien-comprueba-la-palabra.md)); y otras cuatro seguidas: «Dentro y fuera» ([ADR 0028](adr/0028-dentro-y-fuera.md)),
+«Sumas hasta 3», «La asamblea de Bruno» y «Trazos antes de las letras».
 
 La propuesta 3, tal como la leyó (en la [maqueta](investigacion/propuestas.html#p3)):
 
@@ -138,6 +140,10 @@ ha venido a jugar. Se puede saltar con la casa. El día que nace Bruno no se pre
    pieza por su papel y su forma, «¡Ahora, el tejado! Dame el triángulo», y su hueco brilla en la casa. Ella le da una de
    las tres piezas arrastrándola al hueco o tocándola. La buena crece hasta su sitio y Bruno la nombra. Si no es, dice qué
    forma es y la vuelve a pedir. Son seis piezas: las paredes, el tejado, la puerta, dos ventanas y la chimenea.
+   Después, **dentro y fuera** ([ADR 0028](adr/0028-dentro-y-fuera.md)): en el cuarto de Bruno hay una caja grande, una pequeña y una mesa, y el
+   narrador pide poner a Bruno, pequeñito, o su pelota en un sitio: «Esconde a Bruno dentro de la caja grande», «Pon la
+   pelota encima de la mesa», «Saca la pelota fuera de la caja». Ella lo arrastra; si no es, se queda un momento donde lo
+   ha dejado mientras el narrador dice dónde está, vuelve y el sitio pedido brilla. Cinco rondas, cada sitio una vez.
 8. **La isla de las emociones** ([ADR 0010](adr/0010-la-isla-de-las-emociones.md)). A Bruno le pasa algo («¡Oh, no! A
    Bruno se le ha caído el helado») y se pone del color de cómo se siente: alegría amarillo, tristeza azul, enfado rojo,
    miedo morado y calma verde. «¿Cómo se siente Bruno?»: ella elige entre tres caritas, y el narrador dice la emoción.
@@ -248,7 +254,7 @@ Las **voces de la familia** no se harán: «para M2 no vamos a utilizar las voce
 - **Bruno y todo lo demás se dibujan con vectores**, sin imágenes: Bruno respira, parpadea, mira y cambia de cara (ocho
   bocas, cuatro ojos, tres posturas de brazos).
 - **Las voces** son las de un narrador y la de Bruno, algo más aguda y más despacio, a unas 4 sílabas por segundo. Hay
-  630 frases pregrabadas con la voz del sistema del Mac y **los efectos** (17) se sintetizan desde cero
+  658 frases pregrabadas con la voz del sistema del Mac y **los efectos** (17) se sintetizan desde cero
   ([ADR 0004](adr/0004-voces-provisionales.md)). Las frases están en [`voces/guion.tsv`](../voces/guion.tsv).
 - **La letra** de la zona de mayores, de los números, del banderín y del título es Andika, una tipografía pensada para quien aprende a
   leer (licencia OFL, en [`licencias/`](../licencias/Andika-OFL.txt)).
