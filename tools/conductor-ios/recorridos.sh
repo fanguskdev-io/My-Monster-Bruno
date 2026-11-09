@@ -21,7 +21,7 @@ HACE4=$(date -v-4d +%Y%m%d)
 TODOS=(testWalkThroughHeldBothWays testFinalVersionBothWays testTalkAndPhoto testWordsAndLetters testStartAndName
     testFeelingOfTheDay testRhymes testCountdown testPhotoAndRestart testStickers testStory testNumberLine
     testPlaces testSums testPaths testWardrobe testPet testPhotoPlaces testSuggestion testTogether testRace testMusicSwitch
-    testCopy testWeek testShown)
+    testCopy testWeek testShown testSlowVoice)
 if (($# > 0)); then RECORRIDOS=("$@"); else RECORRIDOS=("${TODOS[@]}"); fi
 
 # La partida de la que parte cada recorrido: los de la entrega, en el huevo; los demás, con Bruno nacido, su nombre

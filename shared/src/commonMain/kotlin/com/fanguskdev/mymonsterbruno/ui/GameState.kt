@@ -148,6 +148,7 @@ internal class GameState(
         audio.voiceOn = data.voiceOn
         audio.effectsOn = data.effectsOn
         audio.musicOn = data.musicOn
+        audio.slow = data.slowVoice
     }
 
     private fun firstScene(): Scene = when {
@@ -163,6 +164,7 @@ internal class GameState(
         audio.voiceOn = data.voiceOn
         audio.effectsOn = data.effectsOn
         audio.musicOn = data.musicOn
+        audio.slow = data.slowVoice
         SaveStore.save(store, data)
     }
 

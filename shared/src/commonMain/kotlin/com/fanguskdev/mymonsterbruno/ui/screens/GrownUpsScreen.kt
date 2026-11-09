@@ -210,8 +210,17 @@ internal fun GrownUpsScreen(game: GameState, onExit: (() -> Unit)? = null) {
                     Chip(if (data.musicOn) "Música: sí" else "Música: no", font, selected = data.musicOn) {
                         game.update { it.copy(musicOn = !it.musicOn) }
                     }
+                    Chip(if (data.slowVoice) "Voz despacio: sí" else "Voz despacio: no", font, selected = data.slowVoice) {
+                        game.update { it.copy(slowVoice = !it.slowVoice) }
+                    }
                 }
-                Text("La música suena muy suave en las islas, distinta en cada una.", font, 15, color = Soft)
+                Text(
+                    "La música suena muy suave en las islas, distinta en cada una. Con la voz despacio, Bruno y el narrador hablan " +
+                        "un poco más lento, con la misma voz, y esperan un poco más entre frase y frase.",
+                    font,
+                    15,
+                    color = Soft,
+                )
             }
             Section("Qué sale en el juego", font) {
                 Text(
@@ -396,6 +405,7 @@ internal fun GrownUpsScreen(game: GameState, onExit: (() -> Unit)? = null) {
                                 voiceOn = it.voiceOn,
                                 effectsOn = it.effectsOn,
                                 musicOn = it.musicOn,
+                                slowVoice = it.slowVoice,
                             )
                         }
                         confirmReset = false

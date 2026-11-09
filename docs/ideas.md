@@ -112,7 +112,8 @@ recorridos del iPhone de un tirón. Y una que no estaba aquí, la pantalla de in
   ([ADR 0040](adr/0040-resumen-de-la-semana.md)).*
 - **4.2 Elegir qué letras e islas salen.** Por si aún no han visto la M en clase, o para quitar una isla que ya domina.
   *Pequeña. Hecha: las islas y las consonantes, en la zona de mayores ([ADR 0041](adr/0041-elegir-que-islas-y-letras-salen.md)).*
-- **4.3 Bruno más despacio.** Un ajuste de velocidad de la voz, por si a ella le cuesta seguirlo. *Mediana.*
+- **4.3 Bruno más despacio.** Un ajuste de velocidad de la voz, por si a ella le cuesta seguirlo. *Mediana. Hecha: «Voz
+  despacio», con la misma voz y más pausa ([ADR 0042](adr/0042-bruno-mas-despacio.md)).*
 - **4.4 Que la partida no se pierda al cambiar de móvil.** Comprobar que la copia del propio iPhone la guarda y, si no, poder
   exportarla. *Pequeña. Hecha: no se puede asegurar con una app ad hoc, así que una copia a mano en la zona de mayores
   ([ADR 0039](adr/0039-una-copia-de-su-partida.md)).*

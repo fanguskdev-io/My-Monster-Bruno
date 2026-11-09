@@ -647,6 +647,28 @@ final class BrunoDriverTests: XCTestCase {
         checkpoint("q2-mapa-sin-colores-der")
     }
 
+    /// Bruno slower (ADR 0042): a grown-up turns the slow voice on, and the island of letters plays with it, in silence:
+    /// each line is stretched as it is said, and nothing waits for it more than it should.
+    func testSlowVoice() {
+        XCUIDevice.shared.orientation = .landscapeRight
+        launchPastStart()
+        sleep(1)
+        lock.press(forDuration: 3.5)
+        sleep(2)
+        scrollTo("Voz despacio: no")
+        tapText("Voz despacio: no")
+        sleep(1)
+        checkpoint("v1-voz-despacio-der")
+        scrollTo("Volver al juego", down: false)
+        tapText("Volver al juego")
+        sleep(3)
+        stage(680, 290).tap()
+        sleep(4)
+        stage(262, 258).tap()
+        sleep(10)
+        checkpoint("v2-comeletras-despacio-der")
+    }
+
     /// The stickers of the room (ADR 0024): the save has every island finished and none stuck yet. She takes the first one
     /// from the rug to the wall, lets the next one go on the floor, where it does not stay, sticks it on the wall after
     /// all, and moves the first one somewhere else.

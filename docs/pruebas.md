@@ -41,6 +41,8 @@ Qué se prueba en cada cambio y en cada hito, y cómo. Los criterios de salida d
 | El sonido del escritorio: la mezcla suma sin desbordarse, respeta el volumen y pasa todo a un canal a 22 050 Hz, uniendo las muestras con rectas; la música vuelve a su principio y sigue; y cortar una voz tras otra, como al contar fresas, no atasca su hilo: un toque suele atenderse en un momento y ninguno se queda sin atender (el primero puede esperar a que se despierte la tarjeta de sonido, hasta segundo y medio) | `DesktopSoundTest` | JVM |
 | Cada frase del juego tiene su fichero y dura lo que una frase; el guion y el código tienen las mismas frases; cada efecto tiene su fichero, y cada pieza de música el suyo, de 15 a 32 segundos y por debajo de un mega | `AudioFilesTest` | JVM |
 | La música de las islas: la de donde está, en cuanto se carga y solo si está puesta; otra isla, otra pieza; al volver del fondo, suena otra vez | `MusicTest` | Común |
+| La voz despacio: una frase alargada dura una vez y un quinto, con el mismo tono y casi igual de fuerte; lo que no se puede alargar queda igual | `StretchTest` | Común |
+| La voz despacio en el juego: cada frase se alarga una vez, suena en su sitio y la siguiente vez ya está lista; sin ella, la de siempre | `SlowVoiceTest` | JVM |
 | Su foto en Android 8: la orientación que la cámara escribió en el EXIF, en los dos órdenes de bytes, y cómo ponerla derecha; sin EXIF, cortada o rara, tal cual | `ExifTest` | Común |
 | La copia de su partida: vuelve como se fue, con su foto o sin ella; lo que no es una copia del juego (otro juego, texto suelto, una foto rota) no pasa por una | `BackupTest` | Común |
 | Su semana: los días hacia atrás cruzando meses, años y bisiestos; solo los últimos siete; los minutos de cada día; lo que más le ha costado primero, y entre iguales por su nombre | `WeekTest` | Común |
@@ -98,7 +100,7 @@ propio Mac ([ADR 0027](adr/0027-el-mac-tambien-comprueba-la-palabra.md)); el emu
 Para ver el juego en un iPhone 15 Pro simulado, girado a un lado y al otro, sin tocarlo a mano:
 [`tools/conductor-ios`](../tools/conductor-ios) es una prueba de interfaz que toca el escenario de 800 × 400 y, en cada
 punto de control, espera a que `vigilante.sh` saque una captura con lo que tapan la isla y las esquinas pintado de negro.
-Tiene veinticinco recorridos:
+Tiene veintiséis recorridos:
 
 - los dos de la entrega, que empiezan en el huevo: `testWalkThroughHeldBothWays` y `testFinalVersionBothWays`;
 - `testTalkAndPhoto`, «Habla con Bruno» y elegir su foto;
@@ -133,7 +135,8 @@ Tiene veinticinco recorridos:
 - `testCopy`, la copia de su partida: guardarla en Archivos con el selector de Apple, elegir un perro y recuperar la
   copia, que no tenía animal;
 - `testWeek`, su semana en la zona de mayores, con tres días de juego y sus fallos en la partida;
-- `testShown`, qué sale: quitar la isla de los colores y la M en la zona de mayores, y ver el mapa sin ellas.
+- `testShown`, qué sale: quitar la isla de los colores y la M en la zona de mayores, y ver el mapa sin ellas;
+- `testSlowVoice`, la voz despacio: ponerla en la zona de mayores y jugar Comeletras con ella, en silencio.
 
 Todos pasan antes por la pantalla de inicio, con un toque. Siempre en silencio (`-silencio`) y en un simulador propio que
 se borra al acabar, nunca en uno de otra sesión.
@@ -530,6 +533,15 @@ pedirían el móvil o la tableta (2026-11-06).
 - [x] En el emulador Tester_API36 y en el simulador de iPhone 15 Pro (`testShown`): quitar la isla de los colores y la
   M deja el mapa sin la isla ni su camino, y las rocas de las letras sin la M; la partida lo guarda. La captura del
   mapa sin dos islas y sin cuatro consonantes lo enseña en todas las pantallas (2026-11-09).
+
+### M5 · Bruno más despacio
+
+- [ ] En la zona de mayores, «Voz despacio: no»; tocarlo lo pone en «sí» y se guarda.
+- [ ] Con la voz despacio, Bruno y el narrador hablan algo más lento, con la misma voz y el mismo tono, y esperan más
+  entre frases; su voz en «Habla con Bruno», no. Oírlo queda para la entrega (idea 5.2).
+- [x] En el emulador Tester_API36 y en el simulador de iPhone 15 Pro (`testSlowVoice`), en silencio: «Voz despacio:
+  sí» se guarda, y Comeletras se juega con ella, alargando cada frase al decirla, sin errores en el registro de
+  Android. Cómo suena lo prueban `StretchTest` y `SlowVoiceTest`; oírlo queda para la entrega (2026-11-09).
 
 ### M5 · La F, la B y la R
 

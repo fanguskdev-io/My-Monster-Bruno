@@ -1,10 +1,12 @@
 package com.fanguskdev.mymonsterbruno.audio
 
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import mymonsterbruno.shared.generated.resources.Res
 
 /**
@@ -12,9 +14,22 @@ import mymonsterbruno.shared.generated.resources.Res
  * before. [say] waits until the lines have been said, so a screen can go on when the voice ends; with the voice off it
  * waits a moment instead, so the game keeps its pace without words.
  */
-internal class Audio(private val player: SoundPlayer, private val scope: CoroutineScope) {
+internal class Audio(
+    private val player: SoundPlayer,
+    private val scope: CoroutineScope,
+    private val read: suspend (String) -> ByteArray? = { runCatching { Res.readBytes(it) }.getOrNull() },
+) {
     var voiceOn = true
     var effectsOn = true
+
+    /**
+     * Whether Bruno and the narrator speak a little slower, with the same voice (ADR 0042): each line is stretched when it
+     * is said, and the pause after it is longer.
+     */
+    var slow = false
+
+    /** The lines said slow lately, stretched, so that the ones that come back are ready: the latest last. */
+    private val slowed = LinkedHashMap<String, Slowed>()
 
     /** Whether the music of the islands sounds (ADR 0038); off, it stops at once. */
     var musicOn = true
@@ -62,8 +77,24 @@ internal class Audio(private val player: SoundPlayer, private val scope: Corouti
     private fun musicName(piece: Music) = "musica_${piece.file}"
 
     private suspend fun loadOne(path: String, name: String) {
-        val wav = runCatching { Res.readBytes(path) }.getOrNull() ?: return
+        val wav = read(path) ?: return
         loaded(name, wav)
+    }
+
+    /** [line] stretched, from its file, kept for next time; null if its file cannot be read. */
+    private suspend fun slowLine(line: String): Slowed? {
+        slowed.remove(line)?.let {
+            slowed[line] = it
+            return it
+        }
+        val pcm = read("$VOICES/$line.wav")?.let { readWav(it) } ?: return null
+        val made = withContext(Dispatchers.Default) {
+            val long = stretch(pcm, SLOW_FACTOR)
+            Slowed(long.toWav(), long.millis)
+        }
+        slowed[line] = made
+        while (slowed.size > SLOW_KEPT) slowed.remove(slowed.keys.first())
+        return made
     }
 
     /** [wav] is ready as [name]; if it is the music of where she is, it starts. */
@@ -82,12 +113,21 @@ internal class Audio(private val player: SoundPlayer, private val scope: Corouti
             for (line in lines) {
                 if (turn != mine) return
                 cut()
-                if (voiceOn) {
-                    speaking = line
-                    player.play(line, VOICE_VOLUME)
-                    delay((millis[line] ?: UNKNOWN_MILLIS) + GAP_MILLIS)
-                } else {
-                    delay(SILENT_MILLIS)
+                val long = if (voiceOn && slow) slowLine(line) else null
+                if (turn != mine) return
+                when {
+                    long != null -> {
+                        // One place for the slow line, which takes the place of the one before: little to keep.
+                        speaking = SLOW_LINE
+                        player.playOnce(SLOW_LINE, long.wav, VOICE_VOLUME)
+                        delay(long.millis + SLOW_GAP_MILLIS)
+                    }
+                    voiceOn -> {
+                        speaking = line
+                        player.play(line, VOICE_VOLUME)
+                        delay((millis[line] ?: UNKNOWN_MILLIS) + GAP_MILLIS)
+                    }
+                    else -> delay(SILENT_MILLIS)
                 }
             }
         } finally {
@@ -163,7 +203,16 @@ internal class Audio(private val player: SoundPlayer, private val scope: Corouti
         /** Under the voice, which is at 1: a background, not a song. */
         const val MUSIC_VOLUME = 0.3f
         const val GAP_MILLIS = 250L
+
+        /** The slow voice (ADR 0042): how much longer each line, the pause after it, and how many lines are kept ready. */
+        const val SLOW_LINE = "voz_despacio"
+        const val SLOW_FACTOR = 1.2f
+        const val SLOW_GAP_MILLIS = 450L
+        const val SLOW_KEPT = 24
         const val UNKNOWN_MILLIS = 1200L
         const val SILENT_MILLIS = 700L
     }
 }
+
+/** A line said slow: its WAV and how long it lasts. */
+private class Slowed(val wav: ByteArray, val millis: Long)

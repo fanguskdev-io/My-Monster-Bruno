@@ -52,3 +52,4 @@ y estas decisiones existen antes de G4 porque Fangusk pidió desarrollar ya. Las
 | [0039](0039-una-copia-de-su-partida.md) | Una copia de su partida, que un mayor guarda y recupera desde la zona de mayores, para cambiar de móvil | Aceptada; que la copia del iPhone no basta y la copia a mano, propuesta |
 | [0040](0040-resumen-de-la-semana.md) | Su semana en la zona de mayores: los minutos de cada día, las islas terminadas y lo que más le ha costado | Aceptada; los siete días, qué cuenta como fallo y cómo se dice, propuesta |
 | [0041](0041-elegir-que-islas-y-letras-salen.md) | Elegir qué islas y qué consonantes salen, desde la zona de mayores | Aceptada; solo las consonantes, al menos una isla y qué pasa en el mapa, propuesta |
+| [0042](0042-bruno-mas-despacio.md) | Bruno más despacio: la voz al 83 %, con el mismo tono, y más pausa entre frases, desde la zona de mayores | Aceptada; un interruptor, cuánto y cómo se alarga la voz, propuesta |

@@ -230,7 +230,7 @@ Fuera del camino:
   globo se deshincha despacio. Son tres respiraciones con Bruno.
 - **La zona de mayores**, detrás del candado de la esquina, que se abre manteniendo el dedo 2,5 segundos. En ella se puede
   escribir su nombre (para el banderín), elegir su foto en la galería (para el marco del cuarto) o quitarla, elegir los minutos al día (5, 10, 15 o 20), dar «10 minutos más, solo hoy»,
-  quitar la voz, los efectos o la música, guardar una copia de su partida para otro móvil y recuperarla
+  quitar la voz, los efectos o la música, poner la voz más despacio ([ADR 0042](adr/0042-bruno-mas-despacio.md)), guardar una copia de su partida para otro móvil y recuperarla
   ([ADR 0039](adr/0039-una-copia-de-su-partida.md)), ver su semana (los minutos de cada día, las islas terminadas y lo que
   más le ha costado, [ADR 0040](adr/0040-resumen-de-la-semana.md)), elegir qué islas y qué consonantes salen
   ([ADR 0041](adr/0041-elegir-que-islas-y-letras-salen.md)), cómo se ha sentido los últimos días, entre cuántas elige en cada juego y lo que ha

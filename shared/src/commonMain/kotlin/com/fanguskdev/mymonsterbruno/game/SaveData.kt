@@ -93,6 +93,8 @@ data class SaveData(
     val effectsOn: Boolean = true,
     /** Whether the soft music of the islands sounds (ADR 0038). */
     val musicOn: Boolean = true,
+    /** Whether Bruno and the narrator speak a little slower (ADR 0042). */
+    val slowVoice: Boolean = false,
 ) {
     val islandsDone: Int get() = islands.values.sum()
 
