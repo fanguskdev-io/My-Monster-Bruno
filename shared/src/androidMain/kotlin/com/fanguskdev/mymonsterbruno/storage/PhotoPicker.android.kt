@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.ImageDecoder
+import android.graphics.Matrix
 import android.graphics.Paint
 import android.graphics.Rect
 import android.net.Uri
@@ -23,6 +24,7 @@ import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
+import java.io.InputStream
 
 @Composable
 internal actual fun rememberPhotoPicker(): PhotoPicker {
@@ -104,7 +106,8 @@ private class AndroidPhotoPicker(private val context: Context) : PhotoPicker {
 
     /**
      * Before Android 9: the photo a power of two smaller, as long as its short side keeps [PHOTO_SIZE]. BitmapFactory does
-     * not follow the EXIF: a photo the camera only marked as turned comes out turned.
+     * not follow the EXIF, so it is read by hand and the photo turned upright here: a photo the camera only marked as
+     * turned would come out turned (idea 5.6).
      */
     private fun decodeSampled(uri: Uri): Bitmap? {
         val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
@@ -113,7 +116,29 @@ private class AndroidPhotoPicker(private val context: Context) : PhotoPicker {
         var sample = 1
         while (short / (sample * 2) >= PHOTO_SIZE) sample *= 2
         val options = BitmapFactory.Options().apply { inSampleSize = sample }
-        return context.contentResolver.openInputStream(uri)?.use { BitmapFactory.decodeStream(it, null, options) }
+        val photo = context.contentResolver.openInputStream(uri)?.use { BitmapFactory.decodeStream(it, null, options) } ?: return null
+        val start = context.contentResolver.openInputStream(uri)?.use { readStart(it) } ?: return photo
+        val upright = uprightFrom(exifOrientation(start))
+        if (upright.asItIs) return photo
+        val turn = Matrix().apply {
+            setRotate(upright.degrees.toFloat())
+            if (upright.mirrored) postScale(-1f, 1f)
+        }
+        val turned = Bitmap.createBitmap(photo, 0, 0, photo.width, photo.height, turn, true)
+        if (turned !== photo) photo.recycle()
+        return turned
+    }
+
+    /** The first [EXIF_BYTES] of [input], or all of it if it is shorter: where the EXIF of a photo is. */
+    private fun readStart(input: InputStream): ByteArray {
+        val buffer = ByteArray(EXIF_BYTES)
+        var filled = 0
+        while (filled < buffer.size) {
+            val read = input.read(buffer, filled, buffer.size - filled)
+            if (read <= 0) break
+            filled += read
+        }
+        return buffer.copyOf(filled)
     }
 
     /** The square in the middle of [photo], [PHOTO_SIZE] pixels a side; white where it was transparent, as a JPEG cannot be. */

@@ -133,7 +133,8 @@ recorridos del iPhone de un tirón. Y una que no estaba aquí, la pantalla de in
 - **5.5 La prueba de sonido del Mac.** Falla a veces cuando el Mac está muy cargado; conviene que lo tolere. *Pequeña.
   Hecha: fallaba por el primer toque, que espera a que se despierte la tarjeta de sonido; ahora mira lo que suele tardar
   un toque y que ninguno se quede sin atender.*
-- **5.6 Fotos giradas en Android 8.** Allí una foto girada solo por su EXIF saldría torcida. *Pequeña.*
+- **5.6 Fotos giradas en Android 8.** Allí una foto girada solo por su EXIF saldría torcida. *Pequeña. Hecha: antes de
+  Android 9 el juego lee a mano el EXIF de la foto y la pone derecha.*
 - **5.7 Un mapa con más sitio.** Con seis islas, el mapa está lleno: antes de una isla nueva hace falta otra parte del mar, a
   la que se llega en la barca. *Mediana.*
 - **5.8 Los recorridos del iPhone, de un tirón.** Un solo comando que cree el simulador, siembre la partida, pase los cuatro

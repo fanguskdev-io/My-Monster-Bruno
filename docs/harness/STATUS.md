@@ -135,3 +135,4 @@ día quiere revisar G0, se abre la primera ronda de la cola de
 | 2026-11-09 | agente (Claude Code, Opus 5.5) | M5: jugar con un mayor (ADR 0036), un turno para dos al final de «Habla con Bruno», del cierre de la batería de ideas |
 | 2026-11-09 | agente (Claude Code, Opus 5.5) | M5: primero, segundo y tercero (ADR 0037), una carrera de animales en la isla de los números, del cierre de la batería de ideas |
 | 2026-11-09 | agente (Claude Code, Opus 5.5) | M5: música suave en las islas (ADR 0038), que se puede quitar, del cierre de la batería de ideas |
+| 2026-11-09 | agente (Claude Code, Opus 5.5) | Calidad: su foto, derecha también en Android 8 (idea 5.6), leyendo a mano su EXIF |
