@@ -32,6 +32,11 @@ internal class DesktopSoundPlayer : SoundPlayer {
         orders.put(Order.Play(Playing(name, samples, volume)))
     }
 
+    override fun loop(name: String, volume: Float) {
+        val samples = sounds[name] ?: return
+        orders.put(Order.Play(Playing(name, samples, volume, loops = true)))
+    }
+
     override fun stop(name: String) = orders.put(Order.Stop(name))
 
     override fun stopAll() = orders.put(Order.StopAll)
@@ -103,24 +108,43 @@ internal class DesktopSoundPlayer : SoundPlayer {
     }
 }
 
-/** A sound that plays: [samples] at [volume], from [position] on. */
-internal class Playing(val name: String, val samples: ShortArray, val volume: Float) {
+/** A sound that plays: [samples] at [volume], from [position] on; over and over if it [loops]. */
+internal class Playing(
+    val name: String,
+    val samples: ShortArray,
+    val volume: Float,
+    val loops: Boolean = false,
+) {
     var position = 0
 }
 
-/** Mixes the next [out].size samples of everything [playing] into [out], and forgets the sounds that end. */
+/**
+ * Mixes the next [out].size samples of everything [playing] into [out], and forgets the sounds that end; the ones that
+ * loop go back to their start instead.
+ */
 internal fun mix(playing: MutableList<Playing>, out: ShortArray) {
     out.fill(0)
     val sounds = playing.iterator()
     while (sounds.hasNext()) {
         val sound = sounds.next()
-        val count = minOf(out.size, sound.samples.size - sound.position)
-        for (i in 0 until count) {
-            val sample = out[i] + (sound.samples[sound.position + i] * sound.volume).toInt()
-            out[i] = sample.coerceIn(Short.MIN_VALUE.toInt(), Short.MAX_VALUE.toInt()).toShort()
+        if (sound.samples.isEmpty()) {
+            sounds.remove()
+            continue
         }
-        sound.position += count
-        if (sound.position >= sound.samples.size) sounds.remove()
+        var filled = 0
+        while (filled < out.size) {
+            val count = minOf(out.size - filled, sound.samples.size - sound.position)
+            for (i in 0 until count) {
+                val sample = out[filled + i] + (sound.samples[sound.position + i] * sound.volume).toInt()
+                out[filled + i] = sample.coerceIn(Short.MIN_VALUE.toInt(), Short.MAX_VALUE.toInt()).toShort()
+            }
+            sound.position += count
+            filled += count
+            if (sound.position < sound.samples.size) continue
+            if (!sound.loops) break
+            sound.position = 0
+        }
+        if (!sound.loops && sound.position >= sound.samples.size) sounds.remove()
     }
 }
 
@@ -135,7 +159,14 @@ internal fun toLineFormat(pcm: Pcm): ShortArray {
     }
     if (pcm.rate == LINE_RATE || pcm.rate <= 0 || frames == 0) return mono
     val length = (frames.toLong() * LINE_RATE / pcm.rate).toInt()
-    return ShortArray(length) { i -> mono[(i.toLong() * pcm.rate / LINE_RATE).toInt().coerceAtMost(frames - 1)] }
+    // Between two samples, the straight line from one to the other: the music, at 16 000 Hz, sounds clean (ADR 0038).
+    return ShortArray(length) { i ->
+        val position = i.toLong() * pcm.rate
+        val index = (position / LINE_RATE).toInt().coerceAtMost(frames - 1)
+        val fraction = (position % LINE_RATE).toFloat() / LINE_RATE
+        val next = mono[(index + 1).coerceAtMost(frames - 1)]
+        (mono[index] + (next - mono[index]) * fraction).toInt().toShort()
+    }
 }
 
 private fun toBytes(samples: ShortArray, bytes: ByteArray) {

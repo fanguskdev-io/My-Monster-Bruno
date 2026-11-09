@@ -31,6 +31,18 @@ class AudioFilesTest {
     }
 
     @Test
+    fun everyPieceOfMusicHasItsFile() {
+        for (piece in Music.entries) {
+            val file = File(resources, "musica/${piece.file}.wav")
+            assertTrue(file.exists(), "falta $file")
+            val pcm = readWav(file.readBytes())
+            assertTrue(pcm != null && pcm.millis in 15_000..32_000, "$file no es una pieza de las islas")
+            // SoundPool, on Android, plays from memory: each piece, under a megabyte.
+            assertTrue(file.length() < 1_000_000, "$file pesa demasiado")
+        }
+    }
+
+    @Test
     fun everySoundHasItsFile() {
         for (sound in Sfx.entries) {
             val file = File(resources, "sonidos/${sound.file}.wav")

@@ -195,7 +195,11 @@ internal fun GrownUpsScreen(game: GameState, onExit: (() -> Unit)? = null) {
                     Chip(if (data.effectsOn) "Efectos: sí" else "Efectos: no", font, selected = data.effectsOn) {
                         game.update { it.copy(effectsOn = !it.effectsOn) }
                     }
+                    Chip(if (data.musicOn) "Música: sí" else "Música: no", font, selected = data.musicOn) {
+                        game.update { it.copy(musicOn = !it.musicOn) }
+                    }
                 }
+                Text("La música suena muy suave en las islas, distinta en cada una.", font, 15, color = Soft)
             }
             Section("Lo que ha practicado", font) {
                 val fed = LETTERS.joinToString("   ") { "${it.uppercaseChar()} ${data.fed[it.toString()] ?: 0}" }
@@ -277,6 +281,7 @@ internal fun GrownUpsScreen(game: GameState, onExit: (() -> Unit)? = null) {
                                 extraSeconds = it.extraSeconds,
                                 voiceOn = it.voiceOn,
                                 effectsOn = it.effectsOn,
+                                musicOn = it.musicOn,
                             )
                         }
                         confirmReset = false

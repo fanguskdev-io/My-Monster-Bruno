@@ -89,7 +89,8 @@ recorridos del iPhone de un tirón. Y una que no estaba aquí, la pantalla de in
 - **2.5 Un cuento para dormir.** Al acabarse los minutos, el narrador cuenta un cuento de un minuto en el que Bruno es el
   protagonista, como en la propuesta 4. *Grande, por los dibujos.*
 - **2.6 Música suave que se puede quitar.** La regla 8 la contempla y el juego no tiene música: un fondo tranquilo, distinto
-  en cada isla, con su interruptor en la zona de mayores. *Pequeña.*
+  en cada isla, con su interruptor en la zona de mayores. *Pequeña. Hecha: una pieza por isla, sintetizada como los
+  efectos ([ADR 0038](adr/0038-musica-suave-en-las-islas.md)).*
 - **2.7 Jugar con un mayor.** Momentos para dos: en «Habla con Bruno», que el mayor diga una palabra y ella dé las
   palmadas; o que Bruno le pida enseñarle al mayor lo que ha aprendido. Ayuda a que lo vean como algo que se hace juntos.
   *Pequeña. Hecha: un turno para dos al final de «Habla con Bruno» ([ADR 0036](adr/0036-jugar-con-un-mayor.md)).*

@@ -76,6 +76,7 @@ fun App(store: KeyValueStore, sound: Boolean = true, onExit: (() -> Unit)? = nul
     val lifecycle = LocalLifecycleOwner.current.lifecycle
     LaunchedEffect(lifecycle) {
         lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+            audio.resume()
             try {
                 while (true) {
                     delay(TICK_MILLIS)
@@ -100,6 +101,13 @@ internal fun AppContent(game: GameState, onExit: (() -> Unit)? = null, listen: B
         game.audio.hush()
         game.back()
     }
+    // The music of the island she is on, while she plays there and opens its present; none anywhere else (ADR 0038).
+    val island = when (val scene = game.scene) {
+        is Scene.Play -> scene.island
+        is Scene.Present -> scene.island
+        else -> null
+    }
+    LaunchedEffect(island) { game.audio.music(island?.music) }
     Box(Modifier.fillMaxSize().background(Color(0xFF8E89E8))) {
         when (val scene = game.scene) {
             Scene.Splash -> SplashScreen(game)

@@ -12,8 +12,8 @@ Lo que no se deduce del código. Si algo de aquí discrepa de su fuente, manda l
   ([docs/diseno.md](docs/diseno.md), «Las reglas»).
 - **Nada sale del dispositivo**: sin internet, anuncios, compras ni analítica ([ADR 0005](docs/adr/0005-un-regalo-sin-conexion.md)).
 - **Lo que se dice** está en `voces/guion.tsv`. Una frase nueva va al guion y a `audio/Voice.kt`, y su WAV se genera con
-  `python3 tools/voces.py`, que necesita macOS. Los efectos salen de `python3 tools/sonidos.py`
-  ([ADR 0004](docs/adr/0004-voces-provisionales.md)).
+  `python3 tools/voces.py`, que necesita macOS. Los efectos salen de `python3 tools/sonidos.py`, y la música de las
+  islas de `python3 tools/musica.py` ([ADR 0004](docs/adr/0004-voces-provisionales.md), [ADR 0038](docs/adr/0038-musica-suave-en-las-islas.md)).
 - **Al probar en el emulador o en el simulador**, el sonido va quitado (el emulador con `-no-audio` y la app con su
   argumento de silencio), y al acabar se cierran la app y el emulador o el simulador: se oye en el Mac
   ([docs/pruebas.md](docs/pruebas.md)).

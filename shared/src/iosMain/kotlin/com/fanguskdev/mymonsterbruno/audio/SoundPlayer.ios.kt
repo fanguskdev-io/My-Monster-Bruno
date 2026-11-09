@@ -32,6 +32,16 @@ private class IosSoundPlayer : SoundPlayer {
 
     override fun play(name: String, volume: Float) = onAudioQueue {
         players[name]?.let {
+            it.numberOfLoops = 0
+            it.currentTime = 0.0
+            it.volume = volume
+            it.play()
+        }
+    }
+
+    override fun loop(name: String, volume: Float) = onAudioQueue {
+        players[name]?.let {
+            it.numberOfLoops = -1
             it.currentTime = 0.0
             it.volume = volume
             it.play()

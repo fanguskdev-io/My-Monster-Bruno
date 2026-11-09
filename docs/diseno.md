@@ -230,7 +230,7 @@ Fuera del camino:
   globo se deshincha despacio. Son tres respiraciones con Bruno.
 - **La zona de mayores**, detrás del candado de la esquina, que se abre manteniendo el dedo 2,5 segundos. En ella se puede
   escribir su nombre (para el banderín), elegir su foto en la galería (para el marco del cuarto) o quitarla, elegir los minutos al día (5, 10, 15 o 20), dar «10 minutos más, solo hoy»,
-  quitar la voz o los efectos, ver cómo se ha sentido los últimos días, entre cuántas elige en cada juego y lo que ha
+  quitar la voz, los efectos o la música, ver cómo se ha sentido los últimos días, entre cuántas elige en cada juego y lo que ha
   practicado (galletas por vocal,
   letras trazadas, veces que ha escrito su nombre, fresas por número, globos,
   series, piezas de la casa, emociones, palabras dichas a Bruno, parejas que empiezan igual, islas y regalos) y volver a
@@ -254,7 +254,7 @@ Salen de la [investigación §6](investigacion/investigacion.md#6-reglas-que-sal
 | Para jugar acompañada | La misión para casa de cada noche, y «Habla con Bruno», que la primera vez necesita a un mayor para el permiso del micrófono |
 | Lo del cole | Vocales en mayúscula, sus trazos en el orden del cole, escribir su nombre, la emoción del día como en la asamblea, y contar del 1 al 5 con los dedos y los puntos, en castellano de España |
 | Hecho para ella | Su nombre en el banderín, que aprende a escribir, y su Bruno, con el color y la cabeza que ella elige. La voz no dice su nombre: son frases grabadas de antemano ([ADR 0004](adr/0004-voces-provisionales.md)) |
-| Tranquilo | Colores suaves, sonidos cortos que solo suenan al tocar y animaciones lentas. La voz y los efectos se pueden quitar |
+| Tranquilo | Colores suaves, sonidos cortos que solo suenan al tocar y animaciones lentas. En las islas, una música muy suave, distinta en cada una ([ADR 0038](adr/0038-musica-suave-en-las-islas.md)). La voz, los efectos y la música se pueden quitar |
 | Premios con sentido | Los accesorios de Bruno se ganan terminando islas, y la pegatina de cada isla, que ella pega donde quiere en el cuarto, una por isla ([ADR 0024](adr/0024-pegatinas-para-el-cuarto.md)). No hay cofres sorpresa ni nada que comprar |
 | Limpio | Sin anuncios, compras, cuentas ni internet. En Android no pide el permiso de internet. Todo lo guarda el dispositivo ([ADR 0005](adr/0005-un-regalo-sin-conexion.md)). El micrófono solo escucha mientras ella mantiene el botón, y su voz no se guarda ([ADR 0011](adr/0011-habla-con-bruno.md)) |
 

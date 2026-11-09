@@ -7,6 +7,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.ImageBitmap
 import com.fanguskdev.mymonsterbruno.audio.Audio
+import com.fanguskdev.mymonsterbruno.audio.Music
 import com.fanguskdev.mymonsterbruno.game.NumbersGame
 import com.fanguskdev.mymonsterbruno.game.SaveData
 import com.fanguskdev.mymonsterbruno.game.SaveStore
@@ -26,13 +27,13 @@ import org.jetbrains.compose.resources.decodeToImageBitmap
 import kotlin.random.Random
 
 /** The islands of the map that have something to do, each with its activities in order (docs/diseno.md). */
-internal enum class Island(val activities: List<Activity>) {
-    VOWELS(listOf(Activity.FEED, Activity.TRACE)),
-    NUMBERS(listOf(Activity.COUNT, Activity.COUNTDOWN)),
-    COLORS(listOf(Activity.BALLOONS, Activity.SERIES)),
-    SHAPES(listOf(Activity.HOUSE, Activity.PLACES)),
-    FEELINGS(listOf(Activity.FEELINGS, Activity.STORY)),
-    WORDS(listOf(Activity.WORDS, Activity.RHYMES)),
+internal enum class Island(val activities: List<Activity>, val music: Music) {
+    VOWELS(listOf(Activity.FEED, Activity.TRACE), Music.LETTERS),
+    NUMBERS(listOf(Activity.COUNT, Activity.COUNTDOWN), Music.NUMBERS),
+    COLORS(listOf(Activity.BALLOONS, Activity.SERIES), Music.COLORS),
+    SHAPES(listOf(Activity.HOUSE, Activity.PLACES), Music.SHAPES),
+    FEELINGS(listOf(Activity.FEELINGS, Activity.STORY), Music.FEELINGS),
+    WORDS(listOf(Activity.WORDS, Activity.RHYMES), Music.WORDS),
 }
 
 /**
@@ -144,6 +145,7 @@ internal class GameState(
     init {
         audio.voiceOn = data.voiceOn
         audio.effectsOn = data.effectsOn
+        audio.musicOn = data.musicOn
     }
 
     private fun firstScene(): Scene = when {
@@ -158,6 +160,7 @@ internal class GameState(
         data = change(data)
         audio.voiceOn = data.voiceOn
         audio.effectsOn = data.effectsOn
+        audio.musicOn = data.musicOn
         SaveStore.save(store, data)
     }
 

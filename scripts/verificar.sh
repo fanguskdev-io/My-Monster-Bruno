@@ -6,7 +6,8 @@
 #
 # Corre cada paso aunque falle el anterior y falla al final si alguno falló. Lo que comprueba, en orden:
 #   1. que ningún fichero de Kotlin use «!!» (null-safety sin atajos);
-#   2. que las voces están al día con su guion y los efectos con su receta (tools/voces.py y tools/sonidos.py, ADR 0004);
+#   2. que las voces están al día con su guion, y los efectos y la música con su receta (tools/voces.py, tools/sonidos.py y
+#      tools/musica.py, ADR 0004 y 0038);
 #   3. ktlint, las pruebas comunes en la JVM y en el host de Android, el lint de Android y los APK de depuración y de
 #      lanzamiento (este, con R8); cualquier aviso del compilador rompe la construcción (build.gradle.kts raíz);
 #   4. en macOS: las pruebas comunes en el simulador de iOS y la app de iOS compilada con xcodebuild.
@@ -46,6 +47,8 @@ step "Sin «!!» en el código" no_double_bang
 step "Voces al día con el guion" python3 tools/voces.py --comprobar
 
 step "Efectos al día con su receta" python3 tools/sonidos.py --comprobar
+
+step "Música al día con su receta" python3 tools/musica.py --comprobar
 
 step "Estilo, pruebas, lint y APK" ./gradlew --continue \
     ktlintCheck \

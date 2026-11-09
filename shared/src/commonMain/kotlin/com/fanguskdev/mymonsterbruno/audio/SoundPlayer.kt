@@ -13,6 +13,9 @@ interface SoundPlayer {
     /** Plays [name] from its start at [volume] (0 to 1), if it is loaded. */
     fun play(name: String, volume: Float = 1f)
 
+    /** Plays [name] over and over at [volume] until it is stopped: the music of an island (ADR 0038). By default, once. */
+    fun loop(name: String, volume: Float) = play(name, volume)
+
     /** Stops [name] if it is playing. */
     fun stop(name: String)
 

@@ -557,6 +557,25 @@ final class BrunoDriverTests: XCTestCase {
         checkpoint("r4-regalo-der")
     }
 
+    /// The switch of the music of the islands (ADR 0038), in the grown-ups' corner: it is on, a grown-up turns it off, and
+    /// back to the game. In silence, as every route, the music itself is not heard.
+    func testMusicSwitch() {
+        XCUIDevice.shared.orientation = .landscapeRight
+        launchPastStart()
+        sleep(1)
+        lock.press(forDuration: 3.5)
+        sleep(2)
+        scrollTo("Música: sí")
+        checkpoint("s1-musica-si-der")
+        tapText("Música: sí")
+        sleep(1)
+        checkpoint("s2-musica-no-der")
+        scrollTo("Volver al juego", down: false)
+        tapText("Volver al juego")
+        sleep(3)
+        checkpoint("s3-cuarto-der")
+    }
+
     /// The stickers of the room (ADR 0024): the save has every island finished and none stuck yet. She takes the first one
     /// from the rug to the wall, lets the next one go on the floor, where it does not stay, sticks it on the wall after
     /// all, and moves the first one somewhere else.

@@ -45,6 +45,14 @@ private class AndroidSoundPlayer : SoundPlayer {
         start(name, id, volume)
     }
 
+    /** The music: over and over, and the first to give way if SoundPool runs out of streams (priority 0). */
+    override fun loop(name: String, volume: Float) {
+        val id = ids[name] ?: return
+        stop(name)
+        val stream = runCatching { pool.play(id, volume, volume, 0, -1, 1f) }.getOrDefault(0)
+        if (stream != 0) streams[name] = stream
+    }
+
     /** Puts [wav] in the place of what [name] was, and plays it when SoundPool has read it. */
     override fun playOnce(name: String, wav: ByteArray, volume: Float) {
         stop(name)
@@ -89,6 +97,6 @@ private class AndroidSoundPlayer : SoundPlayer {
     private class Waiting(val name: String, val volume: Float)
 
     private companion object {
-        const val MAX_STREAMS = 6
+        const val MAX_STREAMS = 8
     }
 }

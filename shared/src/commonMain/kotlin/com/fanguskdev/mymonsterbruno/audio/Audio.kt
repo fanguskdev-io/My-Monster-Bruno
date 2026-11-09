@@ -16,6 +16,17 @@ internal class Audio(private val player: SoundPlayer, private val scope: Corouti
     var voiceOn = true
     var effectsOn = true
 
+    /** Whether the music of the islands sounds (ADR 0038); off, it stops at once. */
+    var musicOn = true
+        set(value) {
+            field = value
+            refreshMusic()
+        }
+
+    /** The music of where she is, and the one that is sounding: they differ until it is loaded, or with the music off. */
+    private var music: Music? = null
+    private var musicPlaying: Music? = null
+
     /** How long each loaded file lasts, in milliseconds. */
     private val millis = HashMap<String, Long>()
     private var speaking: String? = null
@@ -29,13 +40,37 @@ internal class Audio(private val player: SoundPlayer, private val scope: Corouti
         scope.launch {
             for (sound in Sfx.entries) loadOne("$SOUNDS/${sound.file}.wav", sound.file)
             for (line in Voice.ALL) loadOne("$VOICES/$line.wav", line)
+            for (piece in Music.entries) loadOne("$MUSIC/${piece.file}.wav", musicName(piece))
         }
     }
 
+    /** The music of where she is now, or none: it changes only if it is another (ADR 0038). */
+    fun music(piece: Music?) {
+        music = piece
+        refreshMusic()
+    }
+
+    /** Plays the music that should sound, if it is on and loaded, and stops the one that should not. */
+    private fun refreshMusic() {
+        val wanted = music?.takeIf { musicOn && musicName(it) in millis }
+        if (wanted == musicPlaying) return
+        musicPlaying?.let { player.stop(musicName(it)) }
+        musicPlaying = wanted
+        wanted?.let { player.loop(musicName(it), MUSIC_VOLUME) }
+    }
+
+    private fun musicName(piece: Music) = "musica_${piece.file}"
+
     private suspend fun loadOne(path: String, name: String) {
         val wav = runCatching { Res.readBytes(path) }.getOrNull() ?: return
+        loaded(name, wav)
+    }
+
+    /** [wav] is ready as [name]; if it is the music of where she is, it starts. */
+    internal fun loaded(name: String, wav: ByteArray) {
         player.load(name, wav)
         millis[name] = readWav(wav)?.millis ?: 0L
+        if (music?.let { musicName(it) } == name) refreshMusic()
     }
 
     /** Says [lines] one after the other, cutting whatever was being said, and returns when they are said. */
@@ -106,7 +141,11 @@ internal class Audio(private val player: SoundPlayer, private val scope: Corouti
     fun pause() {
         hush()
         player.stopAll()
+        musicPlaying = null
     }
+
+    /** The app is back: the music of where she is sounds again. */
+    fun resume() = refreshMusic()
 
     fun release() {
         hush()
@@ -116,9 +155,13 @@ internal class Audio(private val player: SoundPlayer, private val scope: Corouti
     private companion object {
         const val VOICES = "files/voces"
         const val SOUNDS = "files/sonidos"
+        const val MUSIC = "files/musica"
         const val ECHO = "su_voz"
         const val VOICE_VOLUME = 1f
         const val EFFECTS_VOLUME = 0.7f
+
+        /** Under the voice, which is at 1: a background, not a song. */
+        const val MUSIC_VOLUME = 0.3f
         const val GAP_MILLIS = 250L
         const val UNKNOWN_MILLIS = 1200L
         const val SILENT_MILLIS = 700L

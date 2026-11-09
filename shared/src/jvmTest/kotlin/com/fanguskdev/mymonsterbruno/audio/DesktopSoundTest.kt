@@ -28,6 +28,24 @@ class DesktopSoundTest {
     }
 
     @Test
+    fun theMusicGoesBackToItsStartAndStays() {
+        val music = Playing("music", shortArrayOf(1, 2, 3), 1f, loops = true)
+        val playing = mutableListOf(music)
+        val out = ShortArray(7)
+        mix(playing, out)
+        assertEquals(listOf<Short>(1, 2, 3, 1, 2, 3, 1), out.toList())
+        assertEquals(listOf(music), playing)
+        mix(playing, out)
+        assertEquals(listOf<Short>(2, 3, 1, 2, 3, 1, 2), out.toList())
+    }
+
+    @Test
+    fun aSlowerRateIsFilledInWithStraightLines() {
+        val half = Pcm(shortArrayOf(0, 100), channels = 1, rate = LINE_RATE / 2)
+        assertEquals(listOf<Short>(0, 50, 100, 100), toLineFormat(half).toList())
+    }
+
+    @Test
     fun anythingElseBecomesOneChannelAtTheRateOfTheLine() {
         val stereo = Pcm(shortArrayOf(100, 300, 100, 300, 100, 300, 100, 300), channels = 2, rate = LINE_RATE * 2)
         assertEquals(listOf<Short>(200, 200), toLineFormat(stereo).toList())
