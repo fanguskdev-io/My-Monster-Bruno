@@ -71,7 +71,7 @@ internal fun PresentScreen(game: GameState, island: Island, onDone: () -> Unit) 
                         val look = it.look
                         val grown = if (done % 2 == 0) (look.growth + 1).coerceAtMost(BrunoLook.MAX_GROWTH) else look.growth
                         it.copy(
-                            look = look.copy(accessories = if (gift == null) look.accessories else look.accessories + gift, growth = grown),
+                            look = (if (gift == null) look else look.withPresent(gift)).copy(growth = grown),
                             islands = it.islands.plusOne(island.name),
                         )
                     }

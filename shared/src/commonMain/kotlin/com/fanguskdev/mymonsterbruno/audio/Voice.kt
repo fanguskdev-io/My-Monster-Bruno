@@ -125,6 +125,10 @@ internal object Voice {
     const val OFF_I_GO = "b_alla_voy"
     const val THANKS_ROCKET = "b_gracias_cohete"
 
+    /** Bruno's wardrobe, from the room (ADR 0032): how he greets her in it, and what he says taking something off. */
+    const val WARDROBE_INTRO = "b_armario_intro"
+    const val TAKE_OFF = "b_me_lo_quito"
+
     /** Bruno's paths, on the island of letters (ADR 0031): how they start, a finger on Bruno, home, and his thanks. */
     const val PATHS_INTRO = "n_caminos_intro"
     const val FOLLOW_PATH = "n_sigue_camino"
@@ -360,6 +364,7 @@ internal object Voice {
         STICKER_WORDS, STICK_IT, SO_PRETTY, STORY_INTRO, WHAT_FIRST, AND_NEXT, AND_AT_THE_END, LATER, THANKS_STORIES,
         NUMBER_LINE_INTRO, BESIDE_BRUNO, THANKS_NUMBER_LINE, PLACES_INTRO, HIDDEN, THANKS_PLACES, SUMS_INTRO, HOW_MANY_NOW,
         COUNT_THEM_ALL, THANKS_SUMS, ASSEMBLY_INTRO, WHAT_WEATHER, DAY_STARTS, PATHS_INTRO, FOLLOW_PATH, AT_HOME, THANKS_PATHS,
+        WARDROBE_INTRO, TAKE_OFF,
     ) +
         PathShape.entries.map { pathIs(it) } +
         Weekday.entries.flatMap { listOf(todayIs(it), aroundToday(it), thatDay(it)) } +

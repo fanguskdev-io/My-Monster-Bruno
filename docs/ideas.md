@@ -80,7 +80,7 @@ recorridos del iPhone de un tirón. Y una que no estaba aquí, la pantalla de in
   ([ADR 0020](adr/0020-se-adapta-a-lo-que-sabe.md)).*
 - **2.2 Bruno sugiere una isla.** Al llegar al mapa, Bruno señala la isla que menos ha visitado, sin obligar. *Pequeña.*
 - **2.3 El armario de Bruno.** En el cuarto, elegir qué regalos lleva puestos y cambiarle el color o la cabeza más adelante.
-  *Pequeña.*
+  *Pequeña. Hecha, con la percha del cuarto ([ADR 0032](adr/0032-el-armario-de-bruno.md)).*
 - **2.4 Pegatinas para el cuarto.** Cada isla terminada da una pegatina que ella pega donde quiera en el cuarto de Bruno.
   Son premios con sentido, que dice la regla 9; sin coleccionar por coleccionar. *Mediana. Hecha, una por isla
   ([ADR 0024](adr/0024-pegatinas-para-el-cuarto.md)).*

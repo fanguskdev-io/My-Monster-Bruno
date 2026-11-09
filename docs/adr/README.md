@@ -42,3 +42,4 @@ y estas decisiones existen antes de G4 porque Fangusk pidió desarrollar ya. Las
 | [0029](0029-sumas-hasta-3.md) | Sumas hasta 3, con fresas, en la isla de los números, por turnos con la cuenta atrás y la recta | Aceptada; los turnos, la tarjeta de la suma y contarlas todas, propuesta |
 | [0030](0030-la-asamblea-de-bruno.md) | La asamblea de Bruno, después de la emoción del día: qué día es y qué tiempo hace por la ventana | Aceptada; el calendario, los días de al lado y la ventana del cuarto, propuesta |
 | [0031](0031-trazos-antes-de-las-letras.md) | Trazos antes de las letras: llevar a Bruno a casa por caminos rectos, de olas, con bucles y en caracol, por turnos con trazar letras | Aceptada; los turnos, los seis caminos y cómo sigue el dedo, propuesta |
+| [0032](0032-el-armario-de-bruno.md) | El armario de Bruno, desde el cuarto: qué regalos lleva, su color y su cabeza | Aceptada; la percha, las baldas y uno de cada sitio, propuesta |

@@ -88,6 +88,9 @@ internal sealed interface Scene {
     /** The assembly, after the feeling of the day: what day it is and what weather (ADR 0030). */
     data object Assembly : Scene
 
+    /** Bruno's wardrobe, from the room: what he wears, his colour and what he has on his head (ADR 0032). */
+    data object Wardrobe : Scene
+
     data object GrownUps : Scene
 }
 
@@ -249,7 +252,7 @@ internal class GameState(
     /** Back from wherever she is, one step towards the room. */
     fun back() {
         when (scene) {
-            Scene.Map, Scene.Calm, Scene.Talk, Scene.Name, Scene.Mood, Scene.Assembly, Scene.GrownUps ->
+            Scene.Map, Scene.Calm, Scene.Talk, Scene.Name, Scene.Mood, Scene.Assembly, Scene.Wardrobe, Scene.GrownUps ->
                 go(if (data.hatched) Scene.Home else Scene.Hatch)
             is Scene.Play, is Scene.Present -> go(if (timeUp) Scene.Sleep else Scene.Map)
             else -> Unit

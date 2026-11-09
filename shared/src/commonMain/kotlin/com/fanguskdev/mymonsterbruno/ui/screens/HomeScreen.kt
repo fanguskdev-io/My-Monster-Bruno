@@ -43,6 +43,7 @@ import com.fanguskdev.mymonsterbruno.ui.art.STICKER_RADIUS
 import com.fanguskdev.mymonsterbruno.ui.art.Shadow
 import com.fanguskdev.mymonsterbruno.ui.art.drawBalloon
 import com.fanguskdev.mymonsterbruno.ui.art.drawBruno
+import com.fanguskdev.mymonsterbruno.ui.art.drawHanger
 import com.fanguskdev.mymonsterbruno.ui.art.drawRoom
 import com.fanguskdev.mymonsterbruno.ui.art.drawRoundButton
 import com.fanguskdev.mymonsterbruno.ui.art.drawSparkles
@@ -75,6 +76,10 @@ private const val PLAY_RADIUS = 68f
 private val CALM_BUTTON = Offset(82f, 318f)
 private const val CALM_RADIUS = 46f
 private val TALK_BUTTON = Offset(82f, 200f)
+
+/** The button of Bruno's wardrobe (ADR 0032): a hanger on the floor, at his left. */
+private val WARDROBE_BUTTON = Offset(198f, 344f)
+private const val WARDROBE_RADIUS = 34f
 
 /** Her photo hangs on the wall on the right, over the big button: beside the window it would cover Bruno. */
 private val PHOTO_FRAME = Offset(712f, 152f)
@@ -214,6 +219,11 @@ internal fun HomeScreen(game: GameState) {
                         audio.hush()
                         game.go(Scene.Talk)
                     }
+                    hits(point, WARDROBE_BUTTON, WARDROBE_RADIUS) -> {
+                        audio.sfx(Sfx.TAP)
+                        audio.hush()
+                        game.go(Scene.Wardrobe)
+                    }
                     hits(point, lockButton(stage), LOCK_RADIUS) -> {
                         lockSince = now
                         scope.launch {
@@ -310,6 +320,7 @@ internal fun HomeScreen(game: GameState) {
             line(Color(0xFF46526F), CALM_BUTTON + Offset(0f, 22f), CALM_BUTTON + Offset(0f, 34f), 2f)
         }
         drawRoundButton(TALK_BUTTON, CALM_RADIUS, Color(0xFFE85A7A)) { micIcon(TALK_BUTTON, 40f) }
+        drawRoundButton(WARDROBE_BUTTON, WARDROBE_RADIUS, Color(0xFFB79BE8)) { drawHanger(WARDROBE_BUTTON, 40f) }
         drawGrownUpsLock(stage, t, lockSince)
         // The sticker in her finger, a little bigger, over everything.
         dragging?.let { drawSticker(it, dragAt, STICKER_RADIUS * 1.12f, t, measurer, font) }

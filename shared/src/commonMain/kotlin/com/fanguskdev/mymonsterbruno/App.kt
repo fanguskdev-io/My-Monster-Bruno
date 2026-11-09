@@ -50,6 +50,7 @@ import com.fanguskdev.mymonsterbruno.ui.screens.StoryScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.SumsScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.TalkScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.TraceScreen
+import com.fanguskdev.mymonsterbruno.ui.screens.WardrobeScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.WordsScreen
 import kotlinx.coroutines.delay
 import com.fanguskdev.mymonsterbruno.ui.Activity as Step
@@ -127,6 +128,7 @@ internal fun AppContent(game: GameState, onExit: (() -> Unit)? = null, listen: B
             Scene.Name -> NameScreen(game) { game.back() }
             Scene.Mood -> MoodScreen(game) { game.moodDone() }
             Scene.Assembly -> AssemblyScreen(game) { game.go(Scene.Home) }
+            Scene.Wardrobe -> WardrobeScreen(game)
             Scene.Talk -> {
                 val microphone = if (listen) rememberMicrophone() else remember { DeafMicrophone() }
                 val check = if (listen) rememberWordCheck() else remember { NoWordCheck() }

@@ -267,7 +267,7 @@ private fun DrawScope.drawChoices(
     }
 }
 
-private fun DrawScope.drawToppingIcon(top: Topping, center: Offset) {
+internal fun DrawScope.drawToppingIcon(top: Topping, center: Offset) {
     when (top) {
         Topping.HORNS -> {
             for (side in listOf(-1f, 1f)) {

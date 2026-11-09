@@ -192,6 +192,14 @@ class ScreenshotsTest {
             val file = File(folder, "${screen.name}-20-mapa-terminado.png")
             file.writeBytes(render(Scene.Map, screen, finished))
             assertTrue(file.length() > MIN_BYTES, "$file está vacía")
+            // Bruno's wardrobe with five presents, two of them on (ADR 0032).
+            val dressed = { save: SaveData ->
+                val presents = listOf(Accessory.BEANIE, Accessory.GLASSES, Accessory.BOW_TIE, Accessory.FLOWERS, Accessory.SCARF)
+                save.copy(look = save.look.copy(accessories = presents, dressed = listOf(Accessory.FLOWERS, Accessory.SCARF)))
+            }
+            val wardrobe = File(folder, "${screen.name}-36-armario.png")
+            wardrobe.writeBytes(render(Scene.Wardrobe, screen, dressed))
+            assertTrue(wardrobe.length() > MIN_BYTES, "$wardrobe está vacía")
             // Bruno's paths, on the second day she goes to the island of letters (ADR 0031): the first, and the loops and the
             // snail, when they are the ones she has done least.
             val second = { save: SaveData -> save.copy(lettersDay = DAY, lettersDays = 2) }

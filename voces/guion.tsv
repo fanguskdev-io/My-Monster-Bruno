@@ -706,3 +706,5 @@ n_camino_caracol	narrador	¡Un caracol! Da vueltas y vueltas hasta el centro.
 n_sigue_camino	narrador	Pon el dedo en Bruno y sigue el camino.
 b_en_casa	bruno	¡Ya estoy en casa!
 b_gracias_caminos	bruno	¡Qué bien me llevas! ¡Gracias!
+b_armario_intro	bruno	¡Mi armario! ¿Qué me pongo hoy?
+b_me_lo_quito	bruno	Me lo quito un ratito.

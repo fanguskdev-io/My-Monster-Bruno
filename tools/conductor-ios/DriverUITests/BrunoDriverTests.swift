@@ -476,6 +476,34 @@ final class BrunoDriverTests: XCTestCase {
         checkpoint("s4-movida-izq")
     }
 
+    /// Bruno's wardrobe (ADR 0032), with three presents: from the hanger of the room, the beanie taken off, the glasses
+    /// put on again, his colour and his head changed, and back to the room, where he stays so.
+    func testWardrobe() {
+        XCUIDevice.shared.orientation = .landscapeLeft
+        launchPastStart()
+        sleep(2)
+        stage(198, 344).tap()
+        sleep(4)
+        checkpoint("w1-armario-izq")
+        stage(532, 128).tap()
+        sleep(2)
+        stage(620, 128).tap()
+        sleep(2)
+        stage(620, 128).tap()
+        sleep(2)
+        stage(716, 274).tap()
+        sleep(2)
+        stage(620, 336).tap()
+        sleep(2)
+        checkpoint("w2-vestido-izq")
+        XCUIDevice.shared.orientation = .landscapeRight
+        sleep(2)
+        checkpoint("w3-armario-der")
+        stage(44, 42).tap()
+        sleep(4)
+        checkpoint("w4-cuarto-der")
+    }
+
     /// «Trazos antes de las letras» (ADR 0031), the second day she goes to the island of letters, with the straight paths
     /// already done so that the curved ones come: Comeletras first, its cookies touched in turn, and then the waves, the
     /// loops and the snail, each traced with the finger in short strokes along it, as the game keeps where she left Bruno.

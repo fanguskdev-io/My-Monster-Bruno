@@ -17,7 +17,7 @@ decisiones, y la [investigación](docs/investigacion/investigacion.md), de dónd
 > busca rimas con Bruno; en la de los números cuenta hacia atrás para su cohete o, otros días,
 > busca en la recta el número de antes y el de después o suma fresas; en la de las formas esconde a Bruno dentro y fuera, encima y
 > debajo; en la de las emociones ordena historias, y cada isla que termina le da una pegatina para la pared del
-> cuarto. La
+> cuarto y un regalo que Bruno se pone, o se quita, en su armario. La
 > entrega en su iPhone está preparada: será ad hoc, instalado el día que se lo dé ([entrega](docs/entrega.md)).
 
 ## Estructura

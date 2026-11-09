@@ -107,7 +107,8 @@ de él y la ventana del cuarto lo enseña el resto del día. El día sale de la 
    lleva a escribirlo; mientras no lo haya escrito, Bruno se lo pide cada día que abre el juego: «¿Me enseñas a escribir
    tu nombre? Toca el banderín». Y la primera vez que termina cada isla, Bruno le guarda **una pegatina** de esa isla en la
    alfombra ([ADR 0024](adr/0024-pegatinas-para-el-cuarto.md)): ella la arrastra a la pared y la pega donde quiera, menos
-   encima de lo que se toca; y la mueve cuando quiera.
+   encima de lo que se toca; y la mueve cuando quiera. La percha del suelo lleva a **su armario** ([ADR 0032](adr/0032-el-armario-de-bruno.md)):
+   ella elige qué regalos lleva, uno de cada sitio o ninguno, y le cambia el color o lo de la cabeza, como al nacer.
 3. **El mapa**. Bruno va en su barca. Hay seis islas: la de las letras, la de los números, la de los colores, la de las
    formas, la de las emociones y, la más pequeña, arriba a la derecha, la de las palabras. Una isla terminada lleva su
    bandera.
@@ -268,7 +269,7 @@ Las **voces de la familia** no se harán: «para M2 no vamos a utilizar las voce
 - **Bruno y todo lo demás se dibujan con vectores**, sin imágenes: Bruno respira, parpadea, mira y cambia de cara (ocho
   bocas, cuatro ojos, tres posturas de brazos).
 - **Las voces** son las de un narrador y la de Bruno, algo más aguda y más despacio, a unas 4 sílabas por segundo. Hay
-  707 frases pregrabadas con la voz del sistema del Mac y **los efectos** (17) se sintetizan desde cero
+  709 frases pregrabadas con la voz del sistema del Mac y **los efectos** (17) se sintetizan desde cero
   ([ADR 0004](adr/0004-voces-provisionales.md)). Las frases están en [`voces/guion.tsv`](../voces/guion.tsv).
 - **La letra** de la zona de mayores, de los números, del banderín y del título es Andika, una tipografía pensada para quien aprende a
   leer (licencia OFL, en [`licencias/`](../licencias/Andika-OFL.txt)).
