@@ -625,6 +625,28 @@ final class BrunoDriverTests: XCTestCase {
         checkpoint("w1-su-semana-der")
     }
 
+    /// What comes out in the game (ADR 0041): a grown-up takes the island of colours off the map and the M out of the
+    /// letters, and the map and the island of letters show without them.
+    func testShown() {
+        XCUIDevice.shared.orientation = .landscapeRight
+        launchPastStart()
+        sleep(1)
+        lock.press(forDuration: 3.5)
+        sleep(2)
+        scrollTo("Colores")
+        tapText("Colores")
+        sleep(1)
+        tapText("M")
+        sleep(1)
+        checkpoint("q1-sin-colores-ni-m-der")
+        scrollTo("Volver al juego", down: false)
+        tapText("Volver al juego")
+        sleep(3)
+        stage(680, 290).tap()
+        sleep(4)
+        checkpoint("q2-mapa-sin-colores-der")
+    }
+
     /// The stickers of the room (ADR 0024): the save has every island finished and none stuck yet. She takes the first one
     /// from the rug to the wall, lets the next one go on the floor, where it does not stay, sticks it on the wall after
     /// all, and moves the first one somewhere else.

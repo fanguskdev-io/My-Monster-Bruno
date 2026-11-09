@@ -5,11 +5,12 @@ import com.fanguskdev.mymonsterbruno.game.SaveData
 
 /**
  * The island Bruno suggests when she gets to the map (ADR 0035): the one she has finished fewest times and, if there are
- * several, a different one of those each [day] (yyyymmdd).
+ * several, a different one of those each [day] (yyyymmdd); never one the grown-ups took off the map (ADR 0041).
  */
 internal fun SaveData.suggestedIsland(day: Int): Island {
-    val fewest = Island.entries.minOf { islands[it.name] ?: 0 }
-    val least = Island.entries.filter { (islands[it.name] ?: 0) == fewest }
+    val shown = Island.entries.filter { it.name !in hiddenIslands }.ifEmpty { Island.entries }
+    val fewest = shown.minOf { islands[it.name] ?: 0 }
+    val least = shown.filter { (islands[it.name] ?: 0) == fewest }
     return least[day.mod(least.size)]
 }
 

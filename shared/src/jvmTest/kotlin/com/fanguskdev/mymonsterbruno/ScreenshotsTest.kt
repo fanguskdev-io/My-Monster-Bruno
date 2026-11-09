@@ -234,6 +234,11 @@ class ScreenshotsTest {
             val sums = File(folder, "${screen.name}-33-sumas.png")
             sums.writeBytes(render(Scene.Play(Island.NUMBERS, 1), screen, { it.copy(numbersDay = DAY, numbersDays = 3) }))
             assertTrue(sums.length() > MIN_BYTES, "$sums está vacía")
+            // The map without the islands of colours and of words, and without the M and the last consonants (ADR 0041).
+            val fewer = File(folder, "${screen.name}-3-mapa-con-menos.png")
+            val taken = listOf(Island.COLORS.name, Island.WORDS.name)
+            fewer.writeBytes(render(Scene.Map, screen, { it.copy(hiddenIslands = taken, hiddenLetters = listOf("m", "f", "b", "r")) }))
+            assertTrue(fewer.length() > MIN_BYTES, "$fewer está vacía")
             // The race, on the fourth day she goes to the island of the numbers (ADR 0037).
             val race = File(folder, "${screen.name}-37-carrera.png")
             race.writeBytes(render(Scene.Play(Island.NUMBERS, 1), screen, { it.copy(numbersDay = DAY, numbersDays = 4) }))

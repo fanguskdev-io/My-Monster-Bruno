@@ -47,11 +47,17 @@ internal enum class Word(val letter: Char) {
 /**
  * The letters she has practised least in [practised] (by letter), [count] of them, ties at random. They come in steps:
  * the first day, the vowels; the M, the P, the L and the S once she has practised every vowel; the T, the N and the D
- * once she has practised those four too; and the F, the B and the R after them.
+ * once she has practised those four too; and the F, the B and the R after them. The [hidden] ones, that the grown-ups
+ * took out (ADR 0041), never come, nor hold back the step after them.
  */
-internal fun leastPractised(practised: Map<String, Int>, count: Int, random: Random): List<Char> {
-    fun knows(step: List<Char>) = step.all { (practised[it.toString()] ?: 0) > 0 }
-    val open = LETTER_STEPS.filterIndexed { i, _ -> LETTER_STEPS.take(i).all(::knows) }.flatten()
+internal fun leastPractised(
+    practised: Map<String, Int>,
+    count: Int,
+    random: Random,
+    hidden: Set<Char> = emptySet(),
+): List<Char> {
+    fun knows(step: List<Char>) = step.filter { it !in hidden }.all { (practised[it.toString()] ?: 0) > 0 }
+    val open = LETTER_STEPS.filterIndexed { i, _ -> LETTER_STEPS.take(i).all(::knows) }.flatten().filter { it !in hidden }
     return open.shuffled(random)
         .sortedWith(compareBy<Char>({ practised[it.toString()] ?: 0 }, { letter -> LETTER_STEPS.indexOfFirst { letter in it } }))
         .take(count)
@@ -63,10 +69,13 @@ internal fun leastPractised(practised: Map<String, Int>, count: Int, random: Ran
  */
 internal data class LetterRound(val wanted: Char, val cookies: List<Char>)
 
-/** The five rounds of Comeletras: the letters she has fed Bruno least ([fed]), each with up to three other letters. */
-internal fun letterRounds(random: Random, fed: Map<String, Int> = emptyMap()): List<LetterRound> =
-    leastPractised(fed, LETTER_ROUNDS, random).map { wanted ->
-        val others = (LETTERS - wanted).shuffled(random).take(MAX_CHOICES - 1)
+/**
+ * The five rounds of Comeletras: the letters she has fed Bruno least ([fed]), each with up to three other letters; none
+ * of the [hidden] ones (ADR 0041).
+ */
+internal fun letterRounds(random: Random, fed: Map<String, Int> = emptyMap(), hidden: Set<Char> = emptySet()): List<LetterRound> =
+    leastPractised(fed, LETTER_ROUNDS, random, hidden).map { wanted ->
+        val others = (LETTERS - hidden - wanted).shuffled(random).take(MAX_CHOICES - 1)
         LetterRound(wanted, (others + wanted).shuffled(random))
     }
 
@@ -86,8 +95,9 @@ internal fun countRounds(random: Random, counted: Map<String, Int> = emptyMap())
     return rounds
 }
 
-/** The two letters to trace: the ones she has traced least, the vowels first, ties at random. */
-internal fun tracePicks(traced: Map<String, Int>, random: Random): List<Char> = leastPractised(traced, TRACED_LETTERS, random)
+/** The two letters to trace: the ones she has traced least, the vowels first, ties at random; none of the [hidden] ones. */
+internal fun tracePicks(traced: Map<String, Int>, random: Random, hidden: Set<Char> = emptySet()): List<Char> =
+    leastPractised(traced, TRACED_LETTERS, random, hidden)
 
 internal const val LETTER_ROUNDS = 5
 internal const val SMALL_COUNT = 5

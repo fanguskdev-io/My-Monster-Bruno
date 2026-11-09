@@ -23,6 +23,7 @@ import com.fanguskdev.mymonsterbruno.audio.Voice
 import com.fanguskdev.mymonsterbruno.game.Glyph
 import com.fanguskdev.mymonsterbruno.game.Glyphs
 import com.fanguskdev.mymonsterbruno.game.TraceProgress
+import com.fanguskdev.mymonsterbruno.game.hidden
 import com.fanguskdev.mymonsterbruno.game.plusOne
 import com.fanguskdev.mymonsterbruno.game.tracePicks
 import com.fanguskdev.mymonsterbruno.ui.GameState
@@ -70,7 +71,7 @@ internal fun TraceScreen(game: GameState, onDone: () -> Unit) {
     val measurer = rememberTextMeasurer()
     val font = andika()
     val audio = game.audio
-    val letters = remember { tracePicks(game.data.traced, game.random) }
+    val letters = remember { tracePicks(game.data.traced, game.random, game.data.hidden) }
     var index by remember { mutableStateOf(0) }
     var progress by remember { mutableStateOf(TraceProgress(Glyphs.of(letters[0]))) }
     // Where the paint has got to, stroke and point: the progress itself is not observable, this is.

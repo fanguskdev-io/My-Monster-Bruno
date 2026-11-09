@@ -45,6 +45,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.fanguskdev.mymonsterbruno.game.Choosing
 import com.fanguskdev.mymonsterbruno.game.Feeling
+import com.fanguskdev.mymonsterbruno.game.HIDEABLE_LETTERS
 import com.fanguskdev.mymonsterbruno.game.Hue
 import com.fanguskdev.mymonsterbruno.game.LETTERS
 import com.fanguskdev.mymonsterbruno.game.MAX_COUNT
@@ -68,6 +69,9 @@ import com.fanguskdev.mymonsterbruno.game.choices
 import com.fanguskdev.mymonsterbruno.game.chosenPet
 import com.fanguskdev.mymonsterbruno.game.feltDays
 import com.fanguskdev.mymonsterbruno.game.hardest
+import com.fanguskdev.mymonsterbruno.game.hidden
+import com.fanguskdev.mymonsterbruno.game.toggledIsland
+import com.fanguskdev.mymonsterbruno.game.toggledLetter
 import com.fanguskdev.mymonsterbruno.game.week
 import com.fanguskdev.mymonsterbruno.game.weekdayOf
 import com.fanguskdev.mymonsterbruno.storage.Backup
@@ -208,6 +212,34 @@ internal fun GrownUpsScreen(game: GameState, onExit: (() -> Unit)? = null) {
                     }
                 }
                 Text("La música suena muy suave en las islas, distinta en cada una.", font, 15, color = Soft)
+            }
+            Section("Qué sale en el juego", font) {
+                Text(
+                    "Las islas del mapa, y las consonantes de Comeletras, de los trazos y de las rocas de su isla. Quitad una isla que " +
+                        "ya domine, o una letra que aún no hayáis visto en clase. Las vocales salen siempre, y en el mapa queda al " +
+                        "menos una isla.",
+                    font,
+                    15,
+                    color = Soft,
+                )
+                val islandNames = Island.entries.map { it.name }
+                for (row in Island.entries.chunked(ISLANDS_IN_A_ROW)) {
+                    Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                        for (island in row) {
+                            val shown = island.name !in data.hiddenIslands
+                            Chip(island.spoken.replaceFirstChar { it.uppercase() }, font, selected = shown) {
+                                game.update { it.toggledIsland(island.name, islandNames) }
+                            }
+                        }
+                    }
+                }
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    for (letter in HIDEABLE_LETTERS) {
+                        Chip(letter.uppercase(), font, selected = letter !in data.hidden) {
+                            game.update { it.toggledLetter(letter) }
+                        }
+                    }
+                }
             }
             Section("Su semana", font) {
                 Text(
@@ -509,6 +541,7 @@ private val Shape.spoken: String get() = when (this) {
 }
 
 private const val NAME_LENGTH = 12
+private const val ISLANDS_IN_A_ROW = 3
 private const val SECONDS_IN_A_MINUTE = 60
 private const val HALF_MINUTE = 30
 private const val EXTRA_MINUTES = 10

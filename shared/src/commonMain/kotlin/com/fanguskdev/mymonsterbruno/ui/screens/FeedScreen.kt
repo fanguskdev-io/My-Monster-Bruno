@@ -19,6 +19,7 @@ import com.fanguskdev.mymonsterbruno.game.MAX_CHOICES
 import com.fanguskdev.mymonsterbruno.game.Miss
 import com.fanguskdev.mymonsterbruno.game.Word
 import com.fanguskdev.mymonsterbruno.game.choices
+import com.fanguskdev.mymonsterbruno.game.hidden
 import com.fanguskdev.mymonsterbruno.game.letterRounds
 import com.fanguskdev.mymonsterbruno.game.narrowed
 import com.fanguskdev.mymonsterbruno.game.played
@@ -80,7 +81,7 @@ internal fun FeedScreen(game: GameState, onDone: () -> Unit) {
     val measurer = rememberTextMeasurer()
     val font = andika()
     val audio = game.audio
-    val rounds = remember { letterRounds(game.random, game.data.fed) }
+    val rounds = remember { letterRounds(game.random, game.data.fed, game.data.hidden) }
     var round by remember { mutableStateOf(0) }
     var phase by remember { mutableStateOf(FeedPhase.ASKING) }
     var phaseAt by remember { mutableStateOf(0f) }

@@ -44,7 +44,8 @@ Qué se prueba en cada cambio y en cada hito, y cómo. Los criterios de salida d
 | Su foto en Android 8: la orientación que la cámara escribió en el EXIF, en los dos órdenes de bytes, y cómo ponerla derecha; sin EXIF, cortada o rara, tal cual | `ExifTest` | Común |
 | La copia de su partida: vuelve como se fue, con su foto o sin ella; lo que no es una copia del juego (otro juego, texto suelto, una foto rota) no pasa por una | `BackupTest` | Común |
 | Su semana: los días hacia atrás cruzando meses, años y bisiestos; solo los últimos siete; los minutos de cada día; lo que más le ha costado primero, y entre iguales por su nombre | `WeekTest` | Común |
-| Las veintiocho pantallas y, el cuarto con cada uno de los seis animales, el cuarto con lluvia y con nieve en la ventana, los caminos de bucles y de caracol, el cuarto con sus pegatinas, cuando ya sabe las vocales y del 1 al 5, Comeletras, los trazos y las fresas con lo nuevo, Comeletras y los trazos con la T, la N y la D y con la F, la B y la R, el mapa con su cuarta fila de rocas, la pantalla de inicio con el huevo, el cuarto con su foto y cuando Bruno le pide que le enseñe su nombre, la emoción del día con su foto, la pantalla de inicio, el mapa y la hora de dormir con su foto, la carrera de animales, Comeletras, los globos, las emociones, las palabras y las rimas con cuatro para elegir y Comeletras con dos, y el mapa con todas las islas terminadas y sus banderas, se dibujan en móvil (2,17:1) y en tableta (4:3) | `ScreenshotsTest` | JVM |
+| Qué sale: una consonante quitada no se pide, no sale entre las galletas ni se traza, y no frena a las siguientes; los botones, y en el mapa siempre queda una isla, la única que Bruno sugiere | `ShownTest` | Común |
+| Las veintiocho pantallas y, el cuarto con cada uno de los seis animales, el cuarto con lluvia y con nieve en la ventana, los caminos de bucles y de caracol, el cuarto con sus pegatinas, cuando ya sabe las vocales y del 1 al 5, Comeletras, los trazos y las fresas con lo nuevo, Comeletras y los trazos con la T, la N y la D y con la F, la B y la R, el mapa con su cuarta fila de rocas, la pantalla de inicio con el huevo, el cuarto con su foto y cuando Bruno le pide que le enseñe su nombre, la emoción del día con su foto, la pantalla de inicio, el mapa y la hora de dormir con su foto, la carrera de animales, el mapa sin dos islas y sin cuatro consonantes, Comeletras, los globos, las emociones, las palabras y las rimas con cuatro para elegir y Comeletras con dos, y el mapa con todas las islas terminadas y sus banderas, se dibujan en móvil (2,17:1) y en tableta (4:3) | `ScreenshotsTest` | JVM |
 | La salida de la zona de mayores: «Salir del juego» guarda la partida y cierra; sin salida en la plataforma, como en iOS, no hay botón | `GrownUpsExitTest` | JVM |
 | El icono de iOS es el de Android: lo dibuja del vector de `androidApp` en `shared/build/icono/` y lo compara con el del proyecto de Xcode; si cambia el de Android, se copia el nuevo | `AppIconTest` | JVM |
 | En el iPhone 15 Pro de ella y en el 17 Pro del simulador, girados a un lado y al otro, la casa, el altavoz y el candado se ven enteros: ni bajo la Dynamic Island ni cortados por las esquinas redondeadas, medidas en el simulador | `CornerButtonsTest` | Común |
@@ -97,7 +98,7 @@ propio Mac ([ADR 0027](adr/0027-el-mac-tambien-comprueba-la-palabra.md)); el emu
 Para ver el juego en un iPhone 15 Pro simulado, girado a un lado y al otro, sin tocarlo a mano:
 [`tools/conductor-ios`](../tools/conductor-ios) es una prueba de interfaz que toca el escenario de 800 × 400 y, en cada
 punto de control, espera a que `vigilante.sh` saque una captura con lo que tapan la isla y las esquinas pintado de negro.
-Tiene veinticuatro recorridos:
+Tiene veinticinco recorridos:
 
 - los dos de la entrega, que empiezan en el huevo: `testWalkThroughHeldBothWays` y `testFinalVersionBothWays`;
 - `testTalkAndPhoto`, «Habla con Bruno» y elegir su foto;
@@ -131,7 +132,8 @@ Tiene veinticuatro recorridos:
 - `testMusicSwitch`, el interruptor de la música en la zona de mayores: quitarla y volver al juego;
 - `testCopy`, la copia de su partida: guardarla en Archivos con el selector de Apple, elegir un perro y recuperar la
   copia, que no tenía animal;
-- `testWeek`, su semana en la zona de mayores, con tres días de juego y sus fallos en la partida.
+- `testWeek`, su semana en la zona de mayores, con tres días de juego y sus fallos en la partida;
+- `testShown`, qué sale: quitar la isla de los colores y la M en la zona de mayores, y ver el mapa sin ellas.
 
 Todos pasan antes por la pantalla de inicio, con un toque. Siempre en silencio (`-silencio`) y en un simulador propio que
 se borra al acabar, nunca en uno de otra sesión.
@@ -519,6 +521,15 @@ pedirían el móvil o la tableta (2026-11-06).
   partida: los minutos de cada día de martes a lunes, «letras 1, números 1» y «la M (3 veces), el triángulo (una
   vez), debajo de la mesa (una vez)». En el emulador, además, un fallo en la carrera queda apuntado como
   «puesto:segundo» en el día de hoy, con los segundos jugados (2026-11-09).
+
+### M5 · Qué islas y letras salen
+
+- [ ] En la zona de mayores, «Qué sale en el juego»: las seis islas y las diez consonantes, marcadas. Desmarcar una isla
+  la quita del mapa, con su camino y su bandera; la última no se puede quitar.
+- [ ] Desmarcar una consonante la quita de Comeletras, de los trazos y de las rocas de la isla.
+- [x] En el emulador Tester_API36 y en el simulador de iPhone 15 Pro (`testShown`): quitar la isla de los colores y la
+  M deja el mapa sin la isla ni su camino, y las rocas de las letras sin la M; la partida lo guarda. La captura del
+  mapa sin dos islas y sin cuatro consonantes lo enseña en todas las pantallas (2026-11-09).
 
 ### M5 · La F, la B y la R
 

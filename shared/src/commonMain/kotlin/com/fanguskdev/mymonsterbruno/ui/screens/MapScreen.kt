@@ -26,6 +26,7 @@ import com.fanguskdev.mymonsterbruno.game.LAST_CONSONANTS
 import com.fanguskdev.mymonsterbruno.game.NEXT_CONSONANTS
 import com.fanguskdev.mymonsterbruno.game.Shape
 import com.fanguskdev.mymonsterbruno.game.VOWELS
+import com.fanguskdev.mymonsterbruno.game.hidden
 import com.fanguskdev.mymonsterbruno.ui.GameState
 import com.fanguskdev.mymonsterbruno.ui.Island
 import com.fanguskdev.mymonsterbruno.ui.Stage
@@ -105,16 +106,19 @@ internal fun MapScreen(game: GameState) {
                         audio.sfx(Sfx.TAP)
                         game.back()
                     }
-                    inIsland(point, VOWELS_ISLAND) -> go(Island.VOWELS, Voice.TO_LETTERS)
-                    inIsland(point, NUMBERS_ISLAND) -> go(Island.NUMBERS, Voice.TO_NUMBERS)
-                    inIsland(point, COLORS_ISLAND) -> go(Island.COLORS, Voice.TO_COLORS)
-                    inIsland(point, SHAPES_ISLAND) -> go(Island.SHAPES, Voice.TO_SHAPES)
-                    inIsland(point, FEELINGS_ISLAND) -> go(Island.FEELINGS, Voice.TO_FEELINGS)
-                    inIsland(point, WORDS_ISLAND, WORDS_RX, WORDS_RY) -> go(Island.WORDS, Voice.TO_WORDS)
+                    // Only the islands on the map: the grown-ups can take some off (ADR 0041).
+                    shown(Island.VOWELS) && inIsland(point, VOWELS_ISLAND) -> go(Island.VOWELS, Voice.TO_LETTERS)
+                    shown(Island.NUMBERS) && inIsland(point, NUMBERS_ISLAND) -> go(Island.NUMBERS, Voice.TO_NUMBERS)
+                    shown(Island.COLORS) && inIsland(point, COLORS_ISLAND) -> go(Island.COLORS, Voice.TO_COLORS)
+                    shown(Island.SHAPES) && inIsland(point, SHAPES_ISLAND) -> go(Island.SHAPES, Voice.TO_SHAPES)
+                    shown(Island.FEELINGS) && inIsland(point, FEELINGS_ISLAND) -> go(Island.FEELINGS, Voice.TO_FEELINGS)
+                    shown(Island.WORDS) && inIsland(point, WORDS_ISLAND, WORDS_RX, WORDS_RY) -> go(Island.WORDS, Voice.TO_WORDS)
                     else -> return false
                 }
                 return true
             }
+
+            private fun shown(island: Island) = island.name !in game.data.hiddenIslands
 
             private fun go(island: Island, line: String) {
                 going = true
@@ -130,28 +134,44 @@ internal fun MapScreen(game: GameState) {
     StageCanvas(touch) { stage ->
         val t = clock.value
         drawSea(stage, t)
-        drawPath(t)
-        if (suggestion != null && !going) drawSuggestion(suggestion, t)
-        drawIsland(VOWELS_ISLAND, t)
-        drawVowelRocks(VOWELS_ISLAND, measurer, font)
-        drawIsland(NUMBERS_ISLAND, t)
-        drawNumberRocks(NUMBERS_ISLAND, measurer, font)
-        drawIsland(COLORS_ISLAND, t)
-        drawIslandBalloons(COLORS_ISLAND, t)
-        drawIsland(SHAPES_ISLAND, t)
-        drawIslandShapes(SHAPES_ISLAND)
-        drawIsland(FEELINGS_ISLAND, t)
-        drawIslandFaces(FEELINGS_ISLAND)
-        drawIsland(WORDS_ISLAND, t, WORDS_RX, WORDS_RY)
-        drawOpenBook(WORDS_ISLAND + Offset(0f, -14f), 58f)
-        if ((game.data.islands[Island.VOWELS.name] ?: 0) > 0) drawFlag(VOWELS_ISLAND + Offset(92f, -34f))
-        if ((game.data.islands[Island.NUMBERS.name] ?: 0) > 0) drawFlag(NUMBERS_ISLAND + Offset(92f, -34f))
+        // The islands the grown-ups took off the map are not there, nor their way (ADR 0041).
+        val hidden = game.data.hiddenIslands
+        fun shown(island: Island) = island.name !in hidden
+        fun done(island: Island) = shown(island) && (game.data.islands[island.name] ?: 0) > 0
+        drawPath(t, ::shown)
+        if (suggestion != null && !going && shown(suggestion)) drawSuggestion(suggestion, t)
+        if (shown(Island.VOWELS)) {
+            drawIsland(VOWELS_ISLAND, t)
+            drawVowelRocks(VOWELS_ISLAND, game.data.hidden, measurer, font)
+        }
+        if (shown(Island.NUMBERS)) {
+            drawIsland(NUMBERS_ISLAND, t)
+            drawNumberRocks(NUMBERS_ISLAND, measurer, font)
+        }
+        if (shown(Island.COLORS)) {
+            drawIsland(COLORS_ISLAND, t)
+            drawIslandBalloons(COLORS_ISLAND, t)
+        }
+        if (shown(Island.SHAPES)) {
+            drawIsland(SHAPES_ISLAND, t)
+            drawIslandShapes(SHAPES_ISLAND)
+        }
+        if (shown(Island.FEELINGS)) {
+            drawIsland(FEELINGS_ISLAND, t)
+            drawIslandFaces(FEELINGS_ISLAND)
+        }
+        if (shown(Island.WORDS)) {
+            drawIsland(WORDS_ISLAND, t, WORDS_RX, WORDS_RY)
+            drawOpenBook(WORDS_ISLAND + Offset(0f, -14f), 58f)
+        }
+        if (done(Island.VOWELS)) drawFlag(VOWELS_ISLAND + Offset(92f, -34f))
+        if (done(Island.NUMBERS)) drawFlag(NUMBERS_ISLAND + Offset(92f, -34f))
         // Lower than the others: higher, on an iPhone held with its island on the right, the Dynamic Island hides it.
-        if ((game.data.islands[Island.COLORS.name] ?: 0) > 0) drawFlag(COLORS_ISLAND + Offset(84f, 24f))
-        if ((game.data.islands[Island.SHAPES.name] ?: 0) > 0) drawFlag(SHAPES_ISLAND + Offset(102f, -4f))
-        if ((game.data.islands[Island.FEELINGS.name] ?: 0) > 0) drawFlag(FEELINGS_ISLAND + Offset(84f, -30f))
+        if (done(Island.COLORS)) drawFlag(COLORS_ISLAND + Offset(84f, 24f))
+        if (done(Island.SHAPES)) drawFlag(SHAPES_ISLAND + Offset(102f, -4f))
+        if (done(Island.FEELINGS)) drawFlag(FEELINGS_ISLAND + Offset(84f, -30f))
         // Low, beside the book: the island is so high that a flag at its back would go out of the screen.
-        if ((game.data.islands[Island.WORDS.name] ?: 0) > 0) drawFlag(WORDS_ISLAND + Offset(50f, 14f))
+        if (done(Island.WORDS)) drawFlag(WORDS_ISLAND + Offset(50f, 14f))
         drawBoat(game.data.look, BOAT + Offset(0f, 4f * sin(t * 1.5f)), t, photo, suggestion?.let { islandCenter(it) })
         drawHomeButton(stage)
     }
@@ -213,10 +233,18 @@ private fun DrawScope.drawIsland(
     ellipse(Color(0xFF93D46E), center + Offset(0f, -8f), rx - 20f, ry - 16f)
 }
 
-/** The rocks of the island of letters: the vowels in a row, and the consonants in front, as they come in. */
-private fun DrawScope.drawVowelRocks(center: Offset, measurer: TextMeasurer, font: FontFamily) {
+/**
+ * The rocks of the island of letters: the vowels in a row, and the consonants in front, as they come in; without the
+ * ones the grown-ups took out, [hidden] (ADR 0041).
+ */
+private fun DrawScope.drawVowelRocks(
+    center: Offset,
+    hidden: Set<Char>,
+    measurer: TextMeasurer,
+    font: FontFamily,
+) {
     val steps = listOf(VOWELS, CONSONANTS, NEXT_CONSONANTS, LAST_CONSONANTS)
-    drawRocks(center, steps.map { row -> row.map { it.uppercase() } }, measurer, font)
+    drawRocks(center, steps.map { row -> row.filter { it !in hidden }.map { it.uppercase() } }.filter { it.isNotEmpty() }, measurer, font)
 }
 
 /** The rocks of the island of numbers: one to five in a row and six to ten in front. */
@@ -269,18 +297,28 @@ private fun DrawScope.drawIslandBalloons(center: Offset, t: Float) {
     }
 }
 
-private fun DrawScope.drawPath(t: Float) {
+private fun DrawScope.drawPath(t: Float, shown: (Island) -> Boolean) {
     val dots = path {
-        moveTo(VOWELS_ISLAND.x + 60f, VOWELS_ISLAND.y - 40f)
-        quadraticTo(400f, 150f, NUMBERS_ISLAND.x - 90f, NUMBERS_ISLAND.y + 10f)
-        moveTo(NUMBERS_ISLAND.x + 70f, NUMBERS_ISLAND.y + 48f)
-        quadraticTo(720f, 230f, COLORS_ISLAND.x + 20f, COLORS_ISLAND.y - 62f)
-        moveTo(VOWELS_ISLAND.x + 10f, VOWELS_ISLAND.y - 60f)
-        quadraticTo(290f, 170f, SHAPES_ISLAND.x - 30f, SHAPES_ISLAND.y + 56f)
-        moveTo(VOWELS_ISLAND.x - 90f, VOWELS_ISLAND.y - 36f)
-        quadraticTo(150f, 228f, FEELINGS_ISLAND.x + 30f, FEELINGS_ISLAND.y + 56f)
-        moveTo(SHAPES_ISLAND.x + 116f, SHAPES_ISLAND.y - 10f)
-        quadraticTo(520f, 26f, WORDS_ISLAND.x - WORDS_RX - 8f, WORDS_ISLAND.y)
+        if (shown(Island.VOWELS) && shown(Island.NUMBERS)) {
+            moveTo(VOWELS_ISLAND.x + 60f, VOWELS_ISLAND.y - 40f)
+            quadraticTo(400f, 150f, NUMBERS_ISLAND.x - 90f, NUMBERS_ISLAND.y + 10f)
+        }
+        if (shown(Island.NUMBERS) && shown(Island.COLORS)) {
+            moveTo(NUMBERS_ISLAND.x + 70f, NUMBERS_ISLAND.y + 48f)
+            quadraticTo(720f, 230f, COLORS_ISLAND.x + 20f, COLORS_ISLAND.y - 62f)
+        }
+        if (shown(Island.VOWELS) && shown(Island.SHAPES)) {
+            moveTo(VOWELS_ISLAND.x + 10f, VOWELS_ISLAND.y - 60f)
+            quadraticTo(290f, 170f, SHAPES_ISLAND.x - 30f, SHAPES_ISLAND.y + 56f)
+        }
+        if (shown(Island.VOWELS) && shown(Island.FEELINGS)) {
+            moveTo(VOWELS_ISLAND.x - 90f, VOWELS_ISLAND.y - 36f)
+            quadraticTo(150f, 228f, FEELINGS_ISLAND.x + 30f, FEELINGS_ISLAND.y + 56f)
+        }
+        if (shown(Island.SHAPES) && shown(Island.WORDS)) {
+            moveTo(SHAPES_ISLAND.x + 116f, SHAPES_ISLAND.y - 10f)
+            quadraticTo(520f, 26f, WORDS_ISLAND.x - WORDS_RX - 8f, WORDS_ISLAND.y)
+        }
     }
     drawPath(
         dots,

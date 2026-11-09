@@ -76,6 +76,9 @@ data class SaveData(
     val firstTries: Map<String, List<Boolean>> = emptyMap(),
     /** Times she finished each island, by its name. */
     val islands: Map<String, Int> = emptyMap(),
+    /** The islands the grown-ups took off the map, by name, and the consonants they took out of the letters (ADR 0041). */
+    val hiddenIslands: List<String> = emptyList(),
+    val hiddenLetters: List<String> = emptyList(),
     /** What she did each of the last days, by day as yyyymmdd: her week in the grown-ups' corner (ADR 0040). */
     val days: Map<String, DayLog> = emptyMap(),
     /** Where she stuck the sticker of each island on the wall of the room, by its name: x and y on the stage (ADR 0024). */
