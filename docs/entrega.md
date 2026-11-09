@@ -162,6 +162,14 @@ encima, y Bruno sigue como estaba. Para seguir pasado el año hay que renovar el
 Con el programa, la vía 1 también dura un año en vez de 7 días: es casi lo mismo que la ad hoc, pero instalando desde
 Xcode.
 
+### Si cambia de iPhone
+
+El iPhone nuevo hay que darlo de alta y volver a instalar el juego, como el primer día: una app ad hoc no vuelve sola
+con la copia del iPhone, y no está claro que su partida vuelva con ella ([ADR 0039](adr/0039-una-copia-de-su-partida.md)).
+Por eso, **antes de cambiar**: en la zona de mayores, «Su partida» > «Guardar una copia», en Archivos (o en iCloud
+Drive). En el iPhone nuevo, con el juego ya instalado: «Recuperar una copia», el fichero `partida-de-bruno.json`, y
+tocar otra vez para confirmar. Vuelven lo que ha hecho, su nombre, su Bruno y su foto.
+
 ## Android · el APK
 
 Por si juega en un móvil o una tableta Android.
@@ -198,3 +206,6 @@ Es la última parte de M4, y se prueba allí, con el sonido puesto:
   micrófono: lo da un mayor. Después, Bruno repite con la voz de ella la palabra que dice, por el altavoz
   ([ADR 0011](adr/0011-habla-con-bruno.md)).
 - Al cerrarlo y volver a abrirlo, Bruno sigue como estaba, y la zona de mayores se abre manteniendo el candado.
+- La música de las islas suena muy baja, y la voz se entiende encima ([ADR 0038](adr/0038-musica-suave-en-las-islas.md)).
+- «Guardar una copia» deja el fichero en Archivos, y «Recuperar una copia» lo vuelve a leer
+  ([ADR 0039](adr/0039-una-copia-de-su-partida.md)).

@@ -22,6 +22,7 @@ import com.fanguskdev.mymonsterbruno.game.plusOne
 import com.fanguskdev.mymonsterbruno.game.weekdayOf
 import com.fanguskdev.mymonsterbruno.storage.KeyValueStore
 import com.fanguskdev.mymonsterbruno.storage.PhotoStore
+import com.fanguskdev.mymonsterbruno.storage.Restored
 import com.fanguskdev.mymonsterbruno.storage.today
 import org.jetbrains.compose.resources.decodeToImageBitmap
 import kotlin.random.Random
@@ -188,6 +189,21 @@ internal class GameState(
     fun removePhoto() {
         PhotoStore.remove(store)
         photo = null
+    }
+
+    /**
+     * A grown-up recovered a copy of her game (ADR 0039): it takes the place of this one, her photo too, and the game goes
+     * back to where that copy was when the grown-ups' corner closes.
+     */
+    fun restore(copy: Restored) {
+        update { Session.onDay(copy.data, day()) }
+        val restored = copy.photo
+        if (restored != null) {
+            PhotoStore.save(store, restored)
+            photo = restored
+        } else {
+            removePhoto()
+        }
     }
 
     fun go(next: Scene) {

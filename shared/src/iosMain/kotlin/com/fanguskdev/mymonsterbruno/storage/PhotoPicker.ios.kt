@@ -111,7 +111,7 @@ private class PickerDelegate(val controller: PHPickerViewController, private val
 }
 
 /** The view controller on top in the key window of the game's scene: the picker is shown over it. */
-private fun topViewController(): UIViewController? {
+internal fun topViewController(): UIViewController? {
     val scenes = UIApplication.sharedApplication.connectedScenes.filterIsInstance<UIWindowScene>()
     val scene = scenes.firstOrNull { it.activationState == UISceneActivationStateForegroundActive } ?: scenes.firstOrNull()
     val root = scene?.keyWindow?.rootViewController ?: return null

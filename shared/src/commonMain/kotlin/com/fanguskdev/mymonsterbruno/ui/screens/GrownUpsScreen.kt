@@ -65,6 +65,9 @@ import com.fanguskdev.mymonsterbruno.game.Weather
 import com.fanguskdev.mymonsterbruno.game.choices
 import com.fanguskdev.mymonsterbruno.game.chosenPet
 import com.fanguskdev.mymonsterbruno.game.feltDays
+import com.fanguskdev.mymonsterbruno.storage.Backup
+import com.fanguskdev.mymonsterbruno.storage.Restored
+import com.fanguskdev.mymonsterbruno.storage.rememberBackupFiles
 import com.fanguskdev.mymonsterbruno.storage.rememberPhotoPicker
 import com.fanguskdev.mymonsterbruno.ui.GameState
 import com.fanguskdev.mymonsterbruno.ui.Island
@@ -268,6 +271,46 @@ internal fun GrownUpsScreen(game: GameState, onExit: (() -> Unit)? = null) {
                 val felt = days.joinToString("   ") { (day, feeling) -> "${day % 100}/${day / 100 % 100}: ${feeling.spoken}" }
                 Text(if (days.isEmpty()) "Todavía no lo ha dicho." else felt, font, 16)
             }
+            Section("Su partida", font) {
+                Text(
+                    "Una copia de todo lo que ha hecho, con su nombre, su Bruno y su foto, para llevarla a otro móvil si cambiáis de " +
+                        "teléfono. Se guarda donde elijáis; el juego no la manda a ningún sitio.",
+                    font,
+                    15,
+                    color = Soft,
+                )
+                val files = rememberBackupFiles()
+                val scope = rememberCoroutineScope()
+                var note by remember { mutableStateOf<String?>(null) }
+                var found by remember { mutableStateOf<Restored?>(null) }
+                Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                    Chip("Guardar una copia", font, selected = false) {
+                        scope.launch {
+                            found = null
+                            note = if (files.save(Backup.FILE_NAME, Backup.write(game.data, game.photo))) "Copia guardada." else null
+                        }
+                    }
+                    Chip(if (found == null) "Recuperar una copia" else "Toca otra vez para recuperarla", font, selected = found != null) {
+                        val copy = found
+                        if (copy != null) {
+                            game.restore(copy)
+                            found = null
+                            note = "Partida recuperada."
+                        } else {
+                            scope.launch {
+                                val text = files.open() ?: return@launch
+                                found = Backup.read(text)
+                                note = if (found == null) {
+                                    "Ese fichero no es una copia del juego: no cambia nada."
+                                } else {
+                                    "Cambiará la partida de ahora por la de la copia."
+                                }
+                            }
+                        }
+                    }
+                }
+                note?.let { Text(it, font, 15) }
+            }
             Section("Bruno", font) {
                 Text("Volver a empezar: Bruno vuelve al huevo y se borra lo practicado. Los ajustes se quedan.", font, 15, color = Soft)
                 Chip(if (confirmReset) "Toca otra vez para confirmar" else "Volver a empezar", font, selected = confirmReset) {
@@ -291,7 +334,13 @@ internal fun GrownUpsScreen(game: GameState, onExit: (() -> Unit)? = null) {
                     }
                 }
             }
-            Text("Sin internet, sin anuncios, sin compras y sin datos fuera del dispositivo.", font, 14, color = Soft)
+            Text(
+                "Sin internet, sin anuncios, sin compras y sin datos fuera del dispositivo: la copia de su partida solo sale si la " +
+                    "guardáis vosotros.",
+                font,
+                14,
+                color = Soft,
+            )
             Text(
                 "El micrófono solo escucha en «Habla con Bruno» mientras ella mantiene el botón. Lo que oye lo reconoce el propio " +
                     "aparato, sin conexión, y no se guarda.",

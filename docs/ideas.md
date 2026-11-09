@@ -113,7 +113,8 @@ recorridos del iPhone de un tirón. Y una que no estaba aquí, la pantalla de in
   *Pequeña.*
 - **4.3 Bruno más despacio.** Un ajuste de velocidad de la voz, por si a ella le cuesta seguirlo. *Mediana.*
 - **4.4 Que la partida no se pierda al cambiar de móvil.** Comprobar que la copia del propio iPhone la guarda y, si no, poder
-  exportarla. *Pequeña.*
+  exportarla. *Pequeña. Hecha: no se puede asegurar con una app ad hoc, así que una copia a mano en la zona de mayores
+  ([ADR 0039](adr/0039-una-copia-de-su-partida.md)).*
 - **4.5 Sin la frase de Apple en el permiso.** Comprobar la palabra con la API de iOS 26 (SpeechAnalyzer), que reconoce en
   el iPhone, y ver si así ya no sale el permiso de reconocimiento de voz con su frase fija. Solo vale si su iPhone tiene
   iOS 26. *Mediana. Descartada: «No, déjalo» (Fangusk, 2026-11-09).*

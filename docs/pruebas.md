@@ -42,6 +42,7 @@ Qué se prueba en cada cambio y en cada hito, y cómo. Los criterios de salida d
 | Cada frase del juego tiene su fichero y dura lo que una frase; el guion y el código tienen las mismas frases; cada efecto tiene su fichero, y cada pieza de música el suyo, de 15 a 32 segundos y por debajo de un mega | `AudioFilesTest` | JVM |
 | La música de las islas: la de donde está, en cuanto se carga y solo si está puesta; otra isla, otra pieza; al volver del fondo, suena otra vez | `MusicTest` | Común |
 | Su foto en Android 8: la orientación que la cámara escribió en el EXIF, en los dos órdenes de bytes, y cómo ponerla derecha; sin EXIF, cortada o rara, tal cual | `ExifTest` | Común |
+| La copia de su partida: vuelve como se fue, con su foto o sin ella; lo que no es una copia del juego (otro juego, texto suelto, una foto rota) no pasa por una | `BackupTest` | Común |
 | Las veintiocho pantallas y, el cuarto con cada uno de los seis animales, el cuarto con lluvia y con nieve en la ventana, los caminos de bucles y de caracol, el cuarto con sus pegatinas, cuando ya sabe las vocales y del 1 al 5, Comeletras, los trazos y las fresas con lo nuevo, Comeletras y los trazos con la T, la N y la D y con la F, la B y la R, el mapa con su cuarta fila de rocas, la pantalla de inicio con el huevo, el cuarto con su foto y cuando Bruno le pide que le enseñe su nombre, la emoción del día con su foto, la pantalla de inicio, el mapa y la hora de dormir con su foto, la carrera de animales, Comeletras, los globos, las emociones, las palabras y las rimas con cuatro para elegir y Comeletras con dos, y el mapa con todas las islas terminadas y sus banderas, se dibujan en móvil (2,17:1) y en tableta (4:3) | `ScreenshotsTest` | JVM |
 | La salida de la zona de mayores: «Salir del juego» guarda la partida y cierra; sin salida en la plataforma, como en iOS, no hay botón | `GrownUpsExitTest` | JVM |
 | El icono de iOS es el de Android: lo dibuja del vector de `androidApp` en `shared/build/icono/` y lo compara con el del proyecto de Xcode; si cambia el de Android, se copia el nuevo | `AppIconTest` | JVM |
@@ -95,7 +96,7 @@ propio Mac ([ADR 0027](adr/0027-el-mac-tambien-comprueba-la-palabra.md)); el emu
 Para ver el juego en un iPhone 15 Pro simulado, girado a un lado y al otro, sin tocarlo a mano:
 [`tools/conductor-ios`](../tools/conductor-ios) es una prueba de interfaz que toca el escenario de 800 × 400 y, en cada
 punto de control, espera a que `vigilante.sh` saque una captura con lo que tapan la isla y las esquinas pintado de negro.
-Tiene veintidós recorridos:
+Tiene veintitrés recorridos:
 
 - los dos de la entrega, que empiezan en el huevo: `testWalkThroughHeldBothWays` y `testFinalVersionBothWays`;
 - `testTalkAndPhoto`, «Habla con Bruno» y elegir su foto;
@@ -126,7 +127,9 @@ Tiene veintidós recorridos:
   palmadas en las manos, que el narrador cuenta, hasta volver al cuarto;
 - `testRace`, la isla de los números el día de la carrera: las fresas y las tres carreras, tocando las calles por
   turnos, lejos de donde sale el regalo, hasta el regalo;
-- `testMusicSwitch`, el interruptor de la música en la zona de mayores: quitarla y volver al juego.
+- `testMusicSwitch`, el interruptor de la música en la zona de mayores: quitarla y volver al juego;
+- `testCopy`, la copia de su partida: guardarla en Archivos con el selector de Apple, elegir un perro y recuperar la
+  copia, que no tenía animal.
 
 Todos pasan antes por la pantalla de inicio, con un toque. Siempre en silencio (`-silencio`) y en un simulador propio que
 se borra al acabar, nunca en uno de otra sesión.
@@ -490,6 +493,19 @@ pedirían el móvil o la tableta (2026-11-06).
   mayores enseña «Música: sí» con su explicación; tocarlo la quita, la partida lo guarda y las islas siguen igual. La
   música, el bucle y la vuelta del fondo los prueban `MusicTest` y `DesktopSoundTest`; oírla queda para la entrega
   (2026-11-09).
+
+### M5 · Una copia de su partida
+
+- [ ] En la zona de mayores, «Su partida»: «Guardar una copia» abre el sitio de guardar del aparato y deja
+  `partida-de-bruno.json`; «Copia guardada.».
+- [ ] «Recuperar una copia» abre el sitio de abrir ficheros; con una copia, pide tocar otra vez y la partida y la foto
+  pasan a ser las de la copia; con otro fichero, lo dice y no cambia nada.
+- [x] En el emulador Tester_API36, con Lucía, su gato, una isla terminada y su foto: «Guardar una copia» abre el
+  selector de Android y deja `partida-de-bruno.json` en Descargas (15 KB); con otra partida en su lugar (Ana, sin
+  animal ni foto), «Recuperar una copia», el fichero y tocar otra vez: vuelven su nombre, su gato, su foto en el
+  cuarto y la pegatina de la isla. En el simulador de iPhone 15 Pro (`testCopy`), con Archivos: se guarda, se
+  elige un perro y, al recuperar la copia, vuelve a no tener animal. Pasar a otro iPhone de verdad queda para
+  cuando cambie de móvil (2026-11-09).
 
 ### M5 · La F, la B y la R
 

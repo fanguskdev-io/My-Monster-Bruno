@@ -176,7 +176,7 @@ final class BrunoDriverTests: XCTestCase {
     /// Drags the grown-ups' corner slowly, down or up, until [text] can be touched: a quick swipe does not move it.
     private func scrollTo(_ text: String, down: Bool = true) {
         let element = app.staticTexts[text]
-        for _ in 0..<10 {
+        for _ in 0..<14 {
             if element.exists && element.isHittable { return }
             if down {
                 at(400, 330).press(forDuration: 0.2, thenDragTo: at(400, 60), withVelocity: 300, thenHoldForDuration: 0.3)
@@ -574,6 +574,40 @@ final class BrunoDriverTests: XCTestCase {
         tapText("Volver al juego")
         sleep(3)
         checkpoint("s3-cuarto-der")
+    }
+
+    /// A copy of her game (ADR 0039): a grown-up keeps it in Files with Apple's picker, chooses a dog as her favourite
+    /// animal, and recovers the copy, which had none. The picker is another process, touched by where things are: Save at
+    /// the top right, and the copy, the first of the recent files.
+    func testCopy() {
+        XCUIDevice.shared.orientation = .landscapeRight
+        launchPastStart()
+        sleep(1)
+        lock.press(forDuration: 3.5)
+        sleep(2)
+        scrollTo("Guardar una copia")
+        tapText("Guardar una copia")
+        sleep(5)
+        checkpoint("k1-guardar-der")
+        at(screen.width - 44, 30).tap()
+        sleep(4)
+        checkpoint("k2-guardada-der")
+        scrollTo("Perro", down: false)
+        tapText("Perro")
+        sleep(1)
+        checkpoint("k3-perro-der")
+        scrollTo("Recuperar una copia")
+        tapText("Recuperar una copia")
+        sleep(5)
+        checkpoint("k4-abrir-der")
+        at(151, 196).tap()
+        sleep(4)
+        checkpoint("k5-confirmar-der")
+        tapText("Toca otra vez para recuperarla")
+        sleep(2)
+        checkpoint("k6-recuperada-der")
+        scrollTo("Ninguno", down: false)
+        checkpoint("k7-sin-animal-der")
     }
 
     /// The stickers of the room (ADR 0024): the save has every island finished and none stuck yet. She takes the first one
