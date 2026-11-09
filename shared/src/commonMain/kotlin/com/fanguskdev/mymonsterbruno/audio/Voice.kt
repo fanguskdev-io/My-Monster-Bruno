@@ -129,6 +129,14 @@ internal object Voice {
     /** «¡Mira quién ha venido a vivir conmigo!», the first time her animal is in the room (ADR 0033). */
     const val NEW_PET = "b_mascota_nueva"
 
+    /** «¡A mí me apetece ir a la isla de las letras! ¿Y a ti?», and so on: the island Bruno suggests on the map (ADR 0035). */
+    const val SUGGEST_LETTERS = "b_sugiere_letras"
+    const val SUGGEST_NUMBERS = "b_sugiere_numeros"
+    const val SUGGEST_COLORS = "b_sugiere_colores"
+    const val SUGGEST_SHAPES = "b_sugiere_formas"
+    const val SUGGEST_FEELINGS = "b_sugiere_emociones"
+    const val SUGGEST_WORDS = "b_sugiere_palabras"
+
     /** Bruno's wardrobe, from the room (ADR 0032): how he greets her in it, and what he says taking something off. */
     const val WARDROBE_INTRO = "b_armario_intro"
     const val TAKE_OFF = "b_me_lo_quito"
@@ -371,7 +379,8 @@ internal object Voice {
         STICKER_WORDS, STICK_IT, SO_PRETTY, STORY_INTRO, WHAT_FIRST, AND_NEXT, AND_AT_THE_END, LATER, THANKS_STORIES,
         NUMBER_LINE_INTRO, BESIDE_BRUNO, THANKS_NUMBER_LINE, PLACES_INTRO, HIDDEN, THANKS_PLACES, SUMS_INTRO, HOW_MANY_NOW,
         COUNT_THEM_ALL, THANKS_SUMS, ASSEMBLY_INTRO, WHAT_WEATHER, DAY_STARTS, PATHS_INTRO, FOLLOW_PATH, AT_HOME, THANKS_PATHS,
-        WARDROBE_INTRO, TAKE_OFF, NEW_PET,
+        WARDROBE_INTRO, TAKE_OFF, NEW_PET, SUGGEST_LETTERS, SUGGEST_NUMBERS, SUGGEST_COLORS, SUGGEST_SHAPES, SUGGEST_FEELINGS,
+        SUGGEST_WORDS,
     ) +
         Pet.entries.map { petHello(it) } +
         PathShape.entries.map { pathIs(it) } +

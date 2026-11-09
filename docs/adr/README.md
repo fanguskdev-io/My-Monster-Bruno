@@ -45,3 +45,4 @@ y estas decisiones existen antes de G4 porque Fangusk pidió desarrollar ya. Las
 | [0032](0032-el-armario-de-bruno.md) | El armario de Bruno, desde el cuarto: qué regalos lleva, su color y su cabeza | Aceptada; la percha, las baldas y uno de cada sitio, propuesta |
 | [0033](0033-su-animal-favorito.md) | Su animal favorito, que eligen los mayores y vive en una balda del cuarto de Bruno | Aceptada; los seis animales, la balda y que no salga en las islas, propuesta |
 | [0034](0034-su-foto-en-mas-sitios.md) | Su foto en más sitios: en la barca con Bruno, en la pantalla de inicio y en el mapa, y en la tarjeta de la misión para casa | Aceptada; que vaya sentada a su lado y prendida en la esquina de la tarjeta, propuesta |
+| [0035](0035-bruno-sugiere-una-isla.md) | Bruno sugiere una isla al llegar al mapa: la que menos ha terminado, sin obligar | Aceptada; una vez cada vez que se abre el juego, la frase y las ondas, propuesta |

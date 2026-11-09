@@ -8,9 +8,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.drawscope.DrawScope
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.TextMeasurer
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.rememberTextMeasurer
@@ -49,6 +51,8 @@ import com.fanguskdev.mymonsterbruno.ui.path
 import com.fanguskdev.mymonsterbruno.ui.rememberClock
 import com.fanguskdev.mymonsterbruno.ui.rememberPhoto
 import com.fanguskdev.mymonsterbruno.ui.stroke
+import com.fanguskdev.mymonsterbruno.ui.suggestedIsland
+import com.fanguskdev.mymonsterbruno.ui.suggestionLine
 import kotlinx.coroutines.launch
 import kotlin.math.sin
 
@@ -79,7 +83,18 @@ internal fun MapScreen(game: GameState) {
     val audio = game.audio
     var going by remember { mutableStateOf(false) }
 
-    LaunchedEffect(Unit) { audio.say(Voice.WHICH_ISLAND) }
+    // The first time she gets to the map since the game opened, Bruno suggests the island she has done least, which
+    // shines while they are on the map; any other is as good (ADR 0035).
+    val suggestion = remember { if (game.suggestedIsland) null else game.data.suggestedIsland(game.currentDay()) }
+
+    LaunchedEffect(Unit) {
+        if (suggestion != null) {
+            game.suggestedIsland = true
+            audio.say(Voice.WHICH_ISLAND, suggestion.suggestionLine)
+        } else {
+            audio.say(Voice.WHICH_ISLAND)
+        }
+    }
 
     val touch = remember {
         object : Touch {
@@ -116,6 +131,7 @@ internal fun MapScreen(game: GameState) {
         val t = clock.value
         drawSea(stage, t)
         drawPath(t)
+        if (suggestion != null && !going) drawSuggestion(suggestion, t)
         drawIsland(VOWELS_ISLAND, t)
         drawVowelRocks(VOWELS_ISLAND, measurer, font)
         drawIsland(NUMBERS_ISLAND, t)
@@ -136,7 +152,7 @@ internal fun MapScreen(game: GameState) {
         if ((game.data.islands[Island.FEELINGS.name] ?: 0) > 0) drawFlag(FEELINGS_ISLAND + Offset(84f, -30f))
         // Low, beside the book: the island is so high that a flag at its back would go out of the screen.
         if ((game.data.islands[Island.WORDS.name] ?: 0) > 0) drawFlag(WORDS_ISLAND + Offset(50f, 14f))
-        drawBoat(game.data.look, BOAT + Offset(0f, 4f * sin(t * 1.5f)), t, photo)
+        drawBoat(game.data.look, BOAT + Offset(0f, 4f * sin(t * 1.5f)), t, photo, suggestion?.let { islandCenter(it) })
         drawHomeButton(stage)
     }
 }
@@ -151,6 +167,40 @@ private fun inIsland(
     val dy = (point.y - island.y) / (ry + 40f)
     return dx * dx + dy * dy <= 1f
 }
+
+/** Where [island] is on the map. */
+private fun islandCenter(island: Island): Offset = when (island) {
+    Island.VOWELS -> VOWELS_ISLAND
+    Island.NUMBERS -> NUMBERS_ISLAND
+    Island.COLORS -> COLORS_ISLAND
+    Island.SHAPES -> SHAPES_ISLAND
+    Island.FEELINGS -> FEELINGS_ISLAND
+    Island.WORDS -> WORDS_ISLAND
+}
+
+/**
+ * Two soft ripples round the island Bruno suggests (ADR 0035), that grow and fade slowly, one after the other: they show
+ * the way, but nothing jumps or calls, so that any other island is as good.
+ */
+private fun DrawScope.drawSuggestion(island: Island, t: Float) {
+    val center = islandCenter(island) + Offset(0f, 6f)
+    val words = island == Island.WORDS
+    for (k in 0 until 2) {
+        val phase = (t / SUGGESTION_SECONDS + k / 2f) % 1f
+        val grow = 1f + 0.14f * phase
+        val rx = ((if (words) WORDS_RX else ISLAND_RX) + 20f) * grow
+        val ry = ((if (words) WORDS_RY else ISLAND_RY) + 16f) * grow
+        drawOval(
+            Color.White,
+            topLeft = Offset(center.x - rx, center.y - ry),
+            size = Size(rx * 2, ry * 2),
+            alpha = 0.9f * (1f - phase),
+            style = Stroke(6f),
+        )
+    }
+}
+
+private const val SUGGESTION_SECONDS = 2.4f
 
 private fun DrawScope.drawIsland(
     center: Offset,
@@ -257,14 +307,20 @@ private fun DrawScope.drawFlag(at: Offset) {
     )
 }
 
-/** Bruno's boat on the map, and her in it at his side, where he looks, if there is a [photo] of her (ADR 0034). */
+/**
+ * Bruno's boat on the map, and her in it at his side, where he looks, if there is a [photo] of her (ADR 0034). Bruno looks
+ * at [lookingAt], the island he suggests (ADR 0035), or ahead.
+ */
 private fun DrawScope.drawBoat(
     look: BrunoLook,
     at: Offset,
     t: Float,
     photo: ImageBitmap?,
+    lookingAt: Offset?,
 ) {
-    drawBruno(look, at + Offset(if (photo != null) -14f else 0f, -36f), 80f, Pose(lookX = 0.6f), t)
+    val bruno = at + Offset(if (photo != null) -14f else 0f, -36f)
+    val toward = lookingAt?.let { (it - bruno) / (it - bruno).getDistance() }
+    drawBruno(look, bruno, 80f, Pose(lookX = toward?.x ?: 0.6f, lookY = toward?.y ?: 0f), t)
     photo?.let { drawRoundPhoto(it, at + Offset(32f, -20f), 18f) }
     fill(
         path {

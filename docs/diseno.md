@@ -114,7 +114,9 @@ de él y la ventana del cuarto lo enseña el resto del día. El día sale de la 
    la primera vez Bruno lo presenta y, si lo toca, salta y Bruno dice que lo cuida.
 3. **El mapa**. Bruno va en su barca. Hay seis islas: la de las letras, la de los números, la de los colores, la de las
    formas, la de las emociones y, la más pequeña, arriba a la derecha, la de las palabras. Una isla terminada lleva su
-   bandera.
+   bandera. La primera vez que llega al mapa cada vez que se abre el juego, Bruno **sugiere una isla**, la que menos ha
+   terminado: «¡A mí me apetece ir a la isla de las formas! ¿Y a ti?», la mira y alrededor salen unas ondas suaves; pero
+   cualquier otra vale igual ([ADR 0035](adr/0035-bruno-sugiere-una-isla.md)).
 4. **La isla de las letras**, las vocales, la M, la P, la L y la S, la T, la N y la D, y la F, la B y la R
    ([ADR 0009](adr/0009-mas-letras-y-numeros-hasta-el-diez.md), [ADR 0014](adr/0014-la-t-la-n-y-la-d.md),
    [ADR 0022](adr/0022-la-f-la-b-y-la-r.md)):
@@ -273,7 +275,7 @@ Las **voces de la familia** no se harán: «para M2 no vamos a utilizar las voce
 - **Bruno y todo lo demás se dibujan con vectores**, sin imágenes: Bruno respira, parpadea, mira y cambia de cara (ocho
   bocas, cuatro ojos, tres posturas de brazos).
 - **Las voces** son las de un narrador y la de Bruno, algo más aguda y más despacio, a unas 4 sílabas por segundo. Hay
-  716 frases pregrabadas con la voz del sistema del Mac y **los efectos** (17) se sintetizan desde cero
+  722 frases pregrabadas con la voz del sistema del Mac y **los efectos** (17) se sintetizan desde cero
   ([ADR 0004](adr/0004-voces-provisionales.md)). Las frases están en [`voces/guion.tsv`](../voces/guion.tsv).
 - **La letra** de la zona de mayores, de los números, del banderín y del título es Andika, una tipografía pensada para quien aprende a
   leer (licencia OFL, en [`licencias/`](../licencias/Andika-OFL.txt)).

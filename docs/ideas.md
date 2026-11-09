@@ -78,7 +78,8 @@ recorridos del iPhone de un tirón. Y una que no estaba aquí, la pantalla de in
 - **2.1 Que se adapte a lo que sabe.** Si acierta mucho, cuatro galletas o cuatro cartas en vez de tres; si le cuesta, dos.
   Sin decírselo nunca y sin niveles ni puntos. *Mediana. Hecha, en Comeletras, los globos, las caritas y las cartas
   ([ADR 0020](adr/0020-se-adapta-a-lo-que-sabe.md)).*
-- **2.2 Bruno sugiere una isla.** Al llegar al mapa, Bruno señala la isla que menos ha visitado, sin obligar. *Pequeña.*
+- **2.2 Bruno sugiere una isla.** Al llegar al mapa, Bruno señala la isla que menos ha visitado, sin obligar. *Pequeña.
+  Hecha: la que menos ha terminado, una vez cada vez que se abre el juego ([ADR 0035](adr/0035-bruno-sugiere-una-isla.md)).*
 - **2.3 El armario de Bruno.** En el cuarto, elegir qué regalos lleva puestos y cambiarle el color o la cabeza más adelante.
   *Pequeña. Hecha, con la percha del cuarto ([ADR 0032](adr/0032-el-armario-de-bruno.md)).*
 - **2.4 Pegatinas para el cuarto.** Cada isla terminada da una pegatina que ella pega donde quiera en el cuarto de Bruno.

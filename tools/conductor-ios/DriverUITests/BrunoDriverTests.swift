@@ -481,6 +481,24 @@ final class BrunoDriverTests: XCTestCase {
         checkpoint("f3-inicio-con-foto-der")
     }
 
+    /// The island Bruno suggests (ADR 0035): the save has every island finished once but the one of the shapes. On the map,
+    /// the first time, that island shines and Bruno looks at it; she goes to another one, the numbers, which is as good,
+    /// and back on the map there is no suggestion any more.
+    func testSuggestion() {
+        XCUIDevice.shared.orientation = .landscapeRight
+        launchPastStart()
+        sleep(2)
+        stage(680, 290).tap()
+        sleep(3)
+        checkpoint("g1-mapa-sugiere-formas-der")
+        stage(588, 150).tap()
+        sleep(5)
+        checkpoint("g2-isla-numeros-der")
+        house.tap()
+        sleep(3)
+        checkpoint("g3-mapa-sin-sugerencia-der")
+    }
+
     /// The stickers of the room (ADR 0024): the save has every island finished and none stuck yet. She takes the first one
     /// from the rug to the wall, lets the next one go on the floor, where it does not stay, sticks it on the wall after
     /// all, and moves the first one somewhere else.

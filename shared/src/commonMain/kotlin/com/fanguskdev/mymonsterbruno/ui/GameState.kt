@@ -129,6 +129,9 @@ internal class GameState(
     /** Whether Bruno has invited her to the islands since the game opened. */
     var invitedToIsland = false
 
+    /** Whether Bruno has suggested an island on the map since the game opened (ADR 0035). */
+    var suggestedIsland = false
+
     /** Whether Bruno has asked her, since the game opened, to teach him her name (ADR 0017). */
     var askedForName = false
 

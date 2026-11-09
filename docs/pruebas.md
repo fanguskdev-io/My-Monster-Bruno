@@ -24,6 +24,7 @@ Qué se prueba en cada cambio y en cada hito, y cómo. Los criterios de salida d
 | Los caminos de Bruno: en cada visita, los tres menos hechos, las rectas primero; cada camino va a pasos iguales, como las letras, y no sale de donde llega el dedo, lejos de los botones y de la Dynamic Island; un dedo que sigue cualquiera de los seis, aunque vaya un poco de lado, lleva a Bruno a casa, uno lejos no lo mueve y, levantado, sigue desde donde lo dejó; trazar letras y los caminos se turnan por los días que va a la isla, y cada camino tiene su frase | `PathsTest`, `GameStateTest` | Común |
 | El armario: sin elegir, lleva el regalo más nuevo de cada sitio; ella elige uno de cada sitio o ninguno; un regalo nuevo se lo pone en su sitio; y la partida guarda lo que lleva, su color y su cabeza | `WardrobeTest` | Común |
 | Su animal favorito: el que eligieron los mayores, ninguno si no eligieron o si no existe, cada uno con su frase; y las pegatinas no se pegan encima de él | `PetTest`, `StickersTest` | Común |
+| La isla que sugiere Bruno: la que menos ha terminado y, entre iguales, otra cada día; una frase distinta para cada isla | `SuggestionTest` | Común |
 | Dentro y fuera: en cada visita, cada sitio una vez y Bruno y la pelota por turnos, empezando por cualquiera; fuera de la caja es cualquier sitio que no sea una caja, y los demás, solo el suyo; cada ronda tiene sus frases | `PlacesTest` | Común |
 | Las pegatinas: una por isla terminada, en el orden del mapa, hasta que la pega; moverla no la duplica; solo se pega en la pared y nunca encima de los botones, el banderín, el marco de su foto, Bruno o donde un iPhone tiene la isla | `StickersTest` | Común |
 | La cuenta atrás: el panel tiene del 1 al 10, una vez cada uno y desordenados; se cuenta del 10 al 0 y solo vale el número que va | `CountdownTest` | Común |
@@ -91,7 +92,7 @@ propio Mac ([ADR 0027](adr/0027-el-mac-tambien-comprueba-la-palabra.md)); el emu
 Para ver el juego en un iPhone 15 Pro simulado, girado a un lado y al otro, sin tocarlo a mano:
 [`tools/conductor-ios`](../tools/conductor-ios) es una prueba de interfaz que toca el escenario de 800 × 400 y, en cada
 punto de control, espera a que `vigilante.sh` saque una captura con lo que tapan la isla y las esquinas pintado de negro.
-Tiene dieciocho recorridos:
+Tiene diecinueve recorridos:
 
 - los dos de la entrega, que empiezan en el huevo: `testWalkThroughHeldBothWays` y `testFinalVersionBothWays`;
 - `testTalkAndPhoto`, «Habla con Bruno» y elegir su foto;
@@ -115,7 +116,9 @@ Tiene dieciocho recorridos:
 - `testWardrobe`, el armario: quitarle el gorro, ponerle las gafas, cambiarle el color y la cabeza, y volver al cuarto;
 - `testPet`, su animal: el gato, que Bruno presenta y salta al tocarlo, y el perro elegido en la zona de mayores;
 - `testPhotoPlaces`, su foto en más sitios: elegirla, en la barca del mapa con Bruno, prendida en la misión cuando se
-  acaba el tiempo y, al volver a abrir el juego, en la barca de la pantalla de inicio.
+  acaba el tiempo y, al volver a abrir el juego, en la barca de la pantalla de inicio;
+- `testSuggestion`, la isla que sugiere Bruno: la de las formas, la única sin terminar, con sus ondas; ir a otra, la de
+  los números, y al volver al mapa, ya sin sugerencia.
 
 Todos pasan antes por la pantalla de inicio, con un toque. Siempre en silencio (`-silencio`) y en un simulador propio que
 se borra al acabar, nunca en uno de otra sesión.
@@ -431,6 +434,16 @@ pedirían el móvil o la tableta (2026-11-06).
   va prendida en la tarjeta de la misión. En el simulador de iPhone 15 Pro (`testPhotoPlaces`), con la foto elegida en
   la galería, lo mismo: en el mapa, en la misión cuando se acaba el tiempo y, al volver a abrir el juego, en la barca de
   la pantalla de inicio (2026-11-09).
+
+### M5 · Bruno sugiere una isla
+
+- [ ] La primera vez que llega al mapa cada vez que se abre el juego, después de «¿A qué isla vamos hoy?», Bruno
+  sugiere la isla que menos ha terminado («¡A mí me apetece ir a la isla de las formas! ¿Y a ti?»), la mira y salen
+  ondas suaves alrededor. Cualquier otra isla se puede tocar igual.
+- [ ] Al volver al mapa, ya no la sugiere; al volver a abrir el juego, sí.
+- [x] En el emulador Tester_API36, con todas las islas terminadas una vez menos la de las formas: en el mapa, las ondas
+  alrededor de la de las formas y Bruno mirándola; la de los números se toca igual y, al volver al mapa, ya no hay
+  ondas. En el simulador de iPhone 15 Pro (`testSuggestion`), lo mismo (2026-11-09).
 
 ### M5 · La F, la B y la R
 

@@ -715,3 +715,9 @@ b_mascota_conejo	bruno	¡Mira cómo salta tu conejo! Lo cuido muy bien.
 b_mascota_pez	bruno	¡Blub, blub! Es tu pez. Lo cuido muy bien.
 b_mascota_pajaro	bruno	¡Pío, pío! Es tu pájaro. Lo cuido muy bien.
 b_mascota_tortuga	bruno	¡Despacito! Es tu tortuga. La cuido muy bien.
+b_sugiere_letras	bruno	¡A mí me apetece ir a la isla de las letras! ¿Y a ti?
+b_sugiere_numeros	bruno	¡A mí me apetece ir a la isla de los números! ¿Y a ti?
+b_sugiere_colores	bruno	¡A mí me apetece ir a la isla de los colores! ¿Y a ti?
+b_sugiere_formas	bruno	¡A mí me apetece ir a la isla de las formas! ¿Y a ti?
+b_sugiere_emociones	bruno	¡A mí me apetece ir a la isla de las emociones! ¿Y a ti?
+b_sugiere_palabras	bruno	¡A mí me apetece ir a la isla de las palabras! ¿Y a ti?
