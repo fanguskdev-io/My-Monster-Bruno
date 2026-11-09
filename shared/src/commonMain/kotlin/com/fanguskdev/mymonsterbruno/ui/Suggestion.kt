@@ -22,4 +22,5 @@ internal val Island.suggestionLine: String get() = when (this) {
     Island.SHAPES -> Voice.SUGGEST_SHAPES
     Island.FEELINGS -> Voice.SUGGEST_FEELINGS
     Island.WORDS -> Voice.SUGGEST_WORDS
+    Island.HOME -> Voice.SUGGEST_HOME
 }

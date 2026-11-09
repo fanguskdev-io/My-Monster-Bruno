@@ -27,4 +27,5 @@ internal val Island.stickerLine: String get() = when (this) {
     Island.SHAPES -> Voice.STICKER_SHAPES
     Island.FEELINGS -> Voice.STICKER_FEELINGS
     Island.WORDS -> Voice.STICKER_WORDS
+    Island.HOME -> Voice.STICKER_HOME
 }

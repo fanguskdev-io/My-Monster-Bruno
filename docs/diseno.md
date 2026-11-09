@@ -116,7 +116,10 @@ de él y la ventana del cuarto lo enseña el resto del día. El día sale de la 
    formas, la de las emociones y, la más pequeña, arriba a la derecha, la de las palabras. Una isla terminada lleva su
    bandera. La primera vez que llega al mapa cada vez que se abre el juego, Bruno **sugiere una isla**, la que menos ha
    terminado: «¡A mí me apetece ir a la isla de las formas! ¿Y a ti?», la mira y alrededor salen unas ondas suaves; pero
-   cualquier otra vale igual ([ADR 0035](adr/0035-bruno-sugiere-una-isla.md)).
+   cualquier otra vale igual ([ADR 0035](adr/0035-bruno-sugiere-una-isla.md)). Junto a la barca, un botón con una flecha y
+   una casita lleva navegando a **la otra parte del mar** ([ADR 0043](adr/0043-otra-parte-del-mar.md)), donde está la isla
+   de la casa: «¡Vamos al otro lado del mar!»; el mismo botón, con la flecha al revés, vuelve. Al acabar una isla, el mapa
+   abre en la parte del mar de esa isla.
 4. **La isla de las letras**, las vocales, la M, la P, la L y la S, la T, la N y la D, y la F, la B y la R
    ([ADR 0009](adr/0009-mas-letras-y-numeros-hasta-el-diez.md), [ADR 0014](adr/0014-la-t-la-n-y-la-d.md),
    [ADR 0022](adr/0022-la-f-la-b-y-la-r.md)):
@@ -189,6 +192,14 @@ de él y la ventana del cuarto lo enseña el resto del día. El día sale de la 
    zapato!», y se ríe; si no, «¿Rana? Huum... No termina igual», y esa carta se aparta. Son cinco rondas de diez parejas
    (gato y pato, luna y cuna, ratón y botón, rana y lana, sol y col, pez y nuez, mesa y fresa, foca y boca, llave y nave,
    seta y maleta), las que menos ha encontrado.
+9b. **La isla de la casa** ([ADR 0044](adr/0044-la-isla-de-la-casa.md)), en la otra parte del mar: los hábitos. Primero,
+   siempre, **los dientes**: la cara de Bruno de cerca, con la boca muy abierta y los dientes manchados: «¡He comido muchas
+   fresas! ¿Me ayudas a lavarme los dientes?». Ella mueve el cepillo por encima y cada mancha se va con espuma; con todos
+   limpios, «¡Qué dientes tan limpios! ¡Gracias!». Después, un día cada uno, **vestirse según el tiempo**: la ventana del
+   cuarto enseña sol, lluvia o nieve, «¡Llueve! ¿Qué me pongo?», y de tres cosas (gafas de sol o gorra, paraguas o botas
+   de agua, gorro de lana o bufanda) ella le lleva la buena; si no, «Eso es para cuando hace sol»; tres rondas, una por
+   tiempo. O **cada cosa a su contenedor**: el amarillo para los envases, el azul para el papel y el verde para el vidrio;
+   seis cosas, una a una, «¿Dónde va la lata?»; si no es, «La lata va al amarillo» y su contenedor llama.
 Comeletras, los globos, las caritas, las cartas y las rimas **se adaptan a lo que sabe** ([ADR 0020](adr/0020-se-adapta-a-lo-que-sabe.md)):
 si acierta a la primera las últimas cinco rondas de ese juego, la siguiente trae cuatro para elegir en vez de tres; si se
 equivoca en más de la mitad, dos. Nunca se le dice, y no hay niveles ni puntos.
@@ -287,7 +298,7 @@ Las **voces de la familia** no se harán: «para M2 no vamos a utilizar las voce
 - **Bruno y todo lo demás se dibujan con vectores**, sin imágenes: Bruno respira, parpadea, mira y cambia de cara (ocho
   bocas, cuatro ojos, tres posturas de brazos).
 - **Las voces** son las de un narrador y la de Bruno, algo más aguda y más despacio, a unas 4 sílabas por segundo. Hay
-  739 frases pregrabadas con la voz del sistema del Mac y **los efectos** (17) se sintetizan desde cero
+  782 frases pregrabadas con la voz del sistema del Mac y **los efectos** (17) se sintetizan desde cero
   ([ADR 0004](adr/0004-voces-provisionales.md)). Las frases están en [`voces/guion.tsv`](../voces/guion.tsv).
 - **La letra** de la zona de mayores, de los números, del banderín y del título es Andika, una tipografía pensada para quien aprende a
   leer (licencia OFL, en [`licencias/`](../licencias/Andika-OFL.txt)).

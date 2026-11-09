@@ -44,8 +44,8 @@ class ShownTest {
         assertEquals(setOf('t'), data.toggledLetter('m').hidden)
         for (name in all) data = data.toggledIsland(name, all)
         assertEquals(all.size - 1, data.hiddenIslands.size, "en el mapa queda al menos una")
-        assertEquals(all - data.hiddenIslands.toSet(), listOf(Island.WORDS.name))
-        assertEquals(Island.WORDS, data.suggestedIsland(20261109), "y Bruno solo sugiere esa")
+        assertEquals(all - data.hiddenIslands.toSet(), listOf(Island.HOME.name))
+        assertEquals(Island.HOME, data.suggestedIsland(20261109), "y Bruno solo sugiere esa")
         assertEquals(setOf<Char>(), SaveData(hiddenLetters = listOf("a", "x", "mm")).hidden, "las vocales y lo raro no cuentan")
     }
 }

@@ -62,7 +62,8 @@ recorridos del iPhone de un tirón. Y una que no estaba aquí, la pantalla de in
 - **1.9 Ordena la historia.** Tres viñetas de algo de cada día (lavarse los dientes, plantar una semilla) para ordenar:
   primero, después, al final. *Mediana. Hecha, en la isla de las emociones ([ADR 0025](adr/0025-ordena-la-historia.md)).*
 - **1.10 Hábitos.** Lavarle los dientes a Bruno, vestirle según el tiempo que hace, llevar la basura a su contenedor. Va
-  bien como isla nueva, la de la casa. *Grande.*
+  bien como isla nueva, la de la casa. *Grande. Hecha: la isla de la casa, en la otra parte del mar
+  ([ADR 0044](adr/0044-la-isla-de-la-casa.md)).*
 - **1.11 La emoción del día, con su foto.** Al llegar al cuarto, como en la asamblea: «¿Cómo te sientes hoy?», y ella pone su
   foto en el bote del color de cómo se siente. Bruno pone la suya. Si no hay foto, una carita. *Pequeña. Hecha
   ([ADR 0019](adr/0019-la-emocion-del-dia.md)).*
@@ -139,7 +140,8 @@ recorridos del iPhone de un tirón. Y una que no estaba aquí, la pantalla de in
 - **5.6 Fotos giradas en Android 8.** Allí una foto girada solo por su EXIF saldría torcida. *Pequeña. Hecha: antes de
   Android 9 el juego lee a mano el EXIF de la foto y la pone derecha.*
 - **5.7 Un mapa con más sitio.** Con seis islas, el mapa está lleno: antes de una isla nueva hace falta otra parte del mar, a
-  la que se llega en la barca. *Mediana.*
+  la que se llega en la barca. *Mediana. Hecha: un botón junto a la barca lleva navegando a la otra parte
+  ([ADR 0043](adr/0043-otra-parte-del-mar.md)).*
 - **5.8 Los recorridos del iPhone, de un tirón.** Un solo comando que cree el simulador, siembre la partida, pase los cuatro
   recorridos y lo borre. *Pequeña. Hecha: `tools/conductor-ios/recorridos.sh`, con los nueve.*
 

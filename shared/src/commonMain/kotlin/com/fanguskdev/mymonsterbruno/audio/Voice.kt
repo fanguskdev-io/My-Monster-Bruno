@@ -1,6 +1,8 @@
 package com.fanguskdev.mymonsterbruno.audio
 
 import com.fanguskdev.mymonsterbruno.game.COUNTDOWN_FROM
+import com.fanguskdev.mymonsterbruno.game.Clothes
+import com.fanguskdev.mymonsterbruno.game.DRESS_WEATHERS
 import com.fanguskdev.mymonsterbruno.game.Feeling
 import com.fanguskdev.mymonsterbruno.game.Happening
 import com.fanguskdev.mymonsterbruno.game.Hop
@@ -16,6 +18,7 @@ import com.fanguskdev.mymonsterbruno.game.Pet
 import com.fanguskdev.mymonsterbruno.game.Place
 import com.fanguskdev.mymonsterbruno.game.Placing
 import com.fanguskdev.mymonsterbruno.game.RhymeWord
+import com.fanguskdev.mymonsterbruno.game.Rubbish
 import com.fanguskdev.mymonsterbruno.game.STORY_STEPS
 import com.fanguskdev.mymonsterbruno.game.SUMS
 import com.fanguskdev.mymonsterbruno.game.Shape
@@ -148,6 +151,30 @@ internal object Voice {
 
     /** The most claps the voice counts: the four of the longest word, and up to six in the turn for two. */
     const val MOST_CLAPS = 6
+
+    /**
+     * The other part of the sea and its island of the house (ADR 0043 and 0044): going there and back, the way to the
+     * island, Bruno's suggestion, its sticker and its mission for home.
+     */
+    const val OTHER_SEA = "b_otro_mar"
+    const val BACK_SEA = "b_volvemos"
+    const val TO_HOME = "n_isla_casa"
+    const val SUGGEST_HOME = "b_sugiere_casa"
+    const val STICKER_HOME = "b_pegatina_casa"
+    const val MISSION_HOME = "n_mision_casa"
+
+    /** Brushing Bruno's teeth (ADR 0044): his request, how to brush them and his thanks. */
+    const val TEETH_INTRO = "b_dientes_intro"
+    const val BRUSH = "n_cepillo"
+    const val CLEAN_TEETH = "b_dientes_limpios"
+
+    /** Dressing Bruno for the weather (ADR 0044): how it starts and his thanks. */
+    const val DRESS_INTRO = "n_vestir_intro"
+    const val THANKS_DRESS = "b_gracias_vestir"
+
+    /** The bins (ADR 0044): how it starts and Bruno's thanks. */
+    const val RECYCLE_INTRO = "n_reciclar_intro"
+    const val THANKS_RECYCLE = "b_gracias_reciclar"
 
     /** The race of the island of numbers (ADR 0037): how it starts, Bruno's «Preparados, listos... ¡ya!» and his thanks. */
     const val RACE_INTRO = "n_carrera_intro"
@@ -378,6 +405,24 @@ internal object Voice {
     /** «Huum... Luna empieza por lu.» */
     fun startsWith(word: StartWord) = "b_empieza_${word.word}"
 
+    /** «¡Llueve! ¿Qué me pongo?» (ADR 0044). */
+    fun whatToWear(weather: Weather) = "b_que_me_pongo_${weather.word}"
+
+    /** «¡Sí! El paraguas, para la lluvia.» */
+    fun wearIt(clothes: Clothes) = "b_me_pongo_${clothes.word}"
+
+    /** «Eso es para cuando hace sol.» */
+    fun thatIsFor(weather: Weather) = "n_eso_es_para_${weather.word}"
+
+    /** «¿Dónde va la lata?» (ADR 0044). */
+    fun whereGoes(rubbish: Rubbish) = "n_donde_${rubbish.word}"
+
+    /** «¡Sí! La lata, al amarillo.» */
+    fun goesRight(rubbish: Rubbish) = "b_bien_${rubbish.word}"
+
+    /** «La lata va al amarillo.» */
+    fun goesTo(rubbish: Rubbish) = "n_va_${rubbish.word}"
+
     /** «¿Quién ha llegado primero?» (ADR 0037). */
     fun whoArrived(place: Ordinal) = "n_quien_${place.word}"
 
@@ -406,8 +451,13 @@ internal object Voice {
         NUMBER_LINE_INTRO, BESIDE_BRUNO, THANKS_NUMBER_LINE, PLACES_INTRO, HIDDEN, THANKS_PLACES, SUMS_INTRO, HOW_MANY_NOW,
         COUNT_THEM_ALL, THANKS_SUMS, ASSEMBLY_INTRO, WHAT_WEATHER, DAY_STARTS, PATHS_INTRO, FOLLOW_PATH, AT_HOME, THANKS_PATHS,
         WARDROBE_INTRO, TAKE_OFF, NEW_PET, SUGGEST_LETTERS, SUGGEST_NUMBERS, SUGGEST_COLORS, SUGGEST_SHAPES, SUGGEST_FEELINGS,
-        SUGGEST_WORDS, WITH_A_GROWN_UP, CLAP_THE_HANDS, PLAYING_TOGETHER, RACE_INTRO, READY_GO, THANKS_RACE,
+        SUGGEST_WORDS, WITH_A_GROWN_UP, CLAP_THE_HANDS, PLAYING_TOGETHER, RACE_INTRO, READY_GO, THANKS_RACE, OTHER_SEA,
+        BACK_SEA, TO_HOME, SUGGEST_HOME, STICKER_HOME, MISSION_HOME, TEETH_INTRO, BRUSH, CLEAN_TEETH, DRESS_INTRO, THANKS_DRESS,
+        RECYCLE_INTRO, THANKS_RECYCLE,
     ) +
+        DRESS_WEATHERS.flatMap { listOf(whatToWear(it), thatIsFor(it)) } +
+        Clothes.entries.map { wearIt(it) } +
+        Rubbish.entries.flatMap { listOf(whereGoes(it), goesRight(it), goesTo(it)) } +
         Ordinal.entries.flatMap { listOf(whoArrived(it), arrivedYes(it), thatOneArrived(it)) } +
         Pet.entries.map { petHello(it) } +
         PathShape.entries.map { pathIs(it) } +

@@ -234,6 +234,20 @@ class ScreenshotsTest {
             val sums = File(folder, "${screen.name}-33-sumas.png")
             sums.writeBytes(render(Scene.Play(Island.NUMBERS, 1), screen, { it.copy(numbersDay = DAY, numbersDays = 3) }))
             assertTrue(sums.length() > MIN_BYTES, "$sums está vacía")
+            // The island of the house (ADR 0044): the teeth, dressing Bruno the first day and the bins the next; and the other
+            // part of the sea, with its island (ADR 0043).
+            val teeth = File(folder, "${screen.name}-38-dientes.png")
+            teeth.writeBytes(render(Scene.Play(Island.HOME, 0), screen))
+            assertTrue(teeth.length() > MIN_BYTES, "$teeth está vacía")
+            val dress = File(folder, "${screen.name}-39-vestir.png")
+            dress.writeBytes(render(Scene.Play(Island.HOME, 1), screen, { it.copy(homeDay = DAY, homeDays = 1) }))
+            assertTrue(dress.length() > MIN_BYTES, "$dress está vacía")
+            val bins = File(folder, "${screen.name}-40-contenedores.png")
+            bins.writeBytes(render(Scene.Play(Island.HOME, 1), screen, { it.copy(homeDay = DAY, homeDays = 2) }))
+            assertTrue(bins.length() > MIN_BYTES, "$bins está vacía")
+            val otherSea = File(folder, "${screen.name}-3-mapa-otro-mar.png")
+            otherSea.writeBytes(render(Scene.Map, screen, sea = 1))
+            assertTrue(otherSea.length() > MIN_BYTES, "$otherSea está vacía")
             // The map without the islands of colours and of words, and without the M and the last consonants (ADR 0041).
             val fewer = File(folder, "${screen.name}-3-mapa-con-menos.png")
             val taken = listOf(Island.COLORS.name, Island.WORDS.name)
@@ -272,6 +286,7 @@ class ScreenshotsTest {
         practised: (SaveData) -> SaveData = { it },
         photo: ByteArray? = null,
         asksForName: Boolean = false,
+        sea: Int = 0,
     ): ByteArray {
         val store = MemoryStore()
         val save = SaveData(
@@ -285,6 +300,7 @@ class ScreenshotsTest {
         val game = GameState(store, audio, Random(SEED), day = { DAY })
         game.greeted = true
         game.askedForName = !asksForName
+        game.mapSea = sea
         game.go(scene)
         // With a way out, as on Android and the desktop, so the grown-ups' corner shows its «Salir del juego».
         val image = ImageComposeScene(screen.width, screen.height, Density(screen.height / STAGE_DP)) {

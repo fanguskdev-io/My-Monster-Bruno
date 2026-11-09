@@ -29,6 +29,7 @@ import com.fanguskdev.mymonsterbruno.ui.screens.BalloonScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.CalmScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.CountScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.CountdownScreen
+import com.fanguskdev.mymonsterbruno.ui.screens.DressScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.FeedScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.FeelingsScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.GrownUpsScreen
@@ -43,6 +44,7 @@ import com.fanguskdev.mymonsterbruno.ui.screens.PathsScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.PlacesScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.PresentScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.RaceScreen
+import com.fanguskdev.mymonsterbruno.ui.screens.RecycleScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.RhymesScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.SeriesScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.SleepScreen
@@ -50,6 +52,7 @@ import com.fanguskdev.mymonsterbruno.ui.screens.SplashScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.StoryScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.SumsScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.TalkScreen
+import com.fanguskdev.mymonsterbruno.ui.screens.TeethScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.TraceScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.WardrobeScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.WordsScreen
@@ -123,6 +126,9 @@ internal fun AppContent(game: GameState, onExit: (() -> Unit)? = null, listen: B
                 Step.NUMBER_LINE -> NumberLineScreen(game) { game.finished(scene) }
                 Step.SUMS -> SumsScreen(game) { game.finished(scene) }
                 Step.RACE -> RaceScreen(game) { game.finished(scene) }
+                Step.TEETH -> TeethScreen(game) { game.finished(scene) }
+                Step.DRESS -> DressScreen(game) { game.finished(scene) }
+                Step.RECYCLE -> RecycleScreen(game) { game.finished(scene) }
                 Step.BALLOONS -> BalloonScreen(game) { game.finished(scene) }
                 Step.SERIES -> SeriesScreen(game) { game.finished(scene) }
                 Step.HOUSE -> HouseScreen(game) { game.finished(scene) }

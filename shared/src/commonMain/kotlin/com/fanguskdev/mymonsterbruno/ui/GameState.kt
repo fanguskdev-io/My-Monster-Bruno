@@ -8,12 +8,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.ImageBitmap
 import com.fanguskdev.mymonsterbruno.audio.Audio
 import com.fanguskdev.mymonsterbruno.audio.Music
+import com.fanguskdev.mymonsterbruno.game.HomeGame
 import com.fanguskdev.mymonsterbruno.game.NumbersGame
 import com.fanguskdev.mymonsterbruno.game.SaveData
 import com.fanguskdev.mymonsterbruno.game.SaveStore
 import com.fanguskdev.mymonsterbruno.game.Session
 import com.fanguskdev.mymonsterbruno.game.Weather
 import com.fanguskdev.mymonsterbruno.game.Weekday
+import com.fanguskdev.mymonsterbruno.game.homeGameToday
+import com.fanguskdev.mymonsterbruno.game.homeOn
 import com.fanguskdev.mymonsterbruno.game.lettersOn
 import com.fanguskdev.mymonsterbruno.game.logged
 import com.fanguskdev.mymonsterbruno.game.numbersGameToday
@@ -36,6 +39,9 @@ internal enum class Island(val activities: List<Activity>, val music: Music) {
     SHAPES(listOf(Activity.HOUSE, Activity.PLACES), Music.SHAPES),
     FEELINGS(listOf(Activity.FEELINGS, Activity.STORY), Music.FEELINGS),
     WORDS(listOf(Activity.WORDS, Activity.RHYMES), Music.WORDS),
+
+    /** The island of the house, in the other part of the sea (ADR 0043 and 0044): habits. */
+    HOME(listOf(Activity.TEETH, Activity.DRESS), Music.HOME),
 }
 
 /**
@@ -56,6 +62,9 @@ internal enum class Activity {
     NUMBER_LINE,
     SUMS,
     RACE,
+    TEETH,
+    DRESS,
+    RECYCLE,
     BALLOONS,
     SERIES,
     HOUSE,
@@ -136,6 +145,9 @@ internal class GameState(
 
     /** Whether Bruno has suggested an island on the map since the game opened (ADR 0035). */
     var suggestedIsland = false
+
+    /** The part of the sea the map shows: 0, the six islands; 1, the other part (ADR 0043). The one of the last island. */
+    var mapSea = 0
 
     /** Whether Bruno has asked her, since the game opened, to teach him her name (ADR 0017). */
     var askedForName = false
@@ -252,6 +264,8 @@ internal class GameState(
         if (timeUp) return go(Scene.Sleep)
         if (island == Island.NUMBERS) update { it.numbersOn(day()) }
         if (island == Island.VOWELS) update { it.lettersOn(day()) }
+        if (island == Island.HOME) update { it.homeOn(day()) }
+        mapSea = island.sea
         go(Scene.Play(island, 0))
     }
 
@@ -262,6 +276,12 @@ internal class GameState(
      */
     fun activities(island: Island): List<Activity> {
         if (island == Island.VOWELS && data.pathsToday) return listOf(Activity.FEED, Activity.PATHS)
+        // The island of the house: the teeth, and then dressing Bruno one day and the bins the next (ADR 0044).
+        if (island ==
+            Island.HOME
+        ) {
+            return listOf(Activity.TEETH, if (data.homeGameToday == HomeGame.DRESS) Activity.DRESS else Activity.RECYCLE)
+        }
         if (island != Island.NUMBERS) return island.activities
         val second = when (data.numbersGameToday) {
             NumbersGame.COUNTDOWN -> Activity.COUNTDOWN
@@ -318,3 +338,6 @@ internal class GameState(
 @Composable
 internal fun rememberPhoto(game: GameState): ImageBitmap? =
     remember(game.photo) { game.photo?.let { runCatching { it.decodeToImageBitmap() }.getOrNull() } }
+
+/** The part of the sea where this island is (ADR 0043): the island of the house is in the other one. */
+internal val Island.sea: Int get() = if (this == Island.HOME) 1 else 0

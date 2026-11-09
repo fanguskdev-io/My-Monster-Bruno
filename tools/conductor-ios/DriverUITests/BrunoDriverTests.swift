@@ -669,6 +669,73 @@ final class BrunoDriverTests: XCTestCase {
         checkpoint("v2-comeletras-despacio-der")
     }
 
+    /// Brushes Bruno's teeth (ADR 0044): the brush, taken by its handle, goes back and forth over the row above and the row
+    /// below, a few times each, leaving it each time where the head ended.
+    private func brushTeeth() {
+        var head = CGPoint(x: 596, y: 356)
+        let passes: [(CGFloat, CGFloat)] = [
+            (240, 150), (560, 150), (240, 150), (560, 150), (240, 150), (560, 150),
+            (240, 300), (560, 300), (240, 300), (560, 300), (240, 300), (560, 300),
+        ]
+        for (x, y) in passes {
+            stage(head.x + 60, head.y + 6).press(forDuration: 0.2, thenDragTo: stage(x + 60, y + 6), withVelocity: 260, thenHoldForDuration: 0.1)
+            head = CGPoint(x: x, y: y)
+            usleep(300_000)
+        }
+    }
+
+    /// The other part of the sea and its island of the house (ADR 0043 and 0044), the day of dressing Bruno: the boat
+    /// sails there, she brushes his teeth, and then dresses him for each weather, taking each thing to him in turn, from
+    /// the bench, far from where the present comes; and the present.
+    func testHome() {
+        XCUIDevice.shared.orientation = .landscapeRight
+        launchPastStart()
+        sleep(2)
+        stage(680, 290).tap()
+        sleep(4)
+        checkpoint("h0-mapa-boton-der")
+        stage(522, 356).tap()
+        sleep(4)
+        checkpoint("h1-otro-mar-der")
+        stage(430, 168).tap()
+        sleep(9)
+        checkpoint("h2-dientes-der")
+        brushTeeth()
+        sleep(6)
+        checkpoint("h3-vestir-der")
+        for _ in 1...3 {
+            for x in [CGFloat(112), 208, 304] {
+                stage(x, 316).press(forDuration: 0.2, thenDragTo: stage(540, 236), withVelocity: 300, thenHoldForDuration: 0.1)
+                sleep(5)
+            }
+        }
+        checkpoint("h4-regalo-der")
+    }
+
+    /// The island of the house the day of the bins (ADR 0044): the teeth, and then each thing, taken from where it waits to
+    /// each bin in turn, waiting after each for the voice; and the present.
+    func testHomeBins() {
+        XCUIDevice.shared.orientation = .landscapeLeft
+        launchPastStart()
+        sleep(2)
+        stage(680, 290).tap()
+        sleep(4)
+        stage(522, 356).tap()
+        sleep(4)
+        stage(430, 168).tap()
+        sleep(9)
+        brushTeeth()
+        sleep(8)
+        checkpoint("b1-contenedores-izq")
+        for _ in 1...4 {
+            for x in [CGFloat(300), 470, 640] {
+                stage(470, 112).press(forDuration: 0.2, thenDragTo: stage(x, 290), withVelocity: 300, thenHoldForDuration: 0.1)
+                sleep(5)
+            }
+        }
+        checkpoint("b2-regalo-izq")
+    }
+
     /// The stickers of the room (ADR 0024): the save has every island finished and none stuck yet. She takes the first one
     /// from the rug to the wall, lets the next one go on the floor, where it does not stay, sticks it on the wall after
     /// all, and moves the first one somewhere else.

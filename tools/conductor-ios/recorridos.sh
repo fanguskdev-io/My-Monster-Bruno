@@ -21,7 +21,7 @@ HACE4=$(date -v-4d +%Y%m%d)
 TODOS=(testWalkThroughHeldBothWays testFinalVersionBothWays testTalkAndPhoto testWordsAndLetters testStartAndName
     testFeelingOfTheDay testRhymes testCountdown testPhotoAndRestart testStickers testStory testNumberLine
     testPlaces testSums testPaths testWardrobe testPet testPhotoPlaces testSuggestion testTogether testRace testMusicSwitch
-    testCopy testWeek testShown testSlowVoice)
+    testCopy testWeek testShown testSlowVoice testHome testHomeBins)
 if (($# > 0)); then RECORRIDOS=("$@"); else RECORRIDOS=("${TODOS[@]}"); fi
 
 # La partida de la que parte cada recorrido: los de la entrega, en el huevo; los demás, con Bruno nacido, su nombre
@@ -40,6 +40,7 @@ partida() {
         testStickers) echo "{\"hatched\":true,\"childName\":\"Lucía\",\"namesWritten\":1,\"moodDay\":$HOY,\"islands\":{\"VOWELS\":1,\"NUMBERS\":1,\"COLORS\":1,\"SHAPES\":1,\"FEELINGS\":1,\"WORDS\":1}}" ;;
         testPhotoPlaces) echo "{\"hatched\":true,\"childName\":\"Lucía\",\"namesWritten\":1,\"moodDay\":$HOY,\"dailyMinutes\":10,\"playedDay\":$HOY,\"playedSeconds\":560}" ;;
         testWeek) echo "{\"hatched\":true,\"childName\":\"Lucía\",\"namesWritten\":1,\"moodDay\":$HOY,\"days\":{\"$HACE4\":{\"seconds\":600,\"islands\":{\"VOWELS\":1},\"misses\":{\"letra:m\":2}},\"$HACE2\":{\"seconds\":420,\"islands\":{\"NUMBERS\":1},\"misses\":{\"forma:triangulo\":1,\"letra:m\":1}},\"$HOY\":{\"seconds\":300,\"misses\":{\"sitio:debajo\":1}}}}" ;;
+        testHomeBins) echo "{\"hatched\":true,\"childName\":\"Lucía\",\"namesWritten\":1,\"moodDay\":$HOY,\"homeDay\":1,\"homeDays\":1}" ;;
         testRace) echo "{\"hatched\":true,\"childName\":\"Lucía\",\"namesWritten\":1,\"moodDay\":$HOY,\"numbersDay\":1,\"numbersDays\":3}" ;;
         testSuggestion) echo "{\"hatched\":true,\"childName\":\"Lucía\",\"namesWritten\":1,\"moodDay\":$HOY,\"islands\":{\"VOWELS\":1,\"NUMBERS\":1,\"COLORS\":1,\"FEELINGS\":1,\"WORDS\":1}}" ;;
         testPet) echo "{\"hatched\":true,\"childName\":\"Lucía\",\"namesWritten\":1,\"moodDay\":$HOY,\"pet\":\"gato\"}" ;;

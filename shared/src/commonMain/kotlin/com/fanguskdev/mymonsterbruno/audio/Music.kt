@@ -8,4 +8,5 @@ internal enum class Music(val file: String) {
     SHAPES("formas"),
     FEELINGS("emociones"),
     WORDS("palabras"),
+    HOME("casa"),
 }

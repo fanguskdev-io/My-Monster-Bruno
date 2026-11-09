@@ -53,3 +53,5 @@ y estas decisiones existen antes de G4 porque Fangusk pidió desarrollar ya. Las
 | [0040](0040-resumen-de-la-semana.md) | Su semana en la zona de mayores: los minutos de cada día, las islas terminadas y lo que más le ha costado | Aceptada; los siete días, qué cuenta como fallo y cómo se dice, propuesta |
 | [0041](0041-elegir-que-islas-y-letras-salen.md) | Elegir qué islas y qué consonantes salen, desde la zona de mayores | Aceptada; solo las consonantes, al menos una isla y qué pasa en el mapa, propuesta |
 | [0042](0042-bruno-mas-despacio.md) | Bruno más despacio: la voz al 83 %, con el mismo tono, y más pausa entre frases, desde la zona de mayores | Aceptada; un interruptor, cuánto y cómo se alarga la voz, propuesta |
+| [0043](0043-otra-parte-del-mar.md) | Otra parte del mar, a la que se llega navegando con un botón junto a la barca, para más islas | Aceptada; el botón, cómo se pasa y qué hay allí, propuesta |
+| [0044](0044-la-isla-de-la-casa.md) | La isla de la casa: lavarle los dientes a Bruno, vestirle según el tiempo y cada cosa a su contenedor | Aceptada; los tres juegos, cuáles cada día, la ropa y los contenedores, propuesta |

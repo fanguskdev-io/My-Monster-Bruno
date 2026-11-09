@@ -18,8 +18,8 @@ class SuggestionTest {
 
     @Test
     fun amongEqualsAnotherOneEachDay() {
-        val firstWeek = (20261101..20261106).map { SaveData().suggestedIsland(it) }
-        assertEquals(Island.entries.toSet(), firstWeek.toSet(), "sin terminar ninguna, en seis días seguidos salen las seis")
+        val firstWeek = (20261101..20261107).map { SaveData().suggestedIsland(it) }
+        assertEquals(Island.entries.toSet(), firstWeek.toSet(), "sin terminar ninguna, en siete días seguidos salen las siete")
         val once = Island.entries.associate { it.name to 1 } - Island.VOWELS.name - Island.COLORS.name
         val two = (20261109..20261110).map { SaveData(islands = once).suggestedIsland(it) }
         assertEquals(setOf(Island.VOWELS, Island.COLORS), two.toSet(), "las dos que no ha terminado, un día cada una")

@@ -86,6 +86,8 @@ internal object Miss {
     const val SUM = "suma"
     const val PLACE = "sitio"
     const val ORDINAL = "puesto"
+    const val DRESS = "ropa"
+    const val BIN = "contenedor"
 
     fun letter(letter: Char) = "$LETTER:$letter"
 
@@ -106,4 +108,8 @@ internal object Miss {
     fun place(place: Place) = "$PLACE:${place.word}"
 
     fun ordinal(place: Ordinal) = "$ORDINAL:${place.word}"
+
+    fun dress(weather: Weather) = "$DRESS:${weather.word}"
+
+    fun bin(bin: Bin) = "$BIN:${bin.word}"
 }

@@ -134,6 +134,7 @@ ISLAS = {
     "formas": dict(tempo=92, escala=MAYOR, tonica=-7, bajo=(0, 3, 0, 4, 0, 3, 4, 0), voz=pulsada, colchon=False, semilla=41),
     "emociones": dict(tempo=66, escala=MENOR, tonica=0, bajo=(0, 3, 2, 4, 0, 3, 4, 0), voz=flauta, colchon=True, semilla=53),
     "palabras": dict(tempo=76, escala=MAYOR, tonica=-7, bajo=(0, 5, 3, 4, 0, 5, 4, 0), voz=flauta, colchon=True, semilla=67),
+    "casa": dict(tempo=88, escala=MAYOR, tonica=-4, bajo=(0, 3, 4, 0, 5, 3, 4, 0), voz=cajita, colchon=True, semilla=79),
 }
 
 # Los grados del bajo, en la escala mayor de siete notas, para que el acorde de cada compás sea el suyo.

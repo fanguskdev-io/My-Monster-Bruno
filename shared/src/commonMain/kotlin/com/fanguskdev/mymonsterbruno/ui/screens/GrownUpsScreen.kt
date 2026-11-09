@@ -43,7 +43,9 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.fanguskdev.mymonsterbruno.game.Bin
 import com.fanguskdev.mymonsterbruno.game.Choosing
+import com.fanguskdev.mymonsterbruno.game.DRESS_WEATHERS
 import com.fanguskdev.mymonsterbruno.game.Feeling
 import com.fanguskdev.mymonsterbruno.game.HIDEABLE_LETTERS
 import com.fanguskdev.mymonsterbruno.game.Hue
@@ -297,6 +299,11 @@ internal fun GrownUpsScreen(game: GameState, onExit: (() -> Unit)? = null) {
                 Text("Cohetes despegados, contando hacia atrás: ${data.launches}.", font, 16)
                 val sums = SUMS.joinToString("   ") { "${it.has} y ${it.more}: ${data.sums[it.key] ?: 0}" }
                 Text("Sumas de fresas resueltas:   $sums", font, 16)
+                Text("Dientes de Bruno lavados: ${data.brushed}.", font, 16)
+                val dressed = DRESS_WEATHERS.joinToString("   ") { "${it.spoken} ${data.dressed[it.word] ?: 0}" }
+                Text("Bruno vestido para el tiempo:   $dressed", font, 16)
+                val recycled = Bin.entries.joinToString("   ") { "${it.word} ${data.recycled[it.word] ?: 0}" }
+                Text("Cosas a su contenedor:   $recycled", font, 16)
                 val races = Ordinal.entries.joinToString("   ") { "${it.word} ${data.races[it.word] ?: 0}" }
                 Text("En las carreras de animales, quién llegó:   $races", font, 16)
                 val before = data.neighbours[Side.BEFORE.word] ?: 0
@@ -508,6 +515,8 @@ private fun missLabel(key: String): String {
         Miss.SUM -> what.split('_').let { "la suma de ${it.first()} y ${it.last()}" }
         Miss.PLACE -> Place.entries.firstOrNull { it.word == what }?.spoken ?: what
         Miss.ORDINAL -> "quién llega $what, en la carrera"
+        Miss.DRESS -> Weather.entries.firstOrNull { it.word == what }?.let { "qué ponerse con ${it.spoken}" } ?: what
+        Miss.BIN -> "el contenedor $what"
         else -> what
     }
 }
@@ -531,6 +540,7 @@ private val Island.spoken: String get() = when (this) {
     Island.SHAPES -> "formas"
     Island.FEELINGS -> "emociones"
     Island.WORDS -> "palabras"
+    Island.HOME -> "casa"
 }
 
 /** The name of a [Feeling] as a grown-up reads it. */

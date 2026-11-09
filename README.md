@@ -15,10 +15,12 @@ decisiones, y la [investigación](docs/investigacion/investigacion.md), de dónd
 > por su ventana; los juegos de elegir se adaptan a lo que sabe; en
 > la isla de las letras, otros días, lleva a Bruno a casa por caminos de olas, bucles y caracol; en la de las palabras
 > busca rimas con Bruno; en la de los números cuenta hacia atrás para su cohete o, otros días,
-> busca en la recta el número de antes y el de después o suma fresas; en la de las formas esconde a Bruno dentro y fuera, encima y
+> busca en la recta el número de antes y el de después, suma fresas o dice quién llega primero en una carrera; en la de las formas esconde a Bruno dentro y fuera, encima y
 > debajo; en la de las emociones ordena historias, y cada isla que termina le da una pegatina para la pared del
 > cuarto y un regalo que Bruno se pone, o se quita, en su armario; su animal favorito vive con él y, con su foto, ella
-> va en su barca. La
+> va en su barca, que navega hasta otra parte del mar, a la isla de la casa: lavarle los dientes, vestirle según el
+> tiempo y llevar cada cosa a su contenedor. Suena una música suave en las islas, y los mayores ven su semana y eligen
+> qué sale. La
 > entrega en su iPhone está preparada: será ad hoc, instalado el día que se lo dé ([entrega](docs/entrega.md)).
 
 ## Estructura

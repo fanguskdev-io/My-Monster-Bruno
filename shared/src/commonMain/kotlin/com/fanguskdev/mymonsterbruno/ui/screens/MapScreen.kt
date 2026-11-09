@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.text.TextMeasurer
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.rememberTextMeasurer
@@ -29,13 +30,16 @@ import com.fanguskdev.mymonsterbruno.game.VOWELS
 import com.fanguskdev.mymonsterbruno.game.hidden
 import com.fanguskdev.mymonsterbruno.ui.GameState
 import com.fanguskdev.mymonsterbruno.ui.Island
+import com.fanguskdev.mymonsterbruno.ui.STAGE_WIDTH
 import com.fanguskdev.mymonsterbruno.ui.Stage
 import com.fanguskdev.mymonsterbruno.ui.StageCanvas
 import com.fanguskdev.mymonsterbruno.ui.Touch
 import com.fanguskdev.mymonsterbruno.ui.andika
 import com.fanguskdev.mymonsterbruno.ui.art.Pose
+import com.fanguskdev.mymonsterbruno.ui.art.Shadow
 import com.fanguskdev.mymonsterbruno.ui.art.drawBruno
 import com.fanguskdev.mymonsterbruno.ui.art.drawFeelingFace
+import com.fanguskdev.mymonsterbruno.ui.art.drawHouseSign
 import com.fanguskdev.mymonsterbruno.ui.art.drawOpenBook
 import com.fanguskdev.mymonsterbruno.ui.art.drawRoundPhoto
 import com.fanguskdev.mymonsterbruno.ui.art.drawSea
@@ -44,6 +48,8 @@ import com.fanguskdev.mymonsterbruno.ui.art.drawTiedBalloon
 import com.fanguskdev.mymonsterbruno.ui.art.paint
 import com.fanguskdev.mymonsterbruno.ui.art.pieceBox
 import com.fanguskdev.mymonsterbruno.ui.circle
+import com.fanguskdev.mymonsterbruno.ui.clamp01
+import com.fanguskdev.mymonsterbruno.ui.easeInOut
 import com.fanguskdev.mymonsterbruno.ui.ellipse
 import com.fanguskdev.mymonsterbruno.ui.fill
 import com.fanguskdev.mymonsterbruno.ui.label
@@ -51,9 +57,11 @@ import com.fanguskdev.mymonsterbruno.ui.line
 import com.fanguskdev.mymonsterbruno.ui.path
 import com.fanguskdev.mymonsterbruno.ui.rememberClock
 import com.fanguskdev.mymonsterbruno.ui.rememberPhoto
+import com.fanguskdev.mymonsterbruno.ui.sea
 import com.fanguskdev.mymonsterbruno.ui.stroke
 import com.fanguskdev.mymonsterbruno.ui.suggestedIsland
 import com.fanguskdev.mymonsterbruno.ui.suggestionLine
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.math.sin
 
@@ -69,10 +77,17 @@ private const val WORDS_RX = 80f
 private const val WORDS_RY = 38f
 private val BOAT = Offset(410f, 336f)
 
+/** The other part of the sea (ADR 0043): the island of the house, and the button by the boat to sail there and back. */
+private val HOME_ISLAND = Offset(430f, 168f)
+private val SAIL_BUTTON = Offset(522f, 356f)
+private const val SAIL_RADIUS = 34f
+private const val SAIL_SECONDS = 1.3f
+
 /**
  * The map of the islands: the one of the letters, the one of the numbers, the one of the colours, the one of the shapes,
- * the one of the feelings and, the smallest, far up on the right, the one of the words. A touch on an island says where
- * they go and goes there; the flag says she has finished it at least once.
+ * the one of the feelings and, the smallest, far up on the right, the one of the words; and, in the other part of the
+ * sea, sailing with the button by the boat, the one of the house (ADR 0043). A touch on an island says where they go and
+ * goes there; the flag says she has finished it at least once.
  */
 @Composable
 internal fun MapScreen(game: GameState) {
@@ -83,6 +98,12 @@ internal fun MapScreen(game: GameState) {
     val font = andika()
     val audio = game.audio
     var going by remember { mutableStateOf(false) }
+
+    // The part of the sea on screen, the one of the last island; and, while the boat sails to the other, since when. With
+    // every island of the other part taken off by the grown-ups, there is no other part (ADR 0041).
+    fun otherSea() = Island.entries.any { it.sea == 1 && it.name !in game.data.hiddenIslands }
+    var sea by remember { mutableStateOf(if (otherSea()) game.mapSea else 0) }
+    var sailingAt by remember { mutableStateOf<Float?>(null) }
 
     // The first time she gets to the map since the game opened, Bruno suggests the island she has done least, which
     // shines while they are on the map; any other is as good (ADR 0035).
@@ -100,11 +121,15 @@ internal fun MapScreen(game: GameState) {
     val touch = remember {
         object : Touch {
             override fun down(point: Offset, stage: Stage): Boolean {
-                if (going) return true
+                if (going || sailingAt != null) return true
                 when {
                     hits(point, homeButton(stage), CORNER_RADIUS) -> {
                         audio.sfx(Sfx.TAP)
                         game.back()
+                    }
+                    otherSea() && hits(point, SAIL_BUTTON, SAIL_RADIUS) -> sail()
+                    sea == 1 -> {
+                        if (shown(Island.HOME) && inIsland(point, HOME_ISLAND)) go(Island.HOME, Voice.TO_HOME) else return false
                     }
                     // Only the islands on the map: the grown-ups can take some off (ADR 0041).
                     shown(Island.VOWELS) && inIsland(point, VOWELS_ISLAND) -> go(Island.VOWELS, Voice.TO_LETTERS)
@@ -119,6 +144,20 @@ internal fun MapScreen(game: GameState) {
             }
 
             private fun shown(island: Island) = island.name !in game.data.hiddenIslands
+
+            /** The boat sails to the other part of the sea, and the map slides with it. */
+            private fun sail() {
+                val to = 1 - sea
+                sailingAt = clock.value
+                audio.sfx(Sfx.WHOOSH)
+                audio.speak(if (to == 1) Voice.OTHER_SEA else Voice.BACK_SEA)
+                scope.launch {
+                    delay((SAIL_SECONDS * 1000).toLong())
+                    sea = to
+                    game.mapSea = to
+                    sailingAt = null
+                }
+            }
 
             private fun go(island: Island, line: String) {
                 going = true
@@ -138,43 +177,123 @@ internal fun MapScreen(game: GameState) {
         val hidden = game.data.hiddenIslands
         fun shown(island: Island) = island.name !in hidden
         fun done(island: Island) = shown(island) && (game.data.islands[island.name] ?: 0) > 0
-        drawPath(t, ::shown)
-        if (suggestion != null && !going && shown(suggestion)) drawSuggestion(suggestion, t)
-        if (shown(Island.VOWELS)) {
-            drawIsland(VOWELS_ISLAND, t)
-            drawVowelRocks(VOWELS_ISLAND, game.data.hidden, measurer, font)
+        // While the boat sails, the part of the sea it leaves slides away and the other one comes in (ADR 0043).
+        val sailing = sailingAt?.let { easeInOut(clamp01((t - it) / SAIL_SECONDS)) }
+        val toward = if (sea == 0) -1f else 1f
+        val parts = if (sailing ==
+            null
+        ) {
+            listOf(sea to 0f)
+        } else {
+            listOf(sea to toward * STAGE_WIDTH * sailing, (1 - sea) to -toward * STAGE_WIDTH * (1f - sailing))
         }
-        if (shown(Island.NUMBERS)) {
-            drawIsland(NUMBERS_ISLAND, t)
-            drawNumberRocks(NUMBERS_ISLAND, measurer, font)
+        for ((part, dx) in parts) {
+            translate(left = dx) {
+                if (part == 0) {
+                    drawPath(t, ::shown)
+                    if (suggestion != null &&
+                        sailing == null &&
+                        !going &&
+                        shown(suggestion) &&
+                        suggestion.sea == 0
+                    ) {
+                        drawSuggestion(suggestion, t)
+                    }
+                    drawFirstSea(t, ::shown, ::done, game.data.hidden, measurer, font)
+                } else {
+                    if (suggestion != null && sailing == null && !going && suggestion.sea == 1) drawSuggestion(suggestion, t)
+                    if (shown(Island.HOME)) {
+                        drawIsland(HOME_ISLAND, t)
+                        drawHouseSign(HOME_ISLAND + Offset(0f, -18f), 74f)
+                    }
+                    if (done(Island.HOME)) drawFlag(HOME_ISLAND + Offset(92f, -34f))
+                }
+            }
         }
-        if (shown(Island.COLORS)) {
-            drawIsland(COLORS_ISLAND, t)
-            drawIslandBalloons(COLORS_ISLAND, t)
+        // The island Bruno suggests, when it is in the other part: the button to sail there shines, and Bruno looks at it.
+        val elsewhere = suggestion != null && suggestion.sea != sea && sailing == null && !going
+        if (otherSea()) {
+            if (elsewhere) drawCallRing(SAIL_BUTTON, SAIL_RADIUS + 4f, t)
+            drawSailButton(SAIL_BUTTON, SAIL_RADIUS, back = sea == 1)
         }
-        if (shown(Island.SHAPES)) {
-            drawIsland(SHAPES_ISLAND, t)
-            drawIslandShapes(SHAPES_ISLAND)
+        val lookAt = when {
+            sailing != null -> null
+            elsewhere -> SAIL_BUTTON
+            else -> suggestion?.let { islandCenter(it) }
         }
-        if (shown(Island.FEELINGS)) {
-            drawIsland(FEELINGS_ISLAND, t)
-            drawIslandFaces(FEELINGS_ISLAND)
-        }
-        if (shown(Island.WORDS)) {
-            drawIsland(WORDS_ISLAND, t, WORDS_RX, WORDS_RY)
-            drawOpenBook(WORDS_ISLAND + Offset(0f, -14f), 58f)
-        }
-        if (done(Island.VOWELS)) drawFlag(VOWELS_ISLAND + Offset(92f, -34f))
-        if (done(Island.NUMBERS)) drawFlag(NUMBERS_ISLAND + Offset(92f, -34f))
-        // Lower than the others: higher, on an iPhone held with its island on the right, the Dynamic Island hides it.
-        if (done(Island.COLORS)) drawFlag(COLORS_ISLAND + Offset(84f, 24f))
-        if (done(Island.SHAPES)) drawFlag(SHAPES_ISLAND + Offset(102f, -4f))
-        if (done(Island.FEELINGS)) drawFlag(FEELINGS_ISLAND + Offset(84f, -30f))
-        // Low, beside the book: the island is so high that a flag at its back would go out of the screen.
-        if (done(Island.WORDS)) drawFlag(WORDS_ISLAND + Offset(50f, 14f))
-        drawBoat(game.data.look, BOAT + Offset(0f, 4f * sin(t * 1.5f)), t, photo, suggestion?.let { islandCenter(it) })
+        val rock = if (sailing != null) 7f * sin(t * 9f) else 4f * sin(t * 1.5f)
+        drawBoat(game.data.look, BOAT + Offset(0f, rock), t, photo, lookAt)
         drawHomeButton(stage)
     }
+}
+
+/** The first part of the sea: its six islands, each with its sign, and the flags of the ones she has finished. */
+private fun DrawScope.drawFirstSea(
+    t: Float,
+    shown: (Island) -> Boolean,
+    done: (Island) -> Boolean,
+    hiddenLetters: Set<Char>,
+    measurer: TextMeasurer,
+    font: FontFamily,
+) {
+    if (shown(Island.VOWELS)) {
+        drawIsland(VOWELS_ISLAND, t)
+        drawVowelRocks(VOWELS_ISLAND, hiddenLetters, measurer, font)
+    }
+    if (shown(Island.NUMBERS)) {
+        drawIsland(NUMBERS_ISLAND, t)
+        drawNumberRocks(NUMBERS_ISLAND, measurer, font)
+    }
+    if (shown(Island.COLORS)) {
+        drawIsland(COLORS_ISLAND, t)
+        drawIslandBalloons(COLORS_ISLAND, t)
+    }
+    if (shown(Island.SHAPES)) {
+        drawIsland(SHAPES_ISLAND, t)
+        drawIslandShapes(SHAPES_ISLAND)
+    }
+    if (shown(Island.FEELINGS)) {
+        drawIsland(FEELINGS_ISLAND, t)
+        drawIslandFaces(FEELINGS_ISLAND)
+    }
+    if (shown(Island.WORDS)) {
+        drawIsland(WORDS_ISLAND, t, WORDS_RX, WORDS_RY)
+        drawOpenBook(WORDS_ISLAND + Offset(0f, -14f), 58f)
+    }
+    if (done(Island.VOWELS)) drawFlag(VOWELS_ISLAND + Offset(92f, -34f))
+    if (done(Island.NUMBERS)) drawFlag(NUMBERS_ISLAND + Offset(92f, -34f))
+    // Lower than the others: higher, on an iPhone held with its island on the right, the Dynamic Island hides it.
+    if (done(Island.COLORS)) drawFlag(COLORS_ISLAND + Offset(84f, 24f))
+    if (done(Island.SHAPES)) drawFlag(SHAPES_ISLAND + Offset(102f, -4f))
+    if (done(Island.FEELINGS)) drawFlag(FEELINGS_ISLAND + Offset(84f, -30f))
+    // Low, beside the book: the island is so high that a flag at its back would go out of the screen.
+    if (done(Island.WORDS)) drawFlag(WORDS_ISLAND + Offset(50f, 14f))
+}
+
+/**
+ * The button to sail to the other part of the sea (ADR 0043): white and round, with a wave, a little house and an arrow
+ * towards there, or back, the arrow the other way, from the other part.
+ */
+private fun DrawScope.drawSailButton(center: Offset, radius: Float, back: Boolean) {
+    circle(Shadow, center + Offset(0f, 4f), radius)
+    circle(Color.White, center, radius)
+    val ink = Color(0xFF2C74D8)
+    val way = if (back) -1f else 1f
+    val arrowY = if (back) -radius * 0.08f else radius * 0.14f
+    val tip = center + Offset(way * radius * 0.62f, arrowY)
+    line(ink, center + Offset(-way * radius * 0.55f, arrowY), tip, radius * 0.14f)
+    line(ink, tip, tip + Offset(-way * radius * 0.26f, -radius * 0.26f), radius * 0.14f)
+    line(ink, tip, tip + Offset(-way * radius * 0.26f, radius * 0.26f), radius * 0.14f)
+    stroke(
+        path {
+            moveTo(center.x - radius * 0.6f, center.y + radius * 0.45f)
+            quadraticTo(center.x - radius * 0.3f, center.y + radius * 0.25f, center.x, center.y + radius * 0.45f)
+            quadraticTo(center.x + radius * 0.3f, center.y + radius * 0.65f, center.x + radius * 0.6f, center.y + radius * 0.45f)
+        },
+        Color(0xFF5FA3F0),
+        radius * 0.1f,
+    )
+    if (!back) drawHouseSign(center + Offset(-radius * 0.12f, -radius * 0.34f), radius * 0.62f)
 }
 
 private fun inIsland(
@@ -196,6 +315,7 @@ private fun islandCenter(island: Island): Offset = when (island) {
     Island.SHAPES -> SHAPES_ISLAND
     Island.FEELINGS -> FEELINGS_ISLAND
     Island.WORDS -> WORDS_ISLAND
+    Island.HOME -> HOME_ISLAND
 }
 
 /**

@@ -738,3 +738,46 @@ b_si_tercero	bruno	¡Sí! ¡Ha llegado tercero!
 n_ese_primero	narrador	Ese animal ha llegado primero. Mira su número.
 n_ese_segundo	narrador	Ese animal ha llegado segundo. Mira su número.
 n_ese_tercero	narrador	Ese animal ha llegado tercero. Mira su número.
+b_otro_mar	bruno	¡Vamos al otro lado del mar!
+b_volvemos	bruno	¡Volvemos a las otras islas!
+n_isla_casa	narrador	¡A la isla de la casa!
+b_sugiere_casa	bruno	¡A mí me apetece ir a la isla de la casa! ¿Y a ti?
+b_pegatina_casa	bruno	¡Te he guardado una pegatina de la isla de la casa!
+n_mision_casa	narrador	Misión para casa: esta noche, lávate los dientes como Bruno.
+b_dientes_intro	bruno	¡He comido muchas fresas! ¿Me ayudas a lavarme los dientes?
+n_cepillo	narrador	Pasa el cepillo por encima de los dientes, por todos.
+b_dientes_limpios	bruno	¡Qué dientes tan limpios! ¡Gracias!
+n_vestir_intro	narrador	¡Vamos a vestir a Bruno para el tiempo que hace!
+b_que_me_pongo_sol	bruno	¡Hace sol! ¿Qué me pongo?
+b_que_me_pongo_lluvia	bruno	¡Llueve! ¿Qué me pongo?
+b_que_me_pongo_nieve	bruno	¡Nieva! ¿Qué me pongo?
+b_me_pongo_gafas_de_sol	bruno	¡Sí! Las gafas de sol, para el sol.
+b_me_pongo_gorra	bruno	¡Sí! La gorra, para el sol.
+b_me_pongo_paraguas	bruno	¡Sí! El paraguas, para la lluvia.
+b_me_pongo_botas_de_agua	bruno	¡Sí! Las botas de agua, para la lluvia.
+b_me_pongo_gorro_de_lana	bruno	¡Sí! El gorro de lana, para la nieve.
+b_me_pongo_bufanda	bruno	¡Sí! La bufanda, para la nieve.
+n_eso_es_para_sol	narrador	Eso es para cuando hace sol.
+n_eso_es_para_lluvia	narrador	Eso es para cuando llueve.
+n_eso_es_para_nieve	narrador	Eso es para cuando nieva.
+b_gracias_vestir	bruno	¡Ya sé qué ponerme cada día! ¡Gracias!
+n_reciclar_intro	narrador	Cada cosa va a su contenedor: el amarillo, el azul o el verde. ¡Vamos a ayudar a Bruno!
+n_donde_botella_de_plastico	narrador	¿Dónde va la botella de plástico?
+n_donde_lata	narrador	¿Dónde va la lata?
+n_donde_periodico	narrador	¿Dónde va el periódico?
+n_donde_caja_de_carton	narrador	¿Dónde va la caja de cartón?
+n_donde_tarro	narrador	¿Dónde va el tarro de cristal?
+n_donde_botella_de_cristal	narrador	¿Dónde va la botella de cristal?
+b_bien_botella_de_plastico	bruno	¡Sí! La botella de plástico, al amarillo.
+b_bien_lata	bruno	¡Sí! La lata, al amarillo.
+b_bien_periodico	bruno	¡Sí! El periódico, al azul.
+b_bien_caja_de_carton	bruno	¡Sí! La caja de cartón, al azul.
+b_bien_tarro	bruno	¡Sí! El tarro de cristal, al verde.
+b_bien_botella_de_cristal	bruno	¡Sí! La botella de cristal, al verde.
+n_va_botella_de_plastico	narrador	La botella de plástico va al amarillo.
+n_va_lata	narrador	La lata va al amarillo.
+n_va_periodico	narrador	El periódico va al azul.
+n_va_caja_de_carton	narrador	La caja de cartón va al azul.
+n_va_tarro	narrador	El tarro de cristal va al verde.
+n_va_botella_de_cristal	narrador	La botella de cristal va al verde.
+b_gracias_reciclar	bruno	¡Qué limpia está la isla! ¡Gracias!

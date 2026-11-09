@@ -40,11 +40,12 @@ internal fun DrawScope.drawSticker(
             Island.SHAPES -> drawStartPicture(StartWord.CASA, center, 42f * k, time)
             Island.FEELINGS -> drawFeelingFace(Feeling.JOY, center, 18f * k)
             Island.WORDS -> drawOpenBook(center, 42f * k)
+            Island.HOME -> rotate(-35f, center) { drawToothbrush(center + Offset(-22f * k, 2f * k), 0.34f * k) }
         }
     }
 }
 
-private val TILTS = listOf(-8f, 6f, -4f, 9f, -6f, 4f)
+private val TILTS = listOf(-8f, 6f, -4f, 9f, -6f, 4f, -7f)
 private val EDGES = listOf(
     Color(0xFFE4483C),
     Color(0xFF2C74D8),
@@ -52,4 +53,5 @@ private val EDGES = listOf(
     Color(0xFFF4B623),
     Color(0xFF9B6BD3),
     Color(0xFFF28B2E),
+    Color(0xFF4FB3BF),
 )

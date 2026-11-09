@@ -13,6 +13,7 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.drawscope.DrawScope
+import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.text.TextMeasurer
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.rememberTextMeasurer
@@ -33,6 +34,7 @@ import com.fanguskdev.mymonsterbruno.ui.art.drawBlanket
 import com.fanguskdev.mymonsterbruno.ui.art.drawBruno
 import com.fanguskdev.mymonsterbruno.ui.art.drawNightRoom
 import com.fanguskdev.mymonsterbruno.ui.art.drawRoundPhoto
+import com.fanguskdev.mymonsterbruno.ui.art.drawToothbrush
 import com.fanguskdev.mymonsterbruno.ui.circle
 import com.fanguskdev.mymonsterbruno.ui.fill
 import com.fanguskdev.mymonsterbruno.ui.label
@@ -59,6 +61,7 @@ private enum class Mission(val line: String) {
     SHAPE(Voice.MISSION_SHAPE),
     FEELING(Voice.MISSION_FEELING),
     NAME(Voice.MISSION_NAME),
+    TEETH(Voice.MISSION_HOME),
 }
 
 /**
@@ -80,6 +83,7 @@ internal fun SleepScreen(game: GameState) {
             Island.SHAPES -> Mission.SHAPE
             Island.FEELINGS -> Mission.FEELING
             Island.WORDS -> Mission.NAME
+            Island.HOME -> Mission.TEETH
             Island.COLORS, null -> Mission.COLOR
         }
     }
@@ -217,6 +221,10 @@ private fun DrawScope.drawMissionCard(
             } else {
                 label(measurer, "ABC", what + Offset(0f, 2f), 24f, Color.White, font)
             }
+        }
+        Mission.TEETH -> {
+            circle(Color(0xFF4FB3BF), what, 34f)
+            rotate(-30f, what) { drawToothbrush(what + Offset(-20f, 2f), 0.3f) }
         }
         Mission.FEELING -> {
             circle(Color(0xFFFF6F91), what, 34f)

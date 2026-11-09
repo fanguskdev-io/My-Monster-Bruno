@@ -47,7 +47,8 @@ Qué se prueba en cada cambio y en cada hito, y cómo. Los criterios de salida d
 | La copia de su partida: vuelve como se fue, con su foto o sin ella; lo que no es una copia del juego (otro juego, texto suelto, una foto rota) no pasa por una | `BackupTest` | Común |
 | Su semana: los días hacia atrás cruzando meses, años y bisiestos; solo los últimos siete; los minutos de cada día; lo que más le ha costado primero, y entre iguales por su nombre | `WeekTest` | Común |
 | Qué sale: una consonante quitada no se pide, no sale entre las galletas ni se traza, y no frena a las siguientes; los botones, y en el mapa siempre queda una isla, la única que Bruno sugiere | `ShownTest` | Común |
-| Las veintiocho pantallas y, el cuarto con cada uno de los seis animales, el cuarto con lluvia y con nieve en la ventana, los caminos de bucles y de caracol, el cuarto con sus pegatinas, cuando ya sabe las vocales y del 1 al 5, Comeletras, los trazos y las fresas con lo nuevo, Comeletras y los trazos con la T, la N y la D y con la F, la B y la R, el mapa con su cuarta fila de rocas, la pantalla de inicio con el huevo, el cuarto con su foto y cuando Bruno le pide que le enseñe su nombre, la emoción del día con su foto, la pantalla de inicio, el mapa y la hora de dormir con su foto, la carrera de animales, el mapa sin dos islas y sin cuatro consonantes, Comeletras, los globos, las emociones, las palabras y las rimas con cuatro para elegir y Comeletras con dos, y el mapa con todas las islas terminadas y sus banderas, se dibujan en móvil (2,17:1) y en tableta (4:3) | `ScreenshotsTest` | JVM |
+| La isla de la casa: vestirse, una ronda por tiempo con una cosa de cada uno; los contenedores, las seis cosas sin dos del mismo seguidas; primero los dientes y luego, un día cada uno, vestirse o los contenedores; el mapa vuelve a su parte del mar; y sus frases | `HomeTest` | Común |
+| Las veintiocho pantallas y, el cuarto con cada uno de los seis animales, el cuarto con lluvia y con nieve en la ventana, los caminos de bucles y de caracol, el cuarto con sus pegatinas, cuando ya sabe las vocales y del 1 al 5, Comeletras, los trazos y las fresas con lo nuevo, Comeletras y los trazos con la T, la N y la D y con la F, la B y la R, el mapa con su cuarta fila de rocas, la pantalla de inicio con el huevo, el cuarto con su foto y cuando Bruno le pide que le enseñe su nombre, la emoción del día con su foto, la pantalla de inicio, el mapa y la hora de dormir con su foto, la carrera de animales, el mapa sin dos islas y sin cuatro consonantes, la isla de la casa (los dientes, vestirse y los contenedores) y la otra parte del mar, Comeletras, los globos, las emociones, las palabras y las rimas con cuatro para elegir y Comeletras con dos, y el mapa con todas las islas terminadas y sus banderas, se dibujan en móvil (2,17:1) y en tableta (4:3) | `ScreenshotsTest` | JVM |
 | La salida de la zona de mayores: «Salir del juego» guarda la partida y cierra; sin salida en la plataforma, como en iOS, no hay botón | `GrownUpsExitTest` | JVM |
 | El icono de iOS es el de Android: lo dibuja del vector de `androidApp` en `shared/build/icono/` y lo compara con el del proyecto de Xcode; si cambia el de Android, se copia el nuevo | `AppIconTest` | JVM |
 | En el iPhone 15 Pro de ella y en el 17 Pro del simulador, girados a un lado y al otro, la casa, el altavoz y el candado se ven enteros: ni bajo la Dynamic Island ni cortados por las esquinas redondeadas, medidas en el simulador | `CornerButtonsTest` | Común |
@@ -100,7 +101,7 @@ propio Mac ([ADR 0027](adr/0027-el-mac-tambien-comprueba-la-palabra.md)); el emu
 Para ver el juego en un iPhone 15 Pro simulado, girado a un lado y al otro, sin tocarlo a mano:
 [`tools/conductor-ios`](../tools/conductor-ios) es una prueba de interfaz que toca el escenario de 800 × 400 y, en cada
 punto de control, espera a que `vigilante.sh` saque una captura con lo que tapan la isla y las esquinas pintado de negro.
-Tiene veintiséis recorridos:
+Tiene veintiocho recorridos:
 
 - los dos de la entrega, que empiezan en el huevo: `testWalkThroughHeldBothWays` y `testFinalVersionBothWays`;
 - `testTalkAndPhoto`, «Habla con Bruno» y elegir su foto;
@@ -136,7 +137,10 @@ Tiene veintiséis recorridos:
   copia, que no tenía animal;
 - `testWeek`, su semana en la zona de mayores, con tres días de juego y sus fallos en la partida;
 - `testShown`, qué sale: quitar la isla de los colores y la M en la zona de mayores, y ver el mapa sin ellas;
-- `testSlowVoice`, la voz despacio: ponerla en la zona de mayores y jugar Comeletras con ella, en silencio.
+- `testSlowVoice`, la voz despacio: ponerla en la zona de mayores y jugar Comeletras con ella, en silencio;
+- `testHome`, la otra parte del mar y la isla de la casa el día de vestirse: navegar, lavar los dientes con el cepillo a
+  pasadas y vestir a Bruno para cada tiempo, hasta el regalo;
+- `testHomeBins`, la isla de la casa el día de los contenedores: los dientes y las seis cosas, hasta el regalo.
 
 Todos pasan antes por la pantalla de inicio, con un toque. Siempre en silencio (`-silencio`) y en un simulador propio que
 se borra al acabar, nunca en uno de otra sesión.
@@ -542,6 +546,23 @@ pedirían el móvil o la tableta (2026-11-06).
 - [x] En el emulador Tester_API36 y en el simulador de iPhone 15 Pro (`testSlowVoice`), en silencio: «Voz despacio:
   sí» se guarda, y Comeletras se juega con ella, alargando cada frase al decirla, sin errores en el registro de
   Android. Cómo suena lo prueban `StretchTest` y `SlowVoiceTest`; oírlo queda para la entrega (2026-11-09).
+
+### M5 · La otra parte del mar y la isla de la casa
+
+- [ ] En el mapa, junto a la barca, el botón de navegar: el mar se desliza y aparece la otra parte, con la isla de la
+  casa; el mismo botón vuelve. Al acabar la isla de la casa, el mapa abre en su parte del mar.
+- [ ] Si Bruno sugiere la isla de la casa desde la otra parte, el botón de navegar tiene las ondas y Bruno lo mira.
+- [ ] Los dientes: el cepillo, movido por encima, quita las manchas con espuma; con todos limpios, Bruno da las gracias.
+- [ ] Vestirse: la ventana con el tiempo de cada ronda; la cosa buena, llevada a Bruno, se la pone; otra vuelve con
+  «Eso es para cuando...» y la buena llama.
+- [ ] Los contenedores: cada cosa a su contenedor, que levanta la tapa; si no, vuelve y el suyo llama.
+- [ ] La isla tiene su pegatina (un cepillo), su música, su misión para casa y sus cuentas en la zona de mayores.
+- [x] En el emulador Tester_API36: navegar a la otra parte del mar, la isla de la casa, los dientes lavados a pasadas
+  con el cepillo (la partida apunta uno), vestir a Bruno con lluvia, sol y nieve (con dos fallos con nieve, que
+  apunta su semana) y el regalo; otro día, los dientes y las seis cosas a su contenedor, dos en cada uno, con la
+  tapa que se levanta, y el regalo. En el simulador de iPhone 15 Pro, `testHome` hace lo mismo hasta el regalo, que
+  queda cerrado, y `testHomeBins`, con el iPhone girado al otro lado, el día de los contenedores. El paraguas se pasó
+  a la mano de Bruno, porque el palo le tapaba la cara (2026-11-09).
 
 ### M5 · La F, la B y la R
 
