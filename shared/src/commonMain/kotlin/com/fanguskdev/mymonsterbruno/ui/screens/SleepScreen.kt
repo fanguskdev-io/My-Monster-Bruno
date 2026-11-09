@@ -18,6 +18,10 @@ import androidx.compose.ui.text.TextMeasurer
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.rememberTextMeasurer
 import com.fanguskdev.mymonsterbruno.audio.Voice
+import com.fanguskdev.mymonsterbruno.game.TALE_PAGES
+import com.fanguskdev.mymonsterbruno.game.heardTale
+import com.fanguskdev.mymonsterbruno.game.taleTold
+import com.fanguskdev.mymonsterbruno.game.taleTonight
 import com.fanguskdev.mymonsterbruno.ui.GameState
 import com.fanguskdev.mymonsterbruno.ui.Island
 import com.fanguskdev.mymonsterbruno.ui.Scene
@@ -34,6 +38,7 @@ import com.fanguskdev.mymonsterbruno.ui.art.drawBlanket
 import com.fanguskdev.mymonsterbruno.ui.art.drawBruno
 import com.fanguskdev.mymonsterbruno.ui.art.drawNightRoom
 import com.fanguskdev.mymonsterbruno.ui.art.drawRoundPhoto
+import com.fanguskdev.mymonsterbruno.ui.art.drawTalePage
 import com.fanguskdev.mymonsterbruno.ui.art.drawToothbrush
 import com.fanguskdev.mymonsterbruno.ui.circle
 import com.fanguskdev.mymonsterbruno.ui.fill
@@ -89,11 +94,32 @@ internal fun SleepScreen(game: GameState) {
     }
     val photo = rememberPhoto(game)
     var asleep by remember { mutableStateOf(!game.wentToBed) }
+
+    // The story of tonight, if she came to bed playing and has not heard one today (ADR 0045): the page on screen, and
+    // since when.
+    val tale = remember { game.data.taleTonight }
+    var page by remember { mutableStateOf<Int?>(null) }
+    var pageAt by remember { mutableStateOf(0f) }
     var lockSince by remember { mutableStateOf<Float?>(null) }
 
     LaunchedEffect(Unit) {
         if (!asleep) {
             audio.say(Voice.YAWN, mission.line, Voice.SEE_YOU_TOMORROW)
+            val today = game.currentDay()
+            if (!game.data.heardTale(today)) {
+                page = 0
+                pageAt = clock.value
+                audio.say(Voice.TALE_INTRO)
+                for (i in 0 until TALE_PAGES) {
+                    page = i
+                    pageAt = clock.value
+                    audio.say(Voice.taleLine(tale, i))
+                    delay(PAGE_PAUSE_MILLIS)
+                }
+                audio.say(Voice.TALE_END)
+                page = null
+                game.update { it.taleTold(today) }
+            }
             asleep = true
         }
     }
@@ -132,6 +158,16 @@ internal fun SleepScreen(game: GameState) {
 
     StageCanvas(touch) { stage ->
         val t = clock.value
+        val telling = page
+        if (telling != null) {
+            // The story: its page, its dots and, as always, the padlock of the grown-ups.
+            drawTalePage(tale, telling, t - pageAt, t, game.data.look, stage)
+            for (i in 0 until TALE_PAGES) {
+                circle(if (i <= telling) Color(0xFFFFE27A) else Color(0x55FFFFFF), Offset(325f + 30f * i, 384f), 8f)
+            }
+            drawGrownUpsLock(stage, t, lockSince)
+            return@StageCanvas
+        }
         drawNightRoom(stage, t)
         drawBed(BED)
         val pose = if (asleep) Pose(Mouth.SLEEP, Eyes.CLOSED) else Pose(Mouth.YAWN, Eyes.CLOSED)
@@ -243,3 +279,6 @@ private fun DrawScope.drawMissionCard(
     }
     photo?.let { drawRoundPhoto(it, c + Offset(MISSION_SIZE.width - 10f, 6f), 26f) }
 }
+
+/** The pause after each page of the story, to look at it before the next. */
+private const val PAGE_PAUSE_MILLIS = 1200L

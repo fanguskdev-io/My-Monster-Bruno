@@ -736,6 +736,21 @@ final class BrunoDriverTests: XCTestCase {
         checkpoint("b2-regalo-izq")
     }
 
+    /// The story at bedtime (ADR 0045): the save has thirty seconds of play left; on the map they run out, Bruno goes to
+    /// bed, gives the mission and tells the story of tonight, page after page, and falls asleep.
+    func testTale() {
+        XCUIDevice.shared.orientation = .landscapeRight
+        launchPastStart()
+        sleep(2)
+        stage(680, 290).tap()
+        sleep(45)
+        checkpoint("t1-cuento-der")
+        sleep(20)
+        checkpoint("t2-cuento-otra-lamina-der")
+        sleep(40)
+        checkpoint("t3-dormido-der")
+    }
+
     /// The stickers of the room (ADR 0024): the save has every island finished and none stuck yet. She takes the first one
     /// from the rug to the wall, lets the next one go on the floor, where it does not stay, sticks it on the wall after
     /// all, and moves the first one somewhere else.

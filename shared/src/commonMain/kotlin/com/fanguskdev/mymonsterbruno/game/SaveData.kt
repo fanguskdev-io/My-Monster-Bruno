@@ -36,6 +36,9 @@ data class SaveData(
     val places: Map<String, Int> = emptyMap(),
     /** Times she found how many strawberries Bruno had, by sum (Sum.key) (ADR 0029). */
     val sums: Map<String, Int> = emptyMap(),
+    /** The last day, as yyyymmdd, she heard a story at bedtime, and how many she has heard (ADR 0045). */
+    val taleDay: Int = 0,
+    val talesTold: Int = 0,
     /** The last day, as yyyymmdd, she went to the island of the house, and how many days she has gone (ADR 0044). */
     val homeDay: Int = 0,
     val homeDays: Int = 0,

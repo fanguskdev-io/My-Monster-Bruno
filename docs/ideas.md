@@ -88,7 +88,8 @@ recorridos del iPhone de un tirón. Y una que no estaba aquí, la pantalla de in
   Son premios con sentido, que dice la regla 9; sin coleccionar por coleccionar. *Mediana. Hecha, una por isla
   ([ADR 0024](adr/0024-pegatinas-para-el-cuarto.md)).*
 - **2.5 Un cuento para dormir.** Al acabarse los minutos, el narrador cuenta un cuento de un minuto en el que Bruno es el
-  protagonista, como en la propuesta 4. *Grande, por los dibujos.*
+  protagonista, como en la propuesta 4. *Grande, por los dibujos. Hecha: tres cuentos, uno cada noche, con seis láminas
+  cada uno ([ADR 0045](adr/0045-un-cuento-para-dormir.md)).*
 - **2.6 Música suave que se puede quitar.** La regla 8 la contempla y el juego no tiene música: un fondo tranquilo, distinto
   en cada isla, con su interruptor en la zona de mayores. *Pequeña. Hecha: una pieza por isla, sintetizada como los
   efectos ([ADR 0038](adr/0038-musica-suave-en-las-islas.md)).*

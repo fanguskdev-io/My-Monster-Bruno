@@ -20,7 +20,7 @@ decisiones, y la [investigación](docs/investigacion/investigacion.md), de dónd
 > cuarto y un regalo que Bruno se pone, o se quita, en su armario; su animal favorito vive con él y, con su foto, ella
 > va en su barca, que navega hasta otra parte del mar, a la isla de la casa: lavarle los dientes, vestirle según el
 > tiempo y llevar cada cosa a su contenedor. Suena una música suave en las islas, y los mayores ven su semana y eligen
-> qué sale. La
+> qué sale; y al acabarse los minutos, después de la misión, el narrador le cuenta un cuento de Bruno. La
 > entrega en su iPhone está preparada: será ad hoc, instalado el día que se lo dé ([entrega](docs/entrega.md)).
 
 ## Estructura

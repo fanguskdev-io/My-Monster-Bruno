@@ -55,3 +55,4 @@ y estas decisiones existen antes de G4 porque Fangusk pidió desarrollar ya. Las
 | [0042](0042-bruno-mas-despacio.md) | Bruno más despacio: la voz al 83 %, con el mismo tono, y más pausa entre frases, desde la zona de mayores | Aceptada; un interruptor, cuánto y cómo se alarga la voz, propuesta |
 | [0043](0043-otra-parte-del-mar.md) | Otra parte del mar, a la que se llega navegando con un botón junto a la barca, para más islas | Aceptada; el botón, cómo se pasa y qué hay allí, propuesta |
 | [0044](0044-la-isla-de-la-casa.md) | La isla de la casa: lavarle los dientes a Bruno, vestirle según el tiempo y cada cosa a su contenedor | Aceptada; los tres juegos, cuáles cada día, la ropa y los contenedores, propuesta |
+| [0045](0045-un-cuento-para-dormir.md) | Un cuento para dormir, de tres, uno cada noche, con sus láminas, después de la misión para casa | Aceptada; cuándo, los tres cuentos y que no se salte, propuesta |

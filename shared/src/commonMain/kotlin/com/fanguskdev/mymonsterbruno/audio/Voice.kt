@@ -26,6 +26,8 @@ import com.fanguskdev.mymonsterbruno.game.Side
 import com.fanguskdev.mymonsterbruno.game.StartWord
 import com.fanguskdev.mymonsterbruno.game.Story
 import com.fanguskdev.mymonsterbruno.game.Sum
+import com.fanguskdev.mymonsterbruno.game.TALE_PAGES
+import com.fanguskdev.mymonsterbruno.game.Tale
 import com.fanguskdev.mymonsterbruno.game.TalkWord
 import com.fanguskdev.mymonsterbruno.game.Thing
 import com.fanguskdev.mymonsterbruno.game.Weather
@@ -175,6 +177,10 @@ internal object Voice {
     /** The bins (ADR 0044): how it starts and Bruno's thanks. */
     const val RECYCLE_INTRO = "n_reciclar_intro"
     const val THANKS_RECYCLE = "b_gracias_reciclar"
+
+    /** The story at bedtime (ADR 0045): «¿Te cuento un cuento?» and «Colorín colorado, este cuento se ha acabado». */
+    const val TALE_INTRO = "n_cuento_intro"
+    const val TALE_END = "n_cuento_fin"
 
     /** The race of the island of numbers (ADR 0037): how it starts, Bruno's «Preparados, listos... ¡ya!» and his thanks. */
     const val RACE_INTRO = "n_carrera_intro"
@@ -405,6 +411,9 @@ internal object Voice {
     /** «Huum... Luna empieza por lu.» */
     fun startsWith(word: StartWord) = "b_empieza_${word.word}"
 
+    /** The line of [page] (from 0) of [tale]: «Una noche, Bruno navegaba en su barca por el mar...» (ADR 0045). */
+    fun taleLine(tale: Tale, page: Int) = "n_cuento_${tale.key}_${page + 1}"
+
     /** «¡Llueve! ¿Qué me pongo?» (ADR 0044). */
     fun whatToWear(weather: Weather) = "b_que_me_pongo_${weather.word}"
 
@@ -453,8 +462,9 @@ internal object Voice {
         WARDROBE_INTRO, TAKE_OFF, NEW_PET, SUGGEST_LETTERS, SUGGEST_NUMBERS, SUGGEST_COLORS, SUGGEST_SHAPES, SUGGEST_FEELINGS,
         SUGGEST_WORDS, WITH_A_GROWN_UP, CLAP_THE_HANDS, PLAYING_TOGETHER, RACE_INTRO, READY_GO, THANKS_RACE, OTHER_SEA,
         BACK_SEA, TO_HOME, SUGGEST_HOME, STICKER_HOME, MISSION_HOME, TEETH_INTRO, BRUSH, CLEAN_TEETH, DRESS_INTRO, THANKS_DRESS,
-        RECYCLE_INTRO, THANKS_RECYCLE,
+        RECYCLE_INTRO, THANKS_RECYCLE, TALE_INTRO, TALE_END,
     ) +
+        Tale.entries.flatMap { tale -> (0 until TALE_PAGES).map { taleLine(tale, it) } } +
         DRESS_WEATHERS.flatMap { listOf(whatToWear(it), thatIsFor(it)) } +
         Clothes.entries.map { wearIt(it) } +
         Rubbish.entries.flatMap { listOf(whereGoes(it), goesRight(it), goesTo(it)) } +

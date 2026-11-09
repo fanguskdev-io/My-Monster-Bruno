@@ -781,3 +781,23 @@ n_va_caja_de_carton	narrador	La caja de cartón va al azul.
 n_va_tarro	narrador	El tarro de cristal va al verde.
 n_va_botella_de_cristal	narrador	La botella de cristal va al verde.
 b_gracias_reciclar	bruno	¡Qué limpia está la isla! ¡Gracias!
+n_cuento_intro	narrador	¿Te cuento un cuento? Escucha, que es de Bruno.
+n_cuento_fin	narrador	Y colorín colorado, este cuento se ha acabado. Buenas noches.
+n_cuento_estrella_1	narrador	Una noche, Bruno navegaba en su barca por el mar. Arriba brillaban muchas estrellas.
+n_cuento_estrella_2	narrador	De pronto, ¡zas!, una estrella pequeña se cayó del cielo y aterrizó en una isla.
+n_cuento_estrella_3	narrador	Bruno remó hasta allí. La estrella estaba triste: no sabía volver a su sitio.
+n_cuento_estrella_4	narrador	Bruno tuvo una idea: le ató sus globos de colores, el rojo, el azul y el amarillo.
+n_cuento_estrella_5	narrador	Los globos subieron y subieron, y la estrella volvió al cielo, con las demás.
+n_cuento_estrella_6	narrador	Desde arriba, la estrella le guiñó un ojo. Y Bruno volvió a casa, a dormir.
+n_cuento_pez_1	narrador	En el mar vivía un pez naranja que no se podía dormir.
+n_cuento_pez_2	narrador	Daba vueltas y más vueltas, con los ojos muy abiertos.
+n_cuento_pez_3	narrador	Bruno pasó en su barca y le preguntó: ¿qué te pasa, pececito?
+n_cuento_pez_4	narrador	No tengo sueño, dijo el pez. Y Bruno le cantó una canción muy bajito.
+n_cuento_pez_5	narrador	Luego contaron las olas juntos: una, dos, tres... y al pez se le cerraban los ojos.
+n_cuento_pez_6	narrador	El pez se durmió, meciéndose en el agua. Y Bruno bostezó: él también tenía sueño.
+n_cuento_luna_1	narrador	Era una noche de invierno, y hacía mucho, mucho frío.
+n_cuento_luna_2	narrador	En el cielo, la luna tiritaba y decía: ¡uy, qué frío, qué frío!
+n_cuento_luna_3	narrador	Bruno la vio desde su ventana y pensó: pobre luna, tiene frío.
+n_cuento_luna_4	narrador	Subió a lo alto de la colina y le dio su gorro de lana.
+n_cuento_luna_5	narrador	La luna, calentita, sonrió y brilló más que nunca.
+n_cuento_luna_6	narrador	Con su luz, Bruno volvió a casa sin perderse. Buenas noches, luna.

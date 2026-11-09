@@ -211,8 +211,11 @@ equivoca en más de la mitad, dos. Nunca se le dice, y no hay niveles ni puntos.
    nunca a medias: enseguida si están en el cuarto o en el mapa, y al terminar la isla, con su regalo, si están en una.
    Bosteza, le da una **misión para casa** que va con lo que han hecho (buscar algo que empiece por la a, contar las sillas
    de la cocina, buscar algo amarillo o algo redondo, contar cómo se ha sentido, buscar algo que empiece como su nombre)
-   y le dice «¡Hasta mañana!». Si tiene foto, va prendida en la esquina de la tarjeta de la misión. Si se abre otra vez
-   ese día, Bruno sigue dormido:
+   y le dice «¡Hasta mañana!». Si tiene foto, va prendida en la esquina de la tarjeta de la misión. Después, una vez al
+   día, **un cuento para dormir** ([ADR 0045](adr/0045-un-cuento-para-dormir.md)): «¿Te cuento un cuento?», y el narrador
+   cuenta uno de tres, cada noche el siguiente (la estrella que se cayó, el pez que no podía dormir y la luna y el gorro),
+   con seis láminas de noche que pasan despacio, sin poder saltarlo: «Y colorín colorado, este cuento se ha acabado».
+   Si se abre otra vez ese día, Bruno sigue dormido:
    «Huum... Mañana jugamos más».
 
 Fuera del camino:
@@ -298,7 +301,7 @@ Las **voces de la familia** no se harán: «para M2 no vamos a utilizar las voce
 - **Bruno y todo lo demás se dibujan con vectores**, sin imágenes: Bruno respira, parpadea, mira y cambia de cara (ocho
   bocas, cuatro ojos, tres posturas de brazos).
 - **Las voces** son las de un narrador y la de Bruno, algo más aguda y más despacio, a unas 4 sílabas por segundo. Hay
-  782 frases pregrabadas con la voz del sistema del Mac y **los efectos** (17) se sintetizan desde cero
+  802 frases pregrabadas con la voz del sistema del Mac y **los efectos** (17) se sintetizan desde cero
   ([ADR 0004](adr/0004-voces-provisionales.md)). Las frases están en [`voces/guion.tsv`](../voces/guion.tsv).
 - **La letra** de la zona de mayores, de los números, del banderín y del título es Andika, una tipografía pensada para quien aprende a
   leer (licencia OFL, en [`licencias/`](../licencias/Andika-OFL.txt)).

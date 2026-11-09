@@ -48,7 +48,8 @@ Qué se prueba en cada cambio y en cada hito, y cómo. Los criterios de salida d
 | Su semana: los días hacia atrás cruzando meses, años y bisiestos; solo los últimos siete; los minutos de cada día; lo que más le ha costado primero, y entre iguales por su nombre | `WeekTest` | Común |
 | Qué sale: una consonante quitada no se pide, no sale entre las galletas ni se traza, y no frena a las siguientes; los botones, y en el mapa siempre queda una isla, la única que Bruno sugiere | `ShownTest` | Común |
 | La isla de la casa: vestirse, una ronda por tiempo con una cosa de cada uno; los contenedores, las seis cosas sin dos del mismo seguidas; primero los dientes y luego, un día cada uno, vestirse o los contenedores; el mapa vuelve a su parte del mar; y sus frases | `HomeTest` | Común |
-| Las veintiocho pantallas y, el cuarto con cada uno de los seis animales, el cuarto con lluvia y con nieve en la ventana, los caminos de bucles y de caracol, el cuarto con sus pegatinas, cuando ya sabe las vocales y del 1 al 5, Comeletras, los trazos y las fresas con lo nuevo, Comeletras y los trazos con la T, la N y la D y con la F, la B y la R, el mapa con su cuarta fila de rocas, la pantalla de inicio con el huevo, el cuarto con su foto y cuando Bruno le pide que le enseñe su nombre, la emoción del día con su foto, la pantalla de inicio, el mapa y la hora de dormir con su foto, la carrera de animales, el mapa sin dos islas y sin cuatro consonantes, la isla de la casa (los dientes, vestirse y los contenedores) y la otra parte del mar, Comeletras, los globos, las emociones, las palabras y las rimas con cuatro para elegir y Comeletras con dos, y el mapa con todas las islas terminadas y sus banderas, se dibujan en móvil (2,17:1) y en tableta (4:3) | `ScreenshotsTest` | JVM |
+| El cuento para dormir: uno al día, cada noche el siguiente y vuelta a empezar; cada lámina con su frase | `TaleTest` | Común |
+| Las veintiocho pantallas y, el cuarto con cada uno de los seis animales, el cuarto con lluvia y con nieve en la ventana, los caminos de bucles y de caracol, el cuarto con sus pegatinas, cuando ya sabe las vocales y del 1 al 5, Comeletras, los trazos y las fresas con lo nuevo, Comeletras y los trazos con la T, la N y la D y con la F, la B y la R, el mapa con su cuarta fila de rocas, la pantalla de inicio con el huevo, el cuarto con su foto y cuando Bruno le pide que le enseñe su nombre, la emoción del día con su foto, la pantalla de inicio, el mapa y la hora de dormir con su foto, la carrera de animales, el mapa sin dos islas y sin cuatro consonantes, la isla de la casa (los dientes, vestirse y los contenedores), la otra parte del mar, las seis láminas de cada cuento para dormir, Comeletras, los globos, las emociones, las palabras y las rimas con cuatro para elegir y Comeletras con dos, y el mapa con todas las islas terminadas y sus banderas, se dibujan en móvil (2,17:1) y en tableta (4:3) | `ScreenshotsTest` | JVM |
 | La salida de la zona de mayores: «Salir del juego» guarda la partida y cierra; sin salida en la plataforma, como en iOS, no hay botón | `GrownUpsExitTest` | JVM |
 | El icono de iOS es el de Android: lo dibuja del vector de `androidApp` en `shared/build/icono/` y lo compara con el del proyecto de Xcode; si cambia el de Android, se copia el nuevo | `AppIconTest` | JVM |
 | En el iPhone 15 Pro de ella y en el 17 Pro del simulador, girados a un lado y al otro, la casa, el altavoz y el candado se ven enteros: ni bajo la Dynamic Island ni cortados por las esquinas redondeadas, medidas en el simulador | `CornerButtonsTest` | Común |
@@ -101,7 +102,7 @@ propio Mac ([ADR 0027](adr/0027-el-mac-tambien-comprueba-la-palabra.md)); el emu
 Para ver el juego en un iPhone 15 Pro simulado, girado a un lado y al otro, sin tocarlo a mano:
 [`tools/conductor-ios`](../tools/conductor-ios) es una prueba de interfaz que toca el escenario de 800 × 400 y, en cada
 punto de control, espera a que `vigilante.sh` saque una captura con lo que tapan la isla y las esquinas pintado de negro.
-Tiene veintiocho recorridos:
+Tiene veintinueve recorridos:
 
 - los dos de la entrega, que empiezan en el huevo: `testWalkThroughHeldBothWays` y `testFinalVersionBothWays`;
 - `testTalkAndPhoto`, «Habla con Bruno» y elegir su foto;
@@ -140,7 +141,9 @@ Tiene veintiocho recorridos:
 - `testSlowVoice`, la voz despacio: ponerla en la zona de mayores y jugar Comeletras con ella, en silencio;
 - `testHome`, la otra parte del mar y la isla de la casa el día de vestirse: navegar, lavar los dientes con el cepillo a
   pasadas y vestir a Bruno para cada tiempo, hasta el regalo;
-- `testHomeBins`, la isla de la casa el día de los contenedores: los dientes y las seis cosas, hasta el regalo.
+- `testHomeBins`, la isla de la casa el día de los contenedores: los dientes y las seis cosas, hasta el regalo;
+- `testTale`, el cuento para dormir: con un minuto de juego, en el mapa hasta que se acaba, la misión y el cuento,
+  hasta que Bruno duerme.
 
 Todos pasan antes por la pantalla de inicio, con un toque. Siempre en silencio (`-silencio`) y en un simulador propio que
 se borra al acabar, nunca en uno de otra sesión.
@@ -563,6 +566,17 @@ pedirían el móvil o la tableta (2026-11-06).
   tapa que se levanta, y el regalo. En el simulador de iPhone 15 Pro, `testHome` hace lo mismo hasta el regalo, que
   queda cerrado, y `testHomeBins`, con el iPhone girado al otro lado, el día de los contenedores. El paraguas se pasó
   a la mano de Bruno, porque el palo le tapaba la cara (2026-11-09).
+
+### M5 · Un cuento para dormir
+
+- [ ] Al llegar a la cama jugando, después de la misión y «¡Hasta mañana!»: «¿Te cuento un cuento?», y las seis
+  láminas del cuento de esa noche, despacio, con sus puntitos; al final, «Colorín colorado», y Bruno duerme.
+- [ ] Tocar no lo salta; el candado de los mayores sí funciona. Ese día no hay otro cuento; al día siguiente, el
+  siguiente de los tres.
+- [x] En el emulador Tester_API36 y en el simulador de iPhone 15 Pro (`testTale`), en silencio y con medio minuto de
+  juego: se acaba en el mapa, Bruno se va a la cama, da la misión y cuenta «La estrella que se cayó», lámina a
+  lámina con sus puntitos, y se duerme; la partida apunta el día y un cuento contado. Las láminas de los tres
+  cuentos se ven en las capturas (2026-11-09).
 
 ### M5 · La F, la B y la R
 

@@ -134,7 +134,7 @@ internal fun DrawScope.drawClothes(clothes: Clothes, center: Offset, size: Float
             Clothes.CAP -> cap(Offset(0f, 12f), 1.7f)
             Clothes.UMBRELLA -> umbrella(Offset(0f, -8f), 1f)
             Clothes.BOOTS -> boots(Offset(0f, 10f), 1.6f)
-            Clothes.WOOLLY_HAT -> woollyHat(Offset(0f, 14f), 1.6f)
+            Clothes.WOOLLY_HAT -> drawWoollyHat(Offset(0f, 14f), 1.6f)
             Clothes.SCARF -> scarf(Offset(0f, 0f), 1.5f)
         }
     }
@@ -158,7 +158,7 @@ internal fun DrawScope.drawWorn(
             // Held up by his right hand, the stick beside him and not over his face.
             Clothes.UMBRELLA -> umbrella(Offset(46f, -78f), 1f)
             Clothes.BOOTS -> boots(Offset(0f, 46f), 1f)
-            Clothes.WOOLLY_HAT -> woollyHat(Offset(0f, -38f), 1f)
+            Clothes.WOOLLY_HAT -> drawWoollyHat(Offset(0f, -38f), 1f)
             Clothes.SCARF -> scarf(Offset(0f, 30f), 1f)
         }
     }
@@ -225,7 +225,8 @@ private fun DrawScope.boots(at: Offset, s: Float) {
     }
 }
 
-private fun DrawScope.woollyHat(at: Offset, s: Float) {
+/** A blue woolly hat with its white edge and its pompom, [s] times its size, sitting on [at]. */
+internal fun DrawScope.drawWoollyHat(at: Offset, s: Float) {
     val blue = Color(0xFF2C74D8)
     fill(
         path {

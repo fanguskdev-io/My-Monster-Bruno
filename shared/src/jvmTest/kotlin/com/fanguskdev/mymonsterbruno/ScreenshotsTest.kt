@@ -22,6 +22,8 @@ import com.fanguskdev.mymonsterbruno.game.PathShape
 import com.fanguskdev.mymonsterbruno.game.Pet
 import com.fanguskdev.mymonsterbruno.game.SaveData
 import com.fanguskdev.mymonsterbruno.game.SaveStore
+import com.fanguskdev.mymonsterbruno.game.TALE_PAGES
+import com.fanguskdev.mymonsterbruno.game.Tale
 import com.fanguskdev.mymonsterbruno.game.Topping
 import com.fanguskdev.mymonsterbruno.game.VOWELS
 import com.fanguskdev.mymonsterbruno.game.Weather
@@ -32,6 +34,9 @@ import com.fanguskdev.mymonsterbruno.ui.GameState
 import com.fanguskdev.mymonsterbruno.ui.Iphone
 import com.fanguskdev.mymonsterbruno.ui.Island
 import com.fanguskdev.mymonsterbruno.ui.Scene
+import com.fanguskdev.mymonsterbruno.ui.Stage
+import com.fanguskdev.mymonsterbruno.ui.StageCanvas
+import com.fanguskdev.mymonsterbruno.ui.art.drawTalePage
 import com.fanguskdev.mymonsterbruno.ui.fill
 import com.fanguskdev.mymonsterbruno.ui.path
 import kotlinx.coroutines.CoroutineScope
@@ -248,6 +253,14 @@ class ScreenshotsTest {
             val otherSea = File(folder, "${screen.name}-3-mapa-otro-mar.png")
             otherSea.writeBytes(render(Scene.Map, screen, sea = 1))
             assertTrue(otherSea.length() > MIN_BYTES, "$otherSea está vacía")
+            // The stories for bedtime (ADR 0045): every page of each, on the phone; the first of each on the rest.
+            for (tale in Tale.entries) {
+                for (page in if (screen.name == "movil") 0 until TALE_PAGES else 0 until 1) {
+                    val file = File(folder, "${screen.name}-41-cuento-${tale.key}-${page + 1}.png")
+                    file.writeBytes(renderPage(screen) { stage -> drawTalePage(tale, page, 2f, 2f, LOOK, stage) })
+                    assertTrue(file.length() > MIN_BYTES, "$file está vacía")
+                }
+            }
             // The map without the islands of colours and of words, and without the M and the last consonants (ADR 0041).
             val fewer = File(folder, "${screen.name}-3-mapa-con-menos.png")
             val taken = listOf(Island.COLORS.name, Island.WORDS.name)
@@ -292,7 +305,7 @@ class ScreenshotsTest {
         val save = SaveData(
             hatched = scene != Scene.Hatch,
             childName = "Lucía",
-            look = BrunoLook(BrunoColor.MINT, Topping.HORNS, listOf(Accessory.BEANIE, Accessory.BOW_TIE)),
+            look = LOOK,
         )
         SaveStore.save(store, practised(save))
         photo?.let { PhotoStore.save(store, it) }
@@ -321,6 +334,21 @@ class ScreenshotsTest {
         }
     }
 
+    /** [draw] on the stage of [screen], as a PNG: for what is drawn without a screen of the game, as the pages of a story. */
+    private fun renderPage(screen: Screen, draw: DrawScope.(Stage) -> Unit): ByteArray {
+        val image = ImageComposeScene(screen.width, screen.height, Density(screen.height / STAGE_DP)) {
+            Box(Modifier.fillMaxSize()) {
+                StageCanvas(null, draw)
+                screen.hidden?.let { Canvas(Modifier.fillMaxSize(), onDraw = it) }
+            }
+        }
+        try {
+            return image.render(0L).encodeToData(EncodedImageFormat.PNG)?.bytes ?: ByteArray(0)
+        } finally {
+            image.close()
+        }
+    }
+
     /** A screen [width] by [height] pixels, and what of it cannot be seen, drawn over the game, if there is anything. */
     private class Screen(
         val name: String,
@@ -330,6 +358,9 @@ class ScreenshotsTest {
     )
 
     private companion object {
+        /** Bruno in every capture: mint, with horns, his beanie and his bow tie. */
+        val LOOK = BrunoLook(BrunoColor.MINT, Topping.HORNS, listOf(Accessory.BEANIE, Accessory.BOW_TIE))
+
         val IPHONE = Iphone.PRO_15
         val SCREENS = listOf(Screen("movil", 1560, 720), Screen("tablet", 1200, 900)) +
             listOf(true, false).map { islandOnLeft ->
