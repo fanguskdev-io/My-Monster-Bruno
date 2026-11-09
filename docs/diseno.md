@@ -109,6 +109,8 @@ de él y la ventana del cuarto lo enseña el resto del día. El día sale de la 
    alfombra ([ADR 0024](adr/0024-pegatinas-para-el-cuarto.md)): ella la arrastra a la pared y la pega donde quiera, menos
    encima de lo que se toca; y la mueve cuando quiera. La percha del suelo lleva a **su armario** ([ADR 0032](adr/0032-el-armario-de-bruno.md)):
    ella elige qué regalos lleva, uno de cada sitio o ninguno, y le cambia el color o lo de la cabeza, como al nacer.
+   Si los mayores han elegido **su animal favorito** ([ADR 0033](adr/0033-su-animal-favorito.md)), vive en una balda a la derecha de Bruno:
+   la primera vez Bruno lo presenta y, si lo toca, salta y Bruno dice que lo cuida.
 3. **El mapa**. Bruno va en su barca. Hay seis islas: la de las letras, la de los números, la de los colores, la de las
    formas, la de las emociones y, la más pequeña, arriba a la derecha, la de las palabras. Una isla terminada lleva su
    bandera.
@@ -269,7 +271,7 @@ Las **voces de la familia** no se harán: «para M2 no vamos a utilizar las voce
 - **Bruno y todo lo demás se dibujan con vectores**, sin imágenes: Bruno respira, parpadea, mira y cambia de cara (ocho
   bocas, cuatro ojos, tres posturas de brazos).
 - **Las voces** son las de un narrador y la de Bruno, algo más aguda y más despacio, a unas 4 sílabas por segundo. Hay
-  709 frases pregrabadas con la voz del sistema del Mac y **los efectos** (17) se sintetizan desde cero
+  716 frases pregrabadas con la voz del sistema del Mac y **los efectos** (17) se sintetizan desde cero
   ([ADR 0004](adr/0004-voces-provisionales.md)). Las frases están en [`voces/guion.tsv`](../voces/guion.tsv).
 - **La letra** de la zona de mayores, de los números, del banderín y del título es Andika, una tipografía pensada para quien aprende a
   leer (licencia OFL, en [`licencias/`](../licencias/Andika-OFL.txt)).

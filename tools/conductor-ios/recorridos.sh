@@ -18,7 +18,7 @@ DD=build/conductor-ios
 HOY=$(date +%Y%m%d)
 TODOS=(testWalkThroughHeldBothWays testFinalVersionBothWays testTalkAndPhoto testWordsAndLetters testStartAndName
     testFeelingOfTheDay testRhymes testCountdown testPhotoAndRestart testStickers testStory testNumberLine
-    testPlaces testSums testPaths testWardrobe)
+    testPlaces testSums testPaths testWardrobe testPet)
 if (($# > 0)); then RECORRIDOS=("$@"); else RECORRIDOS=("${TODOS[@]}"); fi
 
 # La partida de la que parte cada recorrido: los de la entrega, en el huevo; los demás, con Bruno nacido, su nombre
@@ -32,6 +32,7 @@ partida() {
         testStartAndName) echo "{\"hatched\":true,\"childName\":\"Lucía\",\"moodDay\":$HOY}" ;;
         testFeelingOfTheDay) echo '{"hatched":true,"childName":"Lucía","namesWritten":1}' ;;
         testStickers) echo "{\"hatched\":true,\"childName\":\"Lucía\",\"namesWritten\":1,\"moodDay\":$HOY,\"islands\":{\"VOWELS\":1,\"NUMBERS\":1,\"COLORS\":1,\"SHAPES\":1,\"FEELINGS\":1,\"WORDS\":1}}" ;;
+        testPet) echo "{\"hatched\":true,\"childName\":\"Lucía\",\"namesWritten\":1,\"moodDay\":$HOY,\"pet\":\"gato\"}" ;;
         testWardrobe) echo "{\"hatched\":true,\"childName\":\"Lucía\",\"namesWritten\":1,\"moodDay\":$HOY,\"look\":{\"accessories\":[\"BEANIE\",\"GLASSES\",\"BOW_TIE\"]}}" ;;
         testPaths) echo "{\"hatched\":true,\"childName\":\"Lucía\",\"namesWritten\":1,\"moodDay\":$HOY,\"lettersDay\":1,\"lettersDays\":1,\"paths\":{\"recta\":1,\"abajo\":1,\"inclinada\":1}}" ;;
         testSums) echo "{\"hatched\":true,\"childName\":\"Lucía\",\"namesWritten\":1,\"moodDay\":$HOY,\"numbersDay\":1,\"numbersDays\":2}" ;;

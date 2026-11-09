@@ -19,6 +19,7 @@ import com.fanguskdev.mymonsterbruno.game.CONSONANTS
 import com.fanguskdev.mymonsterbruno.game.Choosing
 import com.fanguskdev.mymonsterbruno.game.NEXT_CONSONANTS
 import com.fanguskdev.mymonsterbruno.game.PathShape
+import com.fanguskdev.mymonsterbruno.game.Pet
 import com.fanguskdev.mymonsterbruno.game.SaveData
 import com.fanguskdev.mymonsterbruno.game.SaveStore
 import com.fanguskdev.mymonsterbruno.game.Topping
@@ -192,6 +193,12 @@ class ScreenshotsTest {
             val file = File(folder, "${screen.name}-20-mapa-terminado.png")
             file.writeBytes(render(Scene.Map, screen, finished))
             assertTrue(file.length() > MIN_BYTES, "$file está vacía")
+            // Her animal on its shelf in the room, each of the six on the phone and the cat on the rest (ADR 0033).
+            for (pet in if (screen.name == "movil") Pet.entries else listOf(Pet.CAT)) {
+                val room = File(folder, "${screen.name}-2-casa-${pet.word}.png")
+                room.writeBytes(render(Scene.Home, screen, { it.copy(pet = pet.word, petSeen = true) }))
+                assertTrue(room.length() > MIN_BYTES, "$room está vacía")
+            }
             // Bruno's wardrobe with five presents, two of them on (ADR 0032).
             val dressed = { save: SaveData ->
                 val presents = listOf(Accessory.BEANIE, Accessory.GLASSES, Accessory.BOW_TIE, Accessory.FLOWERS, Accessory.SCARF)

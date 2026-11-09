@@ -49,6 +49,7 @@ import com.fanguskdev.mymonsterbruno.game.Hue
 import com.fanguskdev.mymonsterbruno.game.LETTERS
 import com.fanguskdev.mymonsterbruno.game.MAX_COUNT
 import com.fanguskdev.mymonsterbruno.game.PathShape
+import com.fanguskdev.mymonsterbruno.game.Pet
 import com.fanguskdev.mymonsterbruno.game.Place
 import com.fanguskdev.mymonsterbruno.game.RhymeWord
 import com.fanguskdev.mymonsterbruno.game.SUMS
@@ -61,6 +62,7 @@ import com.fanguskdev.mymonsterbruno.game.Story
 import com.fanguskdev.mymonsterbruno.game.TalkWord
 import com.fanguskdev.mymonsterbruno.game.Weather
 import com.fanguskdev.mymonsterbruno.game.choices
+import com.fanguskdev.mymonsterbruno.game.chosenPet
 import com.fanguskdev.mymonsterbruno.game.feltDays
 import com.fanguskdev.mymonsterbruno.storage.rememberPhotoPicker
 import com.fanguskdev.mymonsterbruno.ui.GameState
@@ -146,6 +148,19 @@ internal fun GrownUpsScreen(game: GameState, onExit: (() -> Unit)? = null) {
                         scope.launch { picker.pick()?.let(game::choosePhoto) }
                     }
                     if (photo != null) Chip("Quitar su foto", font, selected = false) { game.removePhoto() }
+                }
+            }
+            Section("Su animal favorito", font) {
+                Text("Vive en el cuarto con Bruno, en una balda; si lo toca, salta y Bruno le dice que lo cuida.", font, 15, color = Soft)
+                val pets = listOf<Pet?>(null) + Pet.entries
+                for (row in pets.chunked(4)) {
+                    Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                        for (pet in row) {
+                            Chip(pet?.spoken ?: "Ninguno", font, selected = data.chosenPet == pet) {
+                                game.update { it.copy(pet = pet?.word.orEmpty(), petSeen = it.pet == pet?.word.orEmpty() && it.petSeen) }
+                            }
+                        }
+                    }
                 }
             }
             Section("Tiempo de juego", font) {
@@ -383,4 +398,13 @@ private val PathShape.spoken: String get() = when (this) {
     PathShape.WAVES -> "de olas"
     PathShape.LOOPS -> "con bucles"
     PathShape.SPIRAL -> "caracol"
+}
+
+private val Pet.spoken: String get() = when (this) {
+    Pet.CAT -> "Gato"
+    Pet.DOG -> "Perro"
+    Pet.RABBIT -> "Conejo"
+    Pet.FISH -> "Pez"
+    Pet.BIRD -> "Pájaro"
+    Pet.TURTLE -> "Tortuga"
 }

@@ -11,6 +11,7 @@ import com.fanguskdev.mymonsterbruno.game.LINE_LAST
 import com.fanguskdev.mymonsterbruno.game.MAX_COUNT
 import com.fanguskdev.mymonsterbruno.game.NAME_ALPHABET
 import com.fanguskdev.mymonsterbruno.game.PathShape
+import com.fanguskdev.mymonsterbruno.game.Pet
 import com.fanguskdev.mymonsterbruno.game.Place
 import com.fanguskdev.mymonsterbruno.game.Placing
 import com.fanguskdev.mymonsterbruno.game.RhymeWord
@@ -124,6 +125,9 @@ internal object Voice {
     const val LIFT_OFF = "n_despegue"
     const val OFF_I_GO = "b_alla_voy"
     const val THANKS_ROCKET = "b_gracias_cohete"
+
+    /** «¡Mira quién ha venido a vivir conmigo!», the first time her animal is in the room (ADR 0033). */
+    const val NEW_PET = "b_mascota_nueva"
 
     /** Bruno's wardrobe, from the room (ADR 0032): how he greets her in it, and what he says taking something off. */
     const val WARDROBE_INTRO = "b_armario_intro"
@@ -254,6 +258,9 @@ internal object Voice {
     /** «¡Nueve!», counting down: not «Una» as the strawberries, «¡Uno!». */
     fun down(number: Int) = "n_atras_$number"
 
+    /** «¡Miau! Es tu gato. Lo cuido muy bien.», when she touches her animal. */
+    fun petHello(pet: Pet) = "b_mascota_${pet.word}"
+
     /** «¡Un camino de olas! Arriba y abajo.», the path she takes Bruno home along. */
     fun pathIs(shape: PathShape) = "n_camino_${shape.word}"
 
@@ -364,8 +371,9 @@ internal object Voice {
         STICKER_WORDS, STICK_IT, SO_PRETTY, STORY_INTRO, WHAT_FIRST, AND_NEXT, AND_AT_THE_END, LATER, THANKS_STORIES,
         NUMBER_LINE_INTRO, BESIDE_BRUNO, THANKS_NUMBER_LINE, PLACES_INTRO, HIDDEN, THANKS_PLACES, SUMS_INTRO, HOW_MANY_NOW,
         COUNT_THEM_ALL, THANKS_SUMS, ASSEMBLY_INTRO, WHAT_WEATHER, DAY_STARTS, PATHS_INTRO, FOLLOW_PATH, AT_HOME, THANKS_PATHS,
-        WARDROBE_INTRO, TAKE_OFF,
+        WARDROBE_INTRO, TAKE_OFF, NEW_PET,
     ) +
+        Pet.entries.map { petHello(it) } +
         PathShape.entries.map { pathIs(it) } +
         Weekday.entries.flatMap { listOf(todayIs(it), aroundToday(it), thatDay(it)) } +
         Weather.entries.map { weatherIs(it) } +

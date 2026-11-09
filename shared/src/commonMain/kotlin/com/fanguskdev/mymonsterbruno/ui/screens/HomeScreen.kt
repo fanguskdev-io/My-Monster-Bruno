@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import com.fanguskdev.mymonsterbruno.audio.Sfx
 import com.fanguskdev.mymonsterbruno.audio.Voice
+import com.fanguskdev.mymonsterbruno.game.chosenPet
 import com.fanguskdev.mymonsterbruno.game.nameLetters
 import com.fanguskdev.mymonsterbruno.ui.GameState
 import com.fanguskdev.mymonsterbruno.ui.Island
@@ -44,6 +45,8 @@ import com.fanguskdev.mymonsterbruno.ui.art.Shadow
 import com.fanguskdev.mymonsterbruno.ui.art.drawBalloon
 import com.fanguskdev.mymonsterbruno.ui.art.drawBruno
 import com.fanguskdev.mymonsterbruno.ui.art.drawHanger
+import com.fanguskdev.mymonsterbruno.ui.art.drawPet
+import com.fanguskdev.mymonsterbruno.ui.art.drawPetShelf
 import com.fanguskdev.mymonsterbruno.ui.art.drawRoom
 import com.fanguskdev.mymonsterbruno.ui.art.drawRoundButton
 import com.fanguskdev.mymonsterbruno.ui.art.drawSparkles
@@ -79,6 +82,13 @@ private val TALK_BUTTON = Offset(82f, 200f)
 
 /** The button of Bruno's wardrobe (ADR 0032): a hanger on the floor, at his left. */
 private val WARDROBE_BUTTON = Offset(198f, 344f)
+
+/** Her animal on its shelf on the wall, at the right of Bruno and clear of the big button and its glow (ADR 0033). */
+private val PET_SHELF = Offset(554f, 238f)
+private const val PET_SHELF_WIDTH = 104f
+private val PET = Offset(554f, 204f)
+private const val PET_SIZE = 66f
+private const val PET_HAPPY_SECONDS = 1.2f
 private const val WARDROBE_RADIUS = 34f
 
 /** Her photo hangs on the wall on the right, over the big button: beside the window it would cover Bruno. */
@@ -120,6 +130,9 @@ internal fun HomeScreen(game: GameState) {
 
     // When Bruno last looked at her photo, and when he asked her to teach him her name.
     var lookedAt by remember { mutableStateOf(-10f) }
+
+    // When her animal was touched, or arrived: it jumps a moment.
+    var petAt by remember { mutableStateOf(-10f) }
     var invitedAt by remember { mutableStateOf(-10f) }
 
     // The sticker her finger has, where, and from where; the one going back where it was; and the last one stuck.
@@ -145,7 +158,7 @@ internal fun HomeScreen(game: GameState) {
         when {
             // Just a touch: the one waiting says whose it is; one on the wall makes a pop.
             distance(point, downAt) < TAP_MOVE -> if (from == null) audio.speak(island.stickerLine, Voice.STICK_IT) else audio.sfx(Sfx.POP)
-            stickerFits(dragAt, stage, game.data.childName) -> {
+            stickerFits(dragAt, stage, game.data.childName, pet = game.data.chosenPet != null) -> {
                 game.update { it.stuck(island, dragAt) }
                 stuckAt = dragAt to clock.value
                 audio.sfx(Sfx.POP)
@@ -187,6 +200,12 @@ internal fun HomeScreen(game: GameState) {
             lookedAt = clock.value
             audio.say(Voice.ITS_YOU)
             game.update { it.copy(photoSeen = true) }
+        }
+        val pet = game.data.chosenPet
+        if (pet != null && !game.data.petSeen) {
+            petAt = clock.value
+            audio.say(Voice.NEW_PET, Voice.petHello(pet))
+            game.update { it.copy(petSeen = true) }
         }
         if (sticker != null) {
             audio.say(sticker.stickerLine, Voice.STICK_IT)
@@ -234,6 +253,11 @@ internal fun HomeScreen(game: GameState) {
                                 game.go(Scene.GrownUps)
                             }
                         }
+                    }
+                    game.data.chosenPet != null && hits(point, PET, PET_SIZE / 2) -> {
+                        petAt = now
+                        audio.sfx(Sfx.POP)
+                        game.data.chosenPet?.let { audio.speak(Voice.petHello(it)) }
                     }
                     game.photo != null && hits(point, PHOTO_FRAME, FRAME_SIZE / 2) -> {
                         lookedAt = now
@@ -287,6 +311,11 @@ internal fun HomeScreen(game: GameState) {
         drawBunting(game.data.childName, measurer, font, t, waving = inviting)
         if (inviting) drawSparkles(Offset(BUNTING_CENTER_X, 70f), 110f, t)
         photo?.let { drawPhotoFrame(it, t) }
+        game.data.chosenPet?.let { pet ->
+            drawPetShelf(PET_SHELF, PET_SHELF_WIDTH)
+            val happy = (1f - (t - petAt) / PET_HAPPY_SECONDS).coerceIn(0f, 1f)
+            drawPet(pet, PET, PET_SIZE, t, happy = happy * kotlin.math.abs(sin((t - petAt) * 6f)))
+        }
         val going = back?.takeIf { !it.second.over(t) }
         // The stickers on the wall, behind Bruno.
         for ((island, at) in game.data.stuckStickers()) {
@@ -331,7 +360,12 @@ internal fun HomeScreen(game: GameState) {
  * Whether a sticker can stay at [at] (ADR 0024): whole on the wall and inside the stage, clear of where an iPhone has its
  * Dynamic Island, and off the buttons, the padlock, the bunting, the photo frame and Bruno, so that it never hides them.
  */
-internal fun stickerFits(at: Offset, stage: Stage, name: String): Boolean {
+internal fun stickerFits(
+    at: Offset,
+    stage: Stage,
+    name: String,
+    pet: Boolean = false,
+): Boolean {
     val r = STICKER_RADIUS
     val frame = Rect(
         PHOTO_FRAME.x - FRAME_SIZE / 2,
@@ -346,6 +380,7 @@ internal fun stickerFits(at: Offset, stage: Stage, name: String): Boolean {
         distance(at, lockButton(stage)) >= LOCK_RADIUS + TOUCH_SLACK + r &&
         !buntingArea(name).inflate(r).contains(at) &&
         !frame.inflate(r).contains(at) &&
+        !(pet && petArea().inflate(r).contains(at)) &&
         !(abs(at.x - BRUNO_AT_HOME.x) < BRUNO_HALF_WIDTH + r && at.y + r > BRUNO_TOP)
 }
 
@@ -437,3 +472,11 @@ private const val NAIL = 18f
 private const val TAP_MOVE = 14f
 private const val BACK_SECONDS = 0.35f
 private const val STUCK_SECONDS = 1.2f
+
+/** Where her animal and its shelf are on the wall, which a sticker must not hide. */
+private fun petArea() = Rect(
+    PET_SHELF.x - PET_SHELF_WIDTH / 2,
+    PET.y - PET_SIZE / 2 - 12f,
+    PET_SHELF.x + PET_SHELF_WIDTH / 2,
+    PET_SHELF.y + 26f,
+)

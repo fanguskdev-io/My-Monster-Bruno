@@ -28,6 +28,7 @@ class StickersTest {
         val name = "Lucía"
         assertTrue(stickerFits(Offset(150f, 110f), stage, name), "en la pared de la izquierda")
         assertTrue(stickerFits(Offset(590f, 180f), stage, name), "en la pared de la derecha")
+        assertFalse(stickerFits(Offset(554f, 210f), stage, name, pet = true), "sobre su animal")
         assertFalse(stickerFits(Offset(150f, 300f), stage, name), "en el suelo")
         assertFalse(stickerFits(Offset(680f, 230f), stage, name), "sobre el botón de jugar")
         assertFalse(stickerFits(Offset(90f, 200f), stage, name), "sobre el micrófono")

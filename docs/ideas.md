@@ -99,7 +99,7 @@ recorridos del iPhone de un tirón. Y una que no estaba aquí, la pantalla de in
   grabe una vez. La primera sonaría distinta a la de Bruno, y la segunda se parece a las voces de la familia, que se
   descartaron. *Mediana. Descartada: «Dejarlo como está» (Fangusk, 2026-11-09).*
 - **3.3 Su animal favorito.** Se elige en la zona de mayores y vive en el cuarto con Bruno, o sale como palabra en las islas.
-  *Pequeña.*
+  *Pequeña. Hecha, en una balda del cuarto ([ADR 0033](adr/0033-su-animal-favorito.md)).*
 
 ## 4. Para los mayores
 

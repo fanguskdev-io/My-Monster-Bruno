@@ -476,6 +476,31 @@ final class BrunoDriverTests: XCTestCase {
         checkpoint("s4-movida-izq")
     }
 
+    /// Her favourite animal (ADR 0033): the cat a grown-up chose, which Bruno welcomes the first time, touched so that it
+    /// jumps; then the dog chosen in the grown-ups' corner, and the room with it.
+    func testPet() {
+        XCUIDevice.shared.orientation = .landscapeLeft
+        launchPastStart()
+        sleep(5)
+        checkpoint("p1-cuarto-gato-izq")
+        stage(554, 204).tap()
+        usleep(400_000)
+        checkpoint("p2-gato-salta-izq")
+        sleep(3)
+        XCUIDevice.shared.orientation = .landscapeRight
+        sleep(2)
+        lock.press(forDuration: 3.5)
+        sleep(2)
+        scrollTo("Perro")
+        tapText("Perro")
+        sleep(1)
+        checkpoint("p3-mayores-perro-der")
+        scrollTo("Volver al juego", down: false)
+        tapText("Volver al juego")
+        sleep(5)
+        checkpoint("p4-cuarto-perro-der")
+    }
+
     /// Bruno's wardrobe (ADR 0032), with three presents: from the hanger of the room, the beanie taken off, the glasses
     /// put on again, his colour and his head changed, and back to the room, where he stays so.
     func testWardrobe() {

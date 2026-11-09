@@ -57,6 +57,10 @@ data class SaveData(
     val namesWritten: Int = 0,
     /** Whether Bruno has seen her photo and said «¡Mira! ¡Eres tú!» (ADR 0016); a new photo makes it false again. */
     val photoSeen: Boolean = false,
+    /** Her favourite animal (Pet.word), which lives in Bruno's room; empty if a grown-up has not chosen one (ADR 0033). */
+    val pet: String = "",
+    /** Whether Bruno has said that her animal came to live with him; another animal makes it false again. */
+    val petSeen: Boolean = false,
     /** The last day, as yyyymmdd, Bruno asked her «¿Cómo te sientes hoy?», whether or not she answered (ADR 0019). */
     val moodDay: Int = 0,
     /** The last day, as yyyymmdd, she said in the assembly what weather it was, and which (Weather.word) (ADR 0030). */
