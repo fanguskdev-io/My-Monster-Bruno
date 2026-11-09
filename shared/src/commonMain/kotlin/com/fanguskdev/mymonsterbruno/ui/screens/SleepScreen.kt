@@ -11,6 +11,7 @@ import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.text.TextMeasurer
 import androidx.compose.ui.text.font.FontFamily
@@ -31,11 +32,13 @@ import com.fanguskdev.mymonsterbruno.ui.art.drawBed
 import com.fanguskdev.mymonsterbruno.ui.art.drawBlanket
 import com.fanguskdev.mymonsterbruno.ui.art.drawBruno
 import com.fanguskdev.mymonsterbruno.ui.art.drawNightRoom
+import com.fanguskdev.mymonsterbruno.ui.art.drawRoundPhoto
 import com.fanguskdev.mymonsterbruno.ui.circle
 import com.fanguskdev.mymonsterbruno.ui.fill
 import com.fanguskdev.mymonsterbruno.ui.label
 import com.fanguskdev.mymonsterbruno.ui.path
 import com.fanguskdev.mymonsterbruno.ui.rememberClock
+import com.fanguskdev.mymonsterbruno.ui.rememberPhoto
 import com.fanguskdev.mymonsterbruno.ui.ring
 import com.fanguskdev.mymonsterbruno.ui.stroke
 import kotlinx.coroutines.delay
@@ -80,6 +83,7 @@ internal fun SleepScreen(game: GameState) {
             Island.COLORS, null -> Mission.COLOR
         }
     }
+    val photo = rememberPhoto(game)
     var asleep by remember { mutableStateOf(!game.wentToBed) }
     var lockSince by remember { mutableStateOf<Float?>(null) }
 
@@ -130,7 +134,7 @@ internal fun SleepScreen(game: GameState) {
         drawBruno(game.data.look, BRUNO_IN_BED, BRUNO_HEIGHT, pose, t * 0.5f)
         drawBlanket(BED + Offset(0f, 24f))
         if (asleep) drawSnores(BRUNO_IN_BED + Offset(60f, -100f), t, measurer, font)
-        drawMissionCard(mission, game.data.childName.firstOrNull { it.isLetter() }, measurer, font)
+        drawMissionCard(mission, game.data.childName.firstOrNull { it.isLetter() }, photo, measurer, font)
         drawGrownUpsLock(stage, t, lockSince)
     }
 }
@@ -148,10 +152,14 @@ private fun DrawScope.drawSnores(
     }
 }
 
-/** The mission, drawn without words: a house and what to look for there; for her name, its [initial] if they wrote it. */
+/**
+ * The mission, drawn without words: a house and what to look for there; for her name, its [initial] if they wrote it.
+ * Her [photo], if there is one, is pinned on its corner: the mission is hers (ADR 0034).
+ */
 private fun DrawScope.drawMissionCard(
     mission: Mission,
     initial: Char?,
+    photo: ImageBitmap?,
     measurer: TextMeasurer,
     font: FontFamily,
 ) {
@@ -225,4 +233,5 @@ private fun DrawScope.drawMissionCard(
             )
         }
     }
+    photo?.let { drawRoundPhoto(it, c + Offset(MISSION_SIZE.width - 10f, 6f), 26f) }
 }

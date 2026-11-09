@@ -62,13 +62,13 @@ import com.fanguskdev.mymonsterbruno.ui.line
 import com.fanguskdev.mymonsterbruno.ui.path
 import com.fanguskdev.mymonsterbruno.ui.pendingStickers
 import com.fanguskdev.mymonsterbruno.ui.rememberClock
+import com.fanguskdev.mymonsterbruno.ui.rememberPhoto
 import com.fanguskdev.mymonsterbruno.ui.stickerLine
 import com.fanguskdev.mymonsterbruno.ui.stroke
 import com.fanguskdev.mymonsterbruno.ui.stuck
 import com.fanguskdev.mymonsterbruno.ui.stuckStickers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.resources.decodeToImageBitmap
 import kotlin.math.abs
 import kotlin.math.sin
 
@@ -126,7 +126,7 @@ internal fun HomeScreen(game: GameState) {
     val audio = game.audio
     var cheerAt by remember { mutableStateOf(-10f) }
     var lockSince by remember { mutableStateOf<Float?>(null) }
-    val photo = remember(game.photo) { game.photo?.let { runCatching { it.decodeToImageBitmap() }.getOrNull() } }
+    val photo = rememberPhoto(game)
 
     // When Bruno last looked at her photo, and when he asked her to teach him her name.
     var lookedAt by remember { mutableStateOf(-10f) }

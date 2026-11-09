@@ -30,6 +30,7 @@ import com.fanguskdev.mymonsterbruno.ui.clamp01
 import com.fanguskdev.mymonsterbruno.ui.easeBack
 import com.fanguskdev.mymonsterbruno.ui.label
 import com.fanguskdev.mymonsterbruno.ui.rememberClock
+import com.fanguskdev.mymonsterbruno.ui.rememberPhoto
 import kotlinx.coroutines.delay
 import kotlin.math.sin
 
@@ -83,12 +84,14 @@ internal fun SplashScreen(game: GameState) {
         }
     }
 
+    val photo = rememberPhoto(game)
+
     StageCanvas(touch) { stage ->
         val t = clock.value
         drawSplashSky(stage, t)
         drawSplashSea(stage, t)
         drawHorizonIslands(stage, t)
-        drawBoatWith(if (game.data.hatched) game.data.look else null, BOAT + Offset(0f, 4f * sin(t * 1.5f)), t)
+        drawBoatWith(if (game.data.hatched) game.data.look else null, BOAT + Offset(0f, 4f * sin(t * 1.5f)), t, photo)
         drawTitle(t, measurer, font)
         drawRoundButton(PLAY, PLAY_RADIUS, Color(0xFF2E9E5B), glow = (t % 1.8f) / 1.8f) { playIcon(PLAY, 58f) }
         leavingAt?.let { since ->

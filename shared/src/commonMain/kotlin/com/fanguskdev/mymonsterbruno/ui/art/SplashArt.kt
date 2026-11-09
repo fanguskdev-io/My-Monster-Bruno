@@ -4,6 +4,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.rotate
 import com.fanguskdev.mymonsterbruno.game.BrunoLook
@@ -115,16 +116,23 @@ private const val ISLAND_SIGNS = 5
 
 /**
  * Bruno's boat on the waves at [at], rocking, with Bruno in it looking ahead; or, before he hatches ([look] null), his
- * egg, which wobbles.
+ * egg, which wobbles. With her [photo], she sits in the boat at his side, where he looks (ADR 0034).
  */
-internal fun DrawScope.drawBoatWith(look: BrunoLook?, at: Offset, time: Float) {
+internal fun DrawScope.drawBoatWith(
+    look: BrunoLook?,
+    at: Offset,
+    time: Float,
+    photo: ImageBitmap? = null,
+) {
     val rock = 3f * sin(time * 1.6f)
+    val aside = if (photo != null) -20f else 0f
     rotate(rock, at) {
         if (look != null) {
-            drawBruno(look, at + Offset(0f, -46f), 112f, Pose(lookX = 0.5f, hop = 2f * sin(time * 3f)), time)
+            drawBruno(look, at + Offset(aside, -46f), 112f, Pose(lookX = 0.5f, hop = 2f * sin(time * 3f)), time)
         } else {
-            drawEgg(at + Offset(0f, -40f), 60f, 74f, cracks = 0, tilt = 5f * sin(time * 2.4f))
+            drawEgg(at + Offset(aside, -40f), 60f, 74f, cracks = 0, tilt = 5f * sin(time * 2.4f))
         }
+        photo?.let { drawRoundPhoto(it, at + Offset(42f, -28f), 25f) }
         val hull = path {
             moveTo(at.x - 74f, at.y - 12f)
             lineTo(at.x + 74f, at.y - 12f)

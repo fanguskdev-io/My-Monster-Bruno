@@ -68,8 +68,8 @@ import com.fanguskdev.mymonsterbruno.storage.rememberPhotoPicker
 import com.fanguskdev.mymonsterbruno.ui.GameState
 import com.fanguskdev.mymonsterbruno.ui.Island
 import com.fanguskdev.mymonsterbruno.ui.andika
+import com.fanguskdev.mymonsterbruno.ui.rememberPhoto
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.resources.decodeToImageBitmap
 
 private val Ink = Color(0xFF1D2B53)
 private val Soft = Color(0xFF46526F)
@@ -136,10 +136,16 @@ internal fun GrownUpsScreen(game: GameState, onExit: (() -> Unit)? = null) {
                 )
             }
             Section("Su foto", font) {
-                Text("Sale en un marco del cuarto de Bruno. Se elige en la galería y solo se guarda aquí.", font, 15, color = Soft)
+                Text(
+                    "Sale en el cuarto de Bruno, en su barca, en la emoción del día y en la misión para casa. Se elige en la " +
+                        "galería y solo se guarda aquí.",
+                    font,
+                    15,
+                    color = Soft,
+                )
                 val picker = rememberPhotoPicker()
                 val scope = rememberCoroutineScope()
-                val photo = remember(game.photo) { game.photo?.let { runCatching { it.decodeToImageBitmap() }.getOrNull() } }
+                val photo = rememberPhoto(game)
                 Row(horizontalArrangement = Arrangement.spacedBy(10.dp), verticalAlignment = Alignment.CenterVertically) {
                     if (photo != null) {
                         Image(photo, contentDescription = "Su foto", modifier = Modifier.size(64.dp).clip(RoundedCornerShape(10.dp)))

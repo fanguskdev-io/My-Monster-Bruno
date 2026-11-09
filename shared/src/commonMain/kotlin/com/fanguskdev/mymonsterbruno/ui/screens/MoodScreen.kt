@@ -37,9 +37,9 @@ import com.fanguskdev.mymonsterbruno.ui.easeInOut
 import com.fanguskdev.mymonsterbruno.ui.easeOut
 import com.fanguskdev.mymonsterbruno.ui.lerp
 import com.fanguskdev.mymonsterbruno.ui.rememberClock
+import com.fanguskdev.mymonsterbruno.ui.rememberPhoto
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.resources.decodeToImageBitmap
 import kotlin.math.sin
 
 private val BRUNO_CENTER = Offset(150f, 262f)
@@ -74,7 +74,7 @@ internal fun MoodScreen(game: GameState, onDone: () -> Unit) {
     val clock = rememberClock()
     val scope = rememberCoroutineScope()
     val audio = game.audio
-    val photo = remember(game.photo) { game.photo?.let { runCatching { it.decodeToImageBitmap() }.getOrNull() } }
+    val photo = rememberPhoto(game)
     val take = if (photo != null) Voice.TAKE_YOUR_PHOTO else Voice.TAKE_THE_FACE
     var phase by remember { mutableStateOf(MoodPhase.ASKING) }
     var phaseAt by remember { mutableStateOf(0f) }

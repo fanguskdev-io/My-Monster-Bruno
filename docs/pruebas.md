@@ -38,7 +38,7 @@ Qué se prueba en cada cambio y en cada hito, y cómo. Los criterios de salida d
 | Lo que se hace con su voz antes de que Bruno la repita: sin el silencio de los bordes (y nada si solo hay silencio o un murmullo), a la altura de las voces del juego, más aguda y más rápida, en un canal y de vuelta a WAV | `MicrophoneTest` | Común |
 | El sonido del escritorio: la mezcla suma sin desbordarse, respeta el volumen y pasa todo a un canal a 22 050 Hz; y cortar una voz tras otra, como al contar fresas, no atasca su hilo: un toque suele atenderse en un momento y ninguno se queda sin atender (el primero puede esperar a que se despierte la tarjeta de sonido, hasta segundo y medio) | `DesktopSoundTest` | JVM |
 | Cada frase del juego tiene su fichero y dura lo que una frase; el guion y el código tienen las mismas frases; cada efecto tiene su fichero | `AudioFilesTest` | JVM |
-| Las veintiocho pantallas y, el cuarto con cada uno de los seis animales, el cuarto con lluvia y con nieve en la ventana, los caminos de bucles y de caracol, el cuarto con sus pegatinas, cuando ya sabe las vocales y del 1 al 5, Comeletras, los trazos y las fresas con lo nuevo, Comeletras y los trazos con la T, la N y la D y con la F, la B y la R, el mapa con su cuarta fila de rocas, la pantalla de inicio con el huevo, el cuarto con su foto y cuando Bruno le pide que le enseñe su nombre, la emoción del día con su foto, Comeletras, los globos, las emociones, las palabras y las rimas con cuatro para elegir y Comeletras con dos, y el mapa con todas las islas terminadas y sus banderas, se dibujan en móvil (2,17:1) y en tableta (4:3) | `ScreenshotsTest` | JVM |
+| Las veintiocho pantallas y, el cuarto con cada uno de los seis animales, el cuarto con lluvia y con nieve en la ventana, los caminos de bucles y de caracol, el cuarto con sus pegatinas, cuando ya sabe las vocales y del 1 al 5, Comeletras, los trazos y las fresas con lo nuevo, Comeletras y los trazos con la T, la N y la D y con la F, la B y la R, el mapa con su cuarta fila de rocas, la pantalla de inicio con el huevo, el cuarto con su foto y cuando Bruno le pide que le enseñe su nombre, la emoción del día con su foto, la pantalla de inicio, el mapa y la hora de dormir con su foto, Comeletras, los globos, las emociones, las palabras y las rimas con cuatro para elegir y Comeletras con dos, y el mapa con todas las islas terminadas y sus banderas, se dibujan en móvil (2,17:1) y en tableta (4:3) | `ScreenshotsTest` | JVM |
 | La salida de la zona de mayores: «Salir del juego» guarda la partida y cierra; sin salida en la plataforma, como en iOS, no hay botón | `GrownUpsExitTest` | JVM |
 | El icono de iOS es el de Android: lo dibuja del vector de `androidApp` en `shared/build/icono/` y lo compara con el del proyecto de Xcode; si cambia el de Android, se copia el nuevo | `AppIconTest` | JVM |
 | En el iPhone 15 Pro de ella y en el 17 Pro del simulador, girados a un lado y al otro, la casa, el altavoz y el candado se ven enteros: ni bajo la Dynamic Island ni cortados por las esquinas redondeadas, medidas en el simulador | `CornerButtonsTest` | Común |
@@ -91,7 +91,7 @@ propio Mac ([ADR 0027](adr/0027-el-mac-tambien-comprueba-la-palabra.md)); el emu
 Para ver el juego en un iPhone 15 Pro simulado, girado a un lado y al otro, sin tocarlo a mano:
 [`tools/conductor-ios`](../tools/conductor-ios) es una prueba de interfaz que toca el escenario de 800 × 400 y, en cada
 punto de control, espera a que `vigilante.sh` saque una captura con lo que tapan la isla y las esquinas pintado de negro.
-Tiene diecisiete recorridos:
+Tiene dieciocho recorridos:
 
 - los dos de la entrega, que empiezan en el huevo: `testWalkThroughHeldBothWays` y `testFinalVersionBothWays`;
 - `testTalkAndPhoto`, «Habla con Bruno» y elegir su foto;
@@ -113,7 +113,9 @@ Tiene diecisiete recorridos:
 - `testPaths`, la de las letras el día de los caminos, con los rectos ya hechos: Comeletras y los caminos de olas, de
   bucles y de caracol, trazados con el dedo a trocitos, hasta el regalo;
 - `testWardrobe`, el armario: quitarle el gorro, ponerle las gafas, cambiarle el color y la cabeza, y volver al cuarto;
-- `testPet`, su animal: el gato, que Bruno presenta y salta al tocarlo, y el perro elegido en la zona de mayores.
+- `testPet`, su animal: el gato, que Bruno presenta y salta al tocarlo, y el perro elegido en la zona de mayores;
+- `testPhotoPlaces`, su foto en más sitios: elegirla, en la barca del mapa con Bruno, prendida en la misión cuando se
+  acaba el tiempo y, al volver a abrir el juego, en la barca de la pantalla de inicio.
 
 Todos pasan antes por la pantalla de inicio, con un toque. Siempre en silencio (`-silencio`) y en un simulador propio que
 se borra al acabar, nunca en uno de otra sesión.
@@ -418,6 +420,17 @@ pedirían el móvil o la tableta (2026-11-06).
   la balda y Bruno la presenta. La balda se apartó del botón grande, que tapaba su esquina con el brillo. En el simulador
   de iPhone 15 Pro (`testPet`), girado a los dos lados, el gato salta al tocarlo y el perro elegido en la zona de mayores
   sale en el cuarto (2026-11-09).
+
+### M5 · Su foto en más sitios
+
+- [ ] Con su foto elegida, va sentada al lado de Bruno en la barca de la pantalla de inicio y en la del mapa, y se
+  balancea con él. Sin foto, Bruno va solo, en el centro, como antes.
+- [ ] A la hora de dormir, su foto va prendida en la esquina de la tarjeta de la misión.
+- [x] En el emulador Tester_API36, con una foto de ejemplo en la partida y un minuto de juego: va sentada con Bruno en
+  la barca de la pantalla de inicio y en la del mapa; al acabarse el tiempo en el mapa, Bruno se va a dormir y su foto
+  va prendida en la tarjeta de la misión. En el simulador de iPhone 15 Pro (`testPhotoPlaces`), con la foto elegida en
+  la galería, lo mismo: en el mapa, en la misión cuando se acaba el tiempo y, al volver a abrir el juego, en la barca de
+  la pantalla de inicio (2026-11-09).
 
 ### M5 · La F, la B y la R
 

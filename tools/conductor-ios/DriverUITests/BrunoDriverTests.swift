@@ -453,6 +453,34 @@ final class BrunoDriverTests: XCTestCase {
         checkpoint("p7-cuarto-con-la-foto-der")
     }
 
+    /// Her photo in more places (ADR 0034): chosen in the grown-ups' corner, she sails in Bruno's boat on the map; when
+    /// the minutes of the day run out there, her photo is pinned on the mission card at bedtime; and, the game opened
+    /// again, she is in the boat of the start screen. The save has Bruno hatched, the feeling of today and forty seconds
+    /// of play left.
+    func testPhotoPlaces() {
+        XCUIDevice.shared.orientation = .landscapeRight
+        launchPastStart()
+        sleep(1)
+        lock.press(forDuration: 3.5)
+        sleep(2)
+        scrollTo("Elegir su foto")
+        tapText("Elegir su foto")
+        sleep(5)
+        pickPhoto(132, 280)
+        scrollTo("Volver al juego", down: false)
+        tapText("Volver al juego")
+        sleep(3)
+        stage(680, 290).tap()
+        sleep(3)
+        checkpoint("f1-mapa-con-foto-der")
+        sleep(40)
+        checkpoint("f2-dormir-con-foto-der")
+        app.terminate()
+        app.launch()
+        sleep(3)
+        checkpoint("f3-inicio-con-foto-der")
+    }
+
     /// The stickers of the room (ADR 0024): the save has every island finished and none stuck yet. She takes the first one
     /// from the rug to the wall, lets the next one go on the floor, where it does not stay, sticks it on the wall after
     /// all, and moves the first one somewhere else.

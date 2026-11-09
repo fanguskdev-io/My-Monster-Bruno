@@ -83,7 +83,8 @@ La propuesta 3, tal como la leyó (en la [maqueta](investigacion/propuestas.html
 
 Al abrir el juego, **la pantalla de inicio** ([ADR 0018](adr/0018-la-pantalla-de-inicio.md)): Bruno se mece en su barca
 (antes de nacer, su huevo) mientras pasan las islas por el horizonte, y las letras de BRUNO caen a su sitio. La voz dice
-«¡Mi amigo Bruno!» y «¡Toca para empezar!», y un toque en cualquier sitio abre el juego donde estaba.
+«¡Mi amigo Bruno!» y «¡Toca para empezar!», y un toque en cualquier sitio abre el juego donde estaba. Si los mayores
+han elegido su foto, ella va sentada a su lado en la barca, aquí y en el mapa ([ADR 0034](adr/0034-su-foto-en-mas-sitios.md)).
 
 La primera vez de cada día, antes del cuarto, **la emoción del día** ([ADR 0019](adr/0019-la-emocion-del-dia.md)), como
 en la asamblea de su clase: Bruno saluda y pregunta «¿Cómo te sientes hoy?», y ella lleva su foto (o una carita, si no
@@ -192,7 +193,8 @@ equivoca en más de la mitad, dos. Nunca se le dice, y no hay niveles ni puntos.
    nunca a medias: enseguida si están en el cuarto o en el mapa, y al terminar la isla, con su regalo, si están en una.
    Bosteza, le da una **misión para casa** que va con lo que han hecho (buscar algo que empiece por la a, contar las sillas
    de la cocina, buscar algo amarillo o algo redondo, contar cómo se ha sentido, buscar algo que empiece como su nombre)
-   y le dice «¡Hasta mañana!». Si se abre otra vez ese día, Bruno sigue dormido:
+   y le dice «¡Hasta mañana!». Si tiene foto, va prendida en la esquina de la tarjeta de la misión. Si se abre otra vez
+   ese día, Bruno sigue dormido:
    «Huum... Mañana jugamos más».
 
 Fuera del camino:

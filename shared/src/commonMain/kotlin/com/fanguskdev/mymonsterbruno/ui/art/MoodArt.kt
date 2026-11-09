@@ -88,6 +88,25 @@ internal fun DrawScope.drawPortrait(photo: ImageBitmap?, center: Offset, size: F
     }
 }
 
+/**
+ * Her [photo] round, [radius] units, in a white ring with its shadow: her, sitting in Bruno's boat or pinned on the
+ * mission card (ADR 0034).
+ */
+internal fun DrawScope.drawRoundPhoto(photo: ImageBitmap, center: Offset, radius: Float) {
+    circle(Shadow, center + Offset(0f, radius * 0.14f), radius)
+    circle(Color.White, center, radius)
+    val inner = radius * 0.84f
+    clipPath(Path().apply { addOval(Rect(center, inner)) }) {
+        drawImage(
+            photo,
+            srcSize = IntSize(photo.width, photo.height),
+            dstOffset = IntOffset((center.x - inner).toInt(), (center.y - inner).toInt()),
+            dstSize = IntSize((inner * 2).toInt(), (inner * 2).toInt()),
+            filterQuality = FilterQuality.Medium,
+        )
+    }
+}
+
 /** A girl's face, [size] units across, smiling: her token when there is no photo of her. */
 private fun DrawScope.drawChildFace(center: Offset, size: Float) {
     val r = size / 2

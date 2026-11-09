@@ -18,13 +18,14 @@ DD=build/conductor-ios
 HOY=$(date +%Y%m%d)
 TODOS=(testWalkThroughHeldBothWays testFinalVersionBothWays testTalkAndPhoto testWordsAndLetters testStartAndName
     testFeelingOfTheDay testRhymes testCountdown testPhotoAndRestart testStickers testStory testNumberLine
-    testPlaces testSums testPaths testWardrobe testPet)
+    testPlaces testSums testPaths testWardrobe testPet testPhotoPlaces)
 if (($# > 0)); then RECORRIDOS=("$@"); else RECORRIDOS=("${TODOS[@]}"); fi
 
 # La partida de la que parte cada recorrido: los de la entrega, en el huevo; los demás, con Bruno nacido, su nombre
 # (Lucía, de ejemplo) y la emoción de hoy ya preguntada, salvo los que prueban justo eso; el de la recta, con un día ya
 # ido a la isla de los números, para que hoy le toque la recta y no la cuenta atrás, y el de las sumas, con dos; el
-# de los caminos, con un día en la isla de las letras y los caminos rectos ya hechos, para que salgan los curvos.
+# de los caminos, con un día en la isla de las letras y los caminos rectos ya hechos, para que salgan los curvos; y el
+# de su foto en más sitios, con cuarenta segundos de juego por delante, para que Bruno se vaya a dormir en el mapa.
 partida() {
     local sabe='{"a":1,"e":1,"i":1,"o":1,"u":1,"m":1,"p":1,"l":1,"s":1}'
     case "$1" in
@@ -32,6 +33,7 @@ partida() {
         testStartAndName) echo "{\"hatched\":true,\"childName\":\"Lucía\",\"moodDay\":$HOY}" ;;
         testFeelingOfTheDay) echo '{"hatched":true,"childName":"Lucía","namesWritten":1}' ;;
         testStickers) echo "{\"hatched\":true,\"childName\":\"Lucía\",\"namesWritten\":1,\"moodDay\":$HOY,\"islands\":{\"VOWELS\":1,\"NUMBERS\":1,\"COLORS\":1,\"SHAPES\":1,\"FEELINGS\":1,\"WORDS\":1}}" ;;
+        testPhotoPlaces) echo "{\"hatched\":true,\"childName\":\"Lucía\",\"namesWritten\":1,\"moodDay\":$HOY,\"dailyMinutes\":10,\"playedDay\":$HOY,\"playedSeconds\":560}" ;;
         testPet) echo "{\"hatched\":true,\"childName\":\"Lucía\",\"namesWritten\":1,\"moodDay\":$HOY,\"pet\":\"gato\"}" ;;
         testWardrobe) echo "{\"hatched\":true,\"childName\":\"Lucía\",\"namesWritten\":1,\"moodDay\":$HOY,\"look\":{\"accessories\":[\"BEANIE\",\"GLASSES\",\"BOW_TIE\"]}}" ;;
         testPaths) echo "{\"hatched\":true,\"childName\":\"Lucía\",\"namesWritten\":1,\"moodDay\":$HOY,\"lettersDay\":1,\"lettersDays\":1,\"paths\":{\"recta\":1,\"abajo\":1,\"inclinada\":1}}" ;;

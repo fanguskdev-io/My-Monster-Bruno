@@ -170,6 +170,13 @@ class ScreenshotsTest {
             val withPhoto = File(folder, "${screen.name}-2-casa-con-foto.png")
             withPhoto.writeBytes(render(Scene.Home, screen, photo = samplePhoto()))
             assertTrue(withPhoto.length() > MIN_BYTES, "$withPhoto está vacía")
+            // Her photo in the boat with Bruno, at the start and on the map, and on the mission card at bedtime (ADR 0034).
+            val sheTravels = listOf("0-inicio-con-foto" to Scene.Splash, "3-mapa-con-foto" to Scene.Map, "8-dormir-con-foto" to Scene.Sleep)
+            for ((name, scene) in sheTravels) {
+                val file = File(folder, "${screen.name}-$name.png")
+                file.writeBytes(render(scene, screen, photo = samplePhoto()))
+                assertTrue(file.length() > MIN_BYTES, "$file está vacía")
+            }
             // The room with four stickers on the wall and two waiting on the rug (ADR 0024).
             val stickers = File(folder, "${screen.name}-2-casa-pegatinas.png")
             stickers.writeBytes(render(Scene.Home, screen, withStickers))

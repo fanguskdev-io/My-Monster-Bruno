@@ -1,8 +1,11 @@
 package com.fanguskdev.mymonsterbruno.ui
 
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.ImageBitmap
 import com.fanguskdev.mymonsterbruno.audio.Audio
 import com.fanguskdev.mymonsterbruno.game.NumbersGame
 import com.fanguskdev.mymonsterbruno.game.SaveData
@@ -19,6 +22,7 @@ import com.fanguskdev.mymonsterbruno.game.weekdayOf
 import com.fanguskdev.mymonsterbruno.storage.KeyValueStore
 import com.fanguskdev.mymonsterbruno.storage.PhotoStore
 import com.fanguskdev.mymonsterbruno.storage.today
+import org.jetbrains.compose.resources.decodeToImageBitmap
 import kotlin.random.Random
 
 /** The islands of the map that have something to do, each with its activities in order (docs/diseno.md). */
@@ -275,3 +279,11 @@ internal class GameState(
         const val SAVE_EVERY = 10
     }
 }
+
+/**
+ * Her photo as an image, decoded once while a screen is on: in the room, the feeling of the day, the grown-ups' corner,
+ * Bruno's boat and the mission card (ADR 0016, ADR 0034). Null without one, or if it cannot be read.
+ */
+@Composable
+internal fun rememberPhoto(game: GameState): ImageBitmap? =
+    remember(game.photo) { game.photo?.let { runCatching { it.decodeToImageBitmap() }.getOrNull() } }

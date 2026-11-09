@@ -9,6 +9,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.text.TextMeasurer
 import androidx.compose.ui.text.font.FontFamily
@@ -33,6 +34,7 @@ import com.fanguskdev.mymonsterbruno.ui.art.Pose
 import com.fanguskdev.mymonsterbruno.ui.art.drawBruno
 import com.fanguskdev.mymonsterbruno.ui.art.drawFeelingFace
 import com.fanguskdev.mymonsterbruno.ui.art.drawOpenBook
+import com.fanguskdev.mymonsterbruno.ui.art.drawRoundPhoto
 import com.fanguskdev.mymonsterbruno.ui.art.drawSea
 import com.fanguskdev.mymonsterbruno.ui.art.drawShapePiece
 import com.fanguskdev.mymonsterbruno.ui.art.drawTiedBalloon
@@ -45,6 +47,7 @@ import com.fanguskdev.mymonsterbruno.ui.label
 import com.fanguskdev.mymonsterbruno.ui.line
 import com.fanguskdev.mymonsterbruno.ui.path
 import com.fanguskdev.mymonsterbruno.ui.rememberClock
+import com.fanguskdev.mymonsterbruno.ui.rememberPhoto
 import com.fanguskdev.mymonsterbruno.ui.stroke
 import kotlinx.coroutines.launch
 import kotlin.math.sin
@@ -69,6 +72,7 @@ private val BOAT = Offset(410f, 336f)
 @Composable
 internal fun MapScreen(game: GameState) {
     val clock = rememberClock()
+    val photo = rememberPhoto(game)
     val scope = rememberCoroutineScope()
     val measurer = rememberTextMeasurer()
     val font = andika()
@@ -132,7 +136,7 @@ internal fun MapScreen(game: GameState) {
         if ((game.data.islands[Island.FEELINGS.name] ?: 0) > 0) drawFlag(FEELINGS_ISLAND + Offset(84f, -30f))
         // Low, beside the book: the island is so high that a flag at its back would go out of the screen.
         if ((game.data.islands[Island.WORDS.name] ?: 0) > 0) drawFlag(WORDS_ISLAND + Offset(50f, 14f))
-        drawBoat(game.data.look, BOAT + Offset(0f, 4f * sin(t * 1.5f)), t)
+        drawBoat(game.data.look, BOAT + Offset(0f, 4f * sin(t * 1.5f)), t, photo)
         drawHomeButton(stage)
     }
 }
@@ -253,8 +257,15 @@ private fun DrawScope.drawFlag(at: Offset) {
     )
 }
 
-private fun DrawScope.drawBoat(look: BrunoLook, at: Offset, t: Float) {
-    drawBruno(look, at + Offset(0f, -36f), 80f, Pose(lookX = 0.6f), t)
+/** Bruno's boat on the map, and her in it at his side, where he looks, if there is a [photo] of her (ADR 0034). */
+private fun DrawScope.drawBoat(
+    look: BrunoLook,
+    at: Offset,
+    t: Float,
+    photo: ImageBitmap?,
+) {
+    drawBruno(look, at + Offset(if (photo != null) -14f else 0f, -36f), 80f, Pose(lookX = 0.6f), t)
+    photo?.let { drawRoundPhoto(it, at + Offset(32f, -20f), 18f) }
     fill(
         path {
             moveTo(at.x - 62f, at.y - 10f)

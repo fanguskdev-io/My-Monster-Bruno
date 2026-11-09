@@ -94,7 +94,8 @@ recorridos del iPhone de un tirón. Y una que no estaba aquí, la pantalla de in
 
 ## 3. Más suyo
 
-- **3.1 Su foto en más sitios.** En la barca con Bruno, en el mapa, y en la tarjeta de la misión para casa. *Pequeña.*
+- **3.1 Su foto en más sitios.** En la barca con Bruno, en el mapa, y en la tarjeta de la misión para casa.
+  *Pequeña. Hecha: sentada con Bruno en la barca y prendida en la tarjeta ([ADR 0034](adr/0034-su-foto-en-mas-sitios.md)).*
 - **3.2 Que Bruno diga su nombre.** Con la voz del propio teléfono, sin conexión, solo para su nombre; o que un mayor lo
   grabe una vez. La primera sonaría distinta a la de Bruno, y la segunda se parece a las voces de la familia, que se
   descartaron. *Mediana. Descartada: «Dejarlo como está» (Fangusk, 2026-11-09).*
