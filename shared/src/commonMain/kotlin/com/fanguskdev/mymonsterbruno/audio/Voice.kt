@@ -137,6 +137,17 @@ internal object Voice {
     const val SUGGEST_FEELINGS = "b_sugiere_emociones"
     const val SUGGEST_WORDS = "b_sugiere_palabras"
 
+    /**
+     * The turn for two of «Habla con Bruno» (ADR 0036): «¡Y ahora, una para jugar con un mayor! ...», how she claps on the
+     * hands, and what Bruno says at the end.
+     */
+    const val WITH_A_GROWN_UP = "n_con_mayor"
+    const val CLAP_THE_HANDS = "n_tus_palmadas"
+    const val PLAYING_TOGETHER = "b_juntos"
+
+    /** The most claps the voice counts: the four of the longest word, and up to six in the turn for two. */
+    const val MOST_CLAPS = 6
+
     /** Bruno's wardrobe, from the room (ADR 0032): how he greets her in it, and what he says taking something off. */
     const val WARDROBE_INTRO = "b_armario_intro"
     const val TAKE_OFF = "b_me_lo_quito"
@@ -380,7 +391,7 @@ internal object Voice {
         NUMBER_LINE_INTRO, BESIDE_BRUNO, THANKS_NUMBER_LINE, PLACES_INTRO, HIDDEN, THANKS_PLACES, SUMS_INTRO, HOW_MANY_NOW,
         COUNT_THEM_ALL, THANKS_SUMS, ASSEMBLY_INTRO, WHAT_WEATHER, DAY_STARTS, PATHS_INTRO, FOLLOW_PATH, AT_HOME, THANKS_PATHS,
         WARDROBE_INTRO, TAKE_OFF, NEW_PET, SUGGEST_LETTERS, SUGGEST_NUMBERS, SUGGEST_COLORS, SUGGEST_SHAPES, SUGGEST_FEELINGS,
-        SUGGEST_WORDS,
+        SUGGEST_WORDS, WITH_A_GROWN_UP, CLAP_THE_HANDS, PLAYING_TOGETHER,
     ) +
         Pet.entries.map { petHello(it) } +
         PathShape.entries.map { pathIs(it) } +
@@ -404,7 +415,7 @@ internal object Voice {
         Feeling.entries.flatMap { listOf(feels(it), notThatFace(it), help(it), helped(it), jar(it), today(it)) } +
         TalkWord.entries.flatMap { listOf(tellMe(it), word(it), notThat(it)) } +
         (TalkWord.entries.flatMap { it.syllables } + StartWord.entries.flatMap { it.syllables }).map { syllable(it) }.distinct() +
-        (1..TalkWord.entries.maxOf { it.syllables.size }).map { claps(it) } +
+        (1..MOST_CLAPS).map { claps(it) } +
         StartWord.entries.flatMap { listOf(startsLike(it), startsWith(it)) } +
         StartWord.entries.flatMap { said ->
             StartWord.entries.filter { it != said && it.start == said.start }.map { bothStart(said, it) }

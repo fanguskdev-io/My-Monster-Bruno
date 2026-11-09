@@ -92,6 +92,33 @@ internal fun DrawScope.micIcon(center: Offset, size: Float) {
     line(ink, Offset(center.x - 6f * s, center.y + 14f * s), Offset(center.x + 6f * s, center.y + 14f * s), 2.4f * s)
 }
 
+/** The hands of the big button for her claps (ADR 0036), white: two palms leaning on each other, and the lines of a clap. */
+internal fun DrawScope.clapIcon(center: Offset, size: Float) {
+    val s = size / 26f
+    val ink = Color.White
+    for (side in listOf(-1f, 1f)) {
+        // Each palm upright, leaning in until they touch at the top, with its thumb out on its side.
+        val foot = center + Offset(side * 6.5f * s, 12f * s)
+        withTransform({ rotate(-side * 14f, foot) }) {
+            drawRoundRect(ink, Offset(foot.x - 5f * s, foot.y - 22f * s), Size(10f * s, 22f * s), CornerRadius(5f * s))
+            val thumb = Offset(foot.x + side * 4f * s, foot.y - 8f * s)
+            withTransform({ rotate(side * 35f, thumb) }) {
+                drawRoundRect(ink, Offset(thumb.x - 2.2f * s, thumb.y - 9f * s), Size(4.4f * s, 9f * s), CornerRadius(2.2f * s))
+            }
+        }
+    }
+    for (k in -1..1) {
+        val top = center + Offset(k * 9f * s, -17f * s + kotlin.math.abs(k) * 3f * s)
+        line(ink, top, top + Offset(k * 2.5f * s, -4.5f * s), 2f * s)
+    }
+}
+
+/** A grown-up and a girl side by side, smiling, [size] units across: the turn for two of «Habla con Bruno» (ADR 0036). */
+internal fun DrawScope.drawTwoOfUs(center: Offset, size: Float) {
+    drawGrownUpFace(center + Offset(-size * 0.2f, -size * 0.04f), size * 0.52f)
+    drawChildFace(center + Offset(size * 0.25f, size * 0.07f), size * 0.4f)
+}
+
 /** A syllable on its card, [height] units high, as Bruno claps it; [pop] from 0 to 1 is how much it has just jumped. */
 internal fun DrawScope.drawSyllable(
     syllable: String,

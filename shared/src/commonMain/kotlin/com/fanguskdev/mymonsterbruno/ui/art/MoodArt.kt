@@ -108,7 +108,7 @@ internal fun DrawScope.drawRoundPhoto(photo: ImageBitmap, center: Offset, radius
 }
 
 /** A girl's face, [size] units across, smiling: her token when there is no photo of her. */
-private fun DrawScope.drawChildFace(center: Offset, size: Float) {
+internal fun DrawScope.drawChildFace(center: Offset, size: Float) {
     val r = size / 2
     val hair = Color(0xFF6B3E26)
     circle(hair, center + Offset(0f, -r * 0.1f), r)
@@ -148,4 +148,35 @@ internal fun DrawScope.drawBrunoToken(
     circle(Shadow, center + Offset(0f, 3f), size / 2)
     circle(Color.White, center, size / 2)
     drawBruno(look, center + Offset(0f, size * 0.06f), size * 0.78f / look.size, Pose(Mouth.GRIN, Eyes.HAPPY, Arms.DOWN), time)
+}
+
+/** A grown-up's face, [size] units across, smiling, with short hair: the one who plays with her (ADR 0036). */
+internal fun DrawScope.drawGrownUpFace(center: Offset, size: Float) {
+    val r = size / 2
+    val hair = Color(0xFF3A2A22)
+    circle(hair, center + Offset(0f, -r * 0.14f), r * 0.86f)
+    circle(Color(0xFFE9B78F), center + Offset(0f, r * 0.1f), r * 0.78f)
+    fill(
+        path {
+            moveTo(center.x - r * 0.82f, center.y)
+            quadraticTo(center.x - r * 0.72f, center.y - r * 0.92f, center.x, center.y - r * 0.9f)
+            quadraticTo(center.x + r * 0.72f, center.y - r * 0.92f, center.x + r * 0.82f, center.y)
+            quadraticTo(center.x + r * 0.55f, center.y - r * 0.5f, center.x - r * 0.05f, center.y - r * 0.46f)
+            quadraticTo(center.x - r * 0.6f, center.y - r * 0.42f, center.x - r * 0.82f, center.y)
+            close()
+        },
+        hair,
+    )
+    for (side in listOf(-1f, 1f)) {
+        circle(Color(0xFF2C2340), center + Offset(side * r * 0.3f, r * 0.08f), r * 0.08f)
+        circle(Color(0xFFF29AA5), center + Offset(side * r * 0.48f, r * 0.34f), r * 0.1f, alpha = 0.5f)
+    }
+    stroke(
+        path {
+            moveTo(center.x - r * 0.26f, center.y + r * 0.4f)
+            quadraticTo(center.x, center.y + r * 0.62f, center.x + r * 0.26f, center.y + r * 0.4f)
+        },
+        Color(0xFF2C2340),
+        r * 0.07f,
+    )
 }

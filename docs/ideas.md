@@ -91,7 +91,7 @@ recorridos del iPhone de un tirón. Y una que no estaba aquí, la pantalla de in
   en cada isla, con su interruptor en la zona de mayores. *Pequeña.*
 - **2.7 Jugar con un mayor.** Momentos para dos: en «Habla con Bruno», que el mayor diga una palabra y ella dé las
   palmadas; o que Bruno le pida enseñarle al mayor lo que ha aprendido. Ayuda a que lo vean como algo que se hace juntos.
-  *Pequeña.*
+  *Pequeña. Hecha: un turno para dos al final de «Habla con Bruno» ([ADR 0036](adr/0036-jugar-con-un-mayor.md)).*
 
 ## 3. Más suyo
 

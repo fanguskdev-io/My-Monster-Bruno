@@ -30,6 +30,7 @@ import com.fanguskdev.mymonsterbruno.ui.art.Arms
 import com.fanguskdev.mymonsterbruno.ui.art.Eyes
 import com.fanguskdev.mymonsterbruno.ui.art.Mouth
 import com.fanguskdev.mymonsterbruno.ui.art.Pose
+import com.fanguskdev.mymonsterbruno.ui.art.clapIcon
 import com.fanguskdev.mymonsterbruno.ui.art.drawBruno
 import com.fanguskdev.mymonsterbruno.ui.art.drawRoom
 import com.fanguskdev.mymonsterbruno.ui.art.drawRoundButton
@@ -37,6 +38,7 @@ import com.fanguskdev.mymonsterbruno.ui.art.drawSparkles
 import com.fanguskdev.mymonsterbruno.ui.art.drawSyllable
 import com.fanguskdev.mymonsterbruno.ui.art.drawTalkPicture
 import com.fanguskdev.mymonsterbruno.ui.art.drawThoughtBubble
+import com.fanguskdev.mymonsterbruno.ui.art.drawTwoOfUs
 import com.fanguskdev.mymonsterbruno.ui.art.micIcon
 import com.fanguskdev.mymonsterbruno.ui.art.syllableWidth
 import com.fanguskdev.mymonsterbruno.ui.circle
@@ -54,11 +56,12 @@ private val BUBBLE = Offset(604f, 104f)
 private const val SYLLABLES_Y = 216f
 private const val SYLLABLE_HEIGHT = 56f
 private const val SYLLABLE_GAP = 12f
+private const val CLAP_CARD_HEIGHT = 46f
 private val MIC = Offset(604f, 322f)
 private const val MIC_RADIUS = 56f
 private val SYLLABLE_COLORS = listOf(Color(0xFFE4483C), Color(0xFF2C74D8), Color(0xFF2E9E5B), Color(0xFFF28B2E))
 
-private enum class TalkPhase { ASKING, LISTENING, HEARING, ECHO, CLAPPING, COUNTED, THANKS }
+private enum class TalkPhase { ASKING, LISTENING, HEARING, ECHO, CLAPPING, COUNTED, HER_CLAPS, THANKS }
 
 /**
  * «Habla con Bruno» (ADR 0011): Bruno shows a picture and asks for its word, «¡Dime mariposa!». She keeps her finger on the
@@ -67,7 +70,9 @@ private enum class TalkPhase { ASKING, LISTENING, HEARING, ECHO, CLAPPING, COUNT
  * played once and forgotten: nothing of it is saved nor leaves the device. Without a microphone, or if he does not hear
  * her twice, Bruno says the word himself and claps it all the same. Where the device can make out words by itself
  * ([check], ADR 0015), Bruno knows when she said another one: «Huum... Eso no es manzana. ¿Me dices manzana?», and the
- * second time he says it himself, so that she is never stuck.
+ * second time he says it himself, so that she is never stuck. Last, a turn for two (ADR 0036): a grown-up says a word
+ * aloud, any word, and she claps it on the big hands; the voice counts her claps, and nobody says if they are right but
+ * the grown-up.
  */
 @Composable
 internal fun TalkScreen(
@@ -97,6 +102,10 @@ internal fun TalkScreen(
     var clapAt by remember { mutableStateOf(-10f) }
     var countedAt by remember { mutableStateOf(-10f) }
 
+    // The turn for two, after the words (ADR 0036): how many claps she has given.
+    val together = round == rounds.size
+    var herClaps by remember { mutableStateOf(0) }
+
     fun current() = rounds[round.coerceAtMost(rounds.lastIndex)]
 
     LaunchedEffect(round) {
@@ -109,11 +118,28 @@ internal fun TalkScreen(
             checking = listens && check.allowed()
             allowed = listens
         }
-        if (round == 0) {
-            audio.say(Voice.TALK, Voice.tellMe(current()), Voice.HOLD_MIC)
-        } else {
-            audio.say(Voice.tellMe(current()))
+        when {
+            round == 0 -> audio.say(Voice.TALK, Voice.tellMe(current()), Voice.HOLD_MIC)
+            together -> {
+                phase = TalkPhase.HER_CLAPS
+                audio.say(Voice.WITH_A_GROWN_UP, Voice.CLAP_THE_HANDS)
+            }
+            else -> audio.say(Voice.tellMe(current()))
         }
+    }
+
+    // When she stops clapping for a moment, or has given the most claps, the voice counts them and the turn ends. Each
+    // clap starts the wait again; the phase is not a key, so that changing it here does not stop the count.
+    LaunchedEffect(herClaps) {
+        if (phase != TalkPhase.HER_CLAPS || herClaps == 0) return@LaunchedEffect
+        if (herClaps < Voice.MOST_CLAPS) delay(CLAPS_DONE_MILLIS)
+        phase = TalkPhase.COUNTED
+        countedAt = clock.value
+        audio.sfx(Sfx.SPARKLE)
+        audio.say(Voice.claps(herClaps), Voice.PLAYING_TOGETHER)
+        delay(PAUSE_MILLIS)
+        phase = TalkPhase.THANKS
+        onDone()
     }
 
     suspend fun clap(word: TalkWord) {
@@ -130,13 +156,9 @@ internal fun TalkScreen(
         game.update { it.copy(talked = it.talked.plusOne(word.word)) }
         audio.say(Voice.claps(word.syllables.size))
         delay(PAUSE_MILLIS)
-        if (round + 1 < rounds.size) {
-            round++
-        } else {
-            phase = TalkPhase.THANKS
-            audio.say(Voice.THANKS_WORDS)
-            onDone()
-        }
+        // After the last word, Bruno says thanks, and then comes the turn for two.
+        if (round + 1 == rounds.size) audio.say(Voice.THANKS_WORDS)
+        round++
     }
 
     // She let go of the button: Bruno says back what he heard, or the word himself, and claps it.
@@ -179,12 +201,24 @@ internal fun TalkScreen(
         object : Touch {
             override fun down(point: Offset, stage: Stage): Boolean {
                 if (hits(point, speakerButton(stage), CORNER_RADIUS)) {
-                    if (phase == TalkPhase.ASKING) audio.speak(Voice.tellMe(current()), Voice.HOLD_MIC)
+                    when {
+                        phase == TalkPhase.HER_CLAPS && herClaps == 0 -> audio.speak(Voice.WITH_A_GROWN_UP, Voice.CLAP_THE_HANDS)
+                        phase == TalkPhase.ASKING -> audio.speak(Voice.tellMe(current()), Voice.HOLD_MIC)
+                    }
                     return true
                 }
                 if (hits(point, homeButton(stage), CORNER_RADIUS)) {
                     audio.hush()
                     game.back()
+                    return true
+                }
+                if (phase == TalkPhase.HER_CLAPS && hits(point, MIC, MIC_RADIUS)) {
+                    if (herClaps < Voice.MOST_CLAPS) {
+                        if (herClaps == 0) audio.hush()
+                        herClaps++
+                        clapAt = clock.value
+                        audio.sfx(Sfx.CLAP)
+                    }
                     return true
                 }
                 if (phase != TalkPhase.ASKING || allowed == null || !hits(point, MIC, MIC_RADIUS)) return false
@@ -218,6 +252,8 @@ internal fun TalkScreen(
                 Pose(mouth, Eyes.HAPPY, Arms.UP, hop = 4f * sin(t * 8f).coerceAtLeast(0f))
             }
             TalkPhase.CLAPPING -> Pose(Mouth.GRIN, Eyes.HAPPY, if (sinceClap < CLAP_SECONDS) Arms.CLAP else Arms.UP)
+            TalkPhase.HER_CLAPS ->
+                if (sinceClap < CLAP_SECONDS) Pose(Mouth.GRIN, Eyes.HAPPY, Arms.CLAP) else Pose(lookX = 0.7f, hop = 1.5f * sin(t * 1.6f))
             TalkPhase.COUNTED, TalkPhase.THANKS ->
                 Pose(Mouth.GRIN, Eyes.HAPPY, Arms.UP, hop = 8f * sin((t - countedAt) * 6f).coerceAtLeast(0f))
             else -> Pose(lookX = 0.6f, lookY = -0.2f, hop = 1.5f * sin(t * 1.6f))
@@ -226,24 +262,28 @@ internal fun TalkScreen(
         if (phase == TalkPhase.COUNTED || phase == TalkPhase.THANKS) drawSparkles(BRUNO_CENTER, 140f, t)
         if (phase != TalkPhase.THANKS) {
             drawThoughtBubble(BUBBLE, 100f, 74f, BRUNO_CENTER + Offset(70f, -120f))
-            drawTalkPicture(word, BUBBLE, 110f, t)
+            if (together) drawTwoOfUs(BUBBLE, 130f) else drawTalkPicture(word, BUBBLE, 110f, t)
         }
 
-        // The syllables, one more with each clap.
-        val widths = word.syllables.map { syllableWidth(it, SYLLABLE_HEIGHT) }
+        // The syllables, one more with each clap; in the turn for two, a card with its number for each of her claps.
+        val cards = if (together) (1..herClaps).map { it.toString() } else word.syllables
+        val shown = if (together) herClaps else clapped
+        // Her six claps fit smaller cards.
+        val tall = if (together) CLAP_CARD_HEIGHT else SYLLABLE_HEIGHT
+        val widths = cards.map { syllableWidth(it, tall) }
         var left = BUBBLE.x - (widths.sum() + SYLLABLE_GAP * (widths.size - 1)) / 2
-        for ((i, syllable) in word.syllables.withIndex()) {
+        for ((i, syllable) in cards.withIndex()) {
             val center = Offset(left + widths[i] / 2, SYLLABLES_Y)
             left += widths[i] + SYLLABLE_GAP
-            if (i >= clapped) continue
-            val pop = if (i == clapped - 1) 1f - clamp01(sinceClap / CLAP_SECONDS) else 0f
+            if (i >= shown) continue
+            val pop = if (i == shown - 1) 1f - clamp01(sinceClap / CLAP_SECONDS) else 0f
             val lift = when {
                 phase != TalkPhase.COUNTED -> 0f
                 i % 2 == 0 -> bob(t, 6f, 4f)
                 else -> -bob(t, 6f, 4f)
             }
             val color = SYLLABLE_COLORS[i % SYLLABLE_COLORS.size]
-            drawSyllable(syllable, center + Offset(0f, lift), SYLLABLE_HEIGHT, color, pop, measurer, font)
+            drawSyllable(syllable, center + Offset(0f, lift), tall, color, pop, measurer, font)
         }
 
         val listening = phase == TalkPhase.LISTENING
@@ -256,14 +296,28 @@ internal fun TalkScreen(
         } else if (phase == TalkPhase.ASKING && allowed != null) {
             drawCallRing(MIC, MIC_RADIUS + 4f, t)
         }
-        val ready = phase == TalkPhase.ASKING || listening
-        drawRoundButton(MIC, MIC_RADIUS * if (listening) 1.08f else 1f, if (ready) Color(0xFFE85A7A) else Color(0xFFE6B3C0)) {
-            micIcon(MIC, if (listening) 52f else 48f)
+        if (together) {
+            // Her hands, where the microphone was: they jump a little with each clap.
+            val clapping = phase == TalkPhase.HER_CLAPS
+            if (clapping && herClaps == 0) drawCallRing(MIC, MIC_RADIUS + 4f, t)
+            val pop = if (sinceClap < CLAP_SECONDS) 1.1f else 1f
+            drawRoundButton(MIC, MIC_RADIUS * pop, if (clapping) Color(0xFFF4B623) else Color(0xFFF2D9A0)) { clapIcon(MIC, 50f * pop) }
+        } else {
+            val ready = phase == TalkPhase.ASKING || listening
+            drawRoundButton(MIC, MIC_RADIUS * if (listening) 1.08f else 1f, if (ready) Color(0xFFE85A7A) else Color(0xFFE6B3C0)) {
+                micIcon(MIC, if (listening) 52f else 48f)
+            }
         }
 
-        for (i in rounds.indices) {
+        // A dot for each word and one more, a different colour, for the turn for two.
+        for (i in 0..rounds.size) {
             val done = i < round || (i == round && phase == TalkPhase.COUNTED) || phase == TalkPhase.THANKS
-            circle(if (done) Color(0xFFE9B36A) else Color(0x66FFFFFF), Offset(340f + 30f * i, 382f), 10f)
+            val colour = when {
+                !done -> Color(0x66FFFFFF)
+                i == rounds.size -> Color(0xFFF4B623)
+                else -> Color(0xFFE9B36A)
+            }
+            circle(colour, Offset(325f + 30f * i, 382f), 10f)
         }
         drawHomeButton(stage)
         drawSpeakerButton(stage)
@@ -277,3 +331,6 @@ private const val MONSTER_PITCH = 1.35f
 private const val MIN_VOICE_MILLIS = 300L
 private const val CLAP_SECONDS = 0.25f
 private const val PAUSE_MILLIS = 700L
+
+/** How long she has to stop clapping, in the turn for two, for the voice to count her claps. */
+private const val CLAPS_DONE_MILLIS = 2_000L

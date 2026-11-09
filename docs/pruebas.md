@@ -92,7 +92,7 @@ propio Mac ([ADR 0027](adr/0027-el-mac-tambien-comprueba-la-palabra.md)); el emu
 Para ver el juego en un iPhone 15 Pro simulado, girado a un lado y al otro, sin tocarlo a mano:
 [`tools/conductor-ios`](../tools/conductor-ios) es una prueba de interfaz que toca el escenario de 800 × 400 y, en cada
 punto de control, espera a que `vigilante.sh` saque una captura con lo que tapan la isla y las esquinas pintado de negro.
-Tiene diecinueve recorridos:
+Tiene veinte recorridos:
 
 - los dos de la entrega, que empiezan en el huevo: `testWalkThroughHeldBothWays` y `testFinalVersionBothWays`;
 - `testTalkAndPhoto`, «Habla con Bruno» y elegir su foto;
@@ -118,7 +118,9 @@ Tiene diecinueve recorridos:
 - `testPhotoPlaces`, su foto en más sitios: elegirla, en la barca del mapa con Bruno, prendida en la misión cuando se
   acaba el tiempo y, al volver a abrir el juego, en la barca de la pantalla de inicio;
 - `testSuggestion`, la isla que sugiere Bruno: la de las formas, la única sin terminar, con sus ondas; ir a otra, la de
-  los números, y al volver al mapa, ya sin sugerencia.
+  los números, y al volver al mapa, ya sin sugerencia;
+- `testTogether`, el turno para dos de «Habla con Bruno»: las cuatro palabras, que dice Bruno en silencio, y tres
+  palmadas en las manos, que el narrador cuenta, hasta volver al cuarto.
 
 Todos pasan antes por la pantalla de inicio, con un toque. Siempre en silencio (`-silencio`) y en un simulador propio que
 se borra al acabar, nunca en uno de otra sesión.
@@ -444,6 +446,18 @@ pedirían el móvil o la tableta (2026-11-06).
 - [x] En el emulador Tester_API36, con todas las islas terminadas una vez menos la de las formas: en el mapa, las ondas
   alrededor de la de las formas y Bruno mirándola; la de los números se toca igual y, al volver al mapa, ya no hay
   ondas. En el simulador de iPhone 15 Pro (`testSuggestion`), lo mismo (2026-11-09).
+
+### M5 · Jugar con un mayor
+
+- [ ] Después de las cuatro palabras de «Habla con Bruno», el turno para dos: en la nube, un mayor y una niña, y el
+  narrador pide que un mayor diga una palabra y ella dé las palmadas. Las manos están donde estaba el micrófono.
+- [ ] Cada palmada suena, Bruno aplaude con ella y sale una tarjeta con su número; al parar un momento, el narrador
+  las cuenta y Bruno dice «¡Qué bien jugáis juntos!». Con seis, las cuenta enseguida. Luego, al cuarto.
+- [ ] Sin micrófono, el turno para dos sale igual. La casa sale en cualquier momento.
+- [x] En el emulador Tester_API36, en silencio (sin micrófono): las cuatro palabras, el turno para dos con el mayor y
+  la niña en la nube y las manos, cuatro palmadas con sus tarjetas del 1 al 4, el narrador las cuenta y vuelve al
+  cuarto. En el simulador de iPhone 15 Pro (`testTogether`), lo mismo con tres. Las manos se dibujaron otra vez, con
+  las palmas juntas arriba, después de verlas en el iPhone (2026-11-09).
 
 ### M5 · La F, la B y la R
 

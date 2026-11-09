@@ -499,6 +499,29 @@ final class BrunoDriverTests: XCTestCase {
         checkpoint("g3-mapa-sin-sugerencia-der")
     }
 
+    /// The turn for two of «Habla con Bruno» (ADR 0036), in silence: Bruno says the four words himself and claps them;
+    /// then a grown-up would say a word aloud, and she claps it three times on the hands. The voice counts them, Bruno
+    /// says how well they play together, and back to the room.
+    func testTogether() {
+        XCUIDevice.shared.orientation = .landscapeRight
+        launchPastStart()
+        sleep(2)
+        stage(82, 200).tap()
+        sleep(4)
+        for _ in 0..<4 {
+            stage(604, 322).press(forDuration: 1.0)
+            sleep(10)
+        }
+        checkpoint("h1-para-dos-der")
+        for _ in 0..<3 {
+            stage(604, 322).tap()
+            usleep(500_000)
+        }
+        checkpoint("h2-tres-palmadas-der")
+        sleep(7)
+        checkpoint("h3-cuarto-der")
+    }
+
     /// The stickers of the room (ADR 0024): the save has every island finished and none stuck yet. She takes the first one
     /// from the rug to the wall, lets the next one go on the floor, where it does not stay, sticks it on the wall after
     /// all, and moves the first one somewhere else.

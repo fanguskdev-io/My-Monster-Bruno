@@ -212,6 +212,8 @@ n_palmadas_1	narrador	¡Una palmada!
 n_palmadas_2	narrador	¡Dos palmadas!
 n_palmadas_3	narrador	¡Tres palmadas!
 n_palmadas_4	narrador	¡Cuatro palmadas!
+n_palmadas_5	narrador	¡Cinco palmadas!
+n_palmadas_6	narrador	¡Seis palmadas!
 b_dime_sol	bruno	¡Dime sol!
 b_dime_luna	bruno	¡Dime luna!
 b_dime_oso	bruno	¡Dime oso!
@@ -721,3 +723,6 @@ b_sugiere_colores	bruno	¡A mí me apetece ir a la isla de los colores! ¿Y a ti
 b_sugiere_formas	bruno	¡A mí me apetece ir a la isla de las formas! ¿Y a ti?
 b_sugiere_emociones	bruno	¡A mí me apetece ir a la isla de las emociones! ¿Y a ti?
 b_sugiere_palabras	bruno	¡A mí me apetece ir a la isla de las palabras! ¿Y a ti?
+n_con_mayor	narrador	¡Y ahora, una para jugar con un mayor! Que un mayor diga una palabra y tú das las palmadas.
+n_tus_palmadas	narrador	Toca las manos: una palmada por cada trozo.
+b_juntos	bruno	¡Qué bien jugáis juntos!

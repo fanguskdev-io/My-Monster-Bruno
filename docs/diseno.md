@@ -211,7 +211,11 @@ Fuera del camino:
   ([ADR 0015](adr/0015-bruno-comprueba-la-palabra.md)). Su voz suena una vez y se olvida: no se guarda ni sale del
   aparato, y lo que dice lo reconoce el propio aparato, sin conexión; en la versión del Mac, también
   ([ADR 0027](adr/0027-el-mac-tambien-comprueba-la-palabra.md)). El permiso del micrófono (y en el iPhone y en el Mac,
-  el del reconocimiento de voz) se pide la primera vez que se entra.
+  el del reconocimiento de voz) se pide la primera vez que se entra. Al final, **un turno para dos**
+  ([ADR 0036](adr/0036-jugar-con-un-mayor.md)): «¡Y ahora, una para jugar con un mayor! Que un mayor diga una palabra y
+  tú das las palmadas». El mayor la dice en voz alta, cualquiera, y ella da una palmada por trozo tocando unas manos
+  grandes; cada palmada sale en una tarjeta con su número, el narrador las cuenta y Bruno: «¡Qué bien jugáis juntos!».
+  El juego no corrige: quien sabe si están bien es el mayor.
 - **Escribir su nombre** ([ADR 0017](adr/0017-escribir-su-nombre.md)), desde el banderín del cuarto. Arriba cuelga su
   nombre en un banderín, y abajo, en una hoja, ella traza sus letras una tras otra, con los trazos del cole, mientras el
   narrador dice cada una («La ele»). La tilde y la virgulilla de la ñ son el último trazo de su letra. Cada letra que
@@ -275,7 +279,7 @@ Las **voces de la familia** no se harán: «para M2 no vamos a utilizar las voce
 - **Bruno y todo lo demás se dibujan con vectores**, sin imágenes: Bruno respira, parpadea, mira y cambia de cara (ocho
   bocas, cuatro ojos, tres posturas de brazos).
 - **Las voces** son las de un narrador y la de Bruno, algo más aguda y más despacio, a unas 4 sílabas por segundo. Hay
-  722 frases pregrabadas con la voz del sistema del Mac y **los efectos** (17) se sintetizan desde cero
+  727 frases pregrabadas con la voz del sistema del Mac y **los efectos** (17) se sintetizan desde cero
   ([ADR 0004](adr/0004-voces-provisionales.md)). Las frases están en [`voces/guion.tsv`](../voces/guion.tsv).
 - **La letra** de la zona de mayores, de los números, del banderín y del título es Andika, una tipografía pensada para quien aprende a
   leer (licencia OFL, en [`licencias/`](../licencias/Andika-OFL.txt)).
