@@ -21,6 +21,7 @@ Qué se prueba en cada cambio y en cada hito, y cómo. Los criterios de salida d
 | El anterior y el siguiente: cinco preguntas por visita, con antes y después mezclados, al menos dos de cada, sin repetir y nunca dos seguidas desde la misma casilla; la respuesta, siempre al lado de Bruno y en la recta; cada pregunta tiene sus frases; la cuenta atrás, la recta y las sumas se turnan por los días que va a la isla, no por el calendario | `NumberLineTest`, `GameStateTest` | Común |
 | Sumas hasta 3: en cada visita, una y una, una y dos, y dos y una, una vez cada una y en cualquier orden; cada suma tiene sus frases, y sus números y su «¡Ñam!» están | `SumsTest` | Común |
 | La asamblea: el día de la semana de cada fecha, también un 29 de febrero y al cambiar de año; el día de antes y el de después; cada día y cada tiempo tienen sus frases; después de la emoción del día, la asamblea, una vez al día, y la ventana del cuarto enseña el tiempo que dijo hasta el día siguiente | `AssemblyTest`, `GameStateTest` | Común |
+| Los caminos de Bruno: en cada visita, los tres menos hechos, las rectas primero; cada camino va a pasos iguales, como las letras, y no sale de donde llega el dedo, lejos de los botones y de la Dynamic Island; un dedo que sigue cualquiera de los seis, aunque vaya un poco de lado, lleva a Bruno a casa, uno lejos no lo mueve y, levantado, sigue desde donde lo dejó; trazar letras y los caminos se turnan por los días que va a la isla, y cada camino tiene su frase | `PathsTest`, `GameStateTest` | Común |
 | Dentro y fuera: en cada visita, cada sitio una vez y Bruno y la pelota por turnos, empezando por cualquiera; fuera de la caja es cualquier sitio que no sea una caja, y los demás, solo el suyo; cada ronda tiene sus frases | `PlacesTest` | Común |
 | Las pegatinas: una por isla terminada, en el orden del mapa, hasta que la pega; moverla no la duplica; solo se pega en la pared y nunca encima de los botones, el banderín, el marco de su foto, Bruno o donde un iPhone tiene la isla | `StickersTest` | Común |
 | La cuenta atrás: el panel tiene del 1 al 10, una vez cada uno y desordenados; se cuenta del 10 al 0 y solo vale el número que va | `CountdownTest` | Común |
@@ -35,7 +36,7 @@ Qué se prueba en cada cambio y en cada hito, y cómo. Los criterios de salida d
 | Lo que se hace con su voz antes de que Bruno la repita: sin el silencio de los bordes (y nada si solo hay silencio o un murmullo), a la altura de las voces del juego, más aguda y más rápida, en un canal y de vuelta a WAV | `MicrophoneTest` | Común |
 | El sonido del escritorio: la mezcla suma sin desbordarse, respeta el volumen y pasa todo a un canal a 22 050 Hz; y cortar una voz tras otra, como al contar fresas, no atasca su hilo: un toque suele atenderse en un momento y ninguno se queda sin atender (el primero puede esperar a que se despierte la tarjeta de sonido, hasta segundo y medio) | `DesktopSoundTest` | JVM |
 | Cada frase del juego tiene su fichero y dura lo que una frase; el guion y el código tienen las mismas frases; cada efecto tiene su fichero | `AudioFilesTest` | JVM |
-| Las veintiséis pantallas y, el cuarto con lluvia y con nieve en la ventana, el cuarto con sus pegatinas, cuando ya sabe las vocales y del 1 al 5, Comeletras, los trazos y las fresas con lo nuevo, Comeletras y los trazos con la T, la N y la D y con la F, la B y la R, el mapa con su cuarta fila de rocas, la pantalla de inicio con el huevo, el cuarto con su foto y cuando Bruno le pide que le enseñe su nombre, la emoción del día con su foto, Comeletras, los globos, las emociones, las palabras y las rimas con cuatro para elegir y Comeletras con dos, y el mapa con todas las islas terminadas y sus banderas, se dibujan en móvil (2,17:1) y en tableta (4:3) | `ScreenshotsTest` | JVM |
+| Las veintisiete pantallas y, el cuarto con lluvia y con nieve en la ventana, los caminos de bucles y de caracol, el cuarto con sus pegatinas, cuando ya sabe las vocales y del 1 al 5, Comeletras, los trazos y las fresas con lo nuevo, Comeletras y los trazos con la T, la N y la D y con la F, la B y la R, el mapa con su cuarta fila de rocas, la pantalla de inicio con el huevo, el cuarto con su foto y cuando Bruno le pide que le enseñe su nombre, la emoción del día con su foto, Comeletras, los globos, las emociones, las palabras y las rimas con cuatro para elegir y Comeletras con dos, y el mapa con todas las islas terminadas y sus banderas, se dibujan en móvil (2,17:1) y en tableta (4:3) | `ScreenshotsTest` | JVM |
 | La salida de la zona de mayores: «Salir del juego» guarda la partida y cierra; sin salida en la plataforma, como en iOS, no hay botón | `GrownUpsExitTest` | JVM |
 | El icono de iOS es el de Android: lo dibuja del vector de `androidApp` en `shared/build/icono/` y lo compara con el del proyecto de Xcode; si cambia el de Android, se copia el nuevo | `AppIconTest` | JVM |
 | En el iPhone 15 Pro de ella y en el 17 Pro del simulador, girados a un lado y al otro, la casa, el altavoz y el candado se ven enteros: ni bajo la Dynamic Island ni cortados por las esquinas redondeadas, medidas en el simulador | `CornerButtonsTest` | Común |
@@ -88,7 +89,7 @@ propio Mac ([ADR 0027](adr/0027-el-mac-tambien-comprueba-la-palabra.md)); el emu
 Para ver el juego en un iPhone 15 Pro simulado, girado a un lado y al otro, sin tocarlo a mano:
 [`tools/conductor-ios`](../tools/conductor-ios) es una prueba de interfaz que toca el escenario de 800 × 400 y, en cada
 punto de control, espera a que `vigilante.sh` saque una captura con lo que tapan la isla y las esquinas pintado de negro.
-Tiene catorce recorridos:
+Tiene quince recorridos:
 
 - los dos de la entrega, que empiezan en el huevo: `testWalkThroughHeldBothWays` y `testFinalVersionBothWays`;
 - `testTalkAndPhoto`, «Habla con Bruno» y elegir su foto;
@@ -106,7 +107,9 @@ Tiene catorce recorridos:
 - `testPlaces`, la de las formas entera: la casa, tocando las piezas por turnos, y dentro y fuera, arrastrando a Bruno,
   la pelota y lo que haya en la caja grande a cada sitio, hasta el regalo;
 - `testSums`, la de los números el día de las sumas: las fresas y las tres sumas, dándole fresas y tocando el dos y
-  luego el tres, sin tocar nunca donde sale el regalo, que se queda cerrado.
+  luego el tres, sin tocar nunca donde sale el regalo, que se queda cerrado;
+- `testPaths`, la de las letras el día de los caminos, con los rectos ya hechos: Comeletras y los caminos de olas, de
+  bucles y de caracol, trazados con el dedo a trocitos, hasta el regalo.
 
 Todos pasan antes por la pantalla de inicio, con un toque. Siempre en silencio (`-silencio`) y en un simulador propio que
 se borra al acabar, nunca en uno de otra sesión.
@@ -372,6 +375,22 @@ pedirían el móvil o la tableta (2026-11-06).
   ventana con Bruno contento, y el cuarto con la lluvia en la ventana. La partida guarda el tiempo de hoy. En el
   simulador de iPhone 15 Pro (`testFeelingOfTheDay`), girado a la derecha, lo mismo: la tarjeta del domingo queda al
   lado de la Dynamic Island, entera (2026-11-08).
+
+### M5 · Trazos antes de las letras
+
+- [ ] La isla de las letras se turna por días: después de Comeletras, trazar letras un día que va y los caminos de
+  Bruno el siguiente; el mismo día, siempre lo mismo.
+- [ ] Un camino de arena por un campo, de Bruno a su casa, con una línea discontinua por el medio. Con el dedo en Bruno,
+  anda bajo el dedo mientras no se salga y lo hecho queda en dorado; si se levanta o se sale, se queda y sigue desde
+  ahí. Tocando lejos, el narrador dice que ponga el dedo en Bruno.
+- [ ] Al llegar, Bruno entra en su casa: «¡Ya estoy en casa!». Tres caminos por visita, los rectos primero y luego los de
+  olas, bucles y caracol; al acabar, el regalo de la isla. En la zona de mayores, cada camino.
+- [x] En el emulador Tester_API36, con un día ya ido a la isla: después de Comeletras, los caminos rectos; Bruno anda bajo
+  el dedo, deja el rastro dorado y, levantado el dedo, espera a mitad de camino y sigue desde ahí; entra en su casa con
+  chispas; el recto, el de arriba abajo y el inclinado, y el regalo. La partida guarda los tres. Con el Mac a carga 100
+  el emulador dejaba de recibir el dedo: hay que probarlo con el Mac tranquilo. En el simulador de iPhone 15 Pro
+  (`testPaths`), girado a los dos lados, los de olas, bucles y caracol, trazados a trocitos, hasta el regalo
+  (2026-11-09).
 
 ### M5 · La F, la B y la R
 

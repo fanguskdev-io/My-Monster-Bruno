@@ -48,6 +48,7 @@ import com.fanguskdev.mymonsterbruno.game.Feeling
 import com.fanguskdev.mymonsterbruno.game.Hue
 import com.fanguskdev.mymonsterbruno.game.LETTERS
 import com.fanguskdev.mymonsterbruno.game.MAX_COUNT
+import com.fanguskdev.mymonsterbruno.game.PathShape
 import com.fanguskdev.mymonsterbruno.game.Place
 import com.fanguskdev.mymonsterbruno.game.RhymeWord
 import com.fanguskdev.mymonsterbruno.game.SUMS
@@ -180,6 +181,8 @@ internal fun GrownUpsScreen(game: GameState, onExit: (() -> Unit)? = null) {
                 val counted = (1..MAX_COUNT).joinToString("   ") { "$it: ${data.counted[it.toString()] ?: 0}" }
                 Text("Galletas bien dadas, por letra:   $fed", font, 16)
                 Text("Letras trazadas enteras:   $traced", font, 16)
+                val paths = PathShape.entries.joinToString("   ") { "${it.spoken} ${data.paths[it.word] ?: 0}" }
+                Text("Caminos de Bruno hasta su casa:   $paths", font, 16)
                 Text("Veces que ha escrito su nombre: ${data.namesWritten}.", font, 16)
                 Text("Fresas contadas, por número:   $counted", font, 16)
                 Text("Cohetes despegados, contando hacia atrás: ${data.launches}.", font, 16)
@@ -371,4 +374,13 @@ private val Weather.spoken: String get() = when (this) {
     Weather.CLOUDS -> "nubes"
     Weather.RAIN -> "lluvia"
     Weather.SNOW -> "nieve"
+}
+
+private val PathShape.spoken: String get() = when (this) {
+    PathShape.ACROSS -> "recto"
+    PathShape.DOWN -> "de arriba abajo"
+    PathShape.SLANT -> "inclinado"
+    PathShape.WAVES -> "de olas"
+    PathShape.LOOPS -> "con bucles"
+    PathShape.SPIRAL -> "caracol"
 }

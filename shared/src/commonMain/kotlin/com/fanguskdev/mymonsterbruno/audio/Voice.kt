@@ -10,6 +10,7 @@ import com.fanguskdev.mymonsterbruno.game.LETTERS
 import com.fanguskdev.mymonsterbruno.game.LINE_LAST
 import com.fanguskdev.mymonsterbruno.game.MAX_COUNT
 import com.fanguskdev.mymonsterbruno.game.NAME_ALPHABET
+import com.fanguskdev.mymonsterbruno.game.PathShape
 import com.fanguskdev.mymonsterbruno.game.Place
 import com.fanguskdev.mymonsterbruno.game.Placing
 import com.fanguskdev.mymonsterbruno.game.RhymeWord
@@ -123,6 +124,12 @@ internal object Voice {
     const val LIFT_OFF = "n_despegue"
     const val OFF_I_GO = "b_alla_voy"
     const val THANKS_ROCKET = "b_gracias_cohete"
+
+    /** Bruno's paths, on the island of letters (ADR 0031): how they start, a finger on Bruno, home, and his thanks. */
+    const val PATHS_INTRO = "n_caminos_intro"
+    const val FOLLOW_PATH = "n_sigue_camino"
+    const val AT_HOME = "b_en_casa"
+    const val THANKS_PATHS = "b_gracias_caminos"
 
     /** The assembly, after the feeling of the day (ADR 0030): how it starts, the weather, and how the day starts. */
     const val ASSEMBLY_INTRO = "n_asamblea_intro"
@@ -243,6 +250,9 @@ internal object Voice {
     /** «¡Nueve!», counting down: not «Una» as the strawberries, «¡Uno!». */
     fun down(number: Int) = "n_atras_$number"
 
+    /** «¡Un camino de olas! Arriba y abajo.», the path she takes Bruno home along. */
+    fun pathIs(shape: PathShape) = "n_camino_${shape.word}"
+
     /** «¡Hoy es martes!», Bruno in the assembly. */
     fun todayIs(day: Weekday) = "b_hoy_es_${day.word}"
 
@@ -349,8 +359,9 @@ internal object Voice {
         LIFT_OFF, OFF_I_GO, THANKS_ROCKET, STICKER_LETTERS, STICKER_NUMBERS, STICKER_COLORS, STICKER_SHAPES, STICKER_FEELINGS,
         STICKER_WORDS, STICK_IT, SO_PRETTY, STORY_INTRO, WHAT_FIRST, AND_NEXT, AND_AT_THE_END, LATER, THANKS_STORIES,
         NUMBER_LINE_INTRO, BESIDE_BRUNO, THANKS_NUMBER_LINE, PLACES_INTRO, HIDDEN, THANKS_PLACES, SUMS_INTRO, HOW_MANY_NOW,
-        COUNT_THEM_ALL, THANKS_SUMS, ASSEMBLY_INTRO, WHAT_WEATHER, DAY_STARTS,
+        COUNT_THEM_ALL, THANKS_SUMS, ASSEMBLY_INTRO, WHAT_WEATHER, DAY_STARTS, PATHS_INTRO, FOLLOW_PATH, AT_HOME, THANKS_PATHS,
     ) +
+        PathShape.entries.map { pathIs(it) } +
         Weekday.entries.flatMap { listOf(todayIs(it), aroundToday(it), thatDay(it)) } +
         Weather.entries.map { weatherIs(it) } +
         SUMS.flatMap { listOf(brunoHas(it.has), giveMore(it.more), sumIs(it)) }.distinct() +

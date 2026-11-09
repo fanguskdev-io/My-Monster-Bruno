@@ -10,8 +10,10 @@ import com.fanguskdev.mymonsterbruno.game.SaveStore
 import com.fanguskdev.mymonsterbruno.game.Session
 import com.fanguskdev.mymonsterbruno.game.Weather
 import com.fanguskdev.mymonsterbruno.game.Weekday
+import com.fanguskdev.mymonsterbruno.game.lettersOn
 import com.fanguskdev.mymonsterbruno.game.numbersGameToday
 import com.fanguskdev.mymonsterbruno.game.numbersOn
+import com.fanguskdev.mymonsterbruno.game.pathsToday
 import com.fanguskdev.mymonsterbruno.game.plusOne
 import com.fanguskdev.mymonsterbruno.game.weekdayOf
 import com.fanguskdev.mymonsterbruno.storage.KeyValueStore
@@ -30,7 +32,8 @@ internal enum class Island(val activities: List<Activity>) {
 }
 
 /**
- * The things she does on an island: give Bruno the letter he wants, trace a letter, give him strawberries, give him the
+ * The things she does on an island: give Bruno the letter he wants, trace a letter or take him home along a path, a day
+ * each (ADR 0031), give him strawberries, give him the
  * balloon of the colour he wants, finish a series of balloons, build his house with shapes, know how he feels and find
  * the word that starts as his, and the one that rhymes with his (ADR 0021); count down for his rocket (ADR 0023), or
  * find the number before or after on the number line, or add strawberries, a day each (ADR 0026 and 0029); put a story
@@ -39,6 +42,7 @@ internal enum class Island(val activities: List<Activity>) {
 internal enum class Activity {
     FEED,
     TRACE,
+    PATHS,
     COUNT,
     COUNTDOWN,
     NUMBER_LINE,
@@ -210,14 +214,17 @@ internal class GameState(
     fun goTo(island: Island) {
         if (timeUp) return go(Scene.Sleep)
         if (island == Island.NUMBERS) update { it.numbersOn(day()) }
+        if (island == Island.VOWELS) update { it.lettersOn(day()) }
         go(Scene.Play(island, 0))
     }
 
     /**
      * What she does on [island] today: on the island of the numbers, after the strawberries, the countdown one day she
-     * goes, the number line the next and the sums the next (ADR 0026 and 0029).
+     * goes, the number line the next and the sums the next (ADR 0026 and 0029); on the island of letters, after
+     * Comeletras, tracing letters one day and Bruno's paths the next (ADR 0031).
      */
     fun activities(island: Island): List<Activity> {
+        if (island == Island.VOWELS && data.pathsToday) return listOf(Activity.FEED, Activity.PATHS)
         if (island != Island.NUMBERS) return island.activities
         val second = when (data.numbersGameToday) {
             NumbersGame.COUNTDOWN -> Activity.COUNTDOWN

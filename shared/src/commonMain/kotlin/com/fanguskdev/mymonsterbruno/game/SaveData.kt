@@ -17,6 +17,11 @@ data class SaveData(
     val fed: Map<String, Int> = emptyMap(),
     /** Times she traced each vowel to the end. */
     val traced: Map<String, Int> = emptyMap(),
+    /** Times she took Bruno home along each path, by path (PathShape.word) (ADR 0031). */
+    val paths: Map<String, Int> = emptyMap(),
+    /** The last day, as yyyymmdd, she went to the island of letters, and how many days she has gone (ADR 0031). */
+    val lettersDay: Int = 0,
+    val lettersDays: Int = 0,
     /** Times she gave Bruno that many strawberries, by number. */
     val counted: Map<String, Int> = emptyMap(),
     /** Times she gave Bruno the balloon he wanted, by colour (Hue.word). */

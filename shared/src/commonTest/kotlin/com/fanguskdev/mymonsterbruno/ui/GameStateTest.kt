@@ -198,6 +198,27 @@ class GameStateTest {
     }
 
     @Test
+    fun onTheIslandOfLettersTheLettersAndThePathsTakeTurnsByTheDaysSheGoes() {
+        val store = MemoryStore()
+        SaveStore.save(store, SaveData(hatched = true))
+        var today = monday
+
+        fun secondGame(): Activity {
+            val game = GameState(store, Audio(SilentPlayer(), CoroutineScope(EmptyCoroutineContext)), Random(1)) { today }
+            game.goTo(Island.VOWELS)
+            game.finished(Scene.Play(Island.VOWELS, 0))
+            assertEquals(Scene.Play(Island.VOWELS, 1), game.scene)
+            return game.activities(Island.VOWELS)[1]
+        }
+        assertEquals(Activity.TRACE, secondGame(), "el primer día, trazar letras")
+        assertEquals(Activity.TRACE, secondGame(), "el mismo día, lo mismo")
+        today = monday + 2
+        assertEquals(Activity.PATHS, secondGame(), "el siguiente día que va, los caminos")
+        today = monday + 3
+        assertEquals(Activity.TRACE, secondGame())
+    }
+
+    @Test
     fun afterTheFeelingOfTheDayTheAssemblyOnceADay() {
         val store = MemoryStore()
         SaveStore.save(store, SaveData(hatched = true))

@@ -18,6 +18,7 @@ import com.fanguskdev.mymonsterbruno.game.BrunoLook
 import com.fanguskdev.mymonsterbruno.game.CONSONANTS
 import com.fanguskdev.mymonsterbruno.game.Choosing
 import com.fanguskdev.mymonsterbruno.game.NEXT_CONSONANTS
+import com.fanguskdev.mymonsterbruno.game.PathShape
 import com.fanguskdev.mymonsterbruno.game.SaveData
 import com.fanguskdev.mymonsterbruno.game.SaveStore
 import com.fanguskdev.mymonsterbruno.game.Topping
@@ -191,6 +192,16 @@ class ScreenshotsTest {
             val file = File(folder, "${screen.name}-20-mapa-terminado.png")
             file.writeBytes(render(Scene.Map, screen, finished))
             assertTrue(file.length() > MIN_BYTES, "$file está vacía")
+            // Bruno's paths, on the second day she goes to the island of letters (ADR 0031): the first, and the loops and the
+            // snail, when they are the ones she has done least.
+            val second = { save: SaveData -> save.copy(lettersDay = DAY, lettersDays = 2) }
+            val paths = listOf("" to emptyMap(), "-bucles" to mapOf("bucles" to 0), "-caracol" to mapOf("caracol" to 0))
+            for ((name, least) in paths) {
+                val done = if (least.isEmpty()) emptyMap() else PathShape.entries.associate { it.word to 1 } + least
+                val file = File(folder, "${screen.name}-35-caminos$name.png")
+                file.writeBytes(render(Scene.Play(Island.VOWELS, 1), screen, { second(it).copy(paths = done) }))
+                assertTrue(file.length() > MIN_BYTES, "$file está vacía")
+            }
             // The room with the rain and the snow she said in the assembly today (ADR 0030).
             for (weather in Weather.entries.filter { it == Weather.RAIN || it == Weather.SNOW }) {
                 val room = File(folder, "${screen.name}-2-casa-${weather.word}.png")

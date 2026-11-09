@@ -476,6 +476,58 @@ final class BrunoDriverTests: XCTestCase {
         checkpoint("s4-movida-izq")
     }
 
+    /// «Trazos antes de las letras» (ADR 0031), the second day she goes to the island of letters, with the straight paths
+    /// already done so that the curved ones come: Comeletras first, its cookies touched in turn, and then the waves, the
+    /// loops and the snail, each traced with the finger in short strokes along it, as the game keeps where she left Bruno.
+    func testPaths() {
+        XCUIDevice.shared.orientation = .landscapeLeft
+        launchPastStart()
+        sleep(2)
+        stage(680, 290).tap()
+        sleep(3)
+        stage(262, 258).tap()
+        sleep(8)
+        for _ in 1...8 {
+            for x: CGFloat in [485, 600, 715] {
+                stage(x, 252).tap()
+                sleep(3)
+            }
+        }
+        sleep(4)
+        checkpoint("c1-caminos-izq")
+        for (i, shape) in ["olas", "bucles", "caracol"].enumerated() {
+            let points = pathPoints(shape)
+            for (from, to) in zip(points, points.dropFirst()) {
+                stage(from.x, from.y).press(forDuration: 0.05, thenDragTo: stage(to.x, to.y), withVelocity: 300, thenHoldForDuration: 0.05)
+            }
+            sleep(6)
+            if i == 0 {
+                checkpoint("c2-caminando-izq")
+                XCUIDevice.shared.orientation = .landscapeRight
+                sleep(2)
+            }
+        }
+        checkpoint("c3-regalo-der")
+    }
+
+    /// Points along one of Bruno's curved paths, as the game draws them (game/Paths.kt), close enough for short strokes.
+    private func pathPoints(_ shape: String) -> [CGPoint] {
+        (0...90).map { i in
+            let u = CGFloat(i) / 90
+            switch shape {
+            case "olas":
+                return CGPoint(x: 140 + 520 * u, y: 228 + 56 * sin(2 * .pi * 2.5 * u))
+            case "bucles":
+                let t = -CGFloat.pi + 2 * .pi * 3 * u
+                return CGPoint(x: 150 + 26 * (t + .pi) - 70 * sin(t), y: 228 - 70 * cos(t))
+            default:
+                let angle = 2 * .pi * 2 * u
+                let radius = 122 * (1 - 0.74 * u)
+                return CGPoint(x: 400 + radius * cos(angle), y: 222 + radius * sin(angle))
+            }
+        }
+    }
+
     /// «Sumas hasta 3» (ADR 0029), the third day she goes to the island of numbers: the strawberries first, three times
     /// round the bush, and then each sum, touching what is far from where the present will be, so that the route ends
     /// with it closed: two strawberries of the bush, which give her the ones she has to give or, once the numbers are

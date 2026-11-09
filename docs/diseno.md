@@ -65,7 +65,7 @@ cuatro seguidas: un repaso en su iPhone, «Pegatinas para el cuarto» ([ADR 0024
 «Ordena la historia» ([ADR 0025](adr/0025-ordena-la-historia.md)) y «El anterior y el siguiente»
 ([ADR 0026](adr/0026-el-anterior-y-el-siguiente.md)). Al probarlo en el Mac, que también comprobara la palabra
 ([ADR 0027](adr/0027-el-mac-tambien-comprueba-la-palabra.md)); y otras cuatro seguidas: «Dentro y fuera» ([ADR 0028](adr/0028-dentro-y-fuera.md)),
-«Sumas hasta 3» ([ADR 0029](adr/0029-sumas-hasta-3.md)), «La asamblea de Bruno» ([ADR 0030](adr/0030-la-asamblea-de-bruno.md)) y «Trazos antes de las letras».
+«Sumas hasta 3» ([ADR 0029](adr/0029-sumas-hasta-3.md)), «La asamblea de Bruno» ([ADR 0030](adr/0030-la-asamblea-de-bruno.md)) y «Trazos antes de las letras» ([ADR 0031](adr/0031-trazos-antes-de-las-letras.md)).
 
 La propuesta 3, tal como la leyó (en la [maqueta](investigacion/propuestas.html#p3)):
 
@@ -124,6 +124,11 @@ de él y la ventana del cuarto lo enseña el resto del día. El día sale de la 
      cole. Un punto verde
      dice dónde empezar y una flecha, hacia dónde. El dedo no tiene que ir exacto: el camino perdona. Al acabar la letra,
      Bruno la celebra: «¡La a! ¡Ya sé hacer la a!».
+   - **Los caminos de Bruno** ([ADR 0031](adr/0031-trazos-antes-de-las-letras.md)), el día siguiente que va, por turnos con trazar: «¡Bruno quiere volver a
+     su casa! Llévalo con el dedo por el camino». Un camino de arena cruza un campo hasta su casa, y Bruno anda bajo su
+     dedo mientras no se salga; lo hecho queda en dorado y, si levanta el dedo, sigue desde donde lo dejó. Seis caminos
+     en el orden del cole, recto, de arriba abajo, inclinado, de olas, con bucles y un caracol, tres por visita: los que
+     menos ha hecho, las rectas primero.
 5. **La isla de los números**: **las fresas**. «Bruno quiere tres fresas. ¿Se las das?». Ella toca fresas del arbusto y
    cada una se cuenta en voz alta. Al llegar al número, Bruno se las come. La tarjeta enseña el número, los dedos (desde
    el 6, una mano entera y la otra) y sus puntos. Son cinco rondas: del 1 al 5 hasta que los ha contado todos, y luego
@@ -263,7 +268,7 @@ Las **voces de la familia** no se harán: «para M2 no vamos a utilizar las voce
 - **Bruno y todo lo demás se dibujan con vectores**, sin imágenes: Bruno respira, parpadea, mira y cambia de cara (ocho
   bocas, cuatro ojos, tres posturas de brazos).
 - **Las voces** son las de un narrador y la de Bruno, algo más aguda y más despacio, a unas 4 sílabas por segundo. Hay
-  697 frases pregrabadas con la voz del sistema del Mac y **los efectos** (17) se sintetizan desde cero
+  707 frases pregrabadas con la voz del sistema del Mac y **los efectos** (17) se sintetizan desde cero
   ([ADR 0004](adr/0004-voces-provisionales.md)). Las frases están en [`voces/guion.tsv`](../voces/guion.tsv).
 - **La letra** de la zona de mayores, de los números, del banderín y del título es Andika, una tipografía pensada para quien aprende a
   leer (licencia OFL, en [`licencias/`](../licencias/Andika-OFL.txt)).

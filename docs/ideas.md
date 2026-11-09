@@ -18,7 +18,8 @@ emoción del día ([ADR 0019](adr/0019-la-emocion-del-dia.md)); la 2.1, que se a
 pegatinas para el cuarto ([ADR 0024](adr/0024-pegatinas-para-el-cuarto.md)); la 1.9, ordena la historia
 ([ADR 0025](adr/0025-ordena-la-historia.md)); la 1.4, el anterior y el siguiente
 ([ADR 0026](adr/0026-el-anterior-y-el-siguiente.md)); la 1.8, dentro y fuera ([ADR 0028](adr/0028-dentro-y-fuera.md)); la 1.6, sumas hasta 3
-([ADR 0029](adr/0029-sumas-hasta-3.md)); la 1.12, la asamblea de Bruno ([ADR 0030](adr/0030-la-asamblea-de-bruno.md)); y las 5.3, 5.4, 5.5 y 5.8,
+([ADR 0029](adr/0029-sumas-hasta-3.md)); la 1.12, la asamblea de Bruno ([ADR 0030](adr/0030-la-asamblea-de-bruno.md)); la 1.3, trazos antes de las letras
+([ADR 0031](adr/0031-trazos-antes-de-las-letras.md)); y las 5.3, 5.4, 5.5 y 5.8,
 de calidad: lo que faltaba por probar en el iPhone, lo que rozaba la Dynamic Island, la prueba de sonido del Mac y los
 recorridos del iPhone de un tirón. Y una que no estaba aquí, la pantalla de inicio
 ([ADR 0018](adr/0018-la-pantalla-de-inicio.md)).
@@ -42,7 +43,8 @@ recorridos del iPhone de un tirón. Y una que no estaba aquí, la pantalla de in
   tontas que dan risa. Como la isla de las palabras, con parejas nuevas. *Mediana. Hecha, como segunda actividad de esa
   isla ([ADR 0021](adr/0021-rimas-con-bruno.md)).*
 - **1.3 Trazos antes de las letras.** Llevar a Bruno a casa por un camino con el dedo: rectas, diagonales, ondas, bucles y
-  espirales, en el orden de la grafomotricidad del cole. Ayuda a los trazos de las letras. *Mediana.*
+  espirales, en el orden de la grafomotricidad del cole. Ayuda a los trazos de las letras. *Mediana. Hecha, en la isla
+  de las letras, por turnos con trazar letras ([ADR 0031](adr/0031-trazos-antes-de-las-letras.md)).*
 - **1.4 El anterior y el siguiente.** Bruno salta por una recta numérica del 0 al 10 y pregunta qué número va antes o
   después. En el aula de 4 años se usa la recta, y el juego solo cuenta. *Mediana. Hecha, en la isla de los números,
   por turnos con la cuenta atrás ([ADR 0026](adr/0026-el-anterior-y-el-siguiente.md)).*

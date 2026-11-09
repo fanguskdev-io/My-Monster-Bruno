@@ -696,3 +696,13 @@ b_tiempo_nubes	bruno	Está nublado. ¡Las nubes tapan el sol!
 b_tiempo_lluvia	bruno	¡Llueve! ¡A por el paraguas y las botas!
 b_tiempo_nieve	bruno	¡Nieva! ¡Qué frío! ¡Abrígate bien!
 b_empieza_el_dia	bruno	¡Ya podemos empezar el día!
+n_caminos_intro	narrador	¡Bruno quiere volver a su casa! Llévalo con el dedo por el camino.
+n_camino_recta	narrador	Un camino recto, de un lado a otro.
+n_camino_abajo	narrador	Ahora, de arriba abajo.
+n_camino_inclinada	narrador	Un camino inclinado, como un tobogán.
+n_camino_olas	narrador	¡Un camino de olas! Arriba y abajo.
+n_camino_bucles	narrador	¡Un camino con bucles! Da vueltecitas.
+n_camino_caracol	narrador	¡Un caracol! Da vueltas y vueltas hasta el centro.
+n_sigue_camino	narrador	Pon el dedo en Bruno y sigue el camino.
+b_en_casa	bruno	¡Ya estoy en casa!
+b_gracias_caminos	bruno	¡Qué bien me llevas! ¡Gracias!

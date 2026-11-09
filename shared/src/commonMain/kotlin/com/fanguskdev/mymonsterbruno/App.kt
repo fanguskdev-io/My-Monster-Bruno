@@ -39,6 +39,7 @@ import com.fanguskdev.mymonsterbruno.ui.screens.MapScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.MoodScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.NameScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.NumberLineScreen
+import com.fanguskdev.mymonsterbruno.ui.screens.PathsScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.PlacesScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.PresentScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.RhymesScreen
@@ -106,6 +107,7 @@ internal fun AppContent(game: GameState, onExit: (() -> Unit)? = null, listen: B
             is Scene.Play -> when (game.activities(scene.island)[scene.step]) {
                 Step.FEED -> FeedScreen(game) { game.finished(scene) }
                 Step.TRACE -> TraceScreen(game) { game.finished(scene) }
+                Step.PATHS -> PathsScreen(game) { game.finished(scene) }
                 Step.COUNT -> CountScreen(game) { game.finished(scene) }
                 Step.COUNTDOWN -> CountdownScreen(game) { game.finished(scene) }
                 Step.NUMBER_LINE -> NumberLineScreen(game) { game.finished(scene) }
