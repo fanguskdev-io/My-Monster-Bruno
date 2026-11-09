@@ -2,7 +2,8 @@
 
 Una batería de mejoras y ampliaciones posibles para «Mi amigo Bruno», propuesta por el agente el 2026-11-04, cuando ya
 está toda la propuesta 3 salvo las voces de la familia. Ninguna está decidida: qué se hace, en qué orden y cómo lo decide
-Fangusk ([proceso](proceso.md)).
+Fangusk ([proceso](proceso.md)). El 2026-11-09 pidió cerrarla: «Vale, cerremos el backlog y continuemos»; descartó la 1.14,
+la 3.2 y la 4.5, y las demás se hacen una detrás de otra, salvo la 5.1 y la 5.2, que son del día de la entrega.
 
 Salen de cuatro sitios: lo que se trabaja en el cole a los 4 años y el juego aún no tiene
 ([investigación §2](investigacion/investigacion.md#2-qué-se-trabaja-en-el-cole-a-los-4-años)), las reglas de la
@@ -70,7 +71,7 @@ recorridos del iPhone de un tirón. Y una que no estaba aquí, la pantalla de in
 - **1.13 Más consonantes.** La F, la B y la R (la efe de foca, la be de barco, la erre de ratón), entrando por pasos detrás
   de la T, la N y la D. *Mediana. Hecha ([ADR 0022](adr/0022-la-f-la-b-y-la-r.md)).*
 - **1.14 Colores y números en inglés.** La ley pide un primer contacto con una lengua extranjera a esta edad. Con la voz en
-  inglés, aparte de lo demás. *Mediana. Decide Fangusk si se quiere.*
+  inglés, aparte de lo demás. *Mediana. Descartada: «No» (Fangusk, 2026-11-09).*
 
 ## 2. Jugar más y mejor, sin trampas
 
@@ -96,7 +97,7 @@ recorridos del iPhone de un tirón. Y una que no estaba aquí, la pantalla de in
 - **3.1 Su foto en más sitios.** En la barca con Bruno, en el mapa, y en la tarjeta de la misión para casa. *Pequeña.*
 - **3.2 Que Bruno diga su nombre.** Con la voz del propio teléfono, sin conexión, solo para su nombre; o que un mayor lo
   grabe una vez. La primera sonaría distinta a la de Bruno, y la segunda se parece a las voces de la familia, que se
-  descartaron. *Mediana. Decide Fangusk.*
+  descartaron. *Mediana. Descartada: «Dejarlo como está» (Fangusk, 2026-11-09).*
 - **3.3 Su animal favorito.** Se elige en la zona de mayores y vive en el cuarto con Bruno, o sale como palabra en las islas.
   *Pequeña.*
 
@@ -111,7 +112,7 @@ recorridos del iPhone de un tirón. Y una que no estaba aquí, la pantalla de in
   exportarla. *Pequeña.*
 - **4.5 Sin la frase de Apple en el permiso.** Comprobar la palabra con la API de iOS 26 (SpeechAnalyzer), que reconoce en
   el iPhone, y ver si así ya no sale el permiso de reconocimiento de voz con su frase fija. Solo vale si su iPhone tiene
-  iOS 26. *Mediana. Decide Fangusk.*
+  iOS 26. *Mediana. Descartada: «No, déjalo» (Fangusk, 2026-11-09).*
 
 ## 5. Calidad y entrega
 
