@@ -18,6 +18,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.rememberTextMeasurer
 import com.fanguskdev.mymonsterbruno.audio.Sfx
 import com.fanguskdev.mymonsterbruno.audio.Voice
+import com.fanguskdev.mymonsterbruno.game.Miss
 import com.fanguskdev.mymonsterbruno.game.SERIES_CHOICES
 import com.fanguskdev.mymonsterbruno.game.SeriesRound
 import com.fanguskdev.mymonsterbruno.game.seriesRounds
@@ -157,6 +158,7 @@ internal fun SeriesScreen(game: GameState, onDone: () -> Unit) {
         } else {
             phase = SeriesPhase.WRONG
             phaseAt = now
+            game.missed(Miss.SERIES)
             val near = lerp(positions[i], gap(), 0.7f)
             flights[i] = Flight(positions[i], near, now, FLY_SECONDS * 0.6f)
             scope.launch {

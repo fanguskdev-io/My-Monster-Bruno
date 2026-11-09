@@ -18,6 +18,7 @@ import com.fanguskdev.mymonsterbruno.audio.Voice
 import com.fanguskdev.mymonsterbruno.game.HOUSE_PIECES
 import com.fanguskdev.mymonsterbruno.game.HousePart
 import com.fanguskdev.mymonsterbruno.game.Hue
+import com.fanguskdev.mymonsterbruno.game.Miss
 import com.fanguskdev.mymonsterbruno.game.houseRounds
 import com.fanguskdev.mymonsterbruno.game.plusOne
 import com.fanguskdev.mymonsterbruno.ui.GameState
@@ -169,6 +170,7 @@ internal fun HouseScreen(game: GameState, onDone: () -> Unit) {
         } else {
             phase = HousePhase.WRONG
             phaseAt = now
+            game.missed(Miss.shape(part.shape))
             val near = lerp(positions[i], part.box().center, 0.6f)
             moves[i] = Move(loose(i), loose(i, near), now, BUILD_SECONDS * 0.6f)
             scope.launch {

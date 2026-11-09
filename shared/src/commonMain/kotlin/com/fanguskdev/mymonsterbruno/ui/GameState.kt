@@ -15,6 +15,7 @@ import com.fanguskdev.mymonsterbruno.game.Session
 import com.fanguskdev.mymonsterbruno.game.Weather
 import com.fanguskdev.mymonsterbruno.game.Weekday
 import com.fanguskdev.mymonsterbruno.game.lettersOn
+import com.fanguskdev.mymonsterbruno.game.logged
 import com.fanguskdev.mymonsterbruno.game.numbersGameToday
 import com.fanguskdev.mymonsterbruno.game.numbersOn
 import com.fanguskdev.mymonsterbruno.game.pathsToday
@@ -184,6 +185,9 @@ internal class GameState(
         this.photo = photo
         update { it.copy(photoSeen = false) }
     }
+
+    /** She touched something else than what Bruno asked for, [what] (a [Miss]): only for her week in the grown-ups' corner. */
+    fun missed(what: String) = update { it.logged(day()) { log -> log.copy(misses = log.misses.plusOne(what)) } }
 
     /** A grown-up took her photo away: it is deleted from the device. */
     fun removePhoto() {

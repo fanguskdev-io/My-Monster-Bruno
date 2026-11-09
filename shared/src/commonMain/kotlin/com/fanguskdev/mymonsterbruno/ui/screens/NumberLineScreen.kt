@@ -21,6 +21,7 @@ import com.fanguskdev.mymonsterbruno.audio.Sfx
 import com.fanguskdev.mymonsterbruno.audio.Voice
 import com.fanguskdev.mymonsterbruno.game.Hop
 import com.fanguskdev.mymonsterbruno.game.LINE_LAST
+import com.fanguskdev.mymonsterbruno.game.Miss
 import com.fanguskdev.mymonsterbruno.game.Side
 import com.fanguskdev.mymonsterbruno.game.hops
 import com.fanguskdev.mymonsterbruno.game.plusOne
@@ -169,6 +170,7 @@ internal fun NumberLineScreen(game: GameState, onDone: () -> Unit) {
             wrong = square to clock.value
             hinted = true
             audio.sfx(Sfx.BOING)
+            game.missed(Miss.side(current().side))
             scope.launch {
                 audio.say(Voice.thatSquare(square), Voice.BESIDE_BRUNO, Voice.askSide(hop))
                 if (phase == LinePhase.WRONG) phase = LinePhase.ASKING

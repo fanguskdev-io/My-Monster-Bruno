@@ -16,6 +16,7 @@ import androidx.compose.ui.text.rememberTextMeasurer
 import com.fanguskdev.mymonsterbruno.audio.Sfx
 import com.fanguskdev.mymonsterbruno.audio.Voice
 import com.fanguskdev.mymonsterbruno.game.Choosing
+import com.fanguskdev.mymonsterbruno.game.Miss
 import com.fanguskdev.mymonsterbruno.game.StartWord
 import com.fanguskdev.mymonsterbruno.game.choices
 import com.fanguskdev.mymonsterbruno.game.narrowed
@@ -150,6 +151,7 @@ internal fun WordsScreen(game: GameState, onDone: () -> Unit) {
                 phase = WordsPhase.WRONG
                 missed = true
                 audio.sfx(Sfx.BOING)
+                game.missed(Miss.start(current().said.start))
                 audio.say(Voice.startsWith(word), Voice.findAnother(now.said.start))
                 aside = aside + card
                 chosen = null

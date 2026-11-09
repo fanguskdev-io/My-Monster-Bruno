@@ -11,7 +11,7 @@ internal object Session {
 
     /** [seconds] more played on [day]. */
     fun tick(data: SaveData, day: Int, seconds: Int): SaveData =
-        onDay(data, day).let { it.copy(playedSeconds = it.playedSeconds + seconds) }
+        onDay(data, day).let { it.copy(playedSeconds = it.playedSeconds + seconds) }.logged(day) { it.copy(seconds = it.seconds + seconds) }
 
     /** Whether the time of [day] is over. */
     fun timeUp(data: SaveData, day: Int): Boolean =

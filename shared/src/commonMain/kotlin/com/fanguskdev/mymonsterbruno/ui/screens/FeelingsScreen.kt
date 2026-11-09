@@ -15,6 +15,7 @@ import com.fanguskdev.mymonsterbruno.audio.Voice
 import com.fanguskdev.mymonsterbruno.game.CHOICES
 import com.fanguskdev.mymonsterbruno.game.Choosing
 import com.fanguskdev.mymonsterbruno.game.Feeling
+import com.fanguskdev.mymonsterbruno.game.Miss
 import com.fanguskdev.mymonsterbruno.game.choices
 import com.fanguskdev.mymonsterbruno.game.feelingRounds
 import com.fanguskdev.mymonsterbruno.game.narrowed
@@ -144,6 +145,7 @@ internal fun FeelingsScreen(game: GameState, onDone: () -> Unit) {
             phase = FeelingPhase.WRONG
             missed = true
             audio.sfx(Sfx.BOING)
+            game.missed(Miss.feeling(feeling()))
             scope.launch {
                 audio.say(Voice.notThatFace(face))
                 phase = FeelingPhase.ASKING

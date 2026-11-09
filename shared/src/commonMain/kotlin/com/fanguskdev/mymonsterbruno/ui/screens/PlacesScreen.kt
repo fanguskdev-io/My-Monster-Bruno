@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import com.fanguskdev.mymonsterbruno.audio.Sfx
 import com.fanguskdev.mymonsterbruno.audio.Voice
+import com.fanguskdev.mymonsterbruno.game.Miss
 import com.fanguskdev.mymonsterbruno.game.Place
 import com.fanguskdev.mymonsterbruno.game.Placing
 import com.fanguskdev.mymonsterbruno.game.Thing
@@ -188,6 +189,7 @@ internal fun PlacesScreen(game: GameState, onDone: () -> Unit) {
         phaseAt = clock.value
         hinted = true
         audio.sfx(Sfx.BOING)
+        game.missed(Miss.place(placing.place))
         scope.launch {
             audio.say(Voice.leftAt(place))
             fly(thing, startAt(thing), startOf(thing), RETURN_SECONDS)

@@ -19,6 +19,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.rememberTextMeasurer
 import com.fanguskdev.mymonsterbruno.audio.Sfx
 import com.fanguskdev.mymonsterbruno.audio.Voice
+import com.fanguskdev.mymonsterbruno.game.Miss
 import com.fanguskdev.mymonsterbruno.game.SUM_MAX
 import com.fanguskdev.mymonsterbruno.game.Sum
 import com.fanguskdev.mymonsterbruno.game.plusOne
@@ -208,6 +209,7 @@ internal fun SumsScreen(game: GameState, onDone: () -> Unit) {
             phaseAt = clock.value
             wrong = number to clock.value
             audio.sfx(Sfx.BOING)
+            game.missed(Miss.sum(sum))
             scope.launch {
                 audio.say(Voice.COUNT_THEM_ALL)
                 for (n in 1..sum.total) {

@@ -12,6 +12,7 @@ import androidx.compose.ui.graphics.Color
 import com.fanguskdev.mymonsterbruno.audio.Sfx
 import com.fanguskdev.mymonsterbruno.audio.Voice
 import com.fanguskdev.mymonsterbruno.game.Choosing
+import com.fanguskdev.mymonsterbruno.game.Miss
 import com.fanguskdev.mymonsterbruno.game.choices
 import com.fanguskdev.mymonsterbruno.game.narrowed
 import com.fanguskdev.mymonsterbruno.game.played
@@ -127,6 +128,7 @@ internal fun RhymesScreen(game: GameState, onDone: () -> Unit) {
             phase = RhymesPhase.WRONG
             missed = true
             audio.sfx(Sfx.BOING)
+            game.missed(Miss.rhyme(current().said.pair))
             scope.launch {
                 audio.say(Voice.noRhyme(word))
                 aside = aside + card

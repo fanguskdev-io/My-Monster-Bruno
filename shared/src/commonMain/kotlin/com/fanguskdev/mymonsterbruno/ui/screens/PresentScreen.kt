@@ -11,6 +11,7 @@ import androidx.compose.ui.geometry.Offset
 import com.fanguskdev.mymonsterbruno.audio.Sfx
 import com.fanguskdev.mymonsterbruno.audio.Voice
 import com.fanguskdev.mymonsterbruno.game.BrunoLook
+import com.fanguskdev.mymonsterbruno.game.logged
 import com.fanguskdev.mymonsterbruno.game.plusOne
 import com.fanguskdev.mymonsterbruno.ui.GameState
 import com.fanguskdev.mymonsterbruno.ui.Island
@@ -73,7 +74,7 @@ internal fun PresentScreen(game: GameState, island: Island, onDone: () -> Unit) 
                         it.copy(
                             look = (if (gift == null) look else look.withPresent(gift)).copy(growth = grown),
                             islands = it.islands.plusOne(island.name),
-                        )
+                        ).logged(game.currentDay()) { log -> log.copy(islands = log.islands.plusOne(island.name)) }
                     }
                     worn = true
                     audio.sfx(Sfx.SPARKLE)

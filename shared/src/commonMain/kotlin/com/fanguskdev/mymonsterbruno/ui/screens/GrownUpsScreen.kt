@@ -48,6 +48,7 @@ import com.fanguskdev.mymonsterbruno.game.Feeling
 import com.fanguskdev.mymonsterbruno.game.Hue
 import com.fanguskdev.mymonsterbruno.game.LETTERS
 import com.fanguskdev.mymonsterbruno.game.MAX_COUNT
+import com.fanguskdev.mymonsterbruno.game.Miss
 import com.fanguskdev.mymonsterbruno.game.Ordinal
 import com.fanguskdev.mymonsterbruno.game.PathShape
 import com.fanguskdev.mymonsterbruno.game.Pet
@@ -62,9 +63,13 @@ import com.fanguskdev.mymonsterbruno.game.StartWord
 import com.fanguskdev.mymonsterbruno.game.Story
 import com.fanguskdev.mymonsterbruno.game.TalkWord
 import com.fanguskdev.mymonsterbruno.game.Weather
+import com.fanguskdev.mymonsterbruno.game.Weekday
 import com.fanguskdev.mymonsterbruno.game.choices
 import com.fanguskdev.mymonsterbruno.game.chosenPet
 import com.fanguskdev.mymonsterbruno.game.feltDays
+import com.fanguskdev.mymonsterbruno.game.hardest
+import com.fanguskdev.mymonsterbruno.game.week
+import com.fanguskdev.mymonsterbruno.game.weekdayOf
 import com.fanguskdev.mymonsterbruno.storage.Backup
 import com.fanguskdev.mymonsterbruno.storage.Restored
 import com.fanguskdev.mymonsterbruno.storage.rememberBackupFiles
@@ -203,6 +208,40 @@ internal fun GrownUpsScreen(game: GameState, onExit: (() -> Unit)? = null) {
                     }
                 }
                 Text("La música suena muy suave en las islas, distinta en cada una.", font, 15, color = Soft)
+            }
+            Section("Su semana", font) {
+                Text(
+                    "Los últimos siete días: cuánto ha jugado cada uno, qué islas ha terminado y lo que más le ha costado, lo que pedía " +
+                        "Bruno cuando ella tocó otra cosa. Ella no lo ve nunca.",
+                    font,
+                    15,
+                    color = Soft,
+                )
+                val today = game.currentDay()
+                val week = data.week(today)
+                val minutes = week.joinToString("   ") { (day, log) ->
+                    "${weekdayOf(day).short} ${day % 100}: ${(log.seconds + HALF_MINUTE) / SECONDS_IN_A_MINUTE}"
+                }
+                Text("Minutos de juego:   $minutes", font, 16)
+                val finished = HashMap<String, Int>()
+                for ((_, log) in week) for ((island, times) in log.islands) finished[island] = (finished[island] ?: 0) + times
+                val islands = Island.entries
+                    .filter { (finished[it.name] ?: 0) > 0 }
+                    .joinToString(", ") { "${it.spoken} ${finished[it.name]}" }
+                Text(if (islands.isEmpty()) "Islas terminadas: ninguna esta semana." else "Islas terminadas:   $islands", font, 16)
+                val hardest = data.hardest(today)
+                val hard = hardest.joinToString(", ") { (what, times) ->
+                    "${missLabel(what)} (${if (times == 1) "una vez" else "$times veces"})"
+                }
+                Text(
+                    if (hardest.isEmpty()) {
+                        "Lo que más le ha costado: nada; esta semana le ha salido todo a la primera."
+                    } else {
+                        "Lo que más le ha costado:   $hard"
+                    },
+                    font,
+                    16,
+                )
             }
             Section("Lo que ha practicado", font) {
                 val fed = LETTERS.joinToString("   ") { "${it.uppercaseChar()} ${data.fed[it.toString()] ?: 0}" }
@@ -408,6 +447,50 @@ private fun Chip(
     }
 }
 
+/** How the grown-ups read what she missed (ADR 0040): «la M», «el rojo», «el número de antes, en la recta». */
+private fun missLabel(key: String): String {
+    val what = key.substringAfter(':', "")
+    return when (key.substringBefore(':')) {
+        Miss.LETTER -> "la ${what.uppercase()}"
+        Miss.COLOR -> "el $what"
+        Miss.SERIES -> "las series de globos"
+        Miss.SHAPE -> Shape.entries.firstOrNull { it.word == what }?.let { "el ${it.spoken}" } ?: what
+        Miss.FEELING -> Feeling.entries.firstOrNull { it.word == what }?.let {
+            (if (it == Feeling.ANGER || it == Feeling.FEAR) "el " else "la ") + it.spoken
+        } ?: what
+        Miss.STORY -> "ordenar las historias"
+        Miss.START -> "lo que empieza por «$what»"
+        Miss.RHYME -> "la rima de «$what»"
+        Miss.COUNTDOWN -> "la cuenta atrás"
+        Miss.SIDE -> if (what == Side.BEFORE.word) "el número de antes, en la recta" else "el número de después, en la recta"
+        Miss.SUM -> what.split('_').let { "la suma de ${it.first()} y ${it.last()}" }
+        Miss.PLACE -> Place.entries.firstOrNull { it.word == what }?.spoken ?: what
+        Miss.ORDINAL -> "quién llega $what, en la carrera"
+        else -> what
+    }
+}
+
+/** The day of the week, short, as a grown-up reads it. */
+private val Weekday.short: String get() = when (this) {
+    Weekday.MONDAY -> "lun"
+    Weekday.TUESDAY -> "mar"
+    Weekday.WEDNESDAY -> "mié"
+    Weekday.THURSDAY -> "jue"
+    Weekday.FRIDAY -> "vie"
+    Weekday.SATURDAY -> "sáb"
+    Weekday.SUNDAY -> "dom"
+}
+
+/** How the grown-ups' corner names each island. */
+private val Island.spoken: String get() = when (this) {
+    Island.VOWELS -> "letras"
+    Island.NUMBERS -> "números"
+    Island.COLORS -> "colores"
+    Island.SHAPES -> "formas"
+    Island.FEELINGS -> "emociones"
+    Island.WORDS -> "palabras"
+}
+
 /** The name of a [Feeling] as a grown-up reads it. */
 private val Feeling.spoken: String get() = when (this) {
     Feeling.JOY -> "alegría"
@@ -426,6 +509,8 @@ private val Shape.spoken: String get() = when (this) {
 }
 
 private const val NAME_LENGTH = 12
+private const val SECONDS_IN_A_MINUTE = 60
+private const val HALF_MINUTE = 30
 private const val EXTRA_MINUTES = 10
 
 /** How many of the days she said how she felt the corner shows, the latest first. */

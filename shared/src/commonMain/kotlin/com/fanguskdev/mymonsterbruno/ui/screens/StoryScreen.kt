@@ -20,6 +20,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.rememberTextMeasurer
 import com.fanguskdev.mymonsterbruno.audio.Sfx
 import com.fanguskdev.mymonsterbruno.audio.Voice
+import com.fanguskdev.mymonsterbruno.game.Miss
 import com.fanguskdev.mymonsterbruno.game.STORY_STEPS
 import com.fanguskdev.mymonsterbruno.game.dealtSteps
 import com.fanguskdev.mymonsterbruno.game.plusOne
@@ -143,6 +144,7 @@ internal fun StoryScreen(game: GameState, onDone: () -> Unit) {
             phase = StoryPhase.WRONG
             wrong = card to clock.value
             audio.sfx(Sfx.BOING)
+            game.missed(Miss.STORY)
             scope.launch {
                 audio.say(Voice.LATER, Voice.askStep(next))
                 phase = StoryPhase.ASKING

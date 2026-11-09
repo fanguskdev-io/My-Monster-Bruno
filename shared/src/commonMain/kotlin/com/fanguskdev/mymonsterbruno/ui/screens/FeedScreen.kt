@@ -16,6 +16,7 @@ import com.fanguskdev.mymonsterbruno.audio.Voice
 import com.fanguskdev.mymonsterbruno.game.CHOICES
 import com.fanguskdev.mymonsterbruno.game.Choosing
 import com.fanguskdev.mymonsterbruno.game.MAX_CHOICES
+import com.fanguskdev.mymonsterbruno.game.Miss
 import com.fanguskdev.mymonsterbruno.game.Word
 import com.fanguskdev.mymonsterbruno.game.choices
 import com.fanguskdev.mymonsterbruno.game.letterRounds
@@ -144,6 +145,7 @@ internal fun FeedScreen(game: GameState, onDone: () -> Unit) {
             phase = FeedPhase.WRONG
             phaseAt = now
             missed = true
+            game.missed(Miss.letter(current().wanted))
             val near = lerp(positions[i], MOUTH, 0.75f)
             flights[i] = Flight(positions[i], near, now, FLY_SECONDS * 0.6f)
             scope.launch {

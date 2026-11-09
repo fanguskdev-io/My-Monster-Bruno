@@ -18,6 +18,7 @@ import com.fanguskdev.mymonsterbruno.game.CHOICES
 import com.fanguskdev.mymonsterbruno.game.Choosing
 import com.fanguskdev.mymonsterbruno.game.Hue
 import com.fanguskdev.mymonsterbruno.game.MAX_CHOICES
+import com.fanguskdev.mymonsterbruno.game.Miss
 import com.fanguskdev.mymonsterbruno.game.balloonRounds
 import com.fanguskdev.mymonsterbruno.game.choices
 import com.fanguskdev.mymonsterbruno.game.narrowed
@@ -158,6 +159,7 @@ internal fun BalloonScreen(game: GameState, onDone: () -> Unit) {
             phaseAt = now
             hint = true
             missed = true
+            game.missed(Miss.color(current().wanted))
             val near = lerp(positions[i], to, 0.7f)
             flights[i] = Flight(positions[i], near, now, FLY_SECONDS * 0.6f)
             scope.launch {

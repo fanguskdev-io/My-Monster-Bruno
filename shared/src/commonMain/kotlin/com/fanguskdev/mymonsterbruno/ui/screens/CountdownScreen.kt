@@ -17,6 +17,7 @@ import com.fanguskdev.mymonsterbruno.audio.Sfx
 import com.fanguskdev.mymonsterbruno.audio.Voice
 import com.fanguskdev.mymonsterbruno.game.COUNTDOWN_FROM
 import com.fanguskdev.mymonsterbruno.game.Countdown
+import com.fanguskdev.mymonsterbruno.game.Miss
 import com.fanguskdev.mymonsterbruno.game.countdownPanel
 import com.fanguskdev.mymonsterbruno.ui.GameState
 import com.fanguskdev.mymonsterbruno.ui.Stage
@@ -145,6 +146,7 @@ internal fun CountdownScreen(game: GameState, onDone: () -> Unit) {
                         launch()
                     } else {
                         audio.sfx(Sfx.BOING)
+                        game.missed(Miss.COUNTDOWN)
                         audio.speak(prompt())
                     }
                     return true
@@ -162,6 +164,7 @@ internal fun CountdownScreen(game: GameState, onDone: () -> Unit) {
                 } else {
                     wrong = spot to clock.value
                     audio.sfx(Sfx.BOING)
+                    game.missed(Miss.COUNTDOWN)
                     audio.speak(prompt())
                 }
                 return true

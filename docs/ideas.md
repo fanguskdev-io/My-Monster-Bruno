@@ -108,7 +108,8 @@ recorridos del iPhone de un tirón. Y una que no estaba aquí, la pantalla de in
 ## 4. Para los mayores
 
 - **4.1 Resumen de la semana.** En la zona de mayores, qué ha practicado, qué le cuesta más (lo que más falla) y cuántos
-  minutos juega cada día. Sin salir del aparato. *Pequeña.*
+  minutos juega cada día. Sin salir del aparato. *Pequeña. Hecha: «Su semana», con los últimos siete días
+  ([ADR 0040](adr/0040-resumen-de-la-semana.md)).*
 - **4.2 Elegir qué letras e islas salen.** Por si aún no han visto la M en clase, o para quitar una isla que ya domina.
   *Pequeña.*
 - **4.3 Bruno más despacio.** Un ajuste de velocidad de la voz, por si a ella le cuesta seguirlo. *Mediana.*

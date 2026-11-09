@@ -18,6 +18,7 @@ import androidx.compose.ui.text.rememberTextMeasurer
 import com.fanguskdev.mymonsterbruno.audio.Sfx
 import com.fanguskdev.mymonsterbruno.audio.Voice
 import com.fanguskdev.mymonsterbruno.game.LANES
+import com.fanguskdev.mymonsterbruno.game.Miss
 import com.fanguskdev.mymonsterbruno.game.Race
 import com.fanguskdev.mymonsterbruno.game.plusOne
 import com.fanguskdev.mymonsterbruno.game.raceRounds
@@ -170,6 +171,7 @@ internal fun RaceScreen(game: GameState, onDone: () -> Unit) {
             phaseAt = clock.value
             wrong = lane to clock.value
             audio.sfx(Sfx.BOING)
+            game.missed(Miss.ordinal(race.asked))
             scope.launch {
                 audio.say(Voice.thatOneArrived(place))
                 hinted = true

@@ -610,6 +610,21 @@ final class BrunoDriverTests: XCTestCase {
         checkpoint("k7-sin-animal-der")
     }
 
+    /// Her week in the grown-ups' corner (ADR 0040): the save has three days of play this week, two islands finished and
+    /// what she missed; the corner shows the minutes of each day, the islands and the three she missed most.
+    func testWeek() {
+        XCUIDevice.shared.orientation = .landscapeRight
+        launchPastStart()
+        sleep(1)
+        lock.press(forDuration: 3.5)
+        sleep(2)
+        scrollTo("Su semana")
+        // Its title shows at the bottom first: up a little more, to see the whole section.
+        at(400, 330).press(forDuration: 0.2, thenDragTo: at(400, 130), withVelocity: 300, thenHoldForDuration: 0.3)
+        sleep(1)
+        checkpoint("w1-su-semana-der")
+    }
+
     /// The stickers of the room (ADR 0024): the save has every island finished and none stuck yet. She takes the first one
     /// from the rug to the wall, lets the next one go on the floor, where it does not stay, sticks it on the wall after
     /// all, and moves the first one somewhere else.
