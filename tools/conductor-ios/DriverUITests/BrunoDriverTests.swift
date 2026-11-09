@@ -522,6 +522,41 @@ final class BrunoDriverTests: XCTestCase {
         checkpoint("h3-cuarto-der")
     }
 
+    /// «Primero, segundo y tercero» (ADR 0037): the island of numbers on the day of the race. The strawberries, touching all
+    /// of the bush in turn; then the three races, without knowing which place is asked: each lane in turn, at its number,
+    /// far from where the present will be, waiting after each for the voice; and the present, closed.
+    func testRace() {
+        XCUIDevice.shared.orientation = .landscapeRight
+        launchPastStart()
+        sleep(2)
+        stage(680, 290).tap()
+        sleep(3)
+        stage(588, 150).tap()
+        sleep(8)
+        let berries: [(CGFloat, CGFloat)] = [
+            (528, 200), (588, 180), (648, 180), (706, 200), (512, 254), (572, 238),
+            (632, 238), (692, 254), (538, 304), (598, 292), (658, 292), (716, 306),
+        ]
+        for _ in 1...3 {
+            for (x, y) in berries {
+                stage(x, y).tap()
+                usleep(1_200_000)
+            }
+        }
+        sleep(10)
+        checkpoint("r1-carrera-der")
+        sleep(4)
+        checkpoint("r2-carrera-pregunta-der")
+        for turn in 1...6 {
+            for y in [CGFloat(188), 258, 328] {
+                stage(728, y).tap()
+                sleep(5)
+            }
+            if turn == 1 { checkpoint("r3-carrera-otra-der") }
+        }
+        checkpoint("r4-regalo-der")
+    }
+
     /// The stickers of the room (ADR 0024): the save has every island finished and none stuck yet. She takes the first one
     /// from the rug to the wall, lets the next one go on the floor, where it does not stay, sticks it on the wall after
     /// all, and moves the first one somewhere else.

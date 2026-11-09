@@ -234,6 +234,10 @@ class ScreenshotsTest {
             val sums = File(folder, "${screen.name}-33-sumas.png")
             sums.writeBytes(render(Scene.Play(Island.NUMBERS, 1), screen, { it.copy(numbersDay = DAY, numbersDays = 3) }))
             assertTrue(sums.length() > MIN_BYTES, "$sums está vacía")
+            // The race, on the fourth day she goes to the island of the numbers (ADR 0037).
+            val race = File(folder, "${screen.name}-37-carrera.png")
+            race.writeBytes(render(Scene.Play(Island.NUMBERS, 1), screen, { it.copy(numbersDay = DAY, numbersDays = 4) }))
+            assertTrue(race.length() > MIN_BYTES, "$race está vacía")
             // The number line, on the second day she goes to the island of the numbers (ADR 0026).
             val line = File(folder, "${screen.name}-31-recta.png")
             line.writeBytes(render(Scene.Play(Island.NUMBERS, 1), screen, { it.copy(numbersDay = DAY, numbersDays = 2) }))

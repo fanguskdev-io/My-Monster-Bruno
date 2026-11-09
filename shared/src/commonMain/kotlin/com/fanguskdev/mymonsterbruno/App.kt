@@ -42,6 +42,7 @@ import com.fanguskdev.mymonsterbruno.ui.screens.NumberLineScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.PathsScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.PlacesScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.PresentScreen
+import com.fanguskdev.mymonsterbruno.ui.screens.RaceScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.RhymesScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.SeriesScreen
 import com.fanguskdev.mymonsterbruno.ui.screens.SleepScreen
@@ -113,6 +114,7 @@ internal fun AppContent(game: GameState, onExit: (() -> Unit)? = null, listen: B
                 Step.COUNTDOWN -> CountdownScreen(game) { game.finished(scene) }
                 Step.NUMBER_LINE -> NumberLineScreen(game) { game.finished(scene) }
                 Step.SUMS -> SumsScreen(game) { game.finished(scene) }
+                Step.RACE -> RaceScreen(game) { game.finished(scene) }
                 Step.BALLOONS -> BalloonScreen(game) { game.finished(scene) }
                 Step.SERIES -> SeriesScreen(game) { game.finished(scene) }
                 Step.HOUSE -> HouseScreen(game) { game.finished(scene) }

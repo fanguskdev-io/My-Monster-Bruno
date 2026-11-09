@@ -40,7 +40,8 @@ internal enum class Island(val activities: List<Activity>) {
  * each (ADR 0031), give him strawberries, give him the
  * balloon of the colour he wants, finish a series of balloons, build his house with shapes, know how he feels and find
  * the word that starts as his, and the one that rhymes with his (ADR 0021); count down for his rocket (ADR 0023), or
- * find the number before or after on the number line, or add strawberries, a day each (ADR 0026 and 0029); put a story
+ * find the number before or after on the number line, or add strawberries, or say who arrived first, second or third in
+ * a race of animals, a day each (ADR 0026, 0029 and 0037); put a story
  * in order (ADR 0025); and put Bruno and his ball inside, out of, on and under things (ADR 0028).
  */
 internal enum class Activity {
@@ -51,6 +52,7 @@ internal enum class Activity {
     COUNTDOWN,
     NUMBER_LINE,
     SUMS,
+    RACE,
     BALLOONS,
     SERIES,
     HOUSE,
@@ -230,7 +232,7 @@ internal class GameState(
 
     /**
      * What she does on [island] today: on the island of the numbers, after the strawberries, the countdown one day she
-     * goes, the number line the next and the sums the next (ADR 0026 and 0029); on the island of letters, after
+     * goes, the number line the next, the sums the next and the race the next (ADR 0026, 0029 and 0037); on the island of letters, after
      * Comeletras, tracing letters one day and Bruno's paths the next (ADR 0031).
      */
     fun activities(island: Island): List<Activity> {
@@ -240,6 +242,7 @@ internal class GameState(
             NumbersGame.COUNTDOWN -> Activity.COUNTDOWN
             NumbersGame.NUMBER_LINE -> Activity.NUMBER_LINE
             NumbersGame.SUMS -> Activity.SUMS
+            NumbersGame.RACE -> Activity.RACE
         }
         return listOf(Activity.COUNT, second)
     }

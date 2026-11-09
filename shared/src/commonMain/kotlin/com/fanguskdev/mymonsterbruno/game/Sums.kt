@@ -19,12 +19,13 @@ internal const val SUM_MAX = 3
 /** The sums of a visit: the three, in any order. */
 internal fun sumRounds(random: Random): List<Sum> = SUMS.shuffled(random)
 
-/** The second game of the island of numbers, after the strawberries: they take turns by the days she goes (ADR 0029). */
-internal enum class NumbersGame { COUNTDOWN, NUMBER_LINE, SUMS }
+/** The second game of the island of numbers, after the strawberries: they take turns by the days she goes (ADR 0029, 0037). */
+internal enum class NumbersGame { COUNTDOWN, NUMBER_LINE, SUMS, RACE }
 
 /**
  * The second game of the island of numbers today: the countdown the first day she goes there, the number line the next
- * day she goes, the sums the next, and again; by the days she goes and not by the calendar (ADR 0026 and 0029).
+ * day she goes, the sums the next, the race the next, and again; by the days she goes and not by the calendar (ADR 0026,
+ * 0029 and 0037).
  */
 internal val SaveData.numbersGameToday: NumbersGame
     get() = NumbersGame.entries[(numbersDays - 1).coerceAtLeast(0) % NumbersGame.entries.size]

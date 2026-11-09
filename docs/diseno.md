@@ -148,7 +148,12 @@ de él y la ventana del cuarto lo enseña el resto del día. El día sale de la 
    de Bruno. Son cinco preguntas. Y el siguiente día que va, **las sumas hasta 3** ([ADR 0029](adr/0029-sumas-hasta-3.md)):
    Bruno tiene una o dos fresas en su plato, «Dale dos más», ella se las da del arbusto, y «¿Cuántas fresas tiene
    ahora Bruno?»: toca el número, del 1 al 3; si no es, el narrador las cuenta todas con ella. La tarjeta de arriba
-   enseña la suma con fresas. Así, la cuenta atrás, la recta y las sumas se turnan, un día cada una.
+   enseña la suma con fresas. Y el siguiente, **primero, segundo y tercero**
+   ([ADR 0037](adr/0037-primero-segundo-y-tercero.md)): una carrera de tres animales, cada uno en su calle. Bruno da la
+   salida, «Preparados, listos... ¡ya!», y cada uno recibe su número al llegar a la meta: el 1 dorado, el 2 plateado y
+   el 3 de bronce. «¿Quién ha llegado primero?», y ella toca el animal; si no es, el narrador le dice en qué puesto ha
+   llegado ese y el que era llama. Son tres carreras, una pregunta por cada puesto. Así, la cuenta atrás, la recta, las
+   sumas y la carrera se turnan, un día cada una.
 6. **La isla de los colores** ([ADR 0007](adr/0007-la-isla-de-los-colores.md)):
    - **Los globos**. «¡Quiero el globo rojo!». Hay tres globos, y ella le da uno a Bruno arrastrándolo hasta él o
      tocándolo. El que acierta se queda atado en su mano, así que al final tiene un ramo. Si no es el suyo, Bruno dice de
@@ -279,7 +284,7 @@ Las **voces de la familia** no se harán: «para M2 no vamos a utilizar las voce
 - **Bruno y todo lo demás se dibujan con vectores**, sin imágenes: Bruno respira, parpadea, mira y cambia de cara (ocho
   bocas, cuatro ojos, tres posturas de brazos).
 - **Las voces** son las de un narrador y la de Bruno, algo más aguda y más despacio, a unas 4 sílabas por segundo. Hay
-  727 frases pregrabadas con la voz del sistema del Mac y **los efectos** (17) se sintetizan desde cero
+  739 frases pregrabadas con la voz del sistema del Mac y **los efectos** (17) se sintetizan desde cero
   ([ADR 0004](adr/0004-voces-provisionales.md)). Las frases están en [`voces/guion.tsv`](../voces/guion.tsv).
 - **La letra** de la zona de mayores, de los números, del banderín y del título es Andika, una tipografía pensada para quien aprende a
   leer (licencia OFL, en [`licencias/`](../licencias/Andika-OFL.txt)).

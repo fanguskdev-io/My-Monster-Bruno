@@ -10,6 +10,7 @@ import com.fanguskdev.mymonsterbruno.game.LETTERS
 import com.fanguskdev.mymonsterbruno.game.LINE_LAST
 import com.fanguskdev.mymonsterbruno.game.MAX_COUNT
 import com.fanguskdev.mymonsterbruno.game.NAME_ALPHABET
+import com.fanguskdev.mymonsterbruno.game.Ordinal
 import com.fanguskdev.mymonsterbruno.game.PathShape
 import com.fanguskdev.mymonsterbruno.game.Pet
 import com.fanguskdev.mymonsterbruno.game.Place
@@ -147,6 +148,11 @@ internal object Voice {
 
     /** The most claps the voice counts: the four of the longest word, and up to six in the turn for two. */
     const val MOST_CLAPS = 6
+
+    /** The race of the island of numbers (ADR 0037): how it starts, Bruno's «Preparados, listos... ¡ya!» and his thanks. */
+    const val RACE_INTRO = "n_carrera_intro"
+    const val READY_GO = "b_preparados"
+    const val THANKS_RACE = "b_gracias_carrera"
 
     /** Bruno's wardrobe, from the room (ADR 0032): how he greets her in it, and what he says taking something off. */
     const val WARDROBE_INTRO = "b_armario_intro"
@@ -372,6 +378,15 @@ internal object Voice {
     /** «Huum... Luna empieza por lu.» */
     fun startsWith(word: StartWord) = "b_empieza_${word.word}"
 
+    /** «¿Quién ha llegado primero?» (ADR 0037). */
+    fun whoArrived(place: Ordinal) = "n_quien_${place.word}"
+
+    /** «¡Sí! ¡Ha llegado primero!» */
+    fun arrivedYes(place: Ordinal) = "b_si_${place.word}"
+
+    /** «Ese animal ha llegado segundo. Mira su número.» */
+    fun thatOneArrived(place: Ordinal) = "n_ese_${place.word}"
+
     /** «Busca otra que empiece por pa.» */
     fun findAnother(start: String) = "n_busca_${plain(start)}"
 
@@ -391,8 +406,9 @@ internal object Voice {
         NUMBER_LINE_INTRO, BESIDE_BRUNO, THANKS_NUMBER_LINE, PLACES_INTRO, HIDDEN, THANKS_PLACES, SUMS_INTRO, HOW_MANY_NOW,
         COUNT_THEM_ALL, THANKS_SUMS, ASSEMBLY_INTRO, WHAT_WEATHER, DAY_STARTS, PATHS_INTRO, FOLLOW_PATH, AT_HOME, THANKS_PATHS,
         WARDROBE_INTRO, TAKE_OFF, NEW_PET, SUGGEST_LETTERS, SUGGEST_NUMBERS, SUGGEST_COLORS, SUGGEST_SHAPES, SUGGEST_FEELINGS,
-        SUGGEST_WORDS, WITH_A_GROWN_UP, CLAP_THE_HANDS, PLAYING_TOGETHER,
+        SUGGEST_WORDS, WITH_A_GROWN_UP, CLAP_THE_HANDS, PLAYING_TOGETHER, RACE_INTRO, READY_GO, THANKS_RACE,
     ) +
+        Ordinal.entries.flatMap { listOf(whoArrived(it), arrivedYes(it), thatOneArrived(it)) } +
         Pet.entries.map { petHello(it) } +
         PathShape.entries.map { pathIs(it) } +
         Weekday.entries.flatMap { listOf(todayIs(it), aroundToday(it), thatDay(it)) } +

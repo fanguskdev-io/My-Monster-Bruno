@@ -54,7 +54,8 @@ recorridos del iPhone de un tirón. Y una que no estaba aquí, la pantalla de in
   ([ADR 0023](adr/0023-la-cuenta-atras.md)).*
 - **1.6 Sumas con dibujos hasta 3.** «Bruno tiene una fresa y le das dos más. ¿Cuántas tiene?». *Mediana. Hecha, en la isla
   de los números, por turnos con la cuenta atrás y la recta ([ADR 0029](adr/0029-sumas-hasta-3.md)).*
-- **1.7 Primero, segundo y tercero.** Una carrera de animales: ¿quién llega primero? *Pequeña.*
+- **1.7 Primero, segundo y tercero.** Una carrera de animales: ¿quién llega primero? *Pequeña. Hecha, en la isla de los
+  números, por turnos con la cuenta atrás, la recta y las sumas ([ADR 0037](adr/0037-primero-segundo-y-tercero.md)).*
 - **1.8 Grande y pequeño, dentro y fuera, arriba y abajo.** «Esconde a Bruno dentro de la caja», «pon la pelota encima de la
   mesa». *Mediana. Hecha, como segunda actividad de la isla de las formas, con dos cajas y una mesa
   ([ADR 0028](adr/0028-dentro-y-fuera.md)).*

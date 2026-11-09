@@ -48,7 +48,7 @@ class NumberLineTest {
     }
 
     @Test
-    fun theCountdownTheLineAndTheSumsTakeTurnsByTheDaysSheGoes() {
+    fun theCountdownTheLineTheSumsAndTheRaceTakeTurnsByTheDaysSheGoes() {
         var data = SaveData()
         assertEquals(NumbersGame.COUNTDOWN, data.numbersGameToday, "sin haber ido, la cuenta atrás")
         data = data.numbersOn(20261106)
@@ -60,7 +60,9 @@ class NumberLineTest {
         data = data.numbersOn(20261115)
         assertEquals(NumbersGame.SUMS, data.numbersGameToday, "el siguiente, las sumas")
         data = data.numbersOn(20261116)
+        assertEquals(NumbersGame.RACE, data.numbersGameToday, "el siguiente, la carrera")
+        data = data.numbersOn(20261117)
         assertEquals(NumbersGame.COUNTDOWN, data.numbersGameToday, "y otra vez la cuenta atrás")
-        assertEquals(4, data.numbersDays)
+        assertEquals(5, data.numbersDays)
     }
 }

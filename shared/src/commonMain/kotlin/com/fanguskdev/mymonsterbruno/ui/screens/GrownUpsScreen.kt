@@ -48,6 +48,7 @@ import com.fanguskdev.mymonsterbruno.game.Feeling
 import com.fanguskdev.mymonsterbruno.game.Hue
 import com.fanguskdev.mymonsterbruno.game.LETTERS
 import com.fanguskdev.mymonsterbruno.game.MAX_COUNT
+import com.fanguskdev.mymonsterbruno.game.Ordinal
 import com.fanguskdev.mymonsterbruno.game.PathShape
 import com.fanguskdev.mymonsterbruno.game.Pet
 import com.fanguskdev.mymonsterbruno.game.Place
@@ -209,6 +210,8 @@ internal fun GrownUpsScreen(game: GameState, onExit: (() -> Unit)? = null) {
                 Text("Cohetes despegados, contando hacia atrás: ${data.launches}.", font, 16)
                 val sums = SUMS.joinToString("   ") { "${it.has} y ${it.more}: ${data.sums[it.key] ?: 0}" }
                 Text("Sumas de fresas resueltas:   $sums", font, 16)
+                val races = Ordinal.entries.joinToString("   ") { "${it.word} ${data.races[it.word] ?: 0}" }
+                Text("En las carreras de animales, quién llegó:   $races", font, 16)
                 val before = data.neighbours[Side.BEFORE.word] ?: 0
                 val after = data.neighbours[Side.AFTER.word] ?: 0
                 Text("En la recta de los números, el de antes: $before; el de después: $after.", font, 16)

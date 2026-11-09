@@ -18,13 +18,14 @@ Qué se prueba en cada cambio y en cada hito, y cómo. Los criterios de salida d
 | Los minutos del día, el día nuevo y los minutos de más; la partida se guarda y se recupera, y una rota empieza de cero; lo que lleva Bruno y cuánto crece | `SessionTest` | Común |
 | Cuándo se va Bruno a dormir: enseguida en el cuarto y en el mapa, al terminar la isla dentro de una, «Habla con Bruno» o su nombre, dormido si se abre sin tiempo, y el huevo no cuenta; la pantalla de inicio lleva al huevo, al cuarto o a la cama y no cuenta minutos; la emoción del día se pregunta una vez al día al abrir, aunque no conteste; su foto se queda al volver a abrir, una nueva hace que Bruno la vuelva a ver y quitarla la borra | `GameStateTest` | Común |
 | Ordena la historia: dos historias por visita, las menos ordenadas; las viñetas nunca salen ya en orden, y salen de las cinco formas de desordenarlas; cada viñeta tiene su frase y cada paso su pregunta | `StoriesTest` | Común |
-| El anterior y el siguiente: cinco preguntas por visita, con antes y después mezclados, al menos dos de cada, sin repetir y nunca dos seguidas desde la misma casilla; la respuesta, siempre al lado de Bruno y en la recta; cada pregunta tiene sus frases; la cuenta atrás, la recta y las sumas se turnan por los días que va a la isla, no por el calendario | `NumberLineTest`, `GameStateTest` | Común |
+| El anterior y el siguiente: cinco preguntas por visita, con antes y después mezclados, al menos dos de cada, sin repetir y nunca dos seguidas desde la misma casilla; la respuesta, siempre al lado de Bruno y en la recta; cada pregunta tiene sus frases; la cuenta atrás, la recta, las sumas y la carrera se turnan por los días que va a la isla, no por el calendario | `NumberLineTest`, `GameStateTest` | Común |
 | Sumas hasta 3: en cada visita, una y una, una y dos, y dos y una, una vez cada una y en cualquier orden; cada suma tiene sus frases, y sus números y su «¡Ñam!» están | `SumsTest` | Común |
 | La asamblea: el día de la semana de cada fecha, también un 29 de febrero y al cambiar de año; el día de antes y el de después; cada día y cada tiempo tienen sus frases; después de la emoción del día, la asamblea, una vez al día, y la ventana del cuarto enseña el tiempo que dijo hasta el día siguiente | `AssemblyTest`, `GameStateTest` | Común |
 | Los caminos de Bruno: en cada visita, los tres menos hechos, las rectas primero; cada camino va a pasos iguales, como las letras, y no sale de donde llega el dedo, lejos de los botones y de la Dynamic Island; un dedo que sigue cualquiera de los seis, aunque vaya un poco de lado, lleva a Bruno a casa, uno lejos no lo mueve y, levantado, sigue desde donde lo dejó; trazar letras y los caminos se turnan por los días que va a la isla, y cada camino tiene su frase | `PathsTest`, `GameStateTest` | Común |
 | El armario: sin elegir, lleva el regalo más nuevo de cada sitio; ella elige uno de cada sitio o ninguno; un regalo nuevo se lo pone en su sitio; y la partida guarda lo que lleva, su color y su cabeza | `WardrobeTest` | Común |
 | Su animal favorito: el que eligieron los mayores, ninguno si no eligieron o si no existe, cada uno con su frase; y las pegatinas no se pegan encima de él | `PetTest`, `StickersTest` | Común |
 | La isla que sugiere Bruno: la que menos ha terminado y, entre iguales, otra cada día; una frase distinta para cada isla | `SuggestionTest` | Común |
+| La carrera de animales: tres carreras, una pregunta por cada puesto, tres animales distintos (nunca el pez) y un puesto para cada uno; y sus frases. La isla de los números turna cuatro juegos | `RaceTest`, `NumberLineTest` | Común |
 | Dentro y fuera: en cada visita, cada sitio una vez y Bruno y la pelota por turnos, empezando por cualquiera; fuera de la caja es cualquier sitio que no sea una caja, y los demás, solo el suyo; cada ronda tiene sus frases | `PlacesTest` | Común |
 | Las pegatinas: una por isla terminada, en el orden del mapa, hasta que la pega; moverla no la duplica; solo se pega en la pared y nunca encima de los botones, el banderín, el marco de su foto, Bruno o donde un iPhone tiene la isla | `StickersTest` | Común |
 | La cuenta atrás: el panel tiene del 1 al 10, una vez cada uno y desordenados; se cuenta del 10 al 0 y solo vale el número que va | `CountdownTest` | Común |
@@ -39,7 +40,7 @@ Qué se prueba en cada cambio y en cada hito, y cómo. Los criterios de salida d
 | Lo que se hace con su voz antes de que Bruno la repita: sin el silencio de los bordes (y nada si solo hay silencio o un murmullo), a la altura de las voces del juego, más aguda y más rápida, en un canal y de vuelta a WAV | `MicrophoneTest` | Común |
 | El sonido del escritorio: la mezcla suma sin desbordarse, respeta el volumen y pasa todo a un canal a 22 050 Hz; y cortar una voz tras otra, como al contar fresas, no atasca su hilo: un toque suele atenderse en un momento y ninguno se queda sin atender (el primero puede esperar a que se despierte la tarjeta de sonido, hasta segundo y medio) | `DesktopSoundTest` | JVM |
 | Cada frase del juego tiene su fichero y dura lo que una frase; el guion y el código tienen las mismas frases; cada efecto tiene su fichero | `AudioFilesTest` | JVM |
-| Las veintiocho pantallas y, el cuarto con cada uno de los seis animales, el cuarto con lluvia y con nieve en la ventana, los caminos de bucles y de caracol, el cuarto con sus pegatinas, cuando ya sabe las vocales y del 1 al 5, Comeletras, los trazos y las fresas con lo nuevo, Comeletras y los trazos con la T, la N y la D y con la F, la B y la R, el mapa con su cuarta fila de rocas, la pantalla de inicio con el huevo, el cuarto con su foto y cuando Bruno le pide que le enseñe su nombre, la emoción del día con su foto, la pantalla de inicio, el mapa y la hora de dormir con su foto, Comeletras, los globos, las emociones, las palabras y las rimas con cuatro para elegir y Comeletras con dos, y el mapa con todas las islas terminadas y sus banderas, se dibujan en móvil (2,17:1) y en tableta (4:3) | `ScreenshotsTest` | JVM |
+| Las veintiocho pantallas y, el cuarto con cada uno de los seis animales, el cuarto con lluvia y con nieve en la ventana, los caminos de bucles y de caracol, el cuarto con sus pegatinas, cuando ya sabe las vocales y del 1 al 5, Comeletras, los trazos y las fresas con lo nuevo, Comeletras y los trazos con la T, la N y la D y con la F, la B y la R, el mapa con su cuarta fila de rocas, la pantalla de inicio con el huevo, el cuarto con su foto y cuando Bruno le pide que le enseñe su nombre, la emoción del día con su foto, la pantalla de inicio, el mapa y la hora de dormir con su foto, la carrera de animales, Comeletras, los globos, las emociones, las palabras y las rimas con cuatro para elegir y Comeletras con dos, y el mapa con todas las islas terminadas y sus banderas, se dibujan en móvil (2,17:1) y en tableta (4:3) | `ScreenshotsTest` | JVM |
 | La salida de la zona de mayores: «Salir del juego» guarda la partida y cierra; sin salida en la plataforma, como en iOS, no hay botón | `GrownUpsExitTest` | JVM |
 | El icono de iOS es el de Android: lo dibuja del vector de `androidApp` en `shared/build/icono/` y lo compara con el del proyecto de Xcode; si cambia el de Android, se copia el nuevo | `AppIconTest` | JVM |
 | En el iPhone 15 Pro de ella y en el 17 Pro del simulador, girados a un lado y al otro, la casa, el altavoz y el candado se ven enteros: ni bajo la Dynamic Island ni cortados por las esquinas redondeadas, medidas en el simulador | `CornerButtonsTest` | Común |
@@ -92,7 +93,7 @@ propio Mac ([ADR 0027](adr/0027-el-mac-tambien-comprueba-la-palabra.md)); el emu
 Para ver el juego en un iPhone 15 Pro simulado, girado a un lado y al otro, sin tocarlo a mano:
 [`tools/conductor-ios`](../tools/conductor-ios) es una prueba de interfaz que toca el escenario de 800 × 400 y, en cada
 punto de control, espera a que `vigilante.sh` saque una captura con lo que tapan la isla y las esquinas pintado de negro.
-Tiene veinte recorridos:
+Tiene veintiún recorridos:
 
 - los dos de la entrega, que empiezan en el huevo: `testWalkThroughHeldBothWays` y `testFinalVersionBothWays`;
 - `testTalkAndPhoto`, «Habla con Bruno» y elegir su foto;
@@ -120,7 +121,9 @@ Tiene veinte recorridos:
 - `testSuggestion`, la isla que sugiere Bruno: la de las formas, la única sin terminar, con sus ondas; ir a otra, la de
   los números, y al volver al mapa, ya sin sugerencia;
 - `testTogether`, el turno para dos de «Habla con Bruno»: las cuatro palabras, que dice Bruno en silencio, y tres
-  palmadas en las manos, que el narrador cuenta, hasta volver al cuarto.
+  palmadas en las manos, que el narrador cuenta, hasta volver al cuarto;
+- `testRace`, la isla de los números el día de la carrera: las fresas y las tres carreras, tocando las calles por
+  turnos, lejos de donde sale el regalo, hasta el regalo.
 
 Todos pasan antes por la pantalla de inicio, con un toque. Siempre en silencio (`-silencio`) y en un simulador propio que
 se borra al acabar, nunca en uno de otra sesión.
@@ -359,7 +362,7 @@ pedirían el móvil o la tableta (2026-11-06).
 
 ### M5 · Sumas hasta 3
 
-- [ ] La isla de los números se turna por días: la cuenta atrás, la recta y las sumas, una cada día que va.
+- [ ] La isla de los números se turna por días: la cuenta atrás, la recta, las sumas y la carrera, una cada día que va.
 - [ ] Bruno tiene una o dos fresas, que aparecen en su plato: «Bruno tiene una fresa»; «Dale dos más», y ella se las da
   del arbusto, contadas al llegar. La tarjeta de arriba enseña la suma con fresas y las que faltan en blanco.
 - [ ] «¿Cuántas fresas tiene ahora Bruno?»: los números del 1 al 3 con sus puntos. El bueno se enciende, «¡Sí! Una y dos,
@@ -458,6 +461,20 @@ pedirían el móvil o la tableta (2026-11-06).
   la niña en la nube y las manos, cuatro palmadas con sus tarjetas del 1 al 4, el narrador las cuenta y vuelve al
   cuarto. En el simulador de iPhone 15 Pro (`testTogether`), lo mismo con tres. Las manos se dibujaron otra vez, con
   las palmas juntas arriba, después de verlas en el iPhone (2026-11-09).
+
+### M5 · Primero, segundo y tercero
+
+- [ ] El cuarto día que va a la isla de los números, después de las fresas, la carrera: Bruno da la salida y los tres
+  animales corren, adelantándose, hasta la meta; al llegar, cada uno recibe su número, el 1 dorado, el 2 plateado y
+  el 3 de bronce.
+- [ ] «¿Quién ha llegado primero?», con el número arriba: si toca el que es, «¡Sí!» y salta; si no, el narrador dice
+  en qué puesto ha llegado ese y el que era llama. Tres carreras, una por puesto, y el regalo.
+- [ ] En la zona de mayores, cuántas veces ha acertado cada puesto.
+- [x] En el emulador Tester_API36, el cuarto día de la isla de los números: después de las fresas, las tres carreras
+  con sus números al llegar y la tarjeta de arriba; el tercero bien a la primera, el perro salta y sale en la tarjeta;
+  las otras dos, tocando las calles por turnos, con el que era llamando tras un fallo; el regalo, y la partida apunta
+  un acierto de cada puesto. En el simulador de iPhone 15 Pro (`testRace`), lo mismo hasta el regalo, cerrado. Los
+  animales se paran ahora un poco más allá de la meta, que tapaban (2026-11-09).
 
 ### M5 · La F, la B y la R
 

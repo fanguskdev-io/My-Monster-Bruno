@@ -36,6 +36,8 @@ data class SaveData(
     val places: Map<String, Int> = emptyMap(),
     /** Times she found how many strawberries Bruno had, by sum (Sum.key) (ADR 0029). */
     val sums: Map<String, Int> = emptyMap(),
+    /** Times she knew who arrived in each place of a race of animals, by place (Ordinal.word) (ADR 0037). */
+    val races: Map<String, Int> = emptyMap(),
     /** Times Bruno's rocket took off when she counted down to zero (ADR 0023). */
     val launches: Int = 0,
     /** The last day, as yyyymmdd, she went to the island of the numbers, and how many days she has gone (ADR 0026). */
