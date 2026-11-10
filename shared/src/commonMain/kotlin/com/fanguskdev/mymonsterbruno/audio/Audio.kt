@@ -5,6 +5,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import mymonsterbruno.shared.generated.resources.Res
@@ -12,7 +14,8 @@ import mymonsterbruno.shared.generated.resources.Res
 /**
  * The voice and the sounds of the game. Bruno and the narrator never talk over each other: each new line cuts the one
  * before. [say] waits until the lines have been said, so a screen can go on when the voice ends; with the voice off it
- * waits a moment instead, so the game keeps its pace without words.
+ * waits a moment instead, so the game keeps its pace without words. In the background nothing is said: the next line
+ * waits until the game is on screen again.
  */
 internal class Audio(
     private val player: SoundPlayer,
@@ -30,6 +33,13 @@ internal class Audio(
 
     /** The lines said slow lately, stretched, so that the ones that come back are ready: the latest last. */
     private val slowed = LinkedHashMap<String, Slowed>()
+
+    /**
+     * Whether the game is on screen, and how many times it has gone to the background: in the background the voice waits,
+     * and [tell] knows whether that is what cut a line.
+     */
+    private val onScreen = MutableStateFlow(true)
+    private var pauses = 0
 
     /** Whether the music of the islands sounds (ADR 0038); off, it stops at once. */
     var musicOn = true
@@ -104,17 +114,23 @@ internal class Audio(
         if (music?.let { musicName(it) } == name) refreshMusic()
     }
 
-    /** Says [lines] one after the other, cutting whatever was being said, and returns when they are said. */
-    suspend fun say(vararg lines: String) {
+    /**
+     * Says [lines] one after the other, cutting whatever was being said, and returns when they are said: true, or false if
+     * something cut them, another line or the game going to the background.
+     */
+    suspend fun say(vararg lines: String): Boolean {
         val mine = ++turn
         val me = currentCoroutineContext()[Job]
         if (background != me) background?.cancel()
         try {
             for (line in lines) {
-                if (turn != mine) return
+                if (turn != mine) return false
+                // In the background, the next line waits until she is back.
+                awake()
+                if (turn != mine) return false
                 cut()
                 val long = if (voiceOn && slow) slowLine(line) else null
-                if (turn != mine) return
+                if (turn != mine) return false
                 when {
                     long != null -> {
                         // One place for the slow line, which takes the place of the one before: little to keep.
@@ -130,8 +146,26 @@ internal class Audio(
                     else -> delay(SILENT_MILLIS)
                 }
             }
+            return turn == mine
         } finally {
             if (turn == mine) cut()
+        }
+    }
+
+    /** Waits while the game is in the background. */
+    suspend fun awake() {
+        onScreen.first { it }
+    }
+
+    /**
+     * Says [line] to the end: if going to the background cuts it, it is said again from its start once the game is on
+     * screen again. For the story at bedtime, which goes on where it was (ADR 0045).
+     */
+    suspend fun tell(line: String) {
+        while (true) {
+            val before = pauses
+            if (say(line) || pauses == before) return
+            awake()
         }
     }
 
@@ -179,13 +213,18 @@ internal class Audio(
 
     /** The app went to the background: silence until it comes back. */
     fun pause() {
+        onScreen.value = false
+        pauses++
         hush()
         player.stopAll()
         musicPlaying = null
     }
 
-    /** The app is back: the music of where she is sounds again. */
-    fun resume() = refreshMusic()
+    /** The app is back: the voice goes on, and the music of where she is sounds again. */
+    fun resume() {
+        onScreen.value = true
+        refreshMusic()
+    }
 
     fun release() {
         hush()

@@ -116,6 +116,26 @@ data class SaveData(
     }
 }
 
+/**
+ * The save when a grown-up starts again, in their corner: Bruno back in the egg and what she practised forgotten. Her
+ * name, today's minutes and the grown-ups' settings stay: the sound, the slow voice, her favourite animal (ADR 0033) and
+ * what comes out in the game (ADR 0041). Her photo is kept apart, and stays too.
+ */
+internal fun SaveData.startedAgain(): SaveData = SaveData(
+    childName = childName,
+    dailyMinutes = dailyMinutes,
+    playedDay = playedDay,
+    playedSeconds = playedSeconds,
+    extraSeconds = extraSeconds,
+    voiceOn = voiceOn,
+    effectsOn = effectsOn,
+    musicOn = musicOn,
+    slowVoice = slowVoice,
+    pet = pet,
+    hiddenIslands = hiddenIslands,
+    hiddenLetters = hiddenLetters,
+)
+
 /** Adds one to [key] in a map of counts. */
 internal fun Map<String, Int>.plusOne(key: String): Map<String, Int> = this + (key to (this[key] ?: 0) + 1)
 

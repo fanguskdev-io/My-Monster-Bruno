@@ -29,7 +29,7 @@ if (($# > 0)); then RECORRIDOS=("$@"); else RECORRIDOS=("${TODOS[@]}"); fi
 # ido a la isla de los números, para que hoy le toque la recta y no la cuenta atrás, y el de las sumas, con dos; el
 # de los caminos, con un día en la isla de las letras y los caminos rectos ya hechos, para que salgan los curvos; y el
 # de su foto en más sitios, con cuarenta segundos de juego por delante, para que Bruno se vaya a dormir en el mapa; y
-# el de la isla que sugiere Bruno, con todas terminadas una vez menos la de las formas; el de la carrera, con tres
+# el de la isla que sugiere Bruno, con todas terminadas una vez menos la de las formas (también la de la casa); el de la carrera, con tres
 # días ya idos a la isla de los números, para que hoy le toque; y el de su semana, con tres días de juego y sus fallos.
 partida() {
     local sabe='{"a":1,"e":1,"i":1,"o":1,"u":1,"m":1,"p":1,"l":1,"s":1}'
@@ -43,7 +43,7 @@ partida() {
         testHomeBins) echo "{\"hatched\":true,\"childName\":\"Lucía\",\"namesWritten\":1,\"moodDay\":$HOY,\"homeDay\":1,\"homeDays\":1}" ;;
         testTale) echo "{\"hatched\":true,\"childName\":\"Lucía\",\"namesWritten\":1,\"moodDay\":$HOY,\"dailyMinutes\":10,\"playedDay\":$HOY,\"playedSeconds\":570}" ;;
         testRace) echo "{\"hatched\":true,\"childName\":\"Lucía\",\"namesWritten\":1,\"moodDay\":$HOY,\"numbersDay\":1,\"numbersDays\":3}" ;;
-        testSuggestion) echo "{\"hatched\":true,\"childName\":\"Lucía\",\"namesWritten\":1,\"moodDay\":$HOY,\"islands\":{\"VOWELS\":1,\"NUMBERS\":1,\"COLORS\":1,\"FEELINGS\":1,\"WORDS\":1}}" ;;
+        testSuggestion) echo "{\"hatched\":true,\"childName\":\"Lucía\",\"namesWritten\":1,\"moodDay\":$HOY,\"islands\":{\"VOWELS\":1,\"NUMBERS\":1,\"COLORS\":1,\"FEELINGS\":1,\"WORDS\":1,\"HOME\":1}}" ;;
         testPet) echo "{\"hatched\":true,\"childName\":\"Lucía\",\"namesWritten\":1,\"moodDay\":$HOY,\"pet\":\"gato\"}" ;;
         testWardrobe) echo "{\"hatched\":true,\"childName\":\"Lucía\",\"namesWritten\":1,\"moodDay\":$HOY,\"look\":{\"accessories\":[\"BEANIE\",\"GLASSES\",\"BOW_TIE\"]}}" ;;
         testPaths) echo "{\"hatched\":true,\"childName\":\"Lucía\",\"namesWritten\":1,\"moodDay\":$HOY,\"lettersDay\":1,\"lettersDays\":1,\"paths\":{\"recta\":1,\"abajo\":1,\"inclinada\":1}}" ;;

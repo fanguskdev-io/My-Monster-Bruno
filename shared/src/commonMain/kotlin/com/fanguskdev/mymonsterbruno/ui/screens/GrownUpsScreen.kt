@@ -72,6 +72,7 @@ import com.fanguskdev.mymonsterbruno.game.chosenPet
 import com.fanguskdev.mymonsterbruno.game.feltDays
 import com.fanguskdev.mymonsterbruno.game.hardest
 import com.fanguskdev.mymonsterbruno.game.hidden
+import com.fanguskdev.mymonsterbruno.game.startedAgain
 import com.fanguskdev.mymonsterbruno.game.toggledIsland
 import com.fanguskdev.mymonsterbruno.game.toggledLetter
 import com.fanguskdev.mymonsterbruno.game.week
@@ -402,19 +403,7 @@ internal fun GrownUpsScreen(game: GameState, onExit: (() -> Unit)? = null) {
                 Text("Volver a empezar: Bruno vuelve al huevo y se borra lo practicado. Los ajustes se quedan.", font, 15, color = Soft)
                 Chip(if (confirmReset) "Toca otra vez para confirmar" else "Volver a empezar", font, selected = confirmReset) {
                     if (confirmReset) {
-                        game.update {
-                            SaveData(
-                                childName = it.childName,
-                                dailyMinutes = it.dailyMinutes,
-                                playedDay = it.playedDay,
-                                playedSeconds = it.playedSeconds,
-                                extraSeconds = it.extraSeconds,
-                                voiceOn = it.voiceOn,
-                                effectsOn = it.effectsOn,
-                                musicOn = it.musicOn,
-                                slowVoice = it.slowVoice,
-                            )
-                        }
+                        game.update { it.startedAgain() }
                         confirmReset = false
                         game.leaveGrownUps()
                     } else {

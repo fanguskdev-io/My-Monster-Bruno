@@ -142,3 +142,4 @@ día quiere revisar G0, se abre la primera ronda de la cola de
 | 2026-11-09 | agente (Claude Code, Opus 5.5) | M5: Bruno más despacio (ADR 0042), con la misma voz, del cierre de la batería de ideas |
 | 2026-11-09 | agente (Claude Code, Opus 5.5) | M5: la otra parte del mar (ADR 0043) y en ella la isla de la casa, con los hábitos (ADR 0044), del cierre de la batería de ideas |
 | 2026-11-09 | agente (Claude Code, Opus 5.5) | M5: un cuento para dormir (ADR 0045), el último del cierre de la batería de ideas |
+| 2026-11-10 | agente (Claude Code, Opus 5.5) | Repaso tras el cierre: pasan los 29 recorridos del iPhone; arreglados el cuento que seguía en el fondo en Android (la voz espera fuera del juego), el mapa con una parte del mar vacía, «Volver a empezar», que perdía su animal y lo quitado, y dos recorridos |

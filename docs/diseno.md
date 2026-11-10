@@ -251,7 +251,8 @@ Fuera del camino:
   practicado (galletas por vocal,
   letras trazadas, veces que ha escrito su nombre, fresas por número, globos,
   series, piezas de la casa, emociones, palabras dichas a Bruno, parejas que empiezan igual, islas y regalos) y volver a
-  empezar, que devuelve a Bruno al huevo y conserva los ajustes. En
+  empezar, que devuelve a Bruno al huevo y conserva su nombre, su foto y los ajustes (el sonido, la voz despacio, su
+  animal favorito y qué islas y letras salen). En
   Android y en el escritorio también hay «Salir del juego», que guarda la partida y lo cierra. En iPhone y iPad no lo
   hay: se sale con el gesto del sistema, porque Apple no quiere que una app se cierre sola. Es la única pantalla con
   texto.

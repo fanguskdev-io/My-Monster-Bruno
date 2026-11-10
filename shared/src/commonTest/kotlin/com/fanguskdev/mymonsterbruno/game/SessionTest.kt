@@ -76,4 +76,35 @@ class SessionTest {
         assertEquals(null, BrunoLook(accessories = Accessory.entries).nextPresent)
         assertEquals(BrunoLook(growth = BrunoLook.MAX_GROWTH).size, BrunoLook(growth = 10).size)
     }
+
+    @Test
+    fun startingAgainKeepsHerNameAndTheSettings() {
+        val played = SaveData(
+            hatched = true,
+            childName = "Lucía",
+            islands = mapOf("VOWELS" to 3),
+            fed = mapOf("a" to 4),
+            dailyMinutes = 15,
+            playedDay = monday,
+            playedSeconds = 300,
+            musicOn = false,
+            slowVoice = true,
+            pet = "gato",
+            petSeen = true,
+            hiddenIslands = listOf("HOME"),
+            hiddenLetters = listOf("m"),
+        )
+        val again = played.startedAgain()
+        assertFalse(again.hatched, "Bruno vuelve al huevo")
+        assertTrue(again.islands.isEmpty() && again.fed.isEmpty(), "y se olvida lo practicado")
+        assertEquals("Lucía", again.childName)
+        assertEquals(15, again.dailyMinutes)
+        assertEquals(300, again.playedSeconds, "los minutos de hoy siguen contando")
+        assertFalse(again.musicOn)
+        assertTrue(again.slowVoice)
+        assertEquals("gato", again.pet, "su animal se queda")
+        assertFalse(again.petSeen, "y el Bruno nuevo lo presenta otra vez")
+        assertEquals(listOf("HOME"), again.hiddenIslands)
+        assertEquals(listOf("m"), again.hiddenLetters)
+    }
 }

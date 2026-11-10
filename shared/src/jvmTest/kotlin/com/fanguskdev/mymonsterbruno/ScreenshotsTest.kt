@@ -250,6 +250,9 @@ class ScreenshotsTest {
             val bins = File(folder, "${screen.name}-40-contenedores.png")
             bins.writeBytes(render(Scene.Play(Island.HOME, 1), screen, { it.copy(homeDay = DAY, homeDays = 2) }))
             assertTrue(bins.length() > MIN_BYTES, "$bins está vacía")
+            val homeMission = File(folder, "${screen.name}-8-dormir-casa.png")
+            homeMission.writeBytes(render(Scene.Sleep, screen, lastIsland = Island.HOME))
+            assertTrue(homeMission.length() > MIN_BYTES, "$homeMission está vacía")
             val otherSea = File(folder, "${screen.name}-3-mapa-otro-mar.png")
             otherSea.writeBytes(render(Scene.Map, screen, sea = 1))
             assertTrue(otherSea.length() > MIN_BYTES, "$otherSea está vacía")
@@ -300,6 +303,7 @@ class ScreenshotsTest {
         photo: ByteArray? = null,
         asksForName: Boolean = false,
         sea: Int = 0,
+        lastIsland: Island? = null,
     ): ByteArray {
         val store = MemoryStore()
         val save = SaveData(
@@ -314,6 +318,8 @@ class ScreenshotsTest {
         game.greeted = true
         game.askedForName = !asksForName
         game.mapSea = sea
+        // The island she has just finished: the mission at bedtime goes with it.
+        lastIsland?.let { game.presentGiven(it) }
         game.go(scene)
         // With a way out, as on Android and the desktop, so the grown-ups' corner shows its «Salir del juego».
         val image = ImageComposeScene(screen.width, screen.height, Density(screen.height / STAGE_DP)) {

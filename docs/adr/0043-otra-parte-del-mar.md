@@ -24,8 +24,8 @@ hacía falta sitio. Fangusk pidió cerrar la batería de [ideas](../ideas.md), y
   de esa isla.
 - **La isla sugerida** ([ADR 0035](0035-bruno-sugiere-una-isla.md)) puede estar al otro lado: entonces las ondas
   rodean el botón de navegar, y Bruno lo mira.
-- Si los mayores quitan todas las islas del otro lado ([ADR 0041](0041-elegir-que-islas-y-letras-salen.md)), el botón
-  no sale.
+- Si los mayores quitan todas las islas de una de las dos partes ([ADR 0041](0041-elegir-que-islas-y-letras-salen.md)),
+  el botón no sale, y el mapa abre en la parte que tiene islas.
 
 ## Alternativas consideradas
 

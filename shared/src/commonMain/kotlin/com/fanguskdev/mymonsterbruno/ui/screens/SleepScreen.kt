@@ -104,19 +104,21 @@ internal fun SleepScreen(game: GameState) {
 
     LaunchedEffect(Unit) {
         if (!asleep) {
-            audio.say(Voice.YAWN, mission.line, Voice.SEE_YOU_TOMORROW)
+            // Each line to the end: if the game goes to the background, it waits and says it again when she is back.
+            for (line in listOf(Voice.YAWN, mission.line, Voice.SEE_YOU_TOMORROW)) audio.tell(line)
             val today = game.currentDay()
             if (!game.data.heardTale(today)) {
                 page = 0
                 pageAt = clock.value
-                audio.say(Voice.TALE_INTRO)
+                audio.tell(Voice.TALE_INTRO)
                 for (i in 0 until TALE_PAGES) {
                     page = i
                     pageAt = clock.value
-                    audio.say(Voice.taleLine(tale, i))
+                    audio.tell(Voice.taleLine(tale, i))
                     delay(PAGE_PAUSE_MILLIS)
+                    audio.awake()
                 }
-                audio.say(Voice.TALE_END)
+                audio.tell(Voice.TALE_END)
                 page = null
                 game.update { it.taleTold(today) }
             }

@@ -207,5 +207,8 @@ Es la última parte de M4, y se prueba allí, con el sonido puesto:
   ([ADR 0011](adr/0011-habla-con-bruno.md)).
 - Al cerrarlo y volver a abrirlo, Bruno sigue como estaba, y la zona de mayores se abre manteniendo el candado.
 - La música de las islas suena muy baja, y la voz se entiende encima ([ADR 0038](adr/0038-musica-suave-en-las-islas.md)).
+- Con «Voz despacio: sí», Bruno y el narrador hablan más lento sin cambiar de voz ([ADR 0042](adr/0042-bruno-mas-despacio.md));
+  y al acabarse los minutos, el cuento para dormir se oye entero, también si se sale del juego a mitad y se vuelve
+  ([ADR 0045](adr/0045-un-cuento-para-dormir.md)).
 - «Guardar una copia» deja el fichero en Archivos, y «Recuperar una copia» lo vuelve a leer
   ([ADR 0039](adr/0039-una-copia-de-su-partida.md)).

@@ -1,6 +1,9 @@
 package com.fanguskdev.mymonsterbruno.game
 
 import com.fanguskdev.mymonsterbruno.ui.Island
+import com.fanguskdev.mymonsterbruno.ui.hasIslandsIn
+import com.fanguskdev.mymonsterbruno.ui.sea
+import com.fanguskdev.mymonsterbruno.ui.seaToOpen
 import com.fanguskdev.mymonsterbruno.ui.suggestedIsland
 import kotlin.random.Random
 import kotlin.test.Test
@@ -47,5 +50,16 @@ class ShownTest {
         assertEquals(all - data.hiddenIslands.toSet(), listOf(Island.HOME.name))
         assertEquals(Island.HOME, data.suggestedIsland(20261109), "y Bruno solo sugiere esa")
         assertEquals(setOf<Char>(), SaveData(hiddenLetters = listOf("a", "x", "mm")).hidden, "las vocales y lo raro no cuentan")
+    }
+
+    @Test
+    fun theMapOpensOnAPartOfTheSeaWithIslands() {
+        val firstSea = Island.entries.filter { it.sea == 0 }.map { it.name }
+        assertEquals(1, SaveData().seaToOpen(1), "la de la última isla")
+        assertEquals(0, SaveData().seaToOpen(0))
+        assertEquals(0, SaveData(hiddenIslands = listOf(Island.HOME.name)).seaToOpen(1), "sin la isla de la casa, no hay otra parte")
+        assertEquals(1, SaveData(hiddenIslands = firstSea).seaToOpen(0), "sin ninguna de las seis, la otra parte")
+        assertFalse(SaveData(hiddenIslands = firstSea).hasIslandsIn(0))
+        assertTrue(SaveData().hasIslandsIn(0) && SaveData().hasIslandsIn(1))
     }
 }

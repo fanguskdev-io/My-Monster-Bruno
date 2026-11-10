@@ -341,3 +341,13 @@ internal fun rememberPhoto(game: GameState): ImageBitmap? =
 
 /** The part of the sea where this island is (ADR 0043): the island of the house is in the other one. */
 internal val Island.sea: Int get() = if (this == Island.HOME) 1 else 0
+
+/** Whether the part [part] of the sea has islands the grown-ups did not take off the map (ADR 0041 and 0043). */
+internal fun SaveData.hasIslandsIn(part: Int): Boolean = Island.entries.any { it.sea == part && it.name !in hiddenIslands }
+
+/** The part of the sea the map opens on: [last], the one of the last island, unless one of the two has no island left. */
+internal fun SaveData.seaToOpen(last: Int): Int = when {
+    !hasIslandsIn(1) -> 0
+    !hasIslandsIn(0) -> 1
+    else -> last
+}

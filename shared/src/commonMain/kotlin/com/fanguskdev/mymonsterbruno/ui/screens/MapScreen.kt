@@ -52,12 +52,14 @@ import com.fanguskdev.mymonsterbruno.ui.clamp01
 import com.fanguskdev.mymonsterbruno.ui.easeInOut
 import com.fanguskdev.mymonsterbruno.ui.ellipse
 import com.fanguskdev.mymonsterbruno.ui.fill
+import com.fanguskdev.mymonsterbruno.ui.hasIslandsIn
 import com.fanguskdev.mymonsterbruno.ui.label
 import com.fanguskdev.mymonsterbruno.ui.line
 import com.fanguskdev.mymonsterbruno.ui.path
 import com.fanguskdev.mymonsterbruno.ui.rememberClock
 import com.fanguskdev.mymonsterbruno.ui.rememberPhoto
 import com.fanguskdev.mymonsterbruno.ui.sea
+import com.fanguskdev.mymonsterbruno.ui.seaToOpen
 import com.fanguskdev.mymonsterbruno.ui.stroke
 import com.fanguskdev.mymonsterbruno.ui.suggestedIsland
 import com.fanguskdev.mymonsterbruno.ui.suggestionLine
@@ -99,10 +101,11 @@ internal fun MapScreen(game: GameState) {
     val audio = game.audio
     var going by remember { mutableStateOf(false) }
 
-    // The part of the sea on screen, the one of the last island; and, while the boat sails to the other, since when. With
-    // every island of the other part taken off by the grown-ups, there is no other part (ADR 0041).
-    fun otherSea() = Island.entries.any { it.sea == 1 && it.name !in game.data.hiddenIslands }
-    var sea by remember { mutableStateOf(if (otherSea()) game.mapSea else 0) }
+    // The part of the sea on screen, the one of the last island; and, while the boat sails to the other, since when. The
+    // button to sail is there only when both parts have islands: the grown-ups can take every island of one off, and then
+    // the map shows the other (ADR 0041).
+    fun otherSea() = game.data.hasIslandsIn(0) && game.data.hasIslandsIn(1)
+    var sea by remember { mutableStateOf(game.data.seaToOpen(game.mapSea)) }
     var sailingAt by remember { mutableStateOf<Float?>(null) }
 
     // The first time she gets to the map since the game opened, Bruno suggests the island she has done least, which

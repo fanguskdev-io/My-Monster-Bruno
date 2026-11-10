@@ -28,6 +28,9 @@ batería de [ideas](../ideas.md), y esta es la 2.5.
   globos, la luna...), que pasan despacio mientras el narrador lee, con un puntito por lámina. Al final: «Colorín
   colorado, este cuento se ha acabado», y Bruno se duerme.
 - **No se salta**: es para acabar el día con calma; tocar no hace nada, y el candado de los mayores sigue funcionando.
+- **Si sale del juego a mitad**, el cuento espera: al volver, repite la frase que se cortó y sigue. En Android el juego
+  sigue en marcha en el fondo, y el cuento se contaba solo hasta el final (visto el 2026-11-10); ahora, en el fondo, ni
+  Bruno ni el narrador dicen nada hasta que vuelve, en todo el juego.
 
 ## Alternativas consideradas
 

@@ -636,6 +636,8 @@ final class BrunoDriverTests: XCTestCase {
         scrollTo("Colores")
         tapText("Colores")
         sleep(1)
+        // The consonants are two rows below the islands: on a phone held sideways they can still be out of sight.
+        scrollTo("M")
         tapText("M")
         sleep(1)
         checkpoint("q1-sin-colores-ni-m-der")

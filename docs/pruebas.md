@@ -46,10 +46,12 @@ Qué se prueba en cada cambio y en cada hito, y cómo. Los criterios de salida d
 | Su foto en Android 8: la orientación que la cámara escribió en el EXIF, en los dos órdenes de bytes, y cómo ponerla derecha; sin EXIF, cortada o rara, tal cual | `ExifTest` | Común |
 | La copia de su partida: vuelve como se fue, con su foto o sin ella; lo que no es una copia del juego (otro juego, texto suelto, una foto rota) no pasa por una | `BackupTest` | Común |
 | Su semana: los días hacia atrás cruzando meses, años y bisiestos; solo los últimos siete; los minutos de cada día; lo que más le ha costado primero, y entre iguales por su nombre | `WeekTest` | Común |
-| Qué sale: una consonante quitada no se pide, no sale entre las galletas ni se traza, y no frena a las siguientes; los botones, y en el mapa siempre queda una isla, la única que Bruno sugiere | `ShownTest` | Común |
+| Qué sale: una consonante quitada no se pide, no sale entre las galletas ni se traza, y no frena a las siguientes; los botones, y en el mapa siempre queda una isla, la única que Bruno sugiere; el mapa abre en una parte del mar con islas | `ShownTest` | Común |
+| Volver a empezar: Bruno vuelve al huevo y se olvida lo practicado; se quedan su nombre, los minutos de hoy y los ajustes (sonido, voz despacio, su animal, que se presenta otra vez, y lo que sale) | `SessionTest` | Común |
 | La isla de la casa: vestirse, una ronda por tiempo con una cosa de cada uno; los contenedores, las seis cosas sin dos del mismo seguidas; primero los dientes y luego, un día cada uno, vestirse o los contenedores; el mapa vuelve a su parte del mar; y sus frases | `HomeTest` | Común |
 | El cuento para dormir: uno al día, cada noche el siguiente y vuelta a empezar; cada lámina con su frase | `TaleTest` | Común |
-| Las veintiocho pantallas y, el cuarto con cada uno de los seis animales, el cuarto con lluvia y con nieve en la ventana, los caminos de bucles y de caracol, el cuarto con sus pegatinas, cuando ya sabe las vocales y del 1 al 5, Comeletras, los trazos y las fresas con lo nuevo, Comeletras y los trazos con la T, la N y la D y con la F, la B y la R, el mapa con su cuarta fila de rocas, la pantalla de inicio con el huevo, el cuarto con su foto y cuando Bruno le pide que le enseñe su nombre, la emoción del día con su foto, la pantalla de inicio, el mapa y la hora de dormir con su foto, la carrera de animales, el mapa sin dos islas y sin cuatro consonantes, la isla de la casa (los dientes, vestirse y los contenedores), la otra parte del mar, las seis láminas de cada cuento para dormir, Comeletras, los globos, las emociones, las palabras y las rimas con cuatro para elegir y Comeletras con dos, y el mapa con todas las islas terminadas y sus banderas, se dibujan en móvil (2,17:1) y en tableta (4:3) | `ScreenshotsTest` | JVM |
+| La voz en el fondo: no dice nada hasta que vuelve, y la frase del cuento que se cortó al irse se dice otra vez; la que corta otra frase, no | `BackgroundVoiceTest` | JVM |
+| Las veintiocho pantallas y, el cuarto con cada uno de los seis animales, el cuarto con lluvia y con nieve en la ventana, los caminos de bucles y de caracol, el cuarto con sus pegatinas, cuando ya sabe las vocales y del 1 al 5, Comeletras, los trazos y las fresas con lo nuevo, Comeletras y los trazos con la T, la N y la D y con la F, la B y la R, el mapa con su cuarta fila de rocas, la pantalla de inicio con el huevo, el cuarto con su foto y cuando Bruno le pide que le enseñe su nombre, la emoción del día con su foto, la pantalla de inicio, el mapa y la hora de dormir con su foto, la carrera de animales, el mapa sin dos islas y sin cuatro consonantes, la isla de la casa (los dientes, vestirse y los contenedores), la otra parte del mar, las seis láminas de cada cuento para dormir, la misión de la isla de la casa, Comeletras, los globos, las emociones, las palabras y las rimas con cuatro para elegir y Comeletras con dos, y el mapa con todas las islas terminadas y sus banderas, se dibujan en móvil (2,17:1) y en tableta (4:3) | `ScreenshotsTest` | JVM |
 | La salida de la zona de mayores: «Salir del juego» guarda la partida y cierra; sin salida en la plataforma, como en iOS, no hay botón | `GrownUpsExitTest` | JVM |
 | El icono de iOS es el de Android: lo dibuja del vector de `androidApp` en `shared/build/icono/` y lo compara con el del proyecto de Xcode; si cambia el de Android, se copia el nuevo | `AppIconTest` | JVM |
 | En el iPhone 15 Pro de ella y en el 17 Pro del simulador, girados a un lado y al otro, la casa, el altavoz y el candado se ven enteros: ni bajo la Dynamic Island ni cortados por las esquinas redondeadas, medidas en el simulador | `CornerButtonsTest` | Común |
@@ -150,7 +152,8 @@ se borra al acabar, nunca en uno de otra sesión.
 
 **De un tirón**, con la app de iOS que deja la puerta (`build/xcode`): crea el simulador, le pone dos fotos en la galería,
 pasa los recorridos, cada uno con el juego recién instalado y su partida, y lo borra al acabar, también si algo falla. Las
-capturas quedan en `build/recorridos-ios/`. Tarda una media hora:
+capturas quedan en `build/recorridos-ios/`. Con los veintinueve tarda algo más de una hora (el 2026-11-10, tras cerrar
+la batería de ideas, pasaron todos en 74 minutos):
 
 ```bash
 bash tools/conductor-ios/recorridos.sh
@@ -540,6 +543,9 @@ pedirían el móvil o la tableta (2026-11-06).
 - [x] En el emulador Tester_API36 y en el simulador de iPhone 15 Pro (`testShown`): quitar la isla de los colores y la
   M deja el mapa sin la isla ni su camino, y las rocas de las letras sin la M; la partida lo guarda. La captura del
   mapa sin dos islas y sin cuatro consonantes lo enseña en todas las pantallas (2026-11-09).
+- [x] Volver a empezar, en el emulador Tester_API36, con su gato, la isla de la casa y la M quitadas y la voz despacio:
+  Bruno vuelve al huevo y se olvida lo que había hecho, y se quedan su nombre, el gato (que el Bruno nuevo presentará
+  otra vez), lo quitado y la voz despacio. Antes se perdían el animal y lo quitado (2026-11-10).
 
 ### M5 · Bruno más despacio
 
@@ -573,6 +579,10 @@ pedirían el móvil o la tableta (2026-11-06).
   láminas del cuento de esa noche, despacio, con sus puntitos; al final, «Colorín colorado», y Bruno duerme.
 - [ ] Tocar no lo salta; el candado de los mayores sí funciona. Ese día no hay otro cuento; al día siguiente, el
   siguiente de los tres.
+- [ ] Si sale del juego a mitad del cuento, al volver repite la frase cortada y sigue; en el fondo no se oye nada.
+- [x] En el emulador Tester_API36: antes, al salir del juego en la tercera lámina, el cuento se contaba solo en el fondo
+  hasta el final y la partida lo daba por oído. Con el arreglo, en un minuto en el fondo no avanza; al volver al
+  mismo juego sigue en la tercera lámina, acaba y Bruno se duerme (2026-11-10).
 - [x] En el emulador Tester_API36 y en el simulador de iPhone 15 Pro (`testTale`), en silencio y con medio minuto de
   juego: se acaba en el mapa, Bruno se va a la cama, da la misión y cuenta «La estrella que se cayó», lámina a
   lámina con sus puntitos, y se duerme; la partida apunta el día y un cuento contado. Las láminas de los tres
