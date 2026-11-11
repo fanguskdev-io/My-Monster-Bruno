@@ -51,4 +51,15 @@ class WavTest {
         assertNull(readWav(ByteArray(10)))
         assertNull(readWav("RIFF....AVI LIST".encodeToByteArray()))
     }
+
+    @Test
+    fun howLongItLastsFromItsHeadersAlone() {
+        for ((count, rate) in listOf(22050 to 22050, 8000 to 16000, 4410 to 22050, 0 to 22050)) {
+            val bytes = wav(ShortArray(count) { (it % 200).toShort() }, rate)
+            assertEquals(readWav(bytes)?.millis, wavMillis(bytes), "$count muestras a $rate Hz")
+        }
+        assertEquals(1000L, wavMillis(wav(ShortArray(22050), 22050)))
+        assertNull(wavMillis(ByteArray(10)))
+        assertNull(wavMillis("RIFF....WAVE".encodeToByteArray()))
+    }
 }

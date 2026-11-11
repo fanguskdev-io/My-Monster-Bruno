@@ -59,6 +59,29 @@ class Pcm(val samples: ShortArray, val channels: Int, val rate: Int) {
 
 /** The sound in a WAV file of 16-bit PCM, mono or stereo, or null if it is not one (CaroFarty's reader). */
 fun readWav(bytes: ByteArray): Pcm? {
+    val layout = wavLayout(bytes) ?: return null
+    val samples = ShortArray((layout.end - layout.start) / 2) { int16(bytes, layout.start + 2 * it).toShort() }
+    return Pcm(samples, layout.channels, layout.rate)
+}
+
+/**
+ * How long the WAV in [bytes] lasts, in milliseconds, as [Pcm.millis] says, but from its headers alone, without reading
+ * its sound: the game asks it of every line when it opens. Null if it is not a WAV of 16-bit PCM.
+ */
+fun wavMillis(bytes: ByteArray): Long? {
+    val layout = wavLayout(bytes) ?: return null
+    return (layout.end - layout.start) / 2 * MILLIS_IN_SECOND / (layout.channels.toLong() * layout.rate)
+}
+
+/** Where the sound of a WAV is, from [start] to [end], and how it is: its [channels] and its [rate]. */
+private class WavLayout(
+    val channels: Int,
+    val rate: Int,
+    val start: Int,
+    val end: Int,
+)
+
+private fun wavLayout(bytes: ByteArray): WavLayout? {
     if (bytes.size < HEADER || bytes.decodeToString(0, 4) != "RIFF" || bytes.decodeToString(8, 12) != "WAVE") return null
     var format = 0
     var channels = 0
@@ -78,8 +101,7 @@ fun readWav(bytes: ByteArray): Pcm? {
         } else if (id == "data") {
             if ((format != PCM && format != EXTENSIBLE) || bits != 16 || channels !in 1..2 || rate <= 0) return null
             val end = min(bytes.size.toLong(), body.toLong() + size).toInt()
-            val samples = ShortArray((end - body) / 2) { int16(bytes, body + 2 * it).toShort() }
-            return Pcm(samples, channels, rate)
+            return WavLayout(channels, rate, body, end)
         }
         // Chunks take an even number of bytes.
         offset = body + size + (size and 1)

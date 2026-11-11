@@ -38,7 +38,7 @@ androidApp/     la app de Android
 iosApp/         la app de iOS (proyecto de Xcode)
 desktopApp/     herramienta de desarrollo: una ventana para probar rápido; no se entrega
 voces/          el guion de todo lo que se dice y la huella de cada voz generada
-tools/          las voces (voces.py), los efectos (sonidos.py), la música (musica.py) y los recorridos en el iPhone simulado (conductor-ios/)
+tools/          las voces (voces.py), los efectos (sonidos.py), la música (musica.py), los recorridos en el iPhone simulado (conductor-ios/) y la entrega en su iPhone (entrega-iphone.sh)
 docs/           diseño, investigación, decisiones (ADR), proceso, pruebas y el arnés
 scripts/        la puerta de calidad
 licencias/      la licencia de la letra Andika

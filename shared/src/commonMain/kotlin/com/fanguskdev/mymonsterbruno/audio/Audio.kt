@@ -86,9 +86,14 @@ internal class Audio(
 
     private fun musicName(piece: Music) = "musica_${piece.file}"
 
+    /**
+     * Reads [path], and how long it lasts, away from the main thread: the files are read in one go, and reading the hundreds
+     * of the game there stalled it as it opened on Android («Bruno isn't responding», 2026-11-11). Then gives it to the
+     * player, on the thread of the game.
+     */
     private suspend fun loadOne(path: String, name: String) {
-        val wav = read(path) ?: return
-        loaded(name, wav)
+        val (wav, length) = withContext(Dispatchers.Default) { read(path)?.let { it to wavMillis(it) } } ?: return
+        loaded(name, wav, length)
     }
 
     /** [line] stretched, from its file, kept for next time; null if its file cannot be read. */
@@ -107,10 +112,10 @@ internal class Audio(
         return made
     }
 
-    /** [wav] is ready as [name]; if it is the music of where she is, it starts. */
-    internal fun loaded(name: String, wav: ByteArray) {
+    /** [wav], [length] milliseconds long, is ready as [name]; if it is the music of where she is, it starts. */
+    internal fun loaded(name: String, wav: ByteArray, length: Long? = wavMillis(wav)) {
         player.load(name, wav)
-        millis[name] = readWav(wav)?.millis ?: 0L
+        millis[name] = length ?: 0L
         if (music?.let { musicName(it) } == name) refreshMusic()
     }
 

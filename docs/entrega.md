@@ -9,6 +9,11 @@ tu Apple ID o tener el iPhone en la mano, de las que hace un agente desde este M
 iphone para probarlo, va a tener que ser en la version definitiva»), así que se instala ese día, una sola vez, y dura un
 año. La gratuita quedó descartada porque pide el iPhone en el Mac cada 7 días.
 
+**Dónde estamos** (2026-11-11): lo que se puede hacer sin tu cuenta y sin su iPhone está hecho. La versión de
+lanzamiento compila para un iPhone de verdad, la versión de Android se ha probado en el emulador y el día de la entrega
+es una orden, `bash tools/entrega-iphone.sh instalar`. Falta lo tuyo: darte de alta en el Apple Developer Program e
+iniciar sesión en Xcode con esa cuenta (vía 3, «Antes de la entrega, sin su iPhone»).
+
 ## Antes de elegir
 
 - **El iPhone tiene que tener iOS 18.5 o posterior** (Ajustes > General > Información > Versión de iOS). El iPhone 15 Pro
@@ -130,9 +135,21 @@ Lo que hace el agente:
 
 - Pasa el Team ID a `Local.xcconfig` y deja `project.pbxproj` como estaba.
 - Comprueba que la puerta pasa y prueba la versión definitiva entera en un simulador de iPhone 15 Pro, girado a los dos
-  lados ([pruebas](pruebas.md)).
-- Archiva la versión de lanzamiento, como en la vía 2. La exportación espera al día de la entrega, porque el perfil ad hoc
-  lleva dentro el UDID de su iPhone.
+  lados ([pruebas](pruebas.md)). Hecho el 2026-11-10: pasan los 29 recorridos.
+- Comprueba que la versión de lanzamiento compila para un iPhone de verdad, sin firmar, y cómo es. Hecho el 2026-11-11:
+  se llama «Bruno», es la 1.0 (1), pide iOS 18.5, es para el procesador del iPhone (arm64), ocupa 103 MB (casi todo,
+  las voces) y lleva los textos de los permisos del micrófono y del reconocimiento de voz:
+
+  ```bash
+  bash tools/entrega-iphone.sh comprobar
+  ```
+
+- Con tu Team ID, la archiva, firmada; queda en `build/entrega/`. La exportación espera al día de la entrega, porque el
+  perfil ad hoc lleva dentro el UDID de su iPhone:
+
+  ```bash
+  bash tools/entrega-iphone.sh archivar
+  ```
 
 ### El día de la entrega, con su iPhone y tu Mac
 
@@ -146,18 +163,27 @@ Lo que haces tú:
    instale desde el Mac. Al acabar se puede desactivar, porque la versión ad hoc no lo necesita para abrirse.
 4. **Pruébalo allí con sonido**, como dice «Después de instalarlo», más abajo.
 
-Lo que hace el agente:
+Lo que hace el agente, con una orden:
 
-- Lee el UDID con `xcrun devicectl list devices` y registra el iPhone en tu cuenta (caben 100 aparatos de cada tipo al
-  año). Con el Modo de desarrollador activado, lo hace Xcode solo al compilar para ese iPhone con
-  `-allowProvisioningDeviceRegistration`.
-- Exporta el archivo con `method` = `release-testing` (la distribución ad hoc), ya con su iPhone dentro del perfil, y
-  lo instala desde el Mac con `xcrun devicectl device install app --device <UDID> <la .ipa>`, o con Apple Configurator.
+```bash
+bash tools/entrega-iphone.sh instalar
+```
+
+- Busca su iPhone entre los conectados al Mac, nunca un simulador; si hay más de uno, pide cuál con su UDID. Comprueba
+  que tiene iOS 18.5 o posterior y el Modo de desarrollador.
+- Lo registra en tu cuenta compilando para él con `-allowProvisioningDeviceRegistration` (caben 100 aparatos de cada
+  tipo al año).
+- Si lo archivado no es la versión de ahora, la archiva otra vez. La exporta con `method` = `release-testing` (la
+  distribución ad hoc), ya con su iPhone dentro del perfil.
+- La instala con `xcrun devicectl device install app`, que instala la `.app` de dentro de la `.ipa`, y guarda una copia
+  de la `.ipa` con la fecha en `build/entrega/`, para dentro de un año.
+- Lo que firma, exporta e instala solo se puede probar con tu cuenta y su iPhone: es lo primero que se mira ese día.
 
 ### Dentro de un año
 
 Antes de que caduque, o si hace falta un arreglo, vuelve a conectarlo. El agente la exporta de nuevo y la instala
-encima, y Bruno sigue como estaba. Para seguir pasado el año hay que renovar el programa.
+encima con la misma orden, `bash tools/entrega-iphone.sh instalar`, y Bruno sigue como estaba. Para seguir pasado el
+año hay que renovar el programa.
 
 Con el programa, la vía 1 también dura un año en vez de 7 días: es casi lo mismo que la ad hoc, pero instalando desde
 Xcode.
@@ -189,8 +215,13 @@ Lo que hace el agente:
   ./gradlew :androidApp:assembleRelease
   ```
 
-  El fichero sale en `androidApp/build/outputs/apk/release/`. Si el Android está conectado por USB con la depuración
-  activada, puede instalarlo directamente con `adb -s <su número de serie> install -r <el APK>`, nunca con `adb` sin `-s`.
+  El fichero sale en `androidApp/build/outputs/apk/release/` (unos 69 MB). Si el Android está conectado por USB con la
+  depuración activada, puede instalarlo directamente con `adb -s <su número de serie> install -r <el APK>`, nunca con
+  `adb` sin `-s`.
+- Probado en el emulador el 2026-11-11, tal cual se entrega: se instala limpio, se abre nada más encender el teléfono,
+  nace Bruno, se juega y, al cerrarlo y abrirlo, sigue como estaba. La primera vez salía «Bruno no responde» al
+  abrirlo con el teléfono recién encendido, porque leía todas las voces de golpe en el hilo de la pantalla; ahora las
+  lee aparte.
 - Para instalar encima una versión nueva sin borrar la partida, hay que firmarla con la misma clave, la de este Mac
   (`~/.android/debug.keystore`). Si un día se compila en otro ordenador, se copia esa clave antes.
 

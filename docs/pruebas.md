@@ -40,6 +40,7 @@ Qué se prueba en cada cambio y en cada hito, y cómo. Los criterios de salida d
 | Lo que se hace con su voz antes de que Bruno la repita: sin el silencio de los bordes (y nada si solo hay silencio o un murmullo), a la altura de las voces del juego, más aguda y más rápida, en un canal y de vuelta a WAV | `MicrophoneTest` | Común |
 | El sonido del escritorio: la mezcla suma sin desbordarse, respeta el volumen y pasa todo a un canal a 22 050 Hz, uniendo las muestras con rectas; la música vuelve a su principio y sigue; y cortar una voz tras otra, como al contar fresas, no atasca su hilo: un toque suele atenderse en un momento y ninguno se queda sin atender (el primero puede esperar a que se despierte la tarjeta de sonido, hasta segundo y medio) | `DesktopSoundTest` | JVM |
 | Cada frase del juego tiene su fichero y dura lo que una frase; el guion y el código tienen las mismas frases; cada efecto tiene su fichero, y cada pieza de música el suyo, de 15 a 32 segundos y por debajo de un mega | `AudioFilesTest` | JVM |
+| Cuánto dura un WAV, solo con sus cabeceras: lo mismo que leyéndolo entero; lo que no es un WAV, nada | `WavTest` | Común |
 | La música de las islas: la de donde está, en cuanto se carga y solo si está puesta; otra isla, otra pieza; al volver del fondo, suena otra vez | `MusicTest` | Común |
 | La voz despacio: una frase alargada dura una vez y un quinto, con el mismo tono y casi igual de fuerte; lo que no se puede alargar queda igual | `StretchTest` | Común |
 | La voz despacio en el juego: cada frase se alarga una vez, suena en su sitio y la siguiente vez ya está lista; sin ella, la de siempre | `SlowVoiceTest` | JVM |
@@ -294,6 +295,19 @@ pedirían el móvil o la tableta (2026-11-06).
   empezar), la lámpara que enciende la luz y la caricia. Bruno vuelve a su color.
 - [ ] Son cinco, la nana la última; al terminar, regalo, bandera, la misión de contar cómo se ha sentido y, en la zona
   de mayores, las emociones reconocidas.
+
+### M4 · La entrega
+
+- [x] La versión de lanzamiento compila para un iPhone de verdad, sin firmar (`bash tools/entrega-iphone.sh comprobar`,
+  2026-11-11): «Bruno», 1.0 (1), iOS 18.5, arm64, 103 MB, con los textos de los permisos del micrófono y del
+  reconocimiento de voz.
+- [x] El APK de lanzamiento, con R8, en el emulador Tester_API36 (2026-11-11): instalado limpio y abierto nada más
+  encender, nace Bruno, el mapa, Comeletras y, al cerrarlo y abrirlo, Bruno sigue como estaba. Antes salía «Bruno no
+  responde» al abrirlo con el teléfono recién encendido: leía las voces de golpe en el hilo de la pantalla.
+- [ ] Archivarla firmada con su cuenta (`bash tools/entrega-iphone.sh archivar`): falta que Fangusk se dé de alta en el
+  Apple Developer Program.
+- [ ] Instalarla en su iPhone (`bash tools/entrega-iphone.sh instalar`) y probarla allí con sonido, el día de la
+  entrega ([entrega](entrega.md), «Después de instalarlo», e ideas 5.1 y 5.2).
 
 ### M5 · Su foto
 
