@@ -278,22 +278,22 @@ Salen de la [investigación §6](investigacion/investigacion.md#6-reglas-que-sal
 
 ## Lo que trae y lo que falta
 
-**Trae** lo que la propuesta pide a la primera versión: el nacimiento, Comeletras con las vocales, contar hasta 5, los
-trazos y el mapa con dos islas. De las piezas comunes, el rincón de la calma, la misión para casa y la zona de mayores
-(sin foto ni voces). Y de M3: la isla de los colores, con sus globos y sus series; la de las formas, con la casa de
-Bruno; las letras M, P, L y S y los números hasta el 10 en las islas que ya había; y la isla de las emociones. Con
-eso está todo lo que la propuesta ponía en el mapa. De M2, «Habla con Bruno». Y de lo que faltaba, la isla de las
-palabras, con el sonido inicial por la sílaba. Y de las ideas, escribir su nombre, la pantalla de inicio, la emoción
-del día, que los juegos se adapten a lo que sabe y las rimas con Bruno.
+**Trae** todo lo que la propuesta 3 pedía, menos las voces de la familia: el nacimiento, el cuarto de Bruno, el mapa
+con sus islas (las letras, de las vocales a la F, la B y la R; los números hasta el 10; los colores; las formas; las
+emociones; las palabras; y, en la otra parte del mar, la casa), «Habla con Bruno», el rincón de la calma, la misión para
+casa, a dormir y la zona de mayores. Y toda la batería de [ideas](ideas.md) que Fangusk eligió, cerrada el 2026-11-09:
+escribir su nombre, la pantalla de inicio, la emoción del día y la asamblea, que se adapte a lo que sabe, las rimas,
+la cuenta atrás, el anterior y el siguiente, las sumas, la carrera, dentro y fuera, ordenar historias, los caminos, las
+pegatinas, el armario, su foto, su animal, la isla que sugiere Bruno, jugar con un mayor, la música, la voz despacio, el
+cuento para dormir, su semana, elegir qué sale y la copia de su partida.
 
-**Falta**, de la propuesta 3 que eligió Fangusk. El orden y el alcance de cada pieza los decide él.
+**Falta** desarrollar nada de lo decidido. Queda la entrega en su iPhone (M4, [entrega](entrega.md)), que espera a que
+Fangusk se dé de alta en el Apple Developer Program, y probarlo allí con sonido: que vaya fluido, la batería, su voz en
+«Habla con Bruno», la música, la voz despacio y el cuento (ideas 5.1 y 5.2).
 
-- **Más contenido**: más consonantes, después de la T, la N y la D. El sonido inicial ya está, por la sílaba, en la isla
-  de las palabras.
-
-Una batería de ideas para después, sin decidir, está en [ideas](ideas.md).
-
-Las **voces de la familia** no se harán: «para M2 no vamos a utilizar las voces de la familia, seguiremos con las voces actuales» (Fangusk, 2026-11-03).
+**Se descartaron**: las **voces de la familia** («para M2 no vamos a utilizar las voces de la familia, seguiremos con
+las voces actuales», Fangusk, 2026-11-03), y de la batería, los colores y números en inglés, que Bruno diga su nombre y
+comprobar la palabra con SpeechAnalyzer (2026-11-09).
 
 ## Pantalla, dibujo, voz y sonido
 
