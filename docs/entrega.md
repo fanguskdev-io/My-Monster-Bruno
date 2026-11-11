@@ -27,6 +27,10 @@ iniciar sesión en Xcode con esa cuenta (vía 3, «Antes de la entrega, sin su i
   sola línea, `TEAM_ID = ABCDE12345` (con el tuyo). Lo escribe el agente.
 - **En el iPhone se llama «Bruno»**, es la versión 1.0 (1), tiene el mismo icono que en Android y va siempre en
   horizontal, girado a un lado o al otro.
+- **En modo silencio no suena**, como cualquier juego del iPhone: ni Bruno, ni el narrador, ni los efectos, ni la música.
+  Solo «Habla con Bruno» suena igual, porque para escucharla pasa al altavoz. Si parece que Bruno no habla, lo primero
+  es mirar que el iPhone no esté en silencio: en el iPhone 15 Pro se quita manteniendo pulsado el botón de acción del
+  lateral, o en Ajustes > Sonidos y vibraciones > Modo silencio. En Android no pasa: suena con el volumen multimedia.
 
 | Vía | Cuánto cuesta | Cuánto dura instalada | Cuándo tiene que venir el iPhone al Mac |
 |---|---|---|---|
@@ -161,7 +165,7 @@ Lo que haces tú:
 2. **Conecta el iPhone al Mac** con un cable USB-C, desbloquéalo y toca «Confiar».
 3. **Activa el Modo de desarrollador**, como en el paso 4 de la vía 1. Solo sirve para que el agente lo registre y lo
    instale desde el Mac. Al acabar se puede desactivar, porque la versión ad hoc no lo necesita para abrirse.
-4. **Pruébalo allí con sonido**, como dice «Después de instalarlo», más abajo.
+4. **Pruébalo allí con sonido**, con el modo silencio quitado, como dice «Después de instalarlo», más abajo.
 
 Lo que hace el agente, con una orden:
 
@@ -232,7 +236,8 @@ Es la última parte de M4, y se prueba allí, con el sonido puesto:
 - El icono de Bruno está en la pantalla de inicio y el juego abre.
 - Se juega girado a un lado y al otro: la casa, el altavoz y el candado se ven enteros, y la Dynamic Island no tapa nada
   que haga falta (en el simulador, así es: [pruebas](pruebas.md)).
-- Se oyen la voz y los efectos por el altavoz.
+- Con el modo silencio quitado, se oyen la voz y los efectos por el altavoz. Con él puesto, el juego calla, salvo
+  «Habla con Bruno»: cuéntaselo a la familia, por si un día parece que Bruno no habla.
 - La primera vez que se entra en «Habla con Bruno» (el micrófono rosa del cuarto), el iPhone pide permiso para usar el
   micrófono: lo da un mayor. Después, Bruno repite con la voz de ella la palabra que dice, por el altavoz
   ([ADR 0011](adr/0011-habla-con-bruno.md)).
